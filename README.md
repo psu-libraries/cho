@@ -5,15 +5,25 @@ application up and running.
 
 Things you may want to cover:
 
-* Ruby version
-
-* System dependencies
+* Inital Installation
+  ```
+  git clone... 
+  cd cho-rep
+  bundle install
+  ```
 
 * Configuration
 
 * Database creation
+  ```
+    rake db:drop db:create db:migrate
+  ```
 
 * Database initialization
+  ```
+  bin/rails hyrax:default_admin_set:create
+  bin/rails 'hyrax:workflow:load'
+  ```
 
 * How to run the test suite
 
