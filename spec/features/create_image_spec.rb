@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Generated via
 #  `rails generate hyrax:work Image`
 require 'rails_helper'
@@ -20,14 +22,14 @@ RSpec.feature 'Create a Image', js: false do
 
     scenario do
       visit '/dashboard'
-      click_link "Works"
-      click_link "Add new work"
+      click_link 'Works'
+      click_link 'Add new work'
 
       # If you generate more than one work uncomment these lines
       # choose "payload_concern", option: "Image"
       # click_button "Create work"
 
-      expect(page).to have_content "Add New Image"
+      expect(page).to have_content 'Add New Image'
     end
   end
 end
