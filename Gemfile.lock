@@ -606,6 +606,8 @@ GEM
       rainbow (>= 1.99.1, < 3.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.0, >= 1.0.1)
+    rubocop-rspec (1.15.1)
+      rubocop (>= 0.42.0)
     ruby-box (1.15.0)
       addressable
       json
@@ -731,6 +733,7 @@ DEPENDENCIES
   rsolr (>= 1.0)
   rspec-rails
   rubocop
+  rubocop-rspec
   sass-rails (~> 5.0)
   solr_wrapper (>= 0.3)
   spring
