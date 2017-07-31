@@ -6,6 +6,6 @@ require 'rails_helper'
 
 RSpec.describe Hyrax::ImagesController do
   it 'has tests' do
-    skip 'Add your tests here'
+    expect(described_class.curation_concern_type).to eq(::Image)
   end
 end

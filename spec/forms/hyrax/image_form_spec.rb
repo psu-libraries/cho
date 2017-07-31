@@ -6,6 +6,6 @@ require 'rails_helper'
 
 RSpec.describe Hyrax::ImageForm do
   it 'has tests' do
-    skip 'Add your tests here'
+    expect(described_class.model_class).to eq(::Image)
   end
 end

@@ -6,6 +6,6 @@ require 'rails_helper'
 
 RSpec.describe Hyrax::ImagePresenter do
   it 'has tests' do
-    skip 'Add your tests here'
+    expect(described_class).to respond_to(:collection_presenter_class)
   end
 end

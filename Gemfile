@@ -66,4 +66,5 @@ gem 'rsolr', '>= 1.0'
 group :development, :test do
   gem 'fcrepo_wrapper'
   gem 'rspec-rails'
+  gem "capybara"
 end
