@@ -4,6 +4,6 @@ require 'rails_helper'
 
 RSpec.describe Collection do
   it 'has tests' do
-    skip 'Add your tests here'
+    expect(described_class.new).to respond_to(:to_solr)
   end
 end
