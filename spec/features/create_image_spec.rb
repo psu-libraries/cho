@@ -20,7 +20,7 @@ RSpec.feature 'Create a Image', js: false do
       login_as user
     end
 
-    scenario "Create an Image" do
+    scenario 'Create an Image' do
       visit '/dashboard'
       click_link 'Works'
       click_link 'Add new work'
