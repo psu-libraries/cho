@@ -21,3 +21,4 @@
 .byebug_history
 .rubocop-http*
 public/collection_test.csv
+public/works_test.csv
