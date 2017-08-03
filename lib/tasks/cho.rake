@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
-require 'fcrepo_wrapper'
-require 'fcrepo_wrapper/rake_task'
-require 'solr_wrapper'
+if Rails.env.development?
+  require 'fcrepo_wrapper'
+  require 'fcrepo_wrapper/rake_task'
+  require 'solr_wrapper'
+end
 require 'active_fedora/cleaner'
 
 namespace :cho do
