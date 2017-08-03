@@ -1,8 +1,9 @@
 # frozen_string_literal: true
+
 # lock '3.6'
 
 # Set assets roles to occur on jobs as well as web
-set :assets_role, [:web, :job]
+set :assets_role, %i[web job]
 
 # application and repo settings
 set :application, 'cho'
@@ -16,10 +17,8 @@ set :deploy_to, "/home/deploy/#{fetch(:application)}"
 set :use_sudo, false
 
 # ssh key settings
-set :ssh_options, {
-  keys: [File.join(ENV['HOME'], '.ssh', 'id_deploy_rsa')],
-  forward_agent: true
-}
+set :ssh_options, keys: [File.join(ENV['HOME'], '.ssh', 'id_deploy_rsa')],
+                  forward_agent: true
 
 # rbenv settings
 set :rbenv_type, :user # or :system, depends on your rbenv setup
@@ -36,7 +35,7 @@ set :rails_env, 'production'
 
 # Settings for whenever gem that updates the crontab file on the server
 # See schedule.rb for details
-set :whenever_roles, [:app, :job]
+set :whenever_roles, %i[app job]
 
 set :log_level, :debug
 set :pty, true
@@ -83,7 +82,7 @@ set :keep_releases, 7
 
 # Apache namespace to control apache
 namespace :apache do
-  [:stop, :start, :restart, :reload].each do |action|
+  %i[stop start restart reload].each do |action|
     desc "#{action.to_s.capitalize} Apache"
     task action do
       on roles(:web) do
@@ -94,7 +93,6 @@ namespace :apache do
 end
 
 namespace :deploy do
-
   desc 'set up the shared directory to have the symbolic links to the appropriate directories shared between servers'
   task :symlink_shared_directories do
     on roles(:web, :job) do
