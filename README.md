@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/psu-libraries/cho-req.png?label=ready&title=Ready)](https://waffle.io/psu-libraries/cho-req?utm_source=badge)
 # README
 
 This README would normally document whatever steps are necessary to get the
