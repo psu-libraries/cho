@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Load DSL and Setup Up Stages
 require 'capistrano/setup'
 
@@ -15,12 +17,12 @@ require 'capistrano/deploy'
 #   https://github.com/capistrano/rails
 #
 # require 'capistrano/rvm'
-require 'capistrano/rbenv' #rbenv setup
-require 'capistrano/rails' #rails (includes bundler, rails/assets and rails/migrations)
-require "capistrano/scm/git"
+require 'capistrano/rbenv' # rbenv setup
+require 'capistrano/rails' # rails (includes bundler, rails/assets and rails/migrations)
+require 'capistrano/scm/git'
 install_plugin Capistrano::SCM::Git
-require 'capistrano-resque'  #resque
-require 'capistrano/rbenv_install' #rbenv install plugin
+require 'capistrano-resque' # resque
+require 'capistrano/rbenv_install' # rbenv install plugin
 
 # Loads custom tasks from `lib/capistrano/tasks' if you have any defined.
 # tasks included: passenger, checksum
