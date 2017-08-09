@@ -21,7 +21,6 @@ RSpec.feature 'Create a Image', js: false do
     end
 
     scenario 'Create an Image' do
-      skip("We'll fix this later")
       visit '/dashboard'
       click_link 'Works'
       click_link 'Add new work'
