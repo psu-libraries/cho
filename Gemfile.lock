@@ -481,7 +481,6 @@ GEM
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (4.1.0)
-    newrelic_rpm (4.3.0.335)
     nio4r (2.1.0)
     noid (0.9.0)
     nokogiri (1.8.0)
@@ -810,7 +809,6 @@ DEPENDENCIES
   jquery-rails
   listen (~> 3.0.5)
   mysql2 (~> 0.3.17)
-  newrelic_rpm
   puma (~> 3.0)
   rails (~> 5.0.4)
   resque-pool
