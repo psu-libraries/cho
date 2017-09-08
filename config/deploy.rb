@@ -49,7 +49,8 @@ set :linked_files, fetch(:linked_files, []).push(
   'config/analytics.yml',
   'config/application.yml',
   'config/blacklight.yml',
-  'config/browse_everything_providers.yml',
+  # BE is broken https://github.com/psu-libraries/cho-req/issues/227
+  # 'config/browse_everything_providers.yml',
   'config/database.yml',
   'config/fedora.yml',
   'config/ga-privatekey.p12',
