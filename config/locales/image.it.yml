@@ -1,8 +1,0 @@
-it:
-  hyrax:
-    icons:
-      image:     'fa fa-file-text-o'
-    select_type:
-      image:
-        name:               "Image"
-        description:        "Image opere"

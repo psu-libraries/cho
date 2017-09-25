@@ -1,5 +1,9 @@
-# Place any default configuration for solr_wrapper here
-# port: 8983
+# .solr_wrapper
+version: 5.3.1
+port: 8983
+instance_dir: tmp/solr-development
+download_dir: tmp
 collection:
-  dir: solr/conf/
-  name: blacklight-core
+  persist: true
+  dir: solr/config
+  name: cho-development

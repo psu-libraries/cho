@@ -6,4 +6,4 @@ download_dir: tmp
 collection:
   persist: false
   dir: solr/config
-  name: hydra-test
+  name: cho-test

@@ -7,21 +7,18 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-# This is a Rails app
-gem 'rails', '~> 5.0.4'
+# Main gems
+gem 'rails', '~> 5.1.3'
+gem 'valkyrie', github: 'samvera-labs/valkyrie'
 
-# Samvera gems
-gem 'hyrax', github: 'samvera/hyrax'
-
-# Additional support provided by
+# Supporting gems
 gem 'coffee-rails', '~> 4.2'
-gem 'devise'
-gem 'devise-guests', '~> 0.6'
+gem 'execjs'
 gem 'jbuilder', '~> 2.5'
 gem 'jquery-rails'
-gem 'mysql2', '~> 0.3.17' unless ENV['CI']
-gem 'puma', '~> 3.0'
-gem 'resque-pool'
+gem 'json'
+gem 'pg'
+gem 'puma', '~> 3.7'
 gem 'rsolr', '>= 1.0'
 gem 'sass-rails', '~> 5.0'
 gem 'therubyracer'
@@ -32,9 +29,13 @@ group :development, :test do
   gem 'byebug', platform: :mri
   gem 'capybara'
   gem 'fcrepo_wrapper'
+  gem 'pry-byebug'
+  gem 'pry-rails'
+  gem 'rspec-its'
   gem 'rspec-rails'
   gem 'rubocop'
   gem 'rubocop-rspec'
+  gem 'selenium-webdriver'
   gem 'solr_wrapper', '>= 0.3'
   gem 'sqlite3'
 end
