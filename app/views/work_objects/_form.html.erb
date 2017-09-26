@@ -1,0 +1,28 @@
+<%= form_with(model: work, local: true) do |form| %>
+
+  <p>
+    <%= form.label :title %><br>
+    <%= form.text_field :title %>
+  </p>
+
+  <p>
+    <%= form.label :work_type %><br>
+    <%= form.select :work_type, ["Generic", "Still Image", "Map", "Document", "Audio/Visual"] %>
+  </p>
+
+  <% if work.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(work.errors.count, "error") %> prohibited this work from being saved:</h2>
+
+      <ul>
+      <% work.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
