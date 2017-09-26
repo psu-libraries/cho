@@ -2,10 +2,11 @@ language: ruby
 cache:
   bundler: true
   directories:
-    - "dep_cache"
-    - "travis_phantomjs"
+    - dep_cache
 bundler_args: --without development debug
 sudo: false
+services:
+  - postgresql
 rvm:
   - 2.4.1
 jdk:
@@ -13,28 +14,14 @@ jdk:
 env:
   global:
     - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
-    - JS=true
   matrix:
     - TEST_SUITE=rspec
     - TEST_SUITE=rubocop
 before_install:
-  - "export PATH=$PWD/travis_phantomjs/phantomjs-2.1.1-linux-x86_64/bin:$PATH"
-  - "which phantomjs"
-  - "phantomjs --version"
-  - "if [ $(phantomjs --version) != '2.1.1' ]; then rm -rf $PWD/travis_phantomjs; mkdir -p $PWD/travis_phantomjs; fi"
-  - "if [ $(phantomjs --version) != '2.1.1' ]; then wget https://assets.membergetmember.co/software/phantomjs-2.1.1-linux-x86_64.tar.bz2 -O $PWD/travis_phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2; fi"
-  - "if [ $(phantomjs --version) != '2.1.1' ]; then tar -xvf $PWD/travis_phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 -C $PWD/travis_phantomjs; fi"
-  - "phantomjs --version"
-  - export PATH="$PATH:$(pwd)/fits"
-  - "mkdir -p dep_cache"
-  - "pwd"
-  - "ls -l dep_cache"
-  - "cp config/travis/solr_wrapper_test.yml config/solr_wrapper_test.yml"
-  - "cp config/travis/fcrepo_wrapper_test.yml config/fcrepo_wrapper_test.yml"
-services:
-  - redis-server
-matrix:
-  fast_finish: true
+  - mkdir -p dep_cache
+before_script:
+  - cp config/travis/solr_wrapper_test.yml config/solr_wrapper_test.yml
+  - cp config/travis/database.yml config/database.yml
+  - psql -c 'create database travis_ci_test;' -U postgres
 script:
-  - "bundle exec rake cho:travis:$TEST_SUITE"
-
+  - bundle exec rake cho:travis:$TEST_SUITE

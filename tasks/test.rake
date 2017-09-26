@@ -3,7 +3,6 @@
 require 'rspec/core'
 require 'rspec/core/rake_task'
 require 'rubocop/rake_task'
-require 'active_fedora/rake_support'
 
 namespace :cho do
   desc 'Run specs'
@@ -14,9 +13,7 @@ namespace :cho do
   namespace :travis do
     desc 'Execute Continuous Integration build (docs, tests with coverage)'
     task rspec: :environment do
-      with_test_server do
-        Rake::Task['cho:rspec'].invoke
-      end
+      Rake::Task['cho:rspec'].invoke
     end
 
     desc 'Run style checker'

@@ -1,34 +1,23 @@
-# README
+# CHO
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Penn State University Library's cultural heritage object repository project.
 
-Things you may want to cover:
+## Development Setup
 
-* Inital Installation
-  ```
-  git clone... 
-  cd cho-rep
-  bundle install
-  ```
+Clone the application and install:
 
-* Configuration
+    git clone
+    cd cho
+    bundle install
 
-* Database creation
-  ```
+Ensure that postgres is installed and running, then:
+
+    createdb `whoami`
+    cp config/samples/database.yml config/database.yml
+
+And edit `database.yml`, replacing _YOUR_LOCAL_USERNAME_ with your local user's login name.
+
+Run migrations and tests:
+
     rake db:drop db:create db:migrate
-  ```
-
-* Database initialization
-  ```
-  bin/rails hyrax:default_admin_set:create
-  bin/rails 'hyrax:workflow:load'
-  ```
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+    bundle exec rspec
