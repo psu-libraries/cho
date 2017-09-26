@@ -1,5 +1,22 @@
 <h1>New Work</h1>
 
-<%= render 'form', work: @work %>
+<%= form_with(model: @work, local: true) do |form| %>
+
+  <p>
+    <%= form.label :title %><br>
+    <%= form.text_field :title %>
+  </p>
+
+  <p>
+    <%= form.label :work_type %><br>
+    <%= form.select :work_type, ["Generic", "Still Image", "Map", "Document", "Audio/Visual"] %>
+  </p>
+
+  <%= render 'errors', work: @work if @work.errors.any? %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
 
 <%= link_to 'Back', work_objects_path %>

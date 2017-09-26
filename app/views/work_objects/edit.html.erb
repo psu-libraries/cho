@@ -1,6 +1,18 @@
-<h1>Editing Work</h1>
+<h1>Editing <%= @work.work_type.titleize %></h1>
 
-<%= render 'form', work: @work %>
+<%= form_with(model: @work, local: true) do |form| %>
+
+  <p>
+    <%= form.label :title %><br>
+    <%= form.text_field :title %>
+  </p>
+
+  <%= render 'errors', work: @work if @work.errors.any? %>
+
+  <div class="actions">
+    <%= form.submit "Update #{@work.work_type.titleize}" %>
+  </div>
+<% end %>
 
 <%= link_to 'Show', @work %> |
 <%= link_to 'Back', work_objects_path %>

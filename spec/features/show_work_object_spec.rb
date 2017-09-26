@@ -19,6 +19,6 @@ RSpec.describe 'Showing a work object' do
     expect(page).to have_content('Generic')
     click_link('Edit')
     expect(page).to have_field('work_object[title]', with: 'An editable file')
-    expect(page).to have_select('work_object[work_type]', with_selected: 'Generic')
+    expect(page).not_to have_select('work_object[work_type]', with_selected: 'Generic')
   end
 end

@@ -29,12 +29,12 @@ RSpec.describe WorkObject do
 
   describe '#work_type' do
     it 'is nil when not set' do
-      expect(resource_klass.new.work_type).to be_empty
+      expect(resource_klass.new.work_type).to be_nil
     end
 
     it 'can be set as an attribute' do
       resource = resource_klass.new(work_type: 'test')
-      expect(resource.attributes[:work_type]).to contain_exactly('test')
+      expect(resource.attributes[:work_type]).to eq('test')
     end
 
     it 'is included in the list of attributes' do

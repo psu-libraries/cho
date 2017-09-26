@@ -17,12 +17,12 @@ class WorkObjectsController < ApplicationController
   # POST /work_objects
   # POST /work_objects.json
   def create
-    change_set = WorkObjectChangeSet.new(WorkObject.new)
-    if change_set.validate(resource_params)
-      change_set.sync
+    @work = WorkObjectChangeSet.new(WorkObject.new)
+    if @work.validate(resource_params)
+      @work.sync
       obj = nil
       change_set_persister.buffer_into_index do |buffered_changeset_persister|
-        obj = buffered_changeset_persister.save(resource: change_set)
+        obj = buffered_changeset_persister.save(resource: @work)
       end
       redirect_to(polymorphic_path([:solr_document], id: "id-#{obj.id}"))
     else
@@ -33,12 +33,12 @@ class WorkObjectsController < ApplicationController
   # PATCH/PUT /work_objects/1
   # PATCH/PUT /work_objects/1.json
   def update
-    change_set = WorkObjectChangeSet.new(find_resource(params[:id])).prepopulate!
-    if change_set.validate(resource_params)
-      change_set.sync
+    @work = WorkObjectChangeSet.new(find_resource(params[:id])).prepopulate!
+    if @work.validate(resource_params)
+      @work.sync
       obj = nil
       change_set_persister.buffer_into_index do |buffered_changeset_persister|
-        obj = buffered_changeset_persister.save(resource: change_set)
+        obj = buffered_changeset_persister.save(resource: @work)
       end
       redirect_to(polymorphic_path([:solr_document], id: "id-#{obj.id}"))
     else
