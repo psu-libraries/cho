@@ -5,8 +5,8 @@ cache:
     - dep_cache
 bundler_args: --without development debug
 sudo: false
-services:
-  - postgresql
+addons:
+  postgresql: "9.6"
 rvm:
   - 2.4.1
 jdk:
