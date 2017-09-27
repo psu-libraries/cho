@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170925192912) do
+ActiveRecord::Schema.define(version: 20170927135103) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,20 @@ ActiveRecord::Schema.define(version: 20170925192912) do
     t.datetime "updated_at", null: false
     t.index ["document_id"], name: "index_bookmarks_on_document_id"
     t.index ["user_id"], name: "index_bookmarks_on_user_id"
+  end
+
+  create_table "metadata_application_profile_fields", force: :cascade do |t|
+    t.string "label"
+    t.string "field_type"
+    t.string "requirement_designation"
+    t.string "validation"
+    t.boolean "multiple"
+    t.string "controlled_vocabulary"
+    t.string "default_value"
+    t.string "display_name"
+    t.string "display_transformation"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "orm_resources", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
