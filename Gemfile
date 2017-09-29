@@ -27,16 +27,10 @@ gem 'uglifier', '>= 1.3.0'
 
 group :development, :test do
   gem 'byebug', platform: :mri
-  gem 'capybara'
-  gem 'factory_girl_rails'
-  gem 'fcrepo_wrapper'
   gem 'pry-byebug'
   gem 'pry-rails'
-  gem 'rspec-its'
-  gem 'rspec-rails'
   gem 'rubocop'
   gem 'rubocop-rspec'
-  gem 'selenium-webdriver'
   gem 'solr_wrapper', '>= 0.3'
   gem 'sqlite3'
 end
@@ -57,7 +51,14 @@ group :development do
 end
 
 group :test do
+  gem 'capybara'
   gem 'coveralls', require: false
+  gem 'database_cleaner'
+  gem 'factory_girl_rails'
+  gem 'launchy'
+  gem 'rspec-its'
+  gem 'rspec-rails'
+  gem 'selenium-webdriver'
 end
 
 # @todo https://github.com/psu-libraries/cho-req/issues/225

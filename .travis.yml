@@ -20,8 +20,9 @@ env:
 before_install:
   - mkdir -p dep_cache
 before_script:
-  - cp config/travis/solr_wrapper_test.yml config/solr_wrapper_test.yml
   - cp config/travis/database.yml config/database.yml
   - psql -c 'create database travis_ci_test;' -U postgres
+  - bundle exec solr_wrapper --config config/travis/solr_wrapper_test.yml &
+  - bin/jetty_wait
 script:
   - bundle exec rake cho:travis:$TEST_SUITE
