@@ -28,6 +28,7 @@ gem 'uglifier', '>= 1.3.0'
 group :development, :test do
   gem 'byebug', platform: :mri
   gem 'capybara'
+  gem 'factory_girl_rails'
   gem 'fcrepo_wrapper'
   gem 'pry-byebug'
   gem 'pry-rails'
