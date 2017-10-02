@@ -1,0 +1,34 @@
+# frozen_string_literal: true
+
+require 'rails_helper'
+
+RSpec.describe 'metadata_application_profile_fields/edit', type: :view do
+  let(:metadata_application_profile_field) { create :metadata_application_profile_field, field_attributes }
+  let(:field_attributes) { { field_type: MetadataApplicationProfileField.field_types[:numeric],
+                             requirement_designation: MetadataApplicationProfileField.requirement_designations[:required_to_publish],
+                             validation: 'MyString',
+                             multiple: false,
+                             controlled_vocabulary: 'MyString',
+                             default_value: 'MyString',
+                             display_name: 'MyString',
+                             display_transformation: 'MyString' } }
+
+  before do
+    assign(:metadata_application_profile_field, metadata_application_profile_field)
+  end
+
+  it 'renders the edit metadata_field form' do
+    render
+    assert_select 'form[action=?][method=?]', metadata_application_profile_field_path(metadata_application_profile_field), 'post' do
+      assert_select 'input[name=?]', 'metadata_application_profile_field[label]'
+      assert_select 'input[name=?]', 'metadata_application_profile_field[field_type]'
+      assert_select 'input[name=?]', 'metadata_application_profile_field[requirement_designation]'
+      assert_select 'input[name=?]', 'metadata_application_profile_field[validation]'
+      assert_select 'input[name=?]', 'metadata_application_profile_field[multiple]'
+      assert_select 'input[name=?]', 'metadata_application_profile_field[controlled_vocabulary]'
+      assert_select 'input[name=?]', 'metadata_application_profile_field[default_value]'
+      assert_select 'input[name=?]', 'metadata_application_profile_field[display_name]'
+      assert_select 'input[name=?]', 'metadata_application_profile_field[display_transformation]'
+    end
+  end
+end

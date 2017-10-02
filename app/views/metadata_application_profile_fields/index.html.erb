@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Metadata Fields</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Label</th>
+      <th>Field type</th>
+      <th>Requirement designation</th>
+      <th>Validation</th>
+      <th>Multiple</th>
+      <th>Controlled vocabulary</th>
+      <th>Default value</th>
+      <th>Display name</th>
+      <th>Display transformation</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @metadata_application_profile_fields.each do |metadata_field| %>
+      <tr>
+        <td><%= metadata_field.label %></td>
+        <td><%= metadata_field.field_type %></td>
+        <td><%= metadata_field.requirement_designation.to_s %></td>
+        <td><%= metadata_field.validation %></td>
+        <td><%= metadata_field.multiple %></td>
+        <td><%= metadata_field.controlled_vocabulary %></td>
+        <td><%= metadata_field.default_value %></td>
+        <td><%= metadata_field.display_name %></td>
+        <td><%= metadata_field.display_transformation %></td>
+        <td><%= link_to 'Show', metadata_field %></td>
+        <td><%= link_to 'Edit', edit_metadata_application_profile_field_path(metadata_field) %></td>
+        <td><%= link_to 'Destroy', metadata_field, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Metadata Field', new_metadata_application_profile_field_path %>
