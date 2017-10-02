@@ -1,0 +1,3 @@
+# frozen_string_literal: true
+
+json.partial! 'metadata_application_profile_fields/metadata_field', metadata_application_profile_field: metadata_application_profile_field
