@@ -6,3 +6,15 @@ inherit_from:
 
 AllCops:
   TargetRubyVersion: 2.4.1
+
+RSpec/DescribeClass:
+  Exclude:
+    - 'spec/features/**/*'
+
+RSpec/ExampleLength:
+  Exclude:
+    - 'spec/features/**/*'
+
+RSpec/MultipleExpectations:
+  Exclude:
+    - 'spec/features/**/*'
