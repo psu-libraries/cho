@@ -56,6 +56,10 @@ group :development do
   gem 'capistrano-resque', '~> 0.2.1', require: false
 end
 
+group :test do
+  gem 'coveralls', require: false
+end
+
 # @todo https://github.com/psu-libraries/cho-req/issues/225
 group :production do
   # gem 'newrelic_rpm'
