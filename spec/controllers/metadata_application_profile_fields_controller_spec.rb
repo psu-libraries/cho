@@ -63,6 +63,14 @@ RSpec.describe MetadataApplicationProfileFieldsController, type: :controller do
         expect(response.body).to eq("[{\"label\":\"My Field\",\"field_type\":\"numeric\",\"requirement_designation\":\"optional\",\"validation\":\"valid2\",\"multiple\":false,\"controlled_vocabulary\":\"controlled\",\"default_value\":\"blah\",\"display_name\":\"blah\",\"display_transformation\":\"blah\",\"url\":\"http://test.host/metadata_application_profile_fields/#{metadata_field.id}.json\"}]")
       end
     end
+    describe 'Get #index.csv' do
+      render_views
+      it 'returns a json' do
+        get :index, params: {}, session: valid_session, format: :csv
+        expect(response.content_type).to eq('text/csv')
+        expect(response.body).to eq("Label,Field Type,Requirement Designation,Validation,Multiple,Controlled Vocabulary,Default Value,Display Name,Display Transformation\nMy Field,numeric,optional,valid2,false,controlled,blah,blah,blah\n")
+      end
+    end
 
     describe 'GET #show' do
       it 'returns a success response' do
