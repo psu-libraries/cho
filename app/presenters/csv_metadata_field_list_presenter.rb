@@ -25,9 +25,7 @@ class CsvMetadataFieldListPresenter
     end
 
     def default_attributes
-      [:label, :field_type, :requirement_designation,
-       :validation, :multiple, :controlled_vocabulary,
-       :default_value, :display_name, :display_transformation].map(&:to_s)
+      CsvMetadataApplicationProfileField.default_attributes
     end
 
     def csv_header
@@ -44,7 +42,6 @@ class CsvMetadataFieldListPresenter
     def csv_line(metadata_field)
       return '' if metadata_field.blank?
 
-      values = metadata_field.attributes.slice(*export_attributes).values
-      ::CSV.generate_line(values)
+      CsvMetadataApplicationProfileField.new(metadata_field, export_attributes).to_csv
     end
 end
