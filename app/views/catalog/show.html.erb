@@ -1,0 +1,9 @@
+<div id="content" class="<%= show_content_classes %>">
+  <%= render_document_main_content_partial %>
+
+  <%= link_to "Edit", edit_work_object_path(@document.id.gsub(/id-/,'')) %>
+</div>
+
+<div id="sidebar" class="<%= show_sidebar_classes %>">
+   <%= render_document_sidebar_partial %>
+</div>

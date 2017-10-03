@@ -36,10 +36,13 @@ group :development, :test do
 end
 
 group :development do
+  gem 'better_errors'
+  gem 'binding_of_caller'
   gem 'listen', '~> 3.0.5'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'web-console', '>= 3.3.0'
+  gem 'xray-rails'
 
   # Use Capistrano for deployment
   gem 'capistrano', '~> 3.7', require: false
