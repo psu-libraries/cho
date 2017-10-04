@@ -15,4 +15,6 @@
 <% end %>
 
 <%= link_to 'Show', @work %> |
-<%= link_to 'Back', work_objects_path %>
+<%= link_to 'Back', work_objects_path %> |
+<%= link_to "Delete #{@work.work_type.titleize}", work_object_path(@work),
+            data: {:confirm => 'Are you sure?'}, :method => :delete %>

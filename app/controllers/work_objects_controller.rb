@@ -53,7 +53,7 @@ class WorkObjectsController < ApplicationController
     change_set_persister.buffer_into_index do |buffered_changeset_persister|
       buffered_changeset_persister.delete(resource: change_set)
     end
-    flash[:alert] = "Deleted #{change_set.resource}"
+    flash[:alert] = "#{change_set.title.first} has been deleted"
     redirect_to(root_path)
   end
 
