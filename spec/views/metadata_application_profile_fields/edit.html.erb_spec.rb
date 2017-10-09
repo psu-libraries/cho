@@ -6,7 +6,7 @@ RSpec.describe 'metadata_application_profile_fields/edit', type: :view do
   let(:metadata_application_profile_field) { create :metadata_application_profile_field, field_attributes }
   let(:field_attributes) { { field_type: MetadataApplicationProfileField.field_types[:numeric],
                              requirement_designation: MetadataApplicationProfileField.requirement_designations[:required_to_publish],
-                             validation: 'MyString',
+                             validation: 'no_validation',
                              multiple: false,
                              controlled_vocabulary: 'MyString',
                              default_value: 'MyString',

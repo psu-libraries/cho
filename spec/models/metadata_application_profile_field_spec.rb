@@ -12,7 +12,7 @@ RSpec.describe MetadataApplicationProfileField, type: :model do
                       default_value: 'abc123',
                       display_name: 'My Abc123',
                       display_transformation: 'abc123_transform',
-                      multiple: false, validation: 'abc123_validation' }
+                      multiple: false, validation: 'no_validation' }
 
   it { is_expected.to respond_to(:label) }
   it { is_expected.to respond_to(:multiple) }
@@ -45,7 +45,7 @@ RSpec.describe MetadataApplicationProfileField, type: :model do
                                 'multiple' => false,
                                 'requirement_designation' => 'recommended',
                                 'updated_at' => model.updated_at,
-                                'validation' => 'abc123_validation' } }
+                                'validation' => 'no_validation' } }
 
     it 'can be saved' do
       model.save

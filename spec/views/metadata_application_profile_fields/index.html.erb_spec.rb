@@ -16,7 +16,7 @@ RSpec.describe 'metadata_application_profile_fields/index', type: :view do
     assert_select 'tr>td', text: 'Label Two', count: 1
     assert_select 'tr>td', text: 'date', count: 2
     assert_select 'tr>td', text: 'recommended', count: 2
-    assert_select 'tr>td', text: 'abc123_validation', count: 2
+    assert_select 'tr>td', text: 'no_validation', count: 2
     assert_select 'tr>td', text: false.to_s, count: 2
     assert_select 'tr>td', text: 'abc123_vocab', count: 2
     assert_select 'tr>td', text: 'abc123'.to_s, count: 2

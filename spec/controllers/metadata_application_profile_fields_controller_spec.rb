@@ -30,11 +30,11 @@ RSpec.describe MetadataApplicationProfileFieldsController, type: :controller do
   # MetadataField. As you add validations to MetadataField, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    { 'label' => 'My Field', 'field_type' => 'numeric', 'requirement_designation' => 'optional', 'validation' => 'valid2', 'multiple' => '0', 'controlled_vocabulary' => 'controlled', 'default_value' => 'blah', 'display_name' => 'blah', 'display_transformation' => 'blah' }
+    { 'label' => 'My Field', 'field_type' => 'numeric', 'requirement_designation' => 'optional', 'validation' => 'no_validation', 'multiple' => '0', 'controlled_vocabulary' => 'controlled', 'default_value' => 'blah', 'display_name' => 'blah', 'display_transformation' => 'blah' }
   }
 
   let(:invalid_attributes) {
-    { 'label' => 'My Field', 'field_type' => 'numeric', 'requirement_designation' => 'optional_invalid', 'validation' => 'valid2', 'multiple' => '0', 'controlled_vocabulary' => 'controlled', 'default_value' => 'blah', 'display_name' => 'blah', 'display_transformation' => 'blah' }
+    { 'label' => 'My Field', 'field_type' => 'numeric', 'requirement_designation' => 'optional_invalid', 'validation' => 'no_validation', 'multiple' => '0', 'controlled_vocabulary' => 'controlled', 'default_value' => 'blah', 'display_name' => 'blah', 'display_transformation' => 'blah' }
   }
 
   # This should return the minimal set of values that should be in the session
@@ -60,7 +60,7 @@ RSpec.describe MetadataApplicationProfileFieldsController, type: :controller do
       it 'returns a json' do
         get :index, params: {}, session: valid_session, format: :json
         expect(response.content_type).to eq('application/json')
-        expect(response.body).to eq("[{\"label\":\"My Field\",\"field_type\":\"numeric\",\"requirement_designation\":\"optional\",\"validation\":\"valid2\",\"multiple\":false,\"controlled_vocabulary\":\"controlled\",\"default_value\":\"blah\",\"display_name\":\"blah\",\"display_transformation\":\"blah\",\"url\":\"http://test.host/metadata_application_profile_fields/#{metadata_field.id}.json\"}]")
+        expect(response.body).to eq("[{\"label\":\"My Field\",\"field_type\":\"numeric\",\"requirement_designation\":\"optional\",\"validation\":\"no_validation\",\"multiple\":false,\"controlled_vocabulary\":\"controlled\",\"default_value\":\"blah\",\"display_name\":\"blah\",\"display_transformation\":\"blah\",\"url\":\"http://test.host/metadata_application_profile_fields/#{metadata_field.id}.json\"}]")
       end
     end
     describe 'Get #index.csv' do
@@ -68,7 +68,7 @@ RSpec.describe MetadataApplicationProfileFieldsController, type: :controller do
       it 'returns a json' do
         get :index, params: {}, session: valid_session, format: :csv
         expect(response.content_type).to eq('text/csv')
-        expect(response.body).to eq("Label,Field Type,Requirement Designation,Validation,Multiple,Controlled Vocabulary,Default Value,Display Name,Display Transformation\nMy Field,numeric,optional,valid2,false,controlled,blah,blah,blah\n")
+        expect(response.body).to eq("Label,Field Type,Requirement Designation,Validation,Multiple,Controlled Vocabulary,Default Value,Display Name,Display Transformation\nMy Field,numeric,optional,no_validation,false,controlled,blah,blah,blah\n")
       end
     end
 
@@ -89,14 +89,14 @@ RSpec.describe MetadataApplicationProfileFieldsController, type: :controller do
     describe 'PUT #update' do
       context 'with valid params' do
         let(:new_attributes) {
-          { 'label' => 'My Field', 'field_type' => 'text', 'requirement_designation' => 'required to publish', 'validation' => 'valid_new', 'multiple' => '1', 'controlled_vocabulary' => 'controlled_new', 'default_value' => 'new', 'display_name' => 'new display', 'display_transformation' => 'new transformation' }
+          { 'label' => 'My Field', 'field_type' => 'text', 'requirement_designation' => 'required to publish', 'validation' => 'no_validation', 'multiple' => '0', 'controlled_vocabulary' => 'controlled_new', 'default_value' => 'new', 'display_name' => 'new display', 'display_transformation' => 'new transformation' }
         }
 
         it 'updates the requested metadata_field' do
           put :update, params: { id: metadata_field.to_param, metadata_application_profile_field: new_attributes }, session: valid_session
           metadata_field.reload
           expect(response).to redirect_to(metadata_field)
-          expect(metadata_field.validation).to eq('valid_new')
+          expect(metadata_field.multiple).to be_falsey
         end
       end
 
