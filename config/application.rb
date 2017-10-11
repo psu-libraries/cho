@@ -13,6 +13,9 @@ module Cho
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
 
+    # Add the work_object folder to avoid creating a WorkObject namespace which is unnecessary at this time.
+    config.eager_load_paths << Rails.root.join('app', 'cho', 'work_object')
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

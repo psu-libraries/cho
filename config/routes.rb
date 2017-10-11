@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :metadata_application_profile_fields
+  resources :metadata_application_profile_fields, controller: 'metadata_application_profile/fields'
+
   mount Blacklight::Engine => '/'
   root to: 'catalog#index'
   concern :searchable, Blacklight::Routes::Searchable.new

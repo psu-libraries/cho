@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'metadata_application_profile_fields/index', type: :view do
+RSpec.describe 'metadata_application_profile/fields/index', type: :view do
   let(:metadata_field1) { create :metadata_application_profile_field, label: 'Label' }
   let(:metadata_field2) { create :metadata_application_profile_field, label: 'Label Two' }
 
