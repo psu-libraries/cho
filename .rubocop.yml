@@ -9,13 +9,12 @@ AllCops:
 
 RSpec/DescribeClass:
   Exclude:
-    - 'spec/features/**/*'
+    - 'spec/**/*'
 
 RSpec/ExampleLength:
   Exclude:
-    - 'spec/features/**/*'
-    - 'spec/views/**/*'
+    - 'spec/**/*'
 
 RSpec/MultipleExpectations:
   Exclude:
-    - 'spec/features/**/*'
+    - 'spec/**/*'
