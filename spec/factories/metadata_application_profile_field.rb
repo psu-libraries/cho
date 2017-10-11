@@ -11,6 +11,6 @@ FactoryGirl.define do
     display_name 'My Abc123'
     display_transformation 'abc123_transform'
     multiple false
-    validation 'abc123_validation'
+    validation 'no_validation'
   end
 end
