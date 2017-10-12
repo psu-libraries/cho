@@ -13,6 +13,7 @@ namespace :cho do
   namespace :travis do
     desc 'Execute Continuous Integration build (docs, tests with coverage)'
     task rspec: :environment do
+      Rake::Task['db:migrate'].invoke
       Rake::Task['cho:rspec'].invoke
     end
 
