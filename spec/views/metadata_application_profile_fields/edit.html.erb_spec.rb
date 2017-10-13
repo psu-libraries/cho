@@ -3,9 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe 'metadata_application_profile/fields/edit', type: :view do
-  let(:metadata_application_profile_field) { create :metadata_application_profile_field, field_attributes }
-  let(:field_attributes) { { field_type: MetadataApplicationProfile::Field.field_types[:numeric],
-                             requirement_designation: MetadataApplicationProfile::Field.requirement_designations[:required_to_publish],
+  let(:model) { build(:metadata_application_profile_field, field_attributes) }
+  let(:metadata_application_profile_field) { MetadataApplicationProfile::FieldChangeSet.new(model) }
+  let(:field_attributes) { { field_type:  MetadataApplicationProfile::Field::FieldTypes['numeric'],
+                             requirement_designation: MetadataApplicationProfile::Field::RequirementDesignations['required_to_publish'],
                              validation: 'no_validation',
                              multiple: false,
                              controlled_vocabulary: 'MyString',

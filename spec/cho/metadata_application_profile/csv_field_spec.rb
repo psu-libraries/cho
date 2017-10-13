@@ -23,7 +23,7 @@ RSpec.describe MetadataApplicationProfile::CsvField do
 
     context 'non default attributes' do
       let(:csv_line) { "abc123_label,date,no_validation\n" }
-      let(:attributes) { ['label', 'field_type', 'validation'] }
+      let(:attributes) { [:label, :field_type, :validation] }
       let(:parsed_model) { described_class.new(MetadataApplicationProfile::Field.new, attributes).parse(csv_line) }
 
       it { is_expected.to eq(field_attributes) }

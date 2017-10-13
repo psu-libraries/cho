@@ -3,19 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe 'metadata_application_profile/fields/new', type: :view do
-  let(:metadata_application_profile_field) { build :metadata_application_profile_field,
-                                                   label: 'MyString',
-                                                   field_type: MetadataApplicationProfile::Field.field_types[:numeric],
-                                                   requirement_designation: MetadataApplicationProfile::Field.requirement_designations[:required_to_publish],
-                                                   validation: 'no_validation',
-                                                   multiple: false,
-                                                   controlled_vocabulary: 'MyString',
-                                                   default_value: 'MyString',
-                                                   display_name: 'MyString',
-                                                   display_transformation: 'MyString'}
+  let(:change_set) { MetadataApplicationProfile::FieldChangeSet.new(MetadataApplicationProfile::Field.new) }
 
   before do
-    assign(:metadata_application_profile_field, metadata_application_profile_field)
+    assign(:metadata_application_profile_field, change_set)
   end
 
   it 'renders new metadata_field form' do

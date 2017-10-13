@@ -13,4 +13,9 @@ FactoryGirl.define do
     multiple false
     validation 'no_validation'
   end
+
+  to_create do |resource|
+    change_set = MetadataApplicationProfile::FieldChangeSet.new(resource)
+    Valkyrie.config.metadata_adapter.persister.save(resource: change_set)
+  end
 end

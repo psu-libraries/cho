@@ -4,17 +4,12 @@ require 'rails_helper'
 
 RSpec.describe MetadataApplicationProfile::WithRequirementDesignation, type: :model do
   before do
-    class MyModel < ApplicationRecord
+    class MyModel < Valkyrie::Resource
       include MetadataApplicationProfile::WithRequirementDesignation
-    end
-
-    ActiveRecord::Base.connection.create_table :my_models do |t|
-      t.string :requirement_designation
     end
   end
 
   after do
-    ActiveRecord::Base.connection.drop_table :my_models
     ActiveSupport::Dependencies.remove_constant('MyModel')
   end
 
@@ -77,7 +72,7 @@ RSpec.describe MetadataApplicationProfile::WithRequirementDesignation, type: :mo
     let(:requirement_designation) { 'bogus' }
 
     it 'raises an error' do
-      expect { model }.to raise_error(ArgumentError)
+      expect { model }.to raise_error(Dry::Struct::Error)
     end
   end
 end

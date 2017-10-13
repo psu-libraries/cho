@@ -43,8 +43,10 @@ RSpec.describe MetadataApplicationProfile::FieldsController, type: :controller d
   let(:valid_session) { {} }
 
   context 'valid object created' do
-    let(:metadata_field) { create :metadata_application_profile_field, valid_attributes }
-    let(:title_field)    { MetadataApplicationProfile::Field.find_by(label: 'title') }
+    let(:resource) { MetadataApplicationProfile::FieldChangeSet.new(build(:metadata_application_profile_field)) }
+    let(:metadata_field) { Valkyrie.config.metadata_adapter.persister.save(resource: resource) }
+    let(:title_field) { MetadataApplicationProfile::Field.all.to_a.keep_if { |f| f.label == 'title' }.first }
+    let(:reloaded_metadata_field) { Valkyrie.config.metadata_adapter.query_service.find_by(id: metadata_field.id) }
 
     before do
       metadata_field
@@ -56,20 +58,22 @@ RSpec.describe MetadataApplicationProfile::FieldsController, type: :controller d
         expect(response).to be_success
       end
     end
-    describe 'Get #index.json' do
+
+    describe 'GET #index.json' do
       render_views
-      it 'returns a json' do
+      it 'returns json' do
         get :index, params: {}, session: valid_session, format: :json
         expect(response.content_type).to eq('application/json')
-        expect(response.body).to eq("[{\"label\":\"title\",\"field_type\":null,\"requirement_designation\":\"required_to_publish\",\"validation\":null,\"multiple\":true,\"controlled_vocabulary\":null,\"default_value\":null,\"display_name\":null,\"display_transformation\":null,\"url\":\"http://test.host/metadata_application_profile_fields/#{title_field.id}.json\"},{\"label\":\"My Field\",\"field_type\":\"numeric\",\"requirement_designation\":\"optional\",\"validation\":\"no_validation\",\"multiple\":false,\"controlled_vocabulary\":\"controlled\",\"default_value\":\"blah\",\"display_name\":\"blah\",\"display_transformation\":\"blah\",\"url\":\"http://test.host/metadata_application_profile_fields/#{metadata_field.id}.json\"}]")
+        expect(response.body).to eq("[{\"label\":\"title\",\"field_type\":\"string\",\"requirement_designation\":\"required_to_publish\",\"validation\":\"no_validation\",\"multiple\":true,\"controlled_vocabulary\":null,\"default_value\":null,\"display_name\":null,\"display_transformation\":null,\"url\":\"http://test.host/metadata_application_profile_fields/#{title_field.id}.json\"},{\"label\":\"abc123_label\",\"field_type\":\"date\",\"requirement_designation\":\"recommended\",\"validation\":\"no_validation\",\"multiple\":false,\"controlled_vocabulary\":\"abc123_vocab\",\"default_value\":\"abc123\",\"display_name\":\"My Abc123\",\"display_transformation\":\"abc123_transform\",\"url\":\"http://test.host/metadata_application_profile_fields/#{metadata_field.id}.json\"}]")
       end
     end
-    describe 'Get #index.csv' do
+
+    describe 'GET #index.csv' do
       render_views
-      it 'returns a json' do
+      it 'returns csv' do
         get :index, params: {}, session: valid_session, format: :csv
         expect(response.content_type).to eq('text/csv')
-        expect(response.body).to eq("Label,Field Type,Requirement Designation,Validation,Multiple,Controlled Vocabulary,Default Value,Display Name,Display Transformation\ntitle,,required_to_publish,,true,,,,\nMy Field,numeric,optional,no_validation,false,controlled,blah,blah,blah\n")
+        expect(response.body).to eq("Label,Field Type,Requirement Designation,Validation,Multiple,Controlled Vocabulary,Default Value,Display Name,Display Transformation\ntitle,string,required_to_publish,no_validation,true,,,,\nabc123_label,date,recommended,no_validation,false,abc123_vocab,abc123,My Abc123,abc123_transform\n")
       end
     end
 
@@ -90,14 +94,13 @@ RSpec.describe MetadataApplicationProfile::FieldsController, type: :controller d
     describe 'PUT #update' do
       context 'with valid params' do
         let(:new_attributes) {
-          { 'label' => 'My Field', 'field_type' => 'text', 'requirement_designation' => 'required to publish', 'validation' => 'no_validation', 'multiple' => '0', 'controlled_vocabulary' => 'controlled_new', 'default_value' => 'new', 'display_name' => 'new display', 'display_transformation' => 'new transformation' }
+          { 'label' => 'My Field', 'field_type' => 'text', 'requirement_designation' => 'required_to_publish', 'validation' => 'no_validation', 'multiple' => '0', 'controlled_vocabulary' => 'controlled_new', 'default_value' => 'new', 'display_name' => 'new display', 'display_transformation' => 'new transformation' }
         }
 
         it 'updates the requested metadata_field' do
           put :update, params: { id: metadata_field.to_param, metadata_application_profile_field: new_attributes }, session: valid_session
-          metadata_field.reload
-          expect(response).to redirect_to(metadata_field)
-          expect(metadata_field.multiple).to be_falsey
+          expect(response).to redirect_to(reloaded_metadata_field)
+          expect(reloaded_metadata_field.multiple).to be_falsey
         end
       end
 
@@ -140,7 +143,7 @@ RSpec.describe MetadataApplicationProfile::FieldsController, type: :controller d
 
       it 'redirects to the created metadata_field' do
         post :create, params: { metadata_application_profile_field: valid_attributes }, session: valid_session
-        expect(response).to redirect_to(MetadataApplicationProfile::Field.last)
+        expect(response).to redirect_to(MetadataApplicationProfile::Field.all.to_a.last)
       end
     end
 

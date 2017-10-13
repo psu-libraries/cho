@@ -3,7 +3,7 @@
 RSpec.configure do |config|
   config.before(:suite) do
     DatabaseCleaner.clean_with(:deletion)
-    MetadataApplicationProfile::Field.create!(label: 'title', requirement_designation: 'required_to_publish', multiple: true)
+    SeedMAP.create
   end
 
   config.after(:suite) do

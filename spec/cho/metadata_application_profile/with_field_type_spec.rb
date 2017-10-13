@@ -4,17 +4,12 @@ require 'rails_helper'
 
 RSpec.describe MetadataApplicationProfile::WithFieldType, type: :model do
   before (:all) do
-    class MyFieldModel < ApplicationRecord
+    class MyFieldModel < Valkyrie::Resource
       include MetadataApplicationProfile::WithFieldType
-    end
-
-    ActiveRecord::Base.connection.create_table :my_field_models do |t|
-      t.string :field_type
     end
   end
 
   after (:all) do
-    ActiveRecord::Base.connection.drop_table :my_field_models
     ActiveSupport::Dependencies.remove_constant('MyFieldModel')
   end
 
@@ -111,7 +106,7 @@ RSpec.describe MetadataApplicationProfile::WithFieldType, type: :model do
     let(:field_type) { 'bogus' }
 
     it 'raises an error' do
-      expect { model }.to raise_error(ArgumentError)
+      expect { model }.to raise_error(Dry::Struct::Error)
     end
   end
 end
