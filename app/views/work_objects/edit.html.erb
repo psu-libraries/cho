@@ -2,10 +2,12 @@
 
 <%= form_with(model: @work, local: true) do |form| %>
 
-  <p>
-    <%= form.label :title %><br>
-    <%= form.text_field :title %>
-  </p>
+  <%- @work.fields.except('work_type').each do |field_name, field_value| %>
+    <p>
+      <%= form.label field_name %><br>
+      <%= form.text_field field_name %>
+    </p>
+  <%- end  %>
 
   <%= render 'errors', work: @work if @work.errors.any? %>
 

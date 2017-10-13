@@ -35,13 +35,25 @@ class CatalogController < ApplicationController
     #  # q: '{!term f=id v=$id}'
     # }
 
-    # solr field configuration for search results/index views
     config.index.title_field = 'title_tesim'
+    config.show.title_field = 'title_tesim'
+
+    MetadataApplicationProfile::Field.all.each do |map_field|
+      catalog_field = "#{map_field.label.parameterize.underscore.to_sym}_tesim"
+      catalog_label = map_field.label.titleize
+      config.add_index_field catalog_field, label: catalog_label
+      config.add_show_field catalog_field, label: catalog_label
+      config.add_search_field(map_field.label) do |field|
+        # solr_parameters hash are sent to Solr as ordinary url query params.
+        field.solr_parameters = { 'spellcheck.dictionary': field.label }
+      end
+    end
+
+    # solr field configuration for search results/index views
     config.index.display_type_field = 'work_type_ssim'
     # config.index.thumbnail_field = 'thumbnail_path_ss'
 
     # solr field configuration for document/show views
-    config.show.title_field = 'title_tesim'
     config.show.display_type_field = 'work_type_ssim'
     # config.show.thumbnail_field = 'thumbnail_path_ss'
 
@@ -92,12 +104,10 @@ class CatalogController < ApplicationController
 
     # solr fields to be displayed in the index (search results) view
     #   The ordering of the field names is the order of the display
-    config.add_index_field 'title_tesim', label: 'Title'
     config.add_index_field 'work_type_ssim', label: 'Work Type'
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
-    config.add_show_field 'title_tesim', label: 'Title'
     config.add_show_field 'work_type_ssim', label: 'Work Type'
 
     # "fielded" search configuration. Used by pulldown among other places.
@@ -123,20 +133,6 @@ class CatalogController < ApplicationController
     # Now we see how to over-ride Solr request handler defaults, in this
     # case for a BL "search field", which is really a dismax aggregate
     # of Solr search fields.
-
-    config.add_search_field('title') do |field|
-      # solr_parameters hash are sent to Solr as ordinary url query params.
-      field.solr_parameters = { 'spellcheck.dictionary': 'title' }
-
-      # :solr_local_parameters will be sent using Solr LocalParams
-      # syntax, as eg {! qf=$title_qf }. This is neccesary to use
-      # Solr parameter de-referencing like $title_qf.
-      # See: http://wiki.apache.org/solr/LocalParams
-      field.solr_local_parameters = {
-        qf: '$title_qf',
-        pf: '$title_pf'
-      }
-    end
 
     config.add_search_field('author') do |field|
       field.solr_parameters = { 'spellcheck.dictionary': 'author' }

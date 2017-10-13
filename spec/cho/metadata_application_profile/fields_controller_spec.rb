@@ -44,6 +44,7 @@ RSpec.describe MetadataApplicationProfile::FieldsController, type: :controller d
 
   context 'valid object created' do
     let(:metadata_field) { create :metadata_application_profile_field, valid_attributes }
+    let(:title_field)    { MetadataApplicationProfile::Field.find_by(label: 'title') }
 
     before do
       metadata_field
@@ -60,7 +61,7 @@ RSpec.describe MetadataApplicationProfile::FieldsController, type: :controller d
       it 'returns a json' do
         get :index, params: {}, session: valid_session, format: :json
         expect(response.content_type).to eq('application/json')
-        expect(response.body).to eq("[{\"label\":\"My Field\",\"field_type\":\"numeric\",\"requirement_designation\":\"optional\",\"validation\":\"no_validation\",\"multiple\":false,\"controlled_vocabulary\":\"controlled\",\"default_value\":\"blah\",\"display_name\":\"blah\",\"display_transformation\":\"blah\",\"url\":\"http://test.host/metadata_application_profile_fields/#{metadata_field.id}.json\"}]")
+        expect(response.body).to eq("[{\"label\":\"title\",\"field_type\":null,\"requirement_designation\":\"required_to_publish\",\"validation\":null,\"multiple\":true,\"controlled_vocabulary\":null,\"default_value\":null,\"display_name\":null,\"display_transformation\":null,\"url\":\"http://test.host/metadata_application_profile_fields/#{title_field.id}.json\"},{\"label\":\"My Field\",\"field_type\":\"numeric\",\"requirement_designation\":\"optional\",\"validation\":\"no_validation\",\"multiple\":false,\"controlled_vocabulary\":\"controlled\",\"default_value\":\"blah\",\"display_name\":\"blah\",\"display_transformation\":\"blah\",\"url\":\"http://test.host/metadata_application_profile_fields/#{metadata_field.id}.json\"}]")
       end
     end
     describe 'Get #index.csv' do
@@ -68,7 +69,7 @@ RSpec.describe MetadataApplicationProfile::FieldsController, type: :controller d
       it 'returns a json' do
         get :index, params: {}, session: valid_session, format: :csv
         expect(response.content_type).to eq('text/csv')
-        expect(response.body).to eq("Label,Field Type,Requirement Designation,Validation,Multiple,Controlled Vocabulary,Default Value,Display Name,Display Transformation\nMy Field,numeric,optional,no_validation,false,controlled,blah,blah,blah\n")
+        expect(response.body).to eq("Label,Field Type,Requirement Designation,Validation,Multiple,Controlled Vocabulary,Default Value,Display Name,Display Transformation\ntitle,,required_to_publish,,true,,,,\nMy Field,numeric,optional,no_validation,false,controlled,blah,blah,blah\n")
       end
     end
 
