@@ -33,7 +33,7 @@ RSpec.describe WorkObjectsController, type: :controller do
 
       it 'redirects to the created work' do
         post :create, params: { work_object: valid_attributes }
-        expect(response).to redirect_to("/catalog/id-#{resource.id}")
+        expect(response).to redirect_to("/catalog/#{resource.id}")
       end
     end
 
@@ -60,7 +60,7 @@ RSpec.describe WorkObjectsController, type: :controller do
 
       it 'redirects to the work' do
         put :update, params: { id: resource.to_param, work_object: new_attributes }
-        expect(response).to redirect_to("/catalog/id-#{resource.id}")
+        expect(response).to redirect_to("/catalog/#{resource.id}")
       end
     end
 

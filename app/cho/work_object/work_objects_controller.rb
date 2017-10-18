@@ -24,7 +24,7 @@ class WorkObjectsController < ApplicationController
       change_set_persister.buffer_into_index do |buffered_changeset_persister|
         obj = buffered_changeset_persister.save(resource: @work)
       end
-      redirect_to(polymorphic_path([:solr_document], id: "id-#{obj.id}"))
+      redirect_to(polymorphic_path([:solr_document], id: obj.id))
     else
       render :new
     end
@@ -40,7 +40,7 @@ class WorkObjectsController < ApplicationController
       change_set_persister.buffer_into_index do |buffered_changeset_persister|
         obj = buffered_changeset_persister.save(resource: @work)
       end
-      redirect_to(polymorphic_path([:solr_document], id: "id-#{obj.id}"))
+      redirect_to(polymorphic_path([:solr_document], id: obj.id))
     else
       render :edit
     end

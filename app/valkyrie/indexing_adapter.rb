@@ -31,6 +31,11 @@ class IndexingAdapter
       @metadata_adapter = metadata_adapter
     end
 
+    def wipe!
+      index_persister.wipe!
+      primary_adapter.persister.wipe!
+    end
+
     def primary_adapter
       metadata_adapter.metadata_adapter
     end
