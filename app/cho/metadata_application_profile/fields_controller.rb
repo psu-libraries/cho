@@ -2,7 +2,7 @@
 
 module MetadataApplicationProfile
   class FieldsController < ApplicationController
-    before_action :set_metadata_field, only: [:show, :edit, :update, :destroy]
+    delegate :query_service, :persister, to: :change_set_persister
 
     # GET /metadata_application_profile_fields
     # GET /metadata_application_profile_fields.json
@@ -20,28 +20,21 @@ module MetadataApplicationProfile
     end
 
     # GET /metadata_application_profile_fields/1/edit
-    def edit; end
+    def edit
+      @metadata_application_profile_field = FieldChangeSet.new(find_resource(params[:id])).prepopulate!
+    end
 
     # POST /metadata_application_profile_fields
     # POST /metadata_application_profile_fields.json
     def create
-      no_error = false
-      begin
-        metadata_application_profile_field = MetadataApplicationProfile::Field.new(metadata_field_params)
-        no_error = metadata_application_profile_field.save
-      rescue ArgumentError => e
-        no_error = false
-        metadata_application_profile_field = MetadataApplicationProfile::Field.new
-        metadata_application_profile_field.errors.add('Invalid argument', e.message)
-      end
-
+      @metadata_application_profile_field = persist_changes(create_change_set)
       respond_to do |format|
-        if no_error
-          format.html { redirect_to metadata_application_profile_field, notice: 'Metadata field was successfully created.' }
-          format.json { render :show, status: :created, location: metadata_application_profile_field }
+        if @metadata_application_profile_field.respond_to?(:errors)
+          format.html { render :edit }
+          format.json { render json: @metadata_application_profile_field.errors, status: :unprocessable_entity }
         else
-          format.html { render :new }
-          format.json { render json: metadata_application_profile_field.errors, status: :unprocessable_entity }
+          format.html { redirect_to @metadata_application_profile_field, notice: 'Metadata field was successfully created.' }
+          format.json { render :show, status: :created, location: metadata_application_profile_field }
         end
       end
     end
@@ -49,22 +42,14 @@ module MetadataApplicationProfile
     # PATCH/PUT /metadata_application_profile_fields/1
     # PATCH/PUT /metadata_application_profile_fields/1.json
     def update
-      no_error = false
-      begin
-        @metadata_application_profile_field.update(metadata_field_params)
-        no_error = @metadata_application_profile_field.save
-      rescue ArgumentError => e
-        no_error = false
-        @metadata_application_profile_field.errors.add('Invalid argument', e.message)
-      end
-
+      @metadata_application_profile_field = persist_changes(update_change_set)
       respond_to do |format|
-        if no_error
-          format.html { redirect_to @metadata_application_profile_field, notice: 'Metadata field was successfully updated.' }
-          format.json { render :show, status: :ok, location: metadata_application_profile_field }
-        else
+        if @metadata_application_profile_field.respond_to?(:errors)
           format.html { render :edit }
           format.json { render json: @metadata_application_profile_field.errors, status: :unprocessable_entity }
+        else
+          format.html { redirect_to @metadata_application_profile_field, notice: 'Metadata field was successfully updated.' }
+          format.json { render :show, status: :ok, location: metadata_application_profile_field }
         end
       end
     end
@@ -72,7 +57,7 @@ module MetadataApplicationProfile
     # DELETE /metadata_application_profile_fields/1
     # DELETE /metadata_application_profile_fields/1.json
     def destroy
-      @metadata_application_profile_field.destroy
+      persister.delete(resource: delete_change_set)
       respond_to do |format|
         format.html { redirect_to metadata_application_profile_fields_url, notice: 'Metadata field was successfully destroyed.' }
         format.json { head :no_content }
@@ -81,14 +66,37 @@ module MetadataApplicationProfile
 
     private
 
-      # Use callbacks to share common setup or constraints between actions.
-      def set_metadata_field
-        @metadata_application_profile_field = MetadataApplicationProfile::Field.find(params[:id])
+      def find_resource(id)
+        query_service.find_by(id: Valkyrie::ID.new(id))
       end
 
-      # Never trust parameters from the scary internet, only allow the white list through.
-      def metadata_field_params
-        params.require(:metadata_application_profile_field).permit(:label, :field_type, :requirement_designation, :validation, :multiple, :controlled_vocabulary, :default_value, :display_name, :display_transformation)
+      def update_change_set
+        FieldChangeSet.new(find_resource(params[:id]))
+      end
+      alias_method :delete_change_set, :update_change_set
+
+      def create_change_set
+        FieldChangeSet.new(Field.new).prepopulate!
+      end
+
+      # @return [Field, FieldChangeSet]
+      # @note
+      #   This returns two kinds of objects. If both validation and saving are successful,
+      #   then a Field resource is returned. Otherwise, the change set is returned with errors.
+      # @see https://github.com/psu-libraries/cho/issues/298
+      def persist_changes(change_set)
+        return change_set unless change_set.validate(resource_params)
+        change_set.sync
+        persister.save(resource: change_set)
+      end
+
+      def change_set_persister
+        @change_set_persister ||= ChangeSetPersister.new(metadata_adapter: Valkyrie::MetadataAdapter.find(:postgres),
+                                                         storage_adapter: Valkyrie.config.storage_adapter)
+      end
+
+      def resource_params
+        params[:metadata_application_profile_field].to_unsafe_h
       end
   end
 end

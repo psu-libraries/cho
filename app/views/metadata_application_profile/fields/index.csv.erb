@@ -1,2 +1,2 @@
-<%- presenter = MetadataApplicationProfile::CsvPresenter.new(@metadata_application_profile_fields) %>
+<%- presenter = MetadataApplicationProfile::CsvPresenter.new(@metadata_application_profile_fields.to_a) %>
 <%= presenter.to_csv %>

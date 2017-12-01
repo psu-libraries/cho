@@ -6,8 +6,9 @@ module MetadataApplicationProfile
   class CsvPresenter
     attr_reader :metadata_application_profile_field_list, :export_attributes
 
-    def initialize(metadata_application_profile_field_list, export_attributes = nil)
-      self.export_attributes = export_attributes
+    def initialize(metadata_application_profile_field_list, attributes = CsvField.default_attributes)
+      attribute_symbols = attributes.map(&:to_sym)
+      @export_attributes = (attribute_symbols & Field.attribute_names).map(&:to_s)
       @metadata_application_profile_field_list = metadata_application_profile_field_list
     end
 
@@ -16,18 +17,6 @@ module MetadataApplicationProfile
     end
 
     private
-
-      def export_attributes=(attributes)
-        @export_attributes = if attributes.blank?
-                               default_attributes
-                             else
-                               attributes.map(&:to_s) & MetadataApplicationProfile::Field.attribute_names
-                             end
-      end
-
-      def default_attributes
-        MetadataApplicationProfile::CsvField.default_attributes
-      end
 
       def csv_header
         headers = export_attributes.map(&:titleize)
@@ -43,7 +32,7 @@ module MetadataApplicationProfile
       def csv_line(metadata_field)
         return '' if metadata_field.blank?
 
-        MetadataApplicationProfile::CsvField.new(metadata_field, export_attributes).to_csv
+        CsvField.new(metadata_field, export_attributes).to_csv
       end
   end
 end

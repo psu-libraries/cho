@@ -3,7 +3,9 @@
 module MetadataApplicationProfile::WithValidation
   extend ActiveSupport::Concern
 
+  FieldValidators = Valkyrie::Types::String.enum(*Validation::ValidatorFactory.new.validators)
+
   included do
-    enum validation: Validation::ValidatorFactory.new.to_string_enum
+    attribute :validation, FieldValidators
   end
 end

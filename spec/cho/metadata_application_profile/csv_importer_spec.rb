@@ -17,11 +17,8 @@ RSpec.describe MetadataApplicationProfile::CsvImporter do
   end
 
   context 'record exists' do
-    let(:field) { create :metadata_application_profile_field }
+    before { create(:metadata_application_profile_field) }
 
-    before do
-      field
-    end
     it 'will update records' do
       expect {
         importer.import
@@ -36,6 +33,17 @@ RSpec.describe MetadataApplicationProfile::CsvImporter do
       expect {
         importer.import
       }.to change(MetadataApplicationProfile::Field, :count).by(1)
+    end
+  end
+
+  context 'incorrect fields' do
+    let(:csv_field1) { "abc123_label,date,recommended,unknown_validation,false,abc123_vocab,abc123,My Abc123,abc123_transform\n" }
+    let(:file) { StringIO.new(csv_field1) }
+
+    it 'uses the default' do
+      expect {
+        importer.import
+      }.to change(MetadataApplicationProfile::Field, :count).by(0).and(raise_error(Dry::Struct::Error))
     end
   end
 end

@@ -30,7 +30,7 @@ RSpec.describe 'Editing work objects', type: :feature do
       visit(edit_work_object_path(resource))
       click_link('Delete Generic')
       expect(page).to have_content('Work to edit has been deleted')
-      expect(adapter.metadata_adapter.query_service.find_all.count).to eq(0)
+      expect(WorkObject.all.count).to eq(0)
       expect(adapter.index_adapter.query_service.find_all.count).to eq(0)
     end
   end

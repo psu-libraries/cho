@@ -17,8 +17,8 @@ module Validation
       validator_list[validation_name]
     end
 
-    def to_string_enum
-      validator_list.map { |key, _value| { key => key.to_s } }.reduce(:merge)
+    def validators
+      validator_list.keys.map(&:to_s)
     end
   end
 end

@@ -25,9 +25,9 @@ module MetadataApplicationProfile
       def parse_headers
         attributes = []
         ::CSV.parse(lines.first) { |row| attributes = row.map(&:parameterize).map(&:underscore) }
-        attributes = attributes & MetadataApplicationProfile::Field.attribute_names
+        attributes = attributes.map(&:to_sym) & Field.attribute_names
         if attributes.blank?
-          attributes = MetadataApplicationProfile::CsvField.default_attributes
+          attributes = CsvField.default_attributes
         else
           lines.shift
         end
@@ -42,20 +42,26 @@ module MetadataApplicationProfile
       end
 
       def parse_field(line)
-        csv_field = MetadataApplicationProfile::CsvField.new(MetadataApplicationProfile::Field.new, attributes)
+        csv_field = CsvField.new(Field.new, attributes)
         csv_field.parse(line)
       end
 
+      # @param [MetadataApplicationProfile::Field] metadata_field
       def store_field(metadata_field)
-        field = find_existing_field(metadata_field)
-        field ||= metadata_field
-        field.save
+        change_set = find_existing_field(metadata_field)
+        change_set.validate(metadata_field.attributes.slice(attributes))
+        adapter.persister.save(resource: change_set)
       end
 
+      # @param [MetadataApplicationProfile::Field] metadata_field
+      # @return [MetadataApplicationProfile::FieldChangeSet]
       def find_existing_field(metadata_field)
-        existing_field = MetadataApplicationProfile::Field.find_by(label: metadata_field.label)
-        existing_field&.assign_attributes(metadata_field.attributes.slice(attributes))
-        existing_field
+        existing_field = adapter.query_service.custom_queries.find_using(label: metadata_field.label).first
+        FieldChangeSet.new(existing_field || metadata_field)
+      end
+
+      def adapter
+        @query_service ||= Valkyrie.config.metadata_adapter
       end
   end
 end

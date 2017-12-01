@@ -26,10 +26,10 @@ RSpec.describe Validation::ValidatorFactory, type: :model do
 
     it { within_block_is_expected.not_to raise_exception }
 
-    describe '#to_string_enum' do
-      subject { factory.to_string_enum }
+    describe '#validators' do
+      subject { factory.validators }
 
-      it { is_expected.to eq(my_validator: 'my_validator') }
+      it { is_expected.to contain_exactly('my_validator') }
     end
   end
 
@@ -53,10 +53,10 @@ RSpec.describe Validation::ValidatorFactory, type: :model do
       expect(factory.lookup(:blarg)).to be_nil
     end
 
-    describe '#to_string_enum' do
-      subject { factory.to_string_enum }
+    describe '#validators' do
+      subject { factory.validators }
 
-      it { is_expected.to eq(my_validator: 'my_validator', other_validator: 'other_validator') }
+      it { is_expected.to contain_exactly('my_validator', 'other_validator') }
     end
   end
 end
