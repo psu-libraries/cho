@@ -3,7 +3,7 @@
 module Validation
   class Validator
     def validate(_field)
-      raise 'Validation.validate is abstract. Children must implement.'
+      raise Error, 'Validation.validate is abstract. Children must implement.'
     end
   end
 end
