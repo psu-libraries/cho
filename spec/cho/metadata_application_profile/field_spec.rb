@@ -10,7 +10,7 @@ RSpec.describe MetadataApplicationProfile::Field, type: :model do
   let(:model) { build :metadata_application_profile_field,
                       label: 'abc123_label', field_type: 'date',
                       requirement_designation: 'recommended',
-                      controlled_vocabulary: 'abc123_vocab',
+                      controlled_vocabulary: 'no_vocabulary',
                       default_value: 'abc123',
                       display_name: 'My Abc123',
                       display_transformation: 'abc123_transform',
@@ -65,7 +65,7 @@ RSpec.describe MetadataApplicationProfile::Field, type: :model do
     subject { saved_model }
 
     let(:saved_model) { Valkyrie.config.metadata_adapter.persister.save(resource: model) }
-    let(:expected_metadata) { { controlled_vocabulary: 'abc123_vocab',
+    let(:expected_metadata) { { controlled_vocabulary: 'no_vocabulary',
                                 created_at: saved_model.created_at,
                                 default_value: 'abc123',
                                 display_name: 'My Abc123',

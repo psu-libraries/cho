@@ -9,7 +9,7 @@ RSpec.describe 'metadata_application_profile/fields/show', type: :view do
                                                   requirement_designation: MetadataApplicationProfile::Field::RequirementDesignations['required_to_publish'],
                                                   validation: 'no_validation',
                                                   multiple: false,
-                                                  controlled_vocabulary: 'Controlled Vocabulary',
+                                                  controlled_vocabulary: 'no_vocabulary',
                                                   default_value: 'Default Value',
                                                   display_name: 'Display Name',
                                                   display_transformation: 'Display Transformation' }
@@ -25,7 +25,7 @@ RSpec.describe 'metadata_application_profile/fields/show', type: :view do
     expect(rendered).to match(/required_to_publish/)
     expect(rendered).to match(/no_validation/)
     expect(rendered).to match(/false/)
-    expect(rendered).to match(/Controlled Vocabulary/)
+    expect(rendered).to match(/no_vocabulary/)
     expect(rendered).to match(/Default Value/)
     expect(rendered).to match(/Display Name/)
     expect(rendered).to match(/Display Transformation/)

@@ -18,7 +18,7 @@ RSpec.describe 'metadata_application_profile/fields/index', type: :view do
     assert_select 'tr>td', text: 'recommended', count: 2
     assert_select 'tr>td', text: 'no_validation', count: 2
     assert_select 'tr>td', text: false.to_s, count: 2
-    assert_select 'tr>td', text: 'abc123_vocab', count: 2
+    assert_select 'tr>td', text: 'no_vocabulary', count: 2
     assert_select 'tr>td', text: 'abc123'.to_s, count: 2
     assert_select 'tr>td', text: 'My Abc123'.to_s, count: 2
     assert_select 'tr>td', text: 'abc123_transform'.to_s, count: 2

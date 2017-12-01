@@ -6,7 +6,7 @@ FactoryGirl.define do
     label 'abc123_label'
     field_type 'date'
     requirement_designation 'recommended'
-    controlled_vocabulary 'abc123_vocab'
+    controlled_vocabulary 'no_vocabulary'
     default_value 'abc123'
     display_name 'My Abc123'
     display_transformation 'abc123_transform'

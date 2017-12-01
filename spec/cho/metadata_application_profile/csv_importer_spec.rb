@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe MetadataApplicationProfile::CsvImporter do
   let(:header) { "Label,Field Type,Requirement Designation,Validation,Multiple,Controlled Vocabulary,Default Value,Display Name,Display Transformation\n" }
-  let(:csv_field1) { "abc123_label,date,recommended,no_validation,false,abc123_vocab,abc123,My Abc123,abc123_transform\n" }
+  let(:csv_field1) { "abc123_label,date,recommended,no_validation,false,no_vocabulary,abc123,My Abc123,abc123_transform\n" }
 
   let(:file) { StringIO.new(header + csv_field1) }
 
@@ -37,7 +37,7 @@ RSpec.describe MetadataApplicationProfile::CsvImporter do
   end
 
   context 'incorrect fields' do
-    let(:csv_field1) { "abc123_label,date,recommended,unknown_validation,false,abc123_vocab,abc123,My Abc123,abc123_transform\n" }
+    let(:csv_field1) { "abc123_label,date,recommended,unknown_validation,false,no_vocabulary,abc123,My Abc123,abc123_transform\n" }
     let(:file) { StringIO.new(csv_field1) }
 
     it 'uses the default' do
