@@ -27,6 +27,9 @@ RSpec.describe Validation::Validator, type: :model do
   context 'invalid validator' do
     let(:testing_class) { OtherValidator }
 
-    it { within_block_is_expected.to raise_exception }
+    it { within_block_is_expected.to raise_exception(
+      Validation::Error,
+      'Validation.validate is abstract. Children must implement.'
+    ) }
   end
 end
