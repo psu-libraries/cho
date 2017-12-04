@@ -29,7 +29,7 @@ RSpec.describe DisplayTransformation::Factory, type: :model do
     context 'invalid transformations set' do
       let(:transformations) { { mine: MyTransformation.new, abc: '123' } }
 
-      it { within_block_is_expected.to raise_exception(DisplayTransformation::Error, 'Invalid display transformations(s) in transformation list: abc') }
+      it { within_block_is_expected.to raise_exception(DisplayTransformation::Error, 'Invalid display transformation(s) in transformation list: abc') }
     end
   end
 

@@ -43,6 +43,7 @@ RSpec/NestedGroups:
   Exclude:
     - 'spec/cho/metadata_application_profile/field_change_set_spec.rb'
     - 'spec/cho/metadata_application_profile/fields_controller_spec.rb'
+    - 'spec/cho/shared/item_factory_spec.rb'
 
 # Offense count: 1
 Rails/FilePath:

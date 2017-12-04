@@ -1,23 +1,25 @@
 # frozen_string_literal: true
 
 module DisplayTransformation
-  class Factory
-    def self.transformations=(new_transformations)
-      non_transformations = new_transformations.reject { |_label, transformation| transformation.is_a? DisplayTransformation::Base }
-      if non_transformations.present?
-        error_list = non_transformations.keys.join(', ')
-        raise Error.new("Invalid display transformations(s) in transformation list: #{error_list}")
-      end
+  class Factory < ItemFactory
+    class << self
+      alias_method :transformations, :items
+      alias_method :transformation_names, :names
+      alias_method :transformations=, :items=
 
-      @transformations = new_transformations.merge(none: DisplayTransformation::None.new)
-    end
+      private
 
-    def self.transformations
-      @transformations ||= { none: DisplayTransformation::None.new }
-    end
+        def default_items
+          { none: DisplayTransformation::None.new }
+        end
 
-    def self.lookup(transformation_name)
-      transformations[transformation_name]
+        def item_class
+          DisplayTransformation::Base
+        end
+
+        def send_error(error_list)
+          raise DisplayTransformation::Error.new("Invalid display transformation(s) in transformation list: #{error_list}")
+        end
     end
   end
 end
