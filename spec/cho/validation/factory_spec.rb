@@ -2,11 +2,11 @@
 
 require 'rails_helper'
 
-RSpec.describe Validation::ValidatorFactory, type: :model do
+RSpec.describe Validation::Factory, type: :model do
   before (:all) do
-    class MyValidator < Validation::Validator
+    class MyValidator < Validation::Base
     end
-    class OtherValidator < Validation::Validator
+    class OtherValidator < Validation::Base
     end
   end
 
@@ -15,7 +15,7 @@ RSpec.describe Validation::ValidatorFactory, type: :model do
     ActiveSupport::Dependencies.remove_constant('OtherValidator')
   end
 
-  subject(:factory) { described_class.new(validator_list) }
+  subject { described_class.validators = validator_list }
 
   let(:validator_list) { {} }
 
@@ -26,10 +26,10 @@ RSpec.describe Validation::ValidatorFactory, type: :model do
 
     it { within_block_is_expected.not_to raise_exception }
 
-    describe '#validators' do
-      subject { factory.validators }
+    describe '#validator_names' do
+      subject { described_class.validator_names }
 
-      it { is_expected.to contain_exactly('my_validator') }
+      it { is_expected.to contain_exactly('my_validator', 'no_validation') }
     end
   end
 
@@ -43,20 +43,24 @@ RSpec.describe Validation::ValidatorFactory, type: :model do
     let(:my_validator) { MyValidator.new }
     let(:validator_list) { { my_validator: my_validator, other_validator: OtherValidator.new } }
 
+    before do
+      described_class.validators = validator_list
+    end
+
     it { within_block_is_expected.not_to raise_exception }
 
     it 'allows lookup' do
-      expect(factory.lookup(:my_validator)).to eq(my_validator)
+      expect(described_class.lookup(:my_validator)).to eq(my_validator)
     end
 
     it 'does not lookup invalid names' do
-      expect(factory.lookup(:blarg)).to be_nil
+      expect(described_class.lookup(:blarg)).to be_nil
     end
 
-    describe '#validators' do
-      subject { factory.validators }
+    describe '#validator_names' do
+      subject { described_class.validator_names }
 
-      it { is_expected.to contain_exactly('my_validator', 'other_validator') }
+      it { is_expected.to contain_exactly('my_validator', 'other_validator', 'no_validation') }
     end
   end
 end
