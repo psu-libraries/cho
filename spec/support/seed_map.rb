@@ -13,6 +13,7 @@ class SeedMAP
         requirement_designation: 'required_to_publish',
         field_type: 'string',
         validation: 'no_validation',
+        controlled_vocabulary: 'no_vocabulary',
         multiple: true
       )
     end

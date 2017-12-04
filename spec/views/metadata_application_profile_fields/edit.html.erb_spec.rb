@@ -9,7 +9,7 @@ RSpec.describe 'metadata_application_profile/fields/edit', type: :view do
                              requirement_designation: MetadataApplicationProfile::Field::RequirementDesignations['required_to_publish'],
                              validation: 'no_validation',
                              multiple: false,
-                             controlled_vocabulary: 'MyString',
+                             controlled_vocabulary: 'no_vocabulary',
                              default_value: 'MyString',
                              display_name: 'MyString',
                              display_transformation: 'MyString' } }
