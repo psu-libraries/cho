@@ -43,4 +43,5 @@ Rails.application.config.to_prepare do
   # Queries
 
   Valkyrie.config.metadata_adapter.query_service.custom_queries.register_query_handler(FindUsing)
+  Valkyrie.config.metadata_adapter.query_service.custom_queries.register_query_handler(FindModel)
 end
