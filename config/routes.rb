@@ -4,6 +4,10 @@ Rails.application.routes.draw do
   resources :agent_resources, controller: 'agent/resources', path: 'agents'
   mount DeviseRemote::Engine => '/devise_remote'
   devise_for :users
+  get 'pages/HelloReact'
+
+  resources :metadata_application_profile_fields, controller: 'metadata_application_profile/fields'
+
   mount Blacklight::Engine => '/'
   root to: 'catalog#index'
   concern :searchable, Blacklight::Routes::Searchable.new
