@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 module Validation
-  class NoneValidator < Validator
+  class Base
     def validate(_field)
-      true
+      raise Error, 'Validation.validate is abstract. Children must implement.'
     end
   end
 end

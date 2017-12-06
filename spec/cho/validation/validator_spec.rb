@@ -2,14 +2,14 @@
 
 require 'rails_helper'
 
-RSpec.describe Validation::Validator, type: :model do
+RSpec.describe Validation::Base, type: :model do
   before (:all) do
-    class MyValidator < Validation::Validator
+    class MyValidator < Validation::Base
       def validate(_field)
         true
       end
     end
-    class OtherValidator < Validation::Validator
+    class OtherValidator < Validation::Base
     end
   end
 
