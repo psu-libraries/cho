@@ -6,13 +6,13 @@ module MetadataApplicationProfile
     include WithFieldType
     include WithValidation
     include WithVocabularies
+    include WithDisplayTransformation
     include CommonQueries
 
     attribute :id, Valkyrie::Types::ID.optional
     attribute :label, Valkyrie::Types::String
     attribute :default_value, Valkyrie::Types::String
     attribute :display_name, Valkyrie::Types::String
-    attribute :display_transformation, Valkyrie::Types::String
     attribute :multiple, Valkyrie::Types::Strict::Bool
 
     def multiple?

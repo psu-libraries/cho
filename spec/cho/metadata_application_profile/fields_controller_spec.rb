@@ -30,11 +30,11 @@ RSpec.describe MetadataApplicationProfile::FieldsController, type: :controller d
   # MetadataField. As you add validations to MetadataField, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    { 'label' => 'My Field', 'field_type' => 'numeric', 'requirement_designation' => 'optional', 'validation' => 'no_validation', 'multiple' => '0', 'controlled_vocabulary' => 'no_vocabulary', 'default_value' => 'blah', 'display_name' => 'blah', 'display_transformation' => 'blah' }
+    { 'label' => 'My Field', 'field_type' => 'numeric', 'requirement_designation' => 'optional', 'validation' => 'no_validation', 'multiple' => '0', 'controlled_vocabulary' => 'no_vocabulary', 'default_value' => 'blah', 'display_name' => 'blah', 'display_transformation' => 'no_transformation' }
   }
 
   let(:invalid_attributes) {
-    { 'label' => 'My Field', 'field_type' => 'numeric', 'requirement_designation' => 'optional_invalid', 'validation' => 'no_validation', 'multiple' => '0', 'controlled_vocabulary' => 'no_vocabulary', 'default_value' => 'blah', 'display_name' => 'blah', 'display_transformation' => 'blah' }
+    { 'label' => 'My Field', 'field_type' => 'numeric', 'requirement_designation' => 'optional_invalid', 'validation' => 'no_validation', 'multiple' => '0', 'controlled_vocabulary' => 'no_vocabulary', 'default_value' => 'blah', 'display_name' => 'blah', 'display_transformation' => 'no_transformation' }
   }
 
   # This should return the minimal set of values that should be in the session
@@ -64,7 +64,7 @@ RSpec.describe MetadataApplicationProfile::FieldsController, type: :controller d
       it 'returns json' do
         get :index, params: {}, session: valid_session, format: :json
         expect(response.content_type).to eq('application/json')
-        expect(response.body).to eq("[{\"label\":\"title\",\"field_type\":\"string\",\"requirement_designation\":\"required_to_publish\",\"validation\":\"no_validation\",\"multiple\":true,\"controlled_vocabulary\":\"no_vocabulary\",\"default_value\":null,\"display_name\":null,\"display_transformation\":null,\"url\":\"http://test.host/metadata_application_profile_fields/#{title_field.id}.json\"},{\"label\":\"abc123_label\",\"field_type\":\"date\",\"requirement_designation\":\"recommended\",\"validation\":\"no_validation\",\"multiple\":false,\"controlled_vocabulary\":\"no_vocabulary\",\"default_value\":\"abc123\",\"display_name\":\"My Abc123\",\"display_transformation\":\"abc123_transform\",\"url\":\"http://test.host/metadata_application_profile_fields/#{metadata_field.id}.json\"}]")
+        expect(response.body).to eq("[{\"label\":\"title\",\"field_type\":\"string\",\"requirement_designation\":\"required_to_publish\",\"validation\":\"no_validation\",\"multiple\":true,\"controlled_vocabulary\":\"no_vocabulary\",\"default_value\":null,\"display_name\":null,\"display_transformation\":\"no_transformation\",\"url\":\"http://test.host/metadata_application_profile_fields/#{title_field.id}.json\"},{\"label\":\"abc123_label\",\"field_type\":\"date\",\"requirement_designation\":\"recommended\",\"validation\":\"no_validation\",\"multiple\":false,\"controlled_vocabulary\":\"no_vocabulary\",\"default_value\":\"abc123\",\"display_name\":\"My Abc123\",\"display_transformation\":\"no_transformation\",\"url\":\"http://test.host/metadata_application_profile_fields/#{metadata_field.id}.json\"}]")
       end
     end
 
@@ -73,7 +73,7 @@ RSpec.describe MetadataApplicationProfile::FieldsController, type: :controller d
       it 'returns csv' do
         get :index, params: {}, session: valid_session, format: :csv
         expect(response.content_type).to eq('text/csv')
-        expect(response.body).to eq("Label,Field Type,Requirement Designation,Validation,Multiple,Controlled Vocabulary,Default Value,Display Name,Display Transformation\ntitle,string,required_to_publish,no_validation,true,no_vocabulary,,,\nabc123_label,date,recommended,no_validation,false,no_vocabulary,abc123,My Abc123,abc123_transform\n")
+        expect(response.body).to eq("Label,Field Type,Requirement Designation,Validation,Multiple,Controlled Vocabulary,Default Value,Display Name,Display Transformation\ntitle,string,required_to_publish,no_validation,true,no_vocabulary,,,no_transformation\nabc123_label,date,recommended,no_validation,false,no_vocabulary,abc123,My Abc123,no_transformation\n")
       end
     end
 
@@ -94,7 +94,7 @@ RSpec.describe MetadataApplicationProfile::FieldsController, type: :controller d
     describe 'PUT #update' do
       context 'with valid params' do
         let(:new_attributes) {
-          { 'label' => 'My Field', 'field_type' => 'text', 'requirement_designation' => 'required_to_publish', 'validation' => 'no_validation', 'multiple' => '0', 'controlled_vocabulary' => 'no_vocabulary', 'default_value' => 'new', 'display_name' => 'new display', 'display_transformation' => 'new transformation' }
+          { 'label' => 'My Field', 'field_type' => 'text', 'requirement_designation' => 'required_to_publish', 'validation' => 'no_validation', 'multiple' => '0', 'controlled_vocabulary' => 'no_vocabulary', 'default_value' => 'new', 'display_name' => 'new display', 'display_transformation' => 'no_transformation' }
         }
 
         it 'updates the requested metadata_field' do

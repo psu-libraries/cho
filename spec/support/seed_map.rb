@@ -14,6 +14,7 @@ class SeedMAP
         field_type: 'string',
         validation: 'no_validation',
         controlled_vocabulary: 'no_vocabulary',
+        display_transformation: 'no_transformation',
         multiple: true
       )
     end

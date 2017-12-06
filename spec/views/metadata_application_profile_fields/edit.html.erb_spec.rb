@@ -12,7 +12,7 @@ RSpec.describe 'metadata_application_profile/fields/edit', type: :view do
                              controlled_vocabulary: 'no_vocabulary',
                              default_value: 'MyString',
                              display_name: 'MyString',
-                             display_transformation: 'MyString' } }
+                             display_transformation: 'no_transformation' } }
 
   before do
     assign(:metadata_application_profile_field, metadata_application_profile_field)
