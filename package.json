@@ -7,7 +7,9 @@
     "coffeescript": "1.12.7",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+    "react-dom": "^16.2.0",
+    "react-dnd": "^2.5.4",
+    "react-dnd-html5-backend": "^2.5.4"
   },
   "devDependencies": {
     "webpack-dev-server": "^2.9.5"
