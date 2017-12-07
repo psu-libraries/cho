@@ -32,14 +32,15 @@ class SortingListboxView extends Component {
   }
 
   renderExample() {
+    let options = [];
+
+    this.props.list_options.each( function(index, element) {
+      options.push(<ListboxOption name={$(element).text()}/>)
+    })
+
     return (
       <Listbox ariaLabel="Listbox" hasDragDrop>
-        <ListboxOption name="Ice Cream"/>
-        <ListboxOption name="Pie"/>
-        <ListboxOption name="Cake"/>
-        <ListboxOption name="Cupcake"/>
-        <ListboxOption name="Donut"/>
-        <ListboxOption name="Sorbet"/>
+        {options}
       </Listbox>
     );
   }

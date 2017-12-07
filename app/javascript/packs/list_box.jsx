@@ -7,7 +7,7 @@ import SortingListboxView from '../list_box/SortingListbox';
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
-    <SortingListboxView />,
+    <SortingListboxView list_options={$('#list_box').find('li')} />,
     document.getElementById('list_box')
   )
 })
