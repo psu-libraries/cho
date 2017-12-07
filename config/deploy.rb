@@ -54,7 +54,6 @@ set :linked_files, fetch(:linked_files, []).push(
   'config/database.yml',
   'config/fedora.yml',
   'config/ga-privatekey.p12',
-  'config/initializers/qa.rb',
   'config/newrelic.yml',
   'config/redis.yml',
   'config/secrets.yml',
@@ -106,14 +105,6 @@ namespace :deploy do
   end
   before 'deploy:check:linked_dirs', :symlink_shared_directories
 
-  desc 'Restart resque-pool'
-  task :resquepoolrestart do
-    on roles(:job) do
-      execute 'sudo /sbin/service resque restart'
-    end
-  end
-  after :published, :resquepoolrestart
-
   desc 'Compile assets on for selected server roles'
   task :roleassets do
     on roles(:job) do
@@ -125,18 +116,6 @@ namespace :deploy do
     end
   end
   after :migrate, :roleassets
-
-  desc 'Create a symlink to assets used by Resque'
-  task :symlink_resque_assets do
-    on roles(:web) do
-      within release_path do
-        with rails_env: fetch(:rails_env) do
-          execute :rake, 'resque:assets'
-        end
-      end
-    end
-  end
-  after :roleassets, :symlink_resque_assets
 
   # Passenger Capistrano Task
   # The passenger install task allows Chef to install Passenger now via Yum, but it allows Capistrano to maintain the file
