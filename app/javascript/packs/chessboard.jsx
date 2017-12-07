@@ -1,13 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Knight from '../chess/Knight';
-import Square from '../chess/Square';
+import Board from '../chess/Board';
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
-    <Square black>
-      <Knight />
-    </Square>,
+    <Board knightPosition={[0,0]} />,
     document.getElementById('chessboard')
   )
 })
