@@ -4,6 +4,7 @@
   "dependencies": {
     "@rails/webpacker": "^3.0.2",
     "babel-preset-react": "^6.24.1",
+    "classnames": "^2.2.5",
     "coffeescript": "1.12.7",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
