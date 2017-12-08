@@ -130,6 +130,7 @@ RSpec.describe MetadataApplicationProfile::FieldsController, type: :controller d
     it 'returns a success response' do
       get :new, params: {}, session: valid_session
       expect(response).to be_success
+      expect(assigns(:metadata_application_profile_field)).to be_a(MetadataApplicationProfile::FieldChangeSet)
     end
   end
 
