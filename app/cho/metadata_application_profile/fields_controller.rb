@@ -16,7 +16,7 @@ module MetadataApplicationProfile
 
     # GET /metadata_application_profile_fields/new
     def new
-      @metadata_application_profile_field = MetadataApplicationProfile::Field.new
+      @metadata_application_profile_field = FieldChangeSet.new(MetadataApplicationProfile::Field.new).prepopulate!
     end
 
     # GET /metadata_application_profile_fields/1/edit
