@@ -9,7 +9,7 @@ FactoryGirl.define do
     controlled_vocabulary 'no_vocabulary'
     default_value 'abc123'
     display_name 'My Abc123'
-    display_transformation 'abc123_transform'
+    display_transformation 'no_transformation'
     multiple false
     validation 'no_validation'
   end

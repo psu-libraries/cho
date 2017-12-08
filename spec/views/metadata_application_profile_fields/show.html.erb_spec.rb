@@ -12,7 +12,7 @@ RSpec.describe 'metadata_application_profile/fields/show', type: :view do
                                                   controlled_vocabulary: 'no_vocabulary',
                                                   default_value: 'Default Value',
                                                   display_name: 'Display Name',
-                                                  display_transformation: 'Display Transformation' }
+                                                  display_transformation: 'no_transformation' }
 
   before do
     assign(:metadata_application_profile_field, metadata_application_profile_field)
@@ -28,6 +28,6 @@ RSpec.describe 'metadata_application_profile/fields/show', type: :view do
     expect(rendered).to match(/no_vocabulary/)
     expect(rendered).to match(/Default Value/)
     expect(rendered).to match(/Display Name/)
-    expect(rendered).to match(/Display Transformation/)
+    expect(rendered).to match(/no_transformation/)
   end
 end

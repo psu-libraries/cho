@@ -13,7 +13,7 @@ RSpec.describe MetadataApplicationProfile::Field, type: :model do
                       controlled_vocabulary: 'no_vocabulary',
                       default_value: 'abc123',
                       display_name: 'My Abc123',
-                      display_transformation: 'abc123_transform',
+                      display_transformation: 'no_transformation',
                       multiple: false, validation: 'no_validation' }
 
   it_behaves_like 'a Valkyrie::Resource'
@@ -69,7 +69,7 @@ RSpec.describe MetadataApplicationProfile::Field, type: :model do
                                 created_at: saved_model.created_at,
                                 default_value: 'abc123',
                                 display_name: 'My Abc123',
-                                display_transformation: 'abc123_transform',
+                                display_transformation: 'no_transformation',
                                 field_type: 'date',
                                 id: saved_model.id,
                                 internal_resource: 'MetadataApplicationProfile::Field',

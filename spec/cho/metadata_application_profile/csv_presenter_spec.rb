@@ -6,7 +6,7 @@ RSpec.describe MetadataApplicationProfile::CsvPresenter do
   let(:metdata_field1) { build :metadata_application_profile_field }
   let(:presenter) { described_class.new(field_list) }
   let(:header) { "Label,Field Type,Requirement Designation,Validation,Multiple,Controlled Vocabulary,Default Value,Display Name,Display Transformation\n" }
-  let(:csv_field1) { "abc123_label,date,recommended,no_validation,false,no_vocabulary,abc123,My Abc123,abc123_transform\n" }
+  let(:csv_field1) { "abc123_label,date,recommended,no_validation,false,no_vocabulary,abc123,My Abc123,no_transformation\n" }
 
   describe '#to_csv' do
     subject { presenter.to_csv }
@@ -26,7 +26,7 @@ RSpec.describe MetadataApplicationProfile::CsvPresenter do
     context 'multiple items in list' do
       let(:field_list) { [metdata_field1, metdata_field2] }
       let(:metdata_field2) { build :metadata_application_profile_field, label: 'field2' }
-      let(:csv_field2) { "field2,date,recommended,no_validation,false,no_vocabulary,abc123,My Abc123,abc123_transform\n" }
+      let(:csv_field2) { "field2,date,recommended,no_validation,false,no_vocabulary,abc123,My Abc123,no_transformation\n" }
 
       it { is_expected.to eq(header + csv_field1 + csv_field2) }
     end

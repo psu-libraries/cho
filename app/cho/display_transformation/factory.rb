@@ -10,7 +10,7 @@ module DisplayTransformation
       private
 
         def default_items
-          { none: DisplayTransformation::None.new }
+          { no_transformation: DisplayTransformation::None.new }
         end
 
         def item_class
