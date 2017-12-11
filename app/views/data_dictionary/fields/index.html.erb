@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Metadata Fields</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Label</th>
+      <th>Field type</th>
+      <th>Requirement designation</th>
+      <th>Validation</th>
+      <th>Multiple</th>
+      <th>Controlled vocabulary</th>
+      <th>Default value</th>
+      <th>Display name</th>
+      <th>Display transformation</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @data_dictionary_fields.each do |dictionary_field| %>
+      <tr>
+        <td><%= dictionary_field.label %></td>
+        <td><%= dictionary_field.field_type %></td>
+        <td><%= dictionary_field.requirement_designation.to_s %></td>
+        <td><%= dictionary_field.validation %></td>
+        <td><%= dictionary_field.multiple %></td>
+        <td><%= dictionary_field.controlled_vocabulary %></td>
+        <td><%= dictionary_field.default_value %></td>
+        <td><%= dictionary_field.display_name %></td>
+        <td><%= dictionary_field.display_transformation %></td>
+        <td><%= link_to 'Show', dictionary_field %></td>
+        <td><%= link_to 'Edit', edit_data_dictionary_field_path(dictionary_field) %></td>
+        <td><%= link_to 'Destroy', dictionary_field, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Metadata Field', new_data_dictionary_field_path %>

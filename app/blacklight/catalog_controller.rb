@@ -38,7 +38,7 @@ class CatalogController < ApplicationController
     config.index.title_field = 'title_tesim'
     config.show.title_field = 'title_tesim'
 
-    MetadataApplicationProfile::Field.all.each do |map_field|
+    DataDictionary::Field.all.each do |map_field|
       catalog_field = "#{map_field.label.parameterize.underscore.to_sym}_tesim"
       catalog_label = map_field.label.titleize
       config.add_index_field catalog_field, label: catalog_label

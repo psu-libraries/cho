@@ -1,0 +1,62 @@
+<%= form_with(model: data_dictionary_field, local: true) do |form| %>
+  <% if data_dictionary_field.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(data_dictionary_field.errors.count, "error") %> prohibited this data dictionary from being saved:</h2>
+
+      <ul>
+      <% data_dictionary_field.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :label %>
+    <%= form.text_field :label, id: :dictionary_field_label %>
+  </div>
+
+  <div class="field">
+    <%= form.label :field_type %>
+    <%= form.text_field :field_type, id: :dictionary_field_field_type %>
+  </div>
+
+  <div class="field">
+    <%= form.label :requirement_designation %>
+    <%= form.text_field :requirement_designation, id: :dictionary_field_requirement_designation %>
+  </div>
+
+  <div class="field">
+    <%= form.label :validation %>
+    <%= form.text_field :validation, id: :dictionary_field_validation %>
+  </div>
+
+  <div class="field">
+    <%= form.label :multiple %>
+    <%= form.check_box :multiple, id: :dictionary_field_multiple %>
+  </div>
+
+  <div class="field">
+    <%= form.label :controlled_vocabulary %>
+    <%= form.text_field :controlled_vocabulary, id: :dictionary_field_controlled_vocabulary %>
+  </div>
+
+  <div class="field">
+    <%= form.label :default_value %>
+    <%= form.text_field :default_value, id: :dictionary_field_default_value %>
+  </div>
+
+  <div class="field">
+    <%= form.label :display_name %>
+    <%= form.text_field :display_name, id: :dictionary_field_display_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :display_transformation %>
+    <%= form.text_field :display_transformation, id: :dictionary_field_display_transformation %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

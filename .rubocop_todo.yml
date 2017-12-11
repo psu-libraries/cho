@@ -34,15 +34,15 @@ RSpec/BeforeAfterAll:
 RSpec/ExpectActual:
   Exclude:
     - 'spec/routing/**/*'
-    - 'spec/cho/metadata_application_profile/routing_spec.rb'
+    - 'spec/cho/data_dictionary/routing_spec.rb'
     - 'spec/cho/work_object/routing_spec.rb'
 
 # Offense count: 10
 # Configuration parameters: Max.
 RSpec/NestedGroups:
   Exclude:
-    - 'spec/cho/metadata_application_profile/field_change_set_spec.rb'
-    - 'spec/cho/metadata_application_profile/fields_controller_spec.rb'
+    - 'spec/cho/data_dictionary/field_change_set_spec.rb'
+    - 'spec/cho/data_dictionary/fields_controller_spec.rb'
     - 'spec/cho/shared/item_factory_spec.rb'
 
 # Offense count: 1

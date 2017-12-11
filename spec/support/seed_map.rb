@@ -8,7 +8,7 @@ class SeedMAP
     end
 
     def title_field
-      MetadataApplicationProfile::Field.new(
+      DataDictionary::Field.new(
         label: 'title',
         requirement_designation: 'required_to_publish',
         field_type: 'string',

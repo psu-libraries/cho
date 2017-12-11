@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :metadata_application_profile_fields, controller: 'metadata_application_profile/fields'
+  resources :data_dictionary_fields, controller: 'data_dictionary/fields'
 
   mount Blacklight::Engine => '/'
   root to: 'catalog#index'
