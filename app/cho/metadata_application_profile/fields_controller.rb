@@ -12,7 +12,9 @@ module MetadataApplicationProfile
 
     # GET /metadata_application_profile_fields/1
     # GET /metadata_application_profile_fields/1.json
-    def show; end
+    def show
+      @metadata_application_profile_field = find_resource(params[:id])
+    end
 
     # GET /metadata_application_profile_fields/new
     def new
