@@ -2,7 +2,7 @@
 
 class WorkObject < Valkyrie::Resource
   include Valkyrie::Resource::AccessControls
-  include MetadataApplicationProfile::BaseMAP
+  include DataDictionary::Base
   include CommonQueries
 
   attribute :id, Valkyrie::Types::ID.optional

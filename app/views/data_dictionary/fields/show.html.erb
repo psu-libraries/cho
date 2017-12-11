@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Label:</strong>
+  <%= @data_dictionary_field.label %>
+</p>
+
+<p>
+  <strong>Field type:</strong>
+  <%= @data_dictionary_field.field_type %>
+</p>
+
+<p>
+  <strong>Requirement designation:</strong>
+  <%= @data_dictionary_field.requirement_designation %>
+</p>
+
+<p>
+  <strong>Validation:</strong>
+  <%= @data_dictionary_field.validation %>
+</p>
+
+<p>
+  <strong>Multiple:</strong>
+  <%= @data_dictionary_field.multiple %>
+</p>
+
+<p>
+  <strong>Controlled vocabulary:</strong>
+  <%= @data_dictionary_field.controlled_vocabulary %>
+</p>
+
+<p>
+  <strong>Default value:</strong>
+  <%= @data_dictionary_field.default_value %>
+</p>
+
+<p>
+  <strong>Display name:</strong>
+  <%= @data_dictionary_field.display_name %>
+</p>
+
+<p>
+  <strong>Display transformation:</strong>
+  <%= @data_dictionary_field.display_transformation %>
+</p>
+
+<%= link_to 'Edit', edit_data_dictionary_field_path(@data_dictionary_field) %> |
+<%= link_to 'Back', data_dictionary_fields_path %>

@@ -5,5 +5,5 @@ class WorkObjectChangeSet < Valkyrie::ChangeSet
   validates :work_type, presence: true
   property :work_type, multiple: false, required: true
 
-  include MetadataApplicationProfile::ChangeSetMAP
+  include DataDictionary::ChangeSet
 end

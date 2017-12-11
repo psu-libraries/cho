@@ -1,0 +1,2 @@
+<%- presenter = DataDictionary::CsvPresenter.new(@data_dictionary_fields.to_a) %>
+<%= presenter.to_csv %>

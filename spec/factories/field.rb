@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryGirl.define do
-  factory :metadata_application_profile_field, class: MetadataApplicationProfile::Field do
+  factory :data_dictionary_field, class: DataDictionary::Field do
     sequence(:id)
     label 'abc123_label'
     field_type 'date'
@@ -15,7 +15,7 @@ FactoryGirl.define do
   end
 
   to_create do |resource|
-    change_set = MetadataApplicationProfile::FieldChangeSet.new(resource)
+    change_set = DataDictionary::FieldChangeSet.new(resource)
     Valkyrie.config.metadata_adapter.persister.save(resource: change_set)
   end
 end
