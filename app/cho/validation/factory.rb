@@ -7,10 +7,14 @@ module Validation
       alias_method :validator_names, :names
       alias_method :validators=, :items=
 
+      def default_key
+        :no_validation
+      end
+
       private
 
       def default_items
-        { no_validation: Validation::None.new }
+        { default_key => Validation::None.new }
       end
 
       def item_class

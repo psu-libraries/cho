@@ -24,7 +24,7 @@ RSpec.describe MetadataApplicationProfile::FieldChangeSet do
   describe '#controlled_vocabulary' do
     it { is_expected.not_to be_multiple(:controlled_vocabulary) }
     it { is_expected.not_to be_required(:controlled_vocabulary) }
-    its(:controlled_vocabulary) { is_expected.to be_nil }
+    its(:controlled_vocabulary) { is_expected.to eq('no_vocabulary') }
   end
 
   describe '#default_value' do
@@ -42,7 +42,7 @@ RSpec.describe MetadataApplicationProfile::FieldChangeSet do
   describe '#display_transformation' do
     it { is_expected.not_to be_multiple(:display_transformation) }
     it { is_expected.not_to be_required(:display_transformation) }
-    its(:display_transformation) { is_expected.to be_nil }
+    its(:display_transformation) { is_expected.to eq('no_transformation') }
   end
 
   describe '#multiple' do

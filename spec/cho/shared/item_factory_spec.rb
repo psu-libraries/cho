@@ -47,8 +47,12 @@ RSpec.describe ItemFactory, type: :model do
             Date
           end
 
+          def default_key
+            :my_item
+          end
+
           def default_items
-            { my_item: default_date }
+            { default_key => default_date }
           end
 
           def send_error(error)
@@ -93,5 +97,17 @@ RSpec.describe ItemFactory, type: :model do
 
       it { is_expected.to eq(['my_item']) }
     end
+
+    describe '#default_key' do
+      subject { MyItemFactory.default_key }
+
+      it { is_expected.to eq(:my_item) }
+    end
+  end
+
+  describe '#default_key' do
+    subject { described_class.default_key }
+
+    it { within_block_is_expected.to raise_exception(NotImplementedError) }
   end
 end
