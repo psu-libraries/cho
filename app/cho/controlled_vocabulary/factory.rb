@@ -7,10 +7,14 @@ module ControlledVocabulary
       alias_method :vocabulary_names, :names
       alias_method :vocabularies=, :items=
 
+      def default_key
+        :no_vocabulary
+      end
+
       private
 
         def default_items
-          { no_vocabulary: ControlledVocabulary::None.new }
+          { default_key => ControlledVocabulary::None.new }
         end
 
         def item_class

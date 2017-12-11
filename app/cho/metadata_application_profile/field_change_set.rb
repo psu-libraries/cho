@@ -11,13 +11,14 @@ module MetadataApplicationProfile
     property :requirement_designation, multiple: false, default: 'optional'
     validates :requirement_designation, inclusion: { in: Field::RequirementDesignations.values }
 
-    property :validation, multiple: false, default: 'no_validation'
+    property :validation, multiple: false, default: Validation::Factory.default_key.to_s
     validates :validation, inclusion: { in: Field::FieldValidators.values }
 
-    property :controlled_vocabulary, multiple: false
+    property :controlled_vocabulary, multiple: false, default: ControlledVocabulary::Factory.default_key.to_s
+    validates :controlled_vocabulary, inclusion: { in: Field::FieldVocablaries.values }
     property :default_value, multiple: false
     property :display_name, multiple: false
-    property :display_transformation, multiple: false
+    property :display_transformation, multiple: false, default: DisplayTransformation::Factory.default_key.to_s
 
     property :multiple, multiple: false, default: false
     validates :multiple, with: :coerce_into_boolean

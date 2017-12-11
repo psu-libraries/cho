@@ -23,6 +23,10 @@ class ItemFactory
       items.keys.map(&:to_s)
     end
 
+    def default_key
+      raise NotImplementedError.new('ItemFactory.none_key is abstract and must be implemented')
+    end
+
     private
 
       def default_items

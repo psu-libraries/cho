@@ -7,10 +7,14 @@ module DisplayTransformation
       alias_method :transformation_names, :names
       alias_method :transformations=, :items=
 
+      def default_key
+        :no_transformation
+      end
+
       private
 
         def default_items
-          { no_transformation: DisplayTransformation::None.new }
+          { default_key => DisplayTransformation::None.new }
         end
 
         def item_class

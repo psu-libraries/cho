@@ -68,4 +68,10 @@ RSpec.describe DisplayTransformation::Factory, type: :model do
       it { is_expected.to be_nil }
     end
   end
+
+  describe '#default_key' do
+    subject { described_class.default_key }
+
+    it { is_expected.to eq(:no_transformation) }
+  end
 end
