@@ -3,7 +3,7 @@
 module DataDictionary
   class FieldChangeSet < Valkyrie::ChangeSet
     property :label, multiple: false, required: true
-    validates :label, presence: true
+    validates :label, presence: true, 'data_dictionary/unique': true
 
     property :field_type, multiple: false, default: 'string'
     validates :field_type, inclusion: { in: Field::FieldTypes.values }

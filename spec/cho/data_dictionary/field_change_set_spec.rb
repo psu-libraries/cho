@@ -19,6 +19,38 @@ RSpec.describe DataDictionary::FieldChangeSet do
     it { is_expected.not_to be_multiple(:label) }
     it { is_expected.to be_required(:label) }
     its(:label) { is_expected.to be_nil }
+    it { is_expected.not_to be_valid }
+
+    context 'label is unique' do
+      let(:resource) { build :data_dictionary_field, label: 'not_taken' }
+
+      it { is_expected.to be_valid }
+    end
+
+    context 'label is not unique' do
+      let(:resource) { build :data_dictionary_field, label: 'taken' }
+
+      before do
+        create :data_dictionary_field, label: 'taken'
+      end
+
+      it 'does get errors on the second record' do
+        expect(change_set).not_to be_valid
+        expect(change_set.errors.first).to eq([:label, 'must be unique'])
+      end
+    end
+
+    context 'label is not unique but it is the same id' do
+      subject { described_class.new(my_resource) }
+
+      let(:my_resource) { Valkyrie.config.metadata_adapter.query_service.custom_queries.find_using(label: 'taken').first }
+
+      before do
+        create :data_dictionary_field, label: 'taken'
+      end
+
+      it { is_expected.to be_valid }
+    end
   end
 
   describe '#controlled_vocabulary' do

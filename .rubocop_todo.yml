@@ -10,6 +10,8 @@
 # Configuration parameters: CountComments, ExcludedMethods.
 Metrics/BlockLength:
   Max: 114
+  Exclude:
+    - 'spec/cho/data_dictionary/field_change_set_spec.rb'
 
 # Offense count: 1
 Metrics/CyclomaticComplexity:
