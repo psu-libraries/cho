@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe WorkObjectsController, type: :controller do
   let(:metadata_adapter) { Valkyrie::MetadataAdapter.find(:indexing_persister) }
-  let(:resource) { Valkyrie.config.metadata_adapter.persister.save(resource: build(:work)) }
+  let(:resource) { create_for_repository(:work) }
 
   describe 'GET #new' do
     it 'returns a success response' do
@@ -22,13 +22,13 @@ RSpec.describe WorkObjectsController, type: :controller do
 
   describe 'POST #create' do
     let(:valid_attributes) { { title: 'New Title', work_type: 'type' } }
-    let(:resource) { metadata_adapter.query_service.find_all.to_a.last }
+    let(:resource) { WorkObject.all.last }
 
     context 'with valid params' do
       it 'creates a new WorkObject' do
         expect {
           post :create, params: { work_object: valid_attributes }
-        }.to change { metadata_adapter.query_service.find_all.to_a.count }.by(1)
+        }.to change { WorkObject.count }.by(1)
       end
 
       it 'redirects to the created work' do
@@ -51,7 +51,7 @@ RSpec.describe WorkObjectsController, type: :controller do
     let(:new_attributes) { { title: 'Updated Title' } }
 
     context 'with valid params' do
-      let(:updated_resource) { metadata_adapter.query_service.find_by(id: resource.id) }
+      let(:updated_resource) { WorkObject.find(resource.id) }
 
       it 'updates the requested work' do
         put :update, params: { id: resource.to_param, work_object: new_attributes }

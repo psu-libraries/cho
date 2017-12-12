@@ -3,8 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Editing work objects', type: :feature do
-  let(:work) { build(:work, title: 'Work to edit') }
-  let(:resource) { Valkyrie.config.metadata_adapter.persister.save(resource: work) }
+  let(:resource) { create_for_repository(:work, title: 'Work to edit') }
   let(:adapter) { Valkyrie::MetadataAdapter.find(:indexing_persister) }
 
   context 'with all the required metadata' do

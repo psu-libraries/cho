@@ -12,10 +12,9 @@ FactoryGirl.define do
     display_transformation 'no_transformation'
     multiple false
     validation 'no_validation'
-  end
 
-  to_create do |resource|
-    change_set = DataDictionary::FieldChangeSet.new(resource)
-    Valkyrie.config.metadata_adapter.persister.save(resource: change_set)
+    to_create do |resource|
+      Valkyrie.config.metadata_adapter.persister.save(resource: resource)
+    end
   end
 end

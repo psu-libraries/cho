@@ -3,15 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Showing a work object', type: :feature do
-  # @todo This persists the work in both Postgres and Solr, so we can display it, and then view the
-  # edit form. It would be nice if we could build this process into FactoryGirl to make it easier.
-  let!(:work) do
-    work = nil
-    Valkyrie::MetadataAdapter.find(:indexing_persister).persister.buffer_into_index do |buffered_adapter|
-      work = buffered_adapter.persister.save(resource: build(:work, title: 'An editable file'))
-    end
-    work
-  end
+  let(:work) { create_for_repository(:work, title: 'An editable file') }
 
   it 'displays its show page and links to the edit form' do
     visit(polymorphic_path([:solr_document], id: work.id))
