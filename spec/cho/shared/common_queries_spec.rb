@@ -17,8 +17,10 @@ RSpec.describe CommonQueries do
   subject { CommonResource }
 
   context 'with no resources present' do
-    its(:all) { is_expected.to be_empty }
+    its(:all)   { is_expected.to be_empty }
     its(:count) { is_expected.to eq(0) }
+    its(:last)  { is_expected.to be_nil }
+    its(:first) { is_expected.to be_nil }
 
     describe '::find' do
       subject { CommonResource.find(Valkyrie::ID.new('missing-id')) }
@@ -35,6 +37,8 @@ RSpec.describe CommonQueries do
     end
 
     its(:count) { is_expected.to eq(3) }
+    its(:last)  { is_expected.to eq(CommonResource.all.last) }
+    its(:first) { is_expected.to eq(CommonResource.all.first) }
 
     describe '::find' do
       subject { CommonResource.find(Valkyrie::ID.new('missing-id')) }

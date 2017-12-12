@@ -1,0 +1,52 @@
+<%= form_with(model: collection) do |form| %>
+
+  <p>
+    <%= form.label :title %><br>
+    <%= form.text_field :title %>
+  </p>
+
+  <p>
+    <%= form.label :subtitle %><br>
+    <%= form.text_field :subtitle %>
+  </p>
+
+  <p>
+    <%= form.label :description %><br>
+    <%= form.text_area :description %>
+  </p>
+
+  <p>
+    <%= form.label :workflow %><br>
+
+    <%= form.label :workflow_default do %>
+      <%= form.radio_button :workflow, "default" %> Publish immediately
+    <% end %>
+
+    <%= form.label :workflow_mediated do %>
+      <%= form.radio_button :workflow, "mediated" %> Mediated
+    <% end %>
+  </p>
+
+
+  <p>
+    <%= form.label :visibility %><br>
+
+    <%= form.label :visibility_public do %>
+      <%= form.radio_button :visibility, "public" %> Public
+    <% end %>
+
+    <%= form.label :visibility_authenticated do %>
+      <%= form.radio_button :visibility, "authenticated" %> Authenticated
+    <% end %>
+
+    <%= form.label :visibility_private do %>
+      <%= form.radio_button :visibility, "private" %> Private
+    <% end %>
+  </p>
+
+  <%= render '/work_object/deposits/errors', work: collection if collection.errors.any? %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

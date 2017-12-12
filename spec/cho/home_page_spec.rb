@@ -12,5 +12,12 @@ RSpec.describe 'Home Page', type: :feature do
     expect(page).to have_css("form[action='/work_objects']")
     click_link('Data Dictionary')
     expect(page).to have_content('Data Dictionary Fields')
+    expect(page).to have_link('Create Collection')
+    click_link('Archival Collection')
+    expect(page).to have_content('New Archival Collection')
+    click_link('Library Collection')
+    expect(page).to have_content('New Library Collection')
+    click_link('Curated Collection')
+    expect(page).to have_content('New Curated Collection')
   end
 end

@@ -105,10 +105,14 @@ class CatalogController < ApplicationController
     # solr fields to be displayed in the index (search results) view
     #   The ordering of the field names is the order of the display
     config.add_index_field 'work_type_ssim', label: 'Work Type'
+    config.add_index_field 'visibility_ssim', label: 'Visibility'
+    config.add_index_field 'workflow_ssim', label: 'Workflow'
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
     config.add_show_field 'work_type_ssim', label: 'Work Type'
+    config.add_show_field 'visibility_ssim', label: 'Visibility'
+    config.add_show_field 'workflow_ssim', label: 'Workflow'
 
     # "fielded" search configuration. Used by pulldown among other places.
     # For supported keys in hash, see rdoc for Blacklight::SearchFields
