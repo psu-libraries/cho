@@ -45,5 +45,16 @@
   <%= @data_dictionary_field.display_transformation %>
 </p>
 
+<p>
+  <strong>Help Text:</strong>
+  <%= @data_dictionary_field.help_text %>
+</p>
+
+<p>
+  <strong>Index Tyoe:</strong>
+  <%= @data_dictionary_field.index_type %>
+</p>
+
+
 <%= link_to 'Edit', edit_data_dictionary_field_path(@data_dictionary_field) %> |
 <%= link_to 'Back', data_dictionary_fields_path %>

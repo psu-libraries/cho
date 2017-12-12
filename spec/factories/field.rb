@@ -12,6 +12,8 @@ FactoryGirl.define do
     display_transformation 'no_transformation'
     multiple false
     validation 'no_validation'
+    help_text 'help me'
+    index_type 'no_facet'
 
     to_create do |resource|
       Valkyrie.config.metadata_adapter.persister.save(resource: resource)

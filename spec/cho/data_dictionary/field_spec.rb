@@ -26,6 +26,8 @@ RSpec.describe DataDictionary::Field, type: :model do
   it { is_expected.to respond_to(:default_value) }
   it { is_expected.to respond_to(:display_name) }
   it { is_expected.to respond_to(:display_transformation) }
+  it { is_expected.to respond_to(:help_text) }
+  it { is_expected.to respond_to(:index_type) }
 
   it 'can be optional' do
     model.optional!
@@ -35,6 +37,11 @@ RSpec.describe DataDictionary::Field, type: :model do
   it 'can be text' do
     model.text!
     expect(model.field_type).to eq('text')
+  end
+
+  it 'can be facet' do
+    model.facet!
+    expect(model.index_type).to eq('facet')
   end
 
   describe '#multiple' do
@@ -71,7 +78,9 @@ RSpec.describe DataDictionary::Field, type: :model do
                                 display_name: 'My Abc123',
                                 display_transformation: 'no_transformation',
                                 field_type: 'date',
+                                help_text: 'help me',
                                 id: saved_model.id,
+                                index_type: 'no_facet',
                                 internal_resource: 'DataDictionary::Field',
                                 label: 'abc123_label',
                                 multiple: false,

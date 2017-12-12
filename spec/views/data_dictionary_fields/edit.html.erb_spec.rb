@@ -30,6 +30,8 @@ RSpec.describe 'data_dictionary/fields/edit', type: :view do
       assert_select 'input[name=?]', 'data_dictionary_field[default_value]'
       assert_select 'input[name=?]', 'data_dictionary_field[display_name]'
       assert_select 'input[name=?]', 'data_dictionary_field[display_transformation]'
+      assert_select 'input[name=?]', 'data_dictionary_field[help_text]'
+      assert_select 'input[name=?]', 'data_dictionary_field[index_type]'
     end
   end
 end

@@ -190,4 +190,16 @@ RSpec.describe DataDictionary::FieldChangeSet do
       its(:full_messages) { is_expected.to contain_exactly('Multiple is the wrong type') }
     end
   end
+
+  describe '#index_type' do
+    it { is_expected.not_to be_multiple(:index_type) }
+    it { is_expected.not_to be_required(:index_type) }
+    its(:index_type) { is_expected.to eq('no_facet') }
+  end
+
+  describe '#help_text' do
+    it { is_expected.not_to be_multiple(:help_text) }
+    it { is_expected.not_to be_required(:help_text) }
+    its(:help_text) { is_expected.to eq('') }
+  end
 end

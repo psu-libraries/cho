@@ -23,6 +23,10 @@ module DataDictionary
     property :multiple, multiple: false, default: false
     validates :multiple, with: :coerce_into_boolean
 
+    property :help_text, multiple: false, default: ''
+    property :index_type, multiple: false, default: 'no_facet'
+    validates :index_type, inclusion: { in: Field::IndexTypes.values }
+
     # rubocop:disable Style/NumericPredicate
     # Rubocop wants to use {multiple.zero?} but that breaks things.
     # Need to find a better way to coerce booleans.
