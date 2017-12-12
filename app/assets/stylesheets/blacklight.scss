@@ -3,3 +3,10 @@
 @import 'bootstrap';
 
 @import 'blacklight/blacklight';
+
+#header-navbar .navbar-brand {
+  color: #fff;
+  background: none;
+  text-indent: 2%;
+  width: 500px;
+}
