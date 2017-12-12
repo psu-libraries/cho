@@ -26,4 +26,5 @@ Rails.application.routes.draw do
   end
 
   resources :work_objects, except: [:show, :index]
+  resources :collections, except: [:show, :index]
 end

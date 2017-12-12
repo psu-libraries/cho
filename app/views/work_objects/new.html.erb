@@ -14,7 +14,7 @@
     <%= form.select :work_type, ["Generic", "Still Image", "Map", "Document", "Audio/Visual"] %>
   </p>
 
-  <%= render 'errors', work: @work if @work.errors.any? %>
+  <%= render 'shared/errors', resource: @work if @work.errors.any? %>
 
   <div class="actions">
     <%= form.submit %>

@@ -1,7 +1,7 @@
 <div id="content" class="<%= show_content_classes %>">
   <%= render_document_main_content_partial %>
 
-  <%= link_to "Edit", edit_work_object_path(@document.id) %>
+  <%= link_to "Edit", edit_polymorphic_path(@document.model.underscore.to_sym) %>
 </div>
 
 <div id="sidebar" class="<%= show_sidebar_classes %>">

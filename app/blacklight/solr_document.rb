@@ -17,4 +17,8 @@ class SolrDocument
   # and Blacklight::Document::SemanticFields#to_semantic_values
   # Recommendation: Use field names from Dublin Core
   use_extension(Blacklight::Document::DublinCore)
+
+  def model
+    Array.wrap(self['internal_resource_ssim']).first
+  end
 end

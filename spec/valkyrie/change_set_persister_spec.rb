@@ -30,6 +30,45 @@ RSpec.describe ChangeSetPersister do
         end
       }.to change { metadata_adapter.index_adapter.query_service.find_all.count }.by(1)
     end
+
+    context 'with enums' do
+      before(:all) do
+        class EnumModel < Valkyrie::Resource
+          attribute :id, Valkyrie::Types::ID.optional
+          attribute :controlled_list, Valkyrie::Types::Array.member(Valkyrie::Types::String.enum('foo', 'bar'))
+        end
+
+        class EnumChangeSet < Valkyrie::ChangeSet
+          property :controlled_list, multiple: false, required: true
+          validates :controlled_list, inclusion: { in: ['foo', 'bar'] }
+          validates :controlled_list, presence: true
+        end
+      end
+
+      after(:all) do
+        ActiveSupport::Dependencies.remove_constant('EnumModel')
+        ActiveSupport::Dependencies.remove_constant('EnumChangeSet')
+      end
+
+      let(:resource)   { EnumModel.new(controlled_list: 'foo') }
+      let(:change_set) { EnumChangeSet.new(resource) }
+
+      it 'persists a change set to Postgres' do
+        expect {
+          change_set_persister.buffer_into_index do |persist|
+            persist.save(resource: change_set)
+          end
+        }.to change { metadata_adapter.query_service.find_all.count }.by(1)
+      end
+
+      it 'persists a change set to Solr' do
+        expect {
+          change_set_persister.buffer_into_index do |persist|
+            persist.save(resource: change_set)
+          end
+        }.to change { metadata_adapter.index_adapter.query_service.find_all.count }.by(1)
+      end
+    end
   end
 
   context 'when the persister fails' do
