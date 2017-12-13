@@ -21,11 +21,9 @@ RSpec.describe 'Catalog page', type: :feature do
   end
 
   context 'with an existing work' do
-    let(:work)  { build(:work, title: 'Some exceptional content') }
     let(:query) { 'exceptional' }
 
-    # @todo this only persists the object into Solr; could use FactoryGirl here to make it easier.
-    before { Valkyrie::MetadataAdapter.find(:indexing_persister).persister.save(resource: work) }
+    before { create_for_repository(:work, title: 'Some exceptional content') }
 
     it 'searches and facets on the item' do
       visit('/catalog')
