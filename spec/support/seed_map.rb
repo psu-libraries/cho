@@ -15,7 +15,9 @@ class SeedMAP
         validation: 'no_validation',
         controlled_vocabulary: 'no_vocabulary',
         display_transformation: 'no_transformation',
-        multiple: true
+        multiple: true,
+        help_text: 'help me',
+        index_type: 'no_facet'
       )
     end
   end

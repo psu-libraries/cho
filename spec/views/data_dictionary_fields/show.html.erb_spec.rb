@@ -12,7 +12,9 @@ RSpec.describe 'data_dictionary/fields/show', type: :view do
                                                   controlled_vocabulary: 'no_vocabulary',
                                                   default_value: 'Default Value',
                                                   display_name: 'Display Name',
-                                                  display_transformation: 'no_transformation' }
+                                                  display_transformation: 'no_transformation',
+                                                  help_text: 'helping me',
+                                                  index_type: 'facet'}
 
   before do
     assign(:data_dictionary_field, data_dictionary_field)
@@ -29,5 +31,7 @@ RSpec.describe 'data_dictionary/fields/show', type: :view do
     expect(rendered).to match(/Default Value/)
     expect(rendered).to match(/Display Name/)
     expect(rendered).to match(/no_transformation/)
+    expect(rendered).to match(/helping me/)
+    expect(rendered).to match(/facet/)
   end
 end
