@@ -2,7 +2,7 @@
 
 # Loops through the DataDictionary Fields and applies the changeset properties to the
 #  class this is included in
-module DataDictionary::ChangeSet
+module DataDictionary::FieldsForChangeSet
   extend ActiveSupport::Concern
 
   included do

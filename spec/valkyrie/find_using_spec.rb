@@ -9,7 +9,7 @@ RSpec.describe FindUsing do
   before(:all) do
     class SampleResource < Valkyrie::Resource
       include Valkyrie::Resource::AccessControls
-      include DataDictionary::Base
+      include DataDictionary::FieldsForObject
       attribute :id, Valkyrie::Types::ID.optional
       attribute :framjam, Valkyrie::Types::String
     end

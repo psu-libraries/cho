@@ -2,7 +2,7 @@
 
 class WorkObject < Valkyrie::Resource
   include Valkyrie::Resource::AccessControls
-  include DataDictionary::Base
+  include DataDictionary::FieldsForObject
   include CommonQueries
 
   attribute :id, Valkyrie::Types::ID.optional
