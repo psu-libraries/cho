@@ -22,12 +22,18 @@ class ChangeSetPersister
     #   after_save(change_set: change_set, updated_resource: output)
     # end
     persister.save(resource: change_set.resource)
+  rescue StandardError => e
+    change_set.errors.add(:save, e.message)
+    change_set
   end
 
   # @todo Enable methods to delete parent works
   def delete(change_set:)
     # before_delete(change_set: change_set)
     persister.delete(resource: change_set.resource)
+  rescue StandardError => e
+    change_set.errors.add(:delete, e.message)
+    change_set
   end
 
   def save_all(change_sets:)

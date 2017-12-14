@@ -31,4 +31,35 @@ RSpec.describe ChangeSetPersister do
       }.to change { metadata_adapter.index_adapter.query_service.find_all.count }.by(1)
     end
   end
+
+  context 'when the persister fails' do
+    let(:mock_persister) { double }
+    let(:change_set) { DataDictionary::FieldChangeSet.new(DataDictionary::Field.new) }
+
+    before do
+      allow(metadata_adapter).to receive(:persister).and_return(mock_persister)
+    end
+
+    describe '#save' do
+      before do
+        allow(mock_persister).to receive(:save).and_raise(StandardError, 'save was not successful')
+      end
+
+      it 'reports the error in the change set' do
+        output = change_set_persister.save(change_set: change_set)
+        expect(output.errors.messages).to eq(save: ['save was not successful'])
+      end
+    end
+
+    describe '#delete' do
+      before do
+        allow(mock_persister).to receive(:delete).and_raise(StandardError, 'delete was not successful')
+      end
+
+      it 'reports the error in the change set' do
+        output = change_set_persister.delete(change_set: change_set)
+        expect(output.errors.messages).to eq(delete: ['delete was not successful'])
+      end
+    end
+  end
 end

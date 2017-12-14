@@ -2,7 +2,7 @@
 
 # Contains all the fields available in the entire application.
 #  Does this by looping through all the fields defined in the system.
-module DataDictionary::Base
+module DataDictionary::FieldsForObject
   extend ActiveSupport::Concern
 
   included do
