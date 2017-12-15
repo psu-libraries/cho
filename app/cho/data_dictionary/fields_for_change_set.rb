@@ -6,9 +6,14 @@ module DataDictionary::FieldsForChangeSet
   extend ActiveSupport::Concern
 
   included do
-    DataDictionary::Field.all.each do |field|
-      property field.label.parameterize.underscore.to_sym, multiple: field.multiple?, required: field.required_to_publish?
-      validates field.label.parameterize.underscore.to_sym, presence: field.required_to_publish?
+    # There are some race conditions where the database does not yet exists, but the class is being loaded.
+    #   Like when you run rake db:create
+    #   This statement makes sure the rails environment can be loaded even if the database has yet to be created.
+    if ActiveRecord::Base.connection.table_exists? 'orm_resources'
+      DataDictionary::Field.all.each do |field|
+        property field.label.parameterize.underscore.to_sym, multiple: field.multiple?, required: field.required_to_publish?
+        validates field.label.parameterize.underscore.to_sym, presence: field.required_to_publish?
+      end
     end
   end
 end

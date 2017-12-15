@@ -2,10 +2,10 @@
 
 require 'rails_helper'
 
-RSpec.describe WorkObjectChangeSet do
+RSpec.describe WorkObject::ChangeSet do
   subject(:change_set) { described_class.new(resource) }
 
-  let(:resource) { WorkObject.new }
+  let(:resource) { WorkObject::Deposit.new }
 
   describe '#append_id' do
     before { change_set.append_id = Valkyrie::ID.new('test') }

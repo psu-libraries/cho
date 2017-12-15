@@ -25,5 +25,5 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :work_objects, except: [:show, :index]
+  resources :work_object_deposits, as: 'work_objects', path: '/work_objects', except: [:show, :index], controller: 'work_object/deposits'
 end

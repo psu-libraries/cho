@@ -4,7 +4,12 @@
 class SeedMAP
   class << self
     def create
-      Valkyrie.config.metadata_adapter.persister.save(resource: title_field)
+      # There are some race conditions where the database does not yet exists, but the class is being loaded.
+      #   Like when you run rake db:create
+      #   This statement makes sure the rails environment can be loaded even if the database has yet to be created.
+      if ActiveRecord::Base.connection.table_exists? 'orm_resources'
+        Valkyrie.config.metadata_adapter.persister.save(resource: title_field)
+      end
     end
 
     def title_field
