@@ -1,0 +1,22 @@
+<h1>Editing <%= @collection.title %></h1>
+
+<%= form_with(model: @collection, local: true) do |form| %>
+
+  <%- @collection.fields.each do |field_name, field_value| %>
+    <p>
+      <%= form.label field_name %><br>
+      <%= form.text_field field_name %>
+    </p>
+  <%- end  %>
+
+  <%= render 'shared/errors', resource: @collection if @collection.errors.any? %>
+
+  <div class="actions">
+    <%= form.submit "Update #{@collection.title}" %>
+  </div>
+<% end %>
+
+<%= link_to 'Show', @collection %> |
+<%= link_to 'Back', collections_path %> |
+<%= link_to "Delete #{@collection.title}", collection_path(@collection),
+            data: {:confirm => 'Are you sure?'}, :method => :delete %>

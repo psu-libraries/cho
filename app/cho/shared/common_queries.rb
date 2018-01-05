@@ -8,9 +8,7 @@ module CommonQueries
       Valkyrie.config.metadata_adapter.query_service.find_all_of_model(model: self).to_a
     end
 
-    def count
-      all.count
-    end
+    delegate :count, :last, :first, to: :all
 
     def find(id)
       Valkyrie.config.metadata_adapter.query_service.custom_queries.find_model(model: self, id: id)

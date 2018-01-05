@@ -16,7 +16,8 @@ module Cho
     # Classes such as WorkObject and shared modules are not namespaced and must be loaded explicitly.
     config.eager_load_paths += [
       Rails.root.join('app', 'cho', 'work_object'),
-      Rails.root.join('app', 'cho', 'shared')
+      Rails.root.join('app', 'cho', 'shared'),
+      Rails.root.join('app', 'cho', 'collection')
     ]
 
     # Settings in config/environments/* take precedence over those specified here.

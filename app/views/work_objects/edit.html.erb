@@ -9,7 +9,7 @@
     </p>
   <%- end  %>
 
-  <%= render 'errors', work: @work if @work.errors.any? %>
+  <%= render 'shared/errors', resource: @work if @work.errors.any? %>
 
   <div class="actions">
     <%= form.submit "Update #{@work.work_type.titleize}" %>
