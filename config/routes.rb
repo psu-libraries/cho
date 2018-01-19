@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  get 'hello_angular/index'
+
   resources :data_dictionary_fields, controller: 'data_dictionary/fields'
 
   mount Blacklight::Engine => '/'
