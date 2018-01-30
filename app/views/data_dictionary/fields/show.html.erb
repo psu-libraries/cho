@@ -1,60 +1,42 @@
-<p id="notice"><%= notice %></p>
+<p id="notice"><dd><%= notice %></dd></p>
 
-<p>
-  <strong>Label:</strong>
-  <%= @data_dictionary_field.label %>
-</p>
+<div class="clearleft">
+  <dl class="data-dictionary">
+    <dt>Label</dt>
+    <dd><%= @data_dictionary_field.label %></dd>
 
-<p>
-  <strong>Field type:</strong>
-  <%= @data_dictionary_field.field_type %>
-</p>
+    <dt>Field Type</dt>
+    <dd><%= @data_dictionary_field.field_type %></dd>
 
-<p>
-  <strong>Requirement designation:</strong>
-  <%= @data_dictionary_field.requirement_designation %>
-</p>
+    <dt>Requirement Designation</dt>
+    <dd><%= @data_dictionary_field.requirement_designation %></dd>
 
-<p>
-  <strong>Validation:</strong>
-  <%= @data_dictionary_field.validation %>
-</p>
+    <dt>Validation</dt>
+    <dd><%= @data_dictionary_field.validation %></dd>
 
-<p>
-  <strong>Multiple:</strong>
-  <%= @data_dictionary_field.multiple %>
-</p>
+    <dt>Multiple</dt>
+    <dd><%= @data_dictionary_field.multiple %></dd>
 
-<p>
-  <strong>Controlled vocabulary:</strong>
-  <%= @data_dictionary_field.controlled_vocabulary %>
-</p>
+    <dt>Controlled Vocabulary</dt>
+    <dd><%= @data_dictionary_field.controlled_vocabulary %></dd>
 
-<p>
-  <strong>Default value:</strong>
-  <%= @data_dictionary_field.default_value %>
-</p>
+    <dt>Default Value</dt>
+    <dd><%= @data_dictionary_field.default_value %></dd>
 
-<p>
-  <strong>Display name:</strong>
-  <%= @data_dictionary_field.display_name %>
-</p>
+    <dt>Display Name</dt>
+    <dd><%= @data_dictionary_field.display_name %></dd>
 
-<p>
-  <strong>Display transformation:</strong>
-  <%= @data_dictionary_field.display_transformation %>
-</p>
+    <dt>Display Transformation</dt>
+    <dd><%= @data_dictionary_field.display_transformation %></dd>
 
-<p>
-  <strong>Help Text:</strong>
-  <%= @data_dictionary_field.help_text %>
-</p>
+    <dt>Help Text</dt>
+    <dd><%= @data_dictionary_field.help_text %></dd>
 
-<p>
-  <strong>Index Tyoe:</strong>
-  <%= @data_dictionary_field.index_type %>
-</p>
-
-
-<%= link_to 'Edit', edit_data_dictionary_field_path(@data_dictionary_field) %> |
-<%= link_to 'Back', data_dictionary_fields_path %>
+    <dt>Index Type</dt>
+    <dd><%= @data_dictionary_field.index_type %></dd>
+  </dl>
+</div>
+<div class="clearleft">
+  <%= link_to 'Edit', edit_data_dictionary_field_path(@data_dictionary_field) %> |
+  <%= link_to 'Back', data_dictionary_fields_path %>
+</div>
