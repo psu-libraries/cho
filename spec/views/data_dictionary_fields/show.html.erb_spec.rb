@@ -20,18 +20,18 @@ RSpec.describe 'data_dictionary/fields/show', type: :view do
     assign(:data_dictionary_field, data_dictionary_field)
   end
 
-  it 'renders attributes in <p>' do
+  it 'renders attributes in <dd>' do
     render
-    expect(rendered).to match(/Label/)
-    expect(rendered).to match(/numeric/)
-    expect(rendered).to match(/required_to_publish/)
-    expect(rendered).to match(/no_validation/)
-    expect(rendered).to match(/false/)
-    expect(rendered).to match(/no_vocabulary/)
-    expect(rendered).to match(/Default Value/)
-    expect(rendered).to match(/Display Name/)
-    expect(rendered).to match(/no_transformation/)
-    expect(rendered).to match(/helping me/)
-    expect(rendered).to match(/facet/)
+    expect(rendered).to match(/<dd>Label<\/dd>/)
+    expect(rendered).to match(/<dd>numeric<\/dd>/)
+    expect(rendered).to match(/<dd>required_to_publish<\/dd>/)
+    expect(rendered).to match(/<dd>no_validation<\/dd>/)
+    expect(rendered).to match(/<dd>false<\/dd>/)
+    expect(rendered).to match(/<dd>no_vocabulary<\/dd>/)
+    expect(rendered).to match(/<dd>Default Value<\/dd>/)
+    expect(rendered).to match(/<dd>Display Name<\/dd>/)
+    expect(rendered).to match(/<dd>no_transformation<\/dd>/)
+    expect(rendered).to match(/<dd>helping me<\/dd>/)
+    expect(rendered).to match(/<dd>facet<\/dd>/)
   end
 end
