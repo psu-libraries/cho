@@ -13,7 +13,7 @@ RSpec.describe ChangeSetPersister do
 
   describe '#buffer_into_index' do
     let(:resource)   { build(:work, title: 'Buffer into index') }
-    let(:change_set) { WorkObjectChangeSet.new(resource) }
+    let(:change_set) { WorkObject::ChangeSet.new(resource) }
 
     it 'persists a change set to Postgres' do
       expect {

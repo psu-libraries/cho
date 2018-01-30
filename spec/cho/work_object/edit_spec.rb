@@ -9,7 +9,7 @@ RSpec.describe 'Editing work objects', type: :feature do
   context 'with all the required metadata' do
     it 'updates an existing work with new metadata' do
       visit(edit_work_object_path(resource))
-      fill_in('work_object[title]', with: 'Updated Work Title')
+      fill_in('work_object_deposit[title]', with: 'Updated Work Title')
       click_button('Update Generic')
       expect(page).to have_content('Updated Work Title')
     end
@@ -18,7 +18,7 @@ RSpec.describe 'Editing work objects', type: :feature do
   context 'with a blank title' do
     it 'reports errors' do
       visit(edit_work_object_path(resource))
-      fill_in('work_object[title]', with: '')
+      fill_in('work_object_deposit[title]', with: '')
       click_button('Update Generic')
       expect(page).to have_content("Title can't be blank")
     end
@@ -29,7 +29,7 @@ RSpec.describe 'Editing work objects', type: :feature do
       visit(edit_work_object_path(resource))
       click_link('Delete Generic')
       expect(page).to have_content('Work to edit has been deleted')
-      expect(WorkObject.all.count).to eq(0)
+      expect(WorkObject::Deposit.all.count).to eq(0)
       expect(adapter.index_adapter.query_service.find_all.count).to eq(0)
     end
   end

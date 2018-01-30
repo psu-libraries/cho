@@ -13,9 +13,8 @@ module Cho
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
 
-    # Classes such as WorkObject and shared modules are not namespaced and must be loaded explicitly.
+    # Classes in the shared directory are not namespaced and must be loaded explicitly
     config.eager_load_paths += [
-      Rails.root.join('app', 'cho', 'work_object'),
       Rails.root.join('app', 'cho', 'shared')
     ]
 
