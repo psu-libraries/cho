@@ -21,6 +21,7 @@ RSpec.shared_examples 'a collection controller' do
     it 'returns a success response' do
       get :new, params: {}, session: valid_session
       expect(response).to be_success
+      expect(assigns(:collection)).to be_a(described_class.new.send(:change_set_class))
     end
   end
 
