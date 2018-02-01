@@ -18,33 +18,13 @@ module WorkObject
     # POST /work_objects
     # POST /work_objects.json
     def create
-      @work = ChangeSet.new(WorkObject::Deposit.new)
-      if @work.validate(resource_params)
-        @work.sync
-        obj = nil
-        change_set_persister.buffer_into_index do |buffered_changeset_persister|
-          obj = buffered_changeset_persister.save(resource: @work)
-        end
-        redirect_to(polymorphic_path([:solr_document], id: obj.id))
-      else
-        render :new
-      end
+      validate_save_and_render(ChangeSet.new(WorkObject::Deposit.new), :new)
     end
 
     # PATCH/PUT /work_objects/1
     # PATCH/PUT /work_objects/1.json
     def update
-      @work = ChangeSet.new(find_resource(params[:id])).prepopulate!
-      if @work.validate(resource_params)
-        @work.sync
-        obj = nil
-        change_set_persister.buffer_into_index do |buffered_changeset_persister|
-          obj = buffered_changeset_persister.save(resource: @work)
-        end
-        redirect_to(polymorphic_path([:solr_document], id: obj.id))
-      else
-        render :edit
-      end
+      validate_save_and_render(ChangeSet.new(find_resource(params[:id])).prepopulate!, :edit)
     end
 
     # DELETE /work_objects/1
@@ -59,6 +39,20 @@ module WorkObject
     end
 
     private
+
+      def validate_save_and_render(change_set, error_view)
+        if change_set.validate(resource_params)
+          change_set.sync
+          obj = nil
+          change_set_persister.buffer_into_index do |buffered_changeset_persister|
+            obj = buffered_changeset_persister.save(resource: change_set)
+          end
+          redirect_to(polymorphic_path([:solr_document], id: obj.id))
+        else
+          @work = change_set
+          render error_view
+        end
+      end
 
       # Never trust parameters from the scary internet, only allow the white list through.
       def work_params
