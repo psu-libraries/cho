@@ -29,31 +29,13 @@ module DataDictionary
     # POST /data_dictionary_fields
     # POST /data_dictionary_fields.json
     def create
-      @data_dictionary_field = persist_changes(create_change_set)
-      respond_to do |format|
-        if @data_dictionary_field.respond_to?(:errors)
-          format.html { render :edit }
-          format.json { render json: @data_dictionary_field.errors, status: :unprocessable_entity }
-        else
-          format.html { redirect_to @data_dictionary_field, notice: 'Metadata field was successfully created.' }
-          format.json { render :show, status: :created, location: data_dictionary_field }
-        end
-      end
+      save_and_respond(create_change_set)
     end
 
     # PATCH/PUT /data_dictionary_fields/1
     # PATCH/PUT /data_dictionary_fields/1.json
     def update
-      @data_dictionary_field = persist_changes(update_change_set)
-      respond_to do |format|
-        if @data_dictionary_field.respond_to?(:errors)
-          format.html { render :edit }
-          format.json { render json: @data_dictionary_field.errors, status: :unprocessable_entity }
-        else
-          format.html { redirect_to @data_dictionary_field, notice: 'Metadata field was successfully updated.' }
-          format.json { render :show, status: :ok, location: data_dictionary_field }
-        end
-      end
+      save_and_respond(update_change_set)
     end
 
     # DELETE /data_dictionary_fields/1
@@ -67,6 +49,20 @@ module DataDictionary
     end
 
     private
+
+      def save_and_respond(change_set)
+        change_set_or_object = persist_changes(change_set)
+        @data_dictionary_field = change_set_or_object
+        respond_to do |format|
+          if change_set_or_object.respond_to?(:errors)
+            format.html { render :edit }
+            format.json { render json: change_set_or_object.errors, status: :unprocessable_entity }
+          else
+            format.html { redirect_to @data_dictionary_field, notice: 'Metadata field was successfully updated.' }
+            format.json { render :show, status: :ok, location: data_dictionary_field }
+          end
+        end
+      end
 
       def find_resource(id)
         query_service.find_by(id: Valkyrie::ID.new(id))
