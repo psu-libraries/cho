@@ -37,6 +37,36 @@ RSpec.describe DataDictionary::FieldsController, type: :controller do
     { 'label' => 'My Field', 'field_type' => 'numeric', 'requirement_designation' => 'optional_invalid', 'validation' => 'no_validation', 'multiple' => '0', 'controlled_vocabulary' => 'no_vocabulary', 'default_value' => 'blah', 'display_name' => 'blah', 'display_transformation' => 'no_transformation' }
   }
 
+  let(:title) do
+    {
+      'label' => 'title',
+      'field_type' => 'string',
+      'requirement_designation' => 'required_to_publish',
+      'validation' => 'no_validation',
+      'multiple' => true,
+      'controlled_vocabulary' => 'no_vocabulary',
+      'default_value' => nil,
+      'display_name' => nil,
+      'display_transformation' => 'no_transformation',
+      'url' => "http://test.host/data_dictionary_fields/#{title_field.id}.json"
+    }
+  end
+
+  let(:abc123) do
+    {
+      'label' => 'abc123_label',
+      'field_type' => 'date',
+      'requirement_designation' => 'recommended',
+      'validation' => 'no_validation',
+      'multiple' => false,
+      'controlled_vocabulary' => 'no_vocabulary',
+      'default_value' => 'abc123',
+      'display_name' => 'My Abc123',
+      'display_transformation' => 'no_transformation',
+      'url' => "http://test.host/data_dictionary_fields/#{dictionary_field.id}.json"
+    }
+  end
+
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # MetadataFieldsController. Be sure to keep this updated too.
@@ -56,10 +86,13 @@ RSpec.describe DataDictionary::FieldsController, type: :controller do
 
     describe 'GET #index.json' do
       render_views
+
+      let(:json_response) { JSON.parse(response.body) }
+
       it 'returns json' do
         get :index, params: {}, session: valid_session, format: :json
         expect(response.content_type).to eq('application/json')
-        expect(response.body).to eq("[{\"label\":\"title\",\"field_type\":\"string\",\"requirement_designation\":\"required_to_publish\",\"validation\":\"no_validation\",\"multiple\":true,\"controlled_vocabulary\":\"no_vocabulary\",\"default_value\":null,\"display_name\":null,\"display_transformation\":\"no_transformation\",\"url\":\"http://test.host/data_dictionary_fields/#{title_field.id}.json\"},{\"label\":\"abc123_label\",\"field_type\":\"date\",\"requirement_designation\":\"recommended\",\"validation\":\"no_validation\",\"multiple\":false,\"controlled_vocabulary\":\"no_vocabulary\",\"default_value\":\"abc123\",\"display_name\":\"My Abc123\",\"display_transformation\":\"no_transformation\",\"url\":\"http://test.host/data_dictionary_fields/#{dictionary_field.id}.json\"}]")
+        expect(json_response).to include(title, abc123)
       end
     end
 
@@ -68,7 +101,9 @@ RSpec.describe DataDictionary::FieldsController, type: :controller do
       it 'returns csv' do
         get :index, params: {}, session: valid_session, format: :csv
         expect(response.content_type).to eq('text/csv')
-        expect(response.body).to eq("Label,Field Type,Requirement Designation,Validation,Multiple,Controlled Vocabulary,Default Value,Display Name,Display Transformation\ntitle,string,required_to_publish,no_validation,true,no_vocabulary,,,no_transformation\nabc123_label,date,recommended,no_validation,false,no_vocabulary,abc123,My Abc123,no_transformation\n")
+        expect(response.body).to include("Label,Field Type,Requirement Designation,Validation,Multiple,Controlled Vocabulary,Default Value,Display Name,Display Transformation\n")
+        expect(response.body).to include("title,string,required_to_publish,no_validation,true,no_vocabulary,,,no_transformation\n")
+        expect(response.body).to include("abc123_label,date,recommended,no_validation,false,no_vocabulary,abc123,My Abc123,no_transformation\n")
       end
     end
 

@@ -1,0 +1,85 @@
+# frozen_string_literal: true
+
+require 'rails_helper'
+
+RSpec.describe Collection::ChangeSetBehaviors do
+  before(:all) do
+    class MyCollection < Valkyrie::Resource
+      include ::Collection::CommonFields
+    end
+
+    class MyCollectionChangeSet < Valkyrie::ChangeSet
+      include ::Collection::ChangeSetBehaviors
+    end
+  end
+
+  after(:all) do
+    ActiveSupport::Dependencies.remove_constant('MyCollection')
+    ActiveSupport::Dependencies.remove_constant('MyCollectionChangeSet')
+  end
+
+  subject(:change_set) { MyCollectionChangeSet.new(MyCollection.new) }
+
+  describe '#append_id' do
+    before { change_set.append_id = Valkyrie::ID.new('test') }
+    its(:append_id) { is_expected.to eq(Valkyrie::ID.new('test')) }
+    its([:append_id]) { is_expected.to eq(Valkyrie::ID.new('test')) }
+  end
+
+  describe '#multiple?' do
+    it 'has one title and description' do
+      expect(change_set).not_to be_multiple(:title)
+      expect(change_set).not_to be_multiple(:subtitle)
+      expect(change_set).not_to be_multiple(:description)
+      expect(change_set).not_to be_multiple(:workflow)
+      expect(change_set).not_to be_multiple(:visibility)
+    end
+  end
+
+  describe '#required?' do
+    it 'has a required title' do
+      expect(change_set).to be_required(:title)
+      expect(change_set).to be_required(:workflow)
+      expect(change_set).to be_required(:visibility)
+    end
+  end
+
+  describe '#fields=' do
+    before { change_set.prepopulate! }
+    its(:title) { is_expected.to be_nil }
+    its(:description) { is_expected.to be_nil }
+    its(:subtitle) { is_expected.to be_nil }
+    its(:workflow) { is_expected.to be_nil }
+    its(:visibility) { is_expected.to be_nil }
+  end
+
+  describe '#validate' do
+    subject { change_set.errors }
+
+    before { change_set.validate(params) }
+
+    context 'without a title' do
+      let(:params) { { description: 'description' } }
+
+      its(:full_messages) { is_expected.to include("Title can't be blank") }
+    end
+
+    context 'with an unsupported workflow' do
+      let(:params) { { title: 'title', workflow: 'foo' } }
+
+      its(:full_messages) { is_expected.to include('Workflow is not included in the list') }
+    end
+
+    context 'with an unsupported visibility' do
+      let(:params) { { title: 'title', visibility: 'foo' } }
+
+      its(:full_messages) { is_expected.to include('Visibility is not included in the list') }
+    end
+
+    context 'with all required fields' do
+      let(:params) { { title: 'Title', description: 'My collection', workflow: 'default', visibility: 'public' } }
+
+      its(:full_messages) { is_expected.to be_empty }
+    end
+  end
+end

@@ -9,7 +9,6 @@ RSpec.describe 'Catalog page', type: :feature do
     it 'returns a null search' do
       visit('/catalog')
       fill_in('q', with: query)
-      expect(page).to have_select('search_field', options: ['Title', 'All Fields'])
       click_button('Search')
       within('.constraints-container') do
         expect(page).to have_link('Start Over')
