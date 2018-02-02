@@ -10,6 +10,7 @@ RSpec.describe WorkObject::DepositsController, type: :controller do
     it 'returns a success response' do
       get :new
       expect(response).to be_success
+      expect(assigns(:work)).to be_a(WorkObject::ChangeSet)
     end
   end
 
@@ -17,6 +18,7 @@ RSpec.describe WorkObject::DepositsController, type: :controller do
     it 'returns a success response' do
       get :edit, params: { id: resource.id }
       expect(response).to be_success
+      expect(assigns(:work)).to be_a(WorkObject::ChangeSet)
     end
   end
 
