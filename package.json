@@ -1,5 +1,13 @@
 {
   "name": "cho",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "@rails/webpacker": "^3.2.1",
+    "elm": "^0.18.0",
+    "elm-webpack-loader": "^4.4.0"
+  },
+  "devDependencies": {
+    "elm-hot-loader": "^0.5.4",
+    "webpack-dev-server": "^2.11.1"
+  }
 }
