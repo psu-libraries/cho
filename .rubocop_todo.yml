@@ -55,3 +55,8 @@ RSpec/NestedGroups:
 Rails/FilePath:
   Exclude:
     - 'config/environments/development.rb'
+
+# Offense count: 1
+Rspec/MessageSpies:
+  Exclude:
+    - 'spec/cho/schema/metadata_spec.rb'
