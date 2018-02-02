@@ -23,6 +23,8 @@ Rails.application.routes.draw do
     end
   end
 
+  get '/elm', to: 'application#index'
+
   resources :work_object_deposits, as: 'work_objects', path: '/work_objects', except: [:show, :index], controller: 'work_object/deposits'
   resources :archival_collections, except: [:show, :index], controller: 'collection/archival_collections'
   resources :library_collections, except: [:show, :index], controller: 'collection/library_collections'
