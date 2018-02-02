@@ -1,5 +1,13 @@
 {
   "name": "cho",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "@rails/webpacker": "^3.2.1",
+    "vue": "^2.5.13",
+    "vue-loader": "^14.1.1",
+    "vue-template-compiler": "^2.5.13"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "^2.11.1"
+  }
 }

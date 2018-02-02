@@ -21,3 +21,9 @@
 .byebug_history
 .rubocop-http*
 config/database.yml
+/public/packs
+/public/packs-test
+/node_modules
+yarn-debug.log*
+yarn-error.log*
+.yarn-integrity
