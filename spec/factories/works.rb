@@ -5,7 +5,7 @@
 require Rails.root.join('spec', 'support', 'seed_map')
 
 FactoryGirl.define do
-  factory :work_object, aliases: [:work], class: WorkObject::Deposit do
+  factory :work_submission, aliases: [:work], class: Work::Submission do
     title 'Sample Generic Work'
     work_type 'Generic'
 

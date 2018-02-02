@@ -35,7 +35,7 @@ module Schema
       def gather_field_ids(new_fields)
         new_fields.map do |field|
           unless field.is_a? Schema::MetadataField
-            raise Dry::Types::ConstraintError.new("type?(WorkObject::TemplateField, #{field.class}", field)
+            raise Dry::Types::ConstraintError.new("type?(Work::TemplateField, #{field.class}", field)
           end
           field.id
         end

@@ -1,6 +1,6 @@
 <h1>Editing <%= @work.work_type.titleize %></h1>
 
-<%= form_with(model: @work, url: work_object_path(@work)) do |form| %>
+<%= form_with(model: @work, url: work_path(@work)) do |form| %>
 
   <%- @work.fields.except('work_type').each do |field_name, field_value| %>
     <p>
@@ -16,7 +16,7 @@
   </div>
 <% end %>
 
-<%= link_to 'Show', work_object_path(@work) %> |
-<%= link_to 'Back', work_objects_path %> |
-<%= link_to "Delete #{@work.work_type.titleize}", work_object_path(@work),
+<%= link_to 'Show', work_path(@work) %> |
+<%= link_to 'Back', works_path %> |
+<%= link_to "Delete #{@work.work_type.titleize}", work_path(@work),
             data: {:confirm => 'Are you sure?'}, :method => :delete %>

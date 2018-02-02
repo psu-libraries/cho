@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module WorkObject
-  class Deposit < Valkyrie::Resource
+module Work
+  class Submission < Valkyrie::Resource
     include Valkyrie::Resource::AccessControls
     include DataDictionary::FieldsForObject
     include CommonQueries
