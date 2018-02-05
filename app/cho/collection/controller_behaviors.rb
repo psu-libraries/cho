@@ -20,14 +20,13 @@ module Collection::ControllerBehaviors
   # POST /collections.json
   def create
     @collection = change_set_class.new(resource_class.new)
-    if @collection.validate(resource_params)
-      @collection.sync
-      obj = nil
-      change_set_persister.buffer_into_index do |buffered_changeset_persister|
-        obj = buffered_changeset_persister.save(resource: @collection)
-      end
-      redirect_to(polymorphic_path([:solr_document], id: obj.id))
+    # TODO when the model becomes more complex should we be buffering into Solr?
+    #   if so then we should use .validate_and_save_with_buffer
+    change_set = change_set_persister.validate_and_save(change_set: @collection, resource_params: resource_params)
+    if change_set.errors.blank?
+      redirect_to(polymorphic_path([:solr_document], id: change_set.resource.id))
     else
+      @collection = change_set
       render :new
     end
   end
@@ -36,14 +35,13 @@ module Collection::ControllerBehaviors
   # PATCH/PUT /collections/1.json
   def update
     @collection = change_set_class.new(find_resource(params[:id])).prepopulate!
-    if @collection.validate(resource_params)
-      @collection.sync
-      obj = nil
-      change_set_persister.buffer_into_index do |buffered_changeset_persister|
-        obj = buffered_changeset_persister.save(resource: @collection)
-      end
-      redirect_to(polymorphic_path([:solr_document], id: obj.id))
+    # TODO when the model becomes more complex should we be buffering into Solr?
+    #   if so then we should use .validate_and_save_with_buffer
+    change_set = change_set_persister.validate_and_save(change_set: @collection, resource_params: resource_params)
+    if change_set.errors.blank?
+      redirect_to(polymorphic_path([:solr_document], id: change_set.resource.id))
     else
+      @collection = change_set
       render :edit
     end
   end

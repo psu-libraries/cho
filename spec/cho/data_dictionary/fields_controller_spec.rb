@@ -183,6 +183,26 @@ RSpec.describe DataDictionary::FieldsController, type: :controller do
       it "returns a success response (i.e. to display the 'new' template)" do
         post :create, params: { data_dictionary_field: invalid_attributes }, session: valid_session
         expect(response).to be_success
+        expect(assigns[:data_dictionary_field].errors.first).to eq([:requirement_designation, 'is not included in the list'])
+      end
+    end
+
+    context 'error on save' do
+      let(:metadata_adapter) { Valkyrie::MetadataAdapter.find(:postgres) }
+      let(:storage_adapter)  { Valkyrie.config.storage_adapter }
+      let(:persister) { ChangeSetPersister.new(metadata_adapter: metadata_adapter, storage_adapter: storage_adapter) }
+      let(:metadata_persister) { instance_double(Valkyrie::Persistence::Postgres::Persister) }
+
+      before do
+        allow(ChangeSetPersister).to receive(:new).and_return(persister)
+        allow(metadata_adapter).to receive(:persister).and_return(metadata_persister)
+        allow(metadata_persister).to receive(:save).and_raise(StandardError.new('an error saving'))
+      end
+
+      it "returns a success response (i.e. to display the 'new' template)" do
+        post :create, params: { data_dictionary_field: valid_attributes }, session: valid_session
+        expect(response).to be_success
+        expect(assigns[:data_dictionary_field].errors.first).to eq([:save, 'an error saving'])
       end
     end
   end

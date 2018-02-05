@@ -22,8 +22,14 @@ class ChangeSetPersister
     #   after_save(change_set: change_set, updated_resource: output)
     # end
     persister.save(resource: change_set.resource)
-  rescue StandardError => e
-    change_set.errors.add(:save, e.message)
+  end
+
+  def validate_and_save(change_set:, resource_params:)
+    return change_set unless change_set.validate(resource_params)
+    change_set.sync
+    change_set.class.new(persister.save(resource: change_set))
+  rescue StandardError => error
+    change_set.errors.add(:save, error.message)
     change_set
   end
 
@@ -46,6 +52,19 @@ class ChangeSetPersister
     metadata_adapter.persister.buffer_into_index do |buffered_adapter|
       yield(buffered_adapter.persister)
     end
+  end
+
+  def validate_and_save_with_buffer(change_set:, resource_params:)
+    return change_set unless change_set.validate(resource_params)
+    change_set.sync
+    obj = nil
+    buffer_into_index do |buffered_changeset_persister|
+      obj = buffered_changeset_persister.save(resource: change_set)
+    end
+    change_set.class.new(obj)
+  rescue StandardError => error
+    change_set.errors.add(:save, error.message)
+    change_set
   end
 
   # @note these are all private methods in the original.

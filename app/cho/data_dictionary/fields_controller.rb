@@ -29,13 +29,13 @@ module DataDictionary
     # POST /data_dictionary_fields
     # POST /data_dictionary_fields.json
     def create
-      save_and_respond(create_change_set)
+      validate_save_and_respond(create_change_set, :new)
     end
 
     # PATCH/PUT /data_dictionary_fields/1
     # PATCH/PUT /data_dictionary_fields/1.json
     def update
-      save_and_respond(update_change_set)
+      validate_save_and_respond(update_change_set, :edit)
     end
 
     # DELETE /data_dictionary_fields/1
@@ -50,17 +50,26 @@ module DataDictionary
 
     private
 
-      def save_and_respond(change_set)
-        change_set_or_object = persist_changes(change_set)
-        @data_dictionary_field = change_set_or_object
+      def validate_save_and_respond(change_set, edit_view)
+        @data_dictionary_field = change_set_persister.validate_and_save(change_set: change_set, resource_params: resource_params)
+        if @data_dictionary_field.errors.blank?
+          respond_success
+        else
+          respond_error(@data_dictionary_field, edit_view)
+        end
+      end
+
+      def respond_error(change_set, error_view)
         respond_to do |format|
-          if change_set_or_object.respond_to?(:errors)
-            format.html { render :edit }
-            format.json { render json: change_set_or_object.errors, status: :unprocessable_entity }
-          else
-            format.html { redirect_to @data_dictionary_field, notice: 'Metadata field was successfully updated.' }
-            format.json { render :show, status: :ok, location: data_dictionary_field }
-          end
+          format.html { render error_view }
+          format.json { render json: change_set.errors, status: :unprocessable_entity }
+        end
+      end
+
+      def respond_success
+        respond_to do |format|
+          format.html { redirect_to @data_dictionary_field.resource, notice: 'Metadata field was successfully updated.' }
+          format.json { render :show, status: :ok, location: @data_dictionary_field.resource }
         end
       end
 
@@ -75,17 +84,6 @@ module DataDictionary
 
       def create_change_set
         FieldChangeSet.new(Field.new).prepopulate!
-      end
-
-      # @return [Field, FieldChangeSet]
-      # @note
-      #   This returns two kinds of objects. If both validation and saving are successful,
-      #   then a Field resource is returned. Otherwise, the change set is returned with errors.
-      # @see https://github.com/psu-libraries/cho/issues/298
-      def persist_changes(change_set)
-        return change_set unless change_set.validate(resource_params)
-        change_set.sync
-        persister.save(resource: change_set)
       end
 
       def change_set_persister
