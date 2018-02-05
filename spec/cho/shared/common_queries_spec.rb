@@ -7,6 +7,7 @@ RSpec.describe CommonQueries do
     class CommonResource < Valkyrie::Resource
       include CommonQueries
       attribute :id, Valkyrie::Types::ID.optional
+      attribute :label, Valkyrie::Types::String
     end
   end
 
@@ -15,6 +16,12 @@ RSpec.describe CommonQueries do
   end
 
   subject { CommonResource }
+
+  describe '#where' do
+    it 'is aliased to #find_using' do
+      expect(CommonResource.method(:find_using) == CommonResource.method(:where)).to be(true)
+    end
+  end
 
   context 'with no resources present' do
     its(:all)   { is_expected.to be_empty }
@@ -62,6 +69,19 @@ RSpec.describe CommonQueries do
       subject { CommonResource.find(common_resource.id) }
 
       its(:id) { is_expected.to eq(common_resource.id) }
+    end
+  end
+
+  context "with the resource we're looking for" do
+    let(:resource1) { CommonResource.new(label: 'first resource') }
+    let(:resource2) { CommonResource.new(label: 'second resource') }
+
+    it 'retrieves a resource based on its label' do
+      persisted_resource = Valkyrie.config.metadata_adapter.persister.save(resource: resource1)
+      Valkyrie.config.metadata_adapter.persister.save(resource: resource2)
+      results = CommonResource.find_using(label: 'first resource')
+      expect(results.count).to eq(1)
+      expect(results.first.id).to eq(persisted_resource.id)
     end
   end
 end

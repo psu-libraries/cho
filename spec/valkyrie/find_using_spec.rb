@@ -13,10 +13,18 @@ RSpec.describe FindUsing do
       attribute :id, Valkyrie::Types::ID.optional
       attribute :framjam, Valkyrie::Types::String
     end
+
+    class SimilarResource < Valkyrie::Resource
+      include Valkyrie::Resource::AccessControls
+      include DataDictionary::FieldsForObject
+      attribute :id, Valkyrie::Types::ID.optional
+      attribute :framjam, Valkyrie::Types::String
+    end
   end
 
   after(:all) do
     ActiveSupport::Dependencies.remove_constant('SampleResource')
+    ActiveSupport::Dependencies.remove_constant('SimilarResource')
   end
 
   context 'with a saved resource' do
@@ -39,6 +47,21 @@ RSpec.describe FindUsing do
       expect {
         query_service.custom_queries.find_using(framjam: 'some label', flimjam: 'another label')
       }.to raise_error(ArgumentError, 'only one query term is supported')
+    end
+  end
+
+  context 'when providing a model' do
+    subject { saved_resource }
+
+    let(:sample_resource) { SampleResource.new(framjam: 'testing with model') }
+    let(:similar_resource) { SimilarResource.new(framjam: 'testing with model') }
+
+    it 'retrieves the specific model of resource' do
+      persisted_sample = Valkyrie.config.metadata_adapter.persister.save(resource: sample_resource)
+      Valkyrie.config.metadata_adapter.persister.save(resource: similar_resource)
+      results = query_service.custom_queries.find_using(framjam: 'testing with model', model: SampleResource)
+      expect(results.count).to eq(1)
+      expect(results.first.id).to eq(persisted_sample.id)
     end
   end
 end

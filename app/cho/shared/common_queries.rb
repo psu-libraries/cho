@@ -13,5 +13,11 @@ module CommonQueries
     def find(id)
       Valkyrie.config.metadata_adapter.query_service.custom_queries.find_model(model: self, id: id)
     end
+
+    def find_using(query)
+      query[:model] = self
+      Valkyrie.config.metadata_adapter.query_service.custom_queries.find_using(query)
+    end
+    alias_method :where, :find_using
   end
 end
