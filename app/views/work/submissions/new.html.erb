@@ -1,24 +1,31 @@
-<h1>New Work</h1>
+<%# move this into the change set or some other kind of form object %>
+<% work_type = Work::Type.find(Valkyrie::ID.new(@work.work_type)) %>
 
-<%= form_for(@work.model, url: works_path) do |form| %>
+<% if work_type %>
+  <h1>New <%= work_type.label %> Submission</h1>
 
-  <%- @work.fields.except('work_type').each do |field_name, field_value| %>
-    <p>
-      <%= form.label field_name %><br>
-      <%= form.text_field field_name %>
-    </p>
-  <%- end  %>
+  <%= form_for(@work.model, url: works_path) do |form| %>
 
-  <p>
-    <%= form.label :work_type %><br>
-    <%= form.select :work_type, ["Generic", "Still Image", "Map", "Document", "Audio/Visual"] %>
-  </p>
+    <%- @work.fields.except('work_type').each do |field_name, field_value| %>
+      <p>
+        <%= form.label field_name %><br>
+        <%= form.text_field field_name %>
+      </p>
+    <%- end  %>
 
-  <%= render 'errors', work: @work if @work.errors.any? %>
+    <%= form.hidden_field :work_type, value: work_type.id %>
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+    <%= render 'errors', work: @work if @work.errors.any? %>
+
+    <div class="actions">
+      <%= form.submit %>
+    </div>
+  <% end %>
+
+<% else %>
+
+<p>Unable to find work type</p>
+
 <% end %>
 
 <%= link_to 'Back', works_path %>

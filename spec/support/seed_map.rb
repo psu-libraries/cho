@@ -10,6 +10,9 @@ class SeedMAP
       Valkyrie.config.metadata_adapter.persister.save(resource: title_field)
       Valkyrie.config.metadata_adapter.persister.save(resource: subtitle_field)
       Valkyrie.config.metadata_adapter.persister.save(resource: description_field)
+      Valkyrie.config.metadata_adapter.persister.save(resource: default_metadata_schema)
+      Valkyrie.config.metadata_adapter.persister.save(resource: generic_work_type)
+      Valkyrie.config.metadata_adapter.persister.save(resource: document_work_type)
     end
 
     def title_field
@@ -51,6 +54,31 @@ class SeedMAP
         multiple: true,
         help_text: 'help me',
         index_type: 'no_facet'
+      )
+    end
+
+    def default_metadata_schema
+      Schema::Metadata.new(
+        label: 'default',
+        core_fields: DataDictionary::Field.all.map(&:id)
+      )
+    end
+
+    def generic_work_type
+      Work::Type.new(
+        label: 'Generic',
+        metadata_schema_id: Schema::Metadata.find_using(label: 'default').first.id,
+        processing_schema: 'default',
+        display_schema: 'default'
+      )
+    end
+
+    def document_work_type
+      Work::Type.new(
+        label: 'Document',
+        metadata_schema_id: Schema::Metadata.find_using(label: 'default').first.id,
+        processing_schema: 'default',
+        display_schema: 'default'
       )
     end
   end

@@ -6,10 +6,7 @@ RSpec.describe 'Home Page', type: :feature do
   it 'has all the navigation options' do
     visit('/')
     expect(page).to have_content('Cultural Heritage Objects')
-    expect(page).to have_link('New Work')
     expect(page).to have_link('Data Dictionary')
-    click_link('New Work')
-    expect(page).to have_css("form[action='/works']")
     click_link('Data Dictionary')
     expect(page).to have_content('Data Dictionary Fields')
     expect(page).to have_link('Create Collection')
@@ -19,5 +16,10 @@ RSpec.describe 'Home Page', type: :feature do
     expect(page).to have_content('New Library Collection')
     click_link('Curated Collection')
     expect(page).to have_content('New Curated Collection')
+    expect(page).to have_link('Create Submission')
+    click_link('Generic')
+    expect(page).to have_content('New Generic Submission')
+    click_link('Document')
+    expect(page).to have_content('New Document Submission')
   end
 end
