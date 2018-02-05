@@ -1,36 +1,36 @@
 # frozen_string_literal: true
 
-module WorkObject
-  class DepositsController < ApplicationController
+module Work
+  class SubmissionsController < ApplicationController
     delegate :metadata_adapter, :storage_adapter, to: :change_set_persister
     delegate :persister, :query_service, to: :metadata_adapter
 
-    # GET /work_objects/new
+    # GET /works/new
     def new
-      @work = ChangeSet.new(WorkObject::Deposit.new).prepopulate!
+      @work = SubmissionChangeSet.new(Submission.new).prepopulate!
     end
 
-    # GET /work_objects/1/edit
+    # GET /works/1/edit
     def edit
-      @work = ChangeSet.new(find_resource(params[:id])).prepopulate!
+      @work = SubmissionChangeSet.new(find_resource(params[:id])).prepopulate!
     end
 
-    # POST /work_objects
-    # POST /work_objects.json
+    # POST /works
+    # POST /works.json
     def create
-      validate_save_and_render(ChangeSet.new(WorkObject::Deposit.new), :new)
+      validate_save_and_render(SubmissionChangeSet.new(Submission.new), :new)
     end
 
-    # PATCH/PUT /work_objects/1
-    # PATCH/PUT /work_objects/1.json
+    # PATCH/PUT /works/1
+    # PATCH/PUT /works/1.json
     def update
-      validate_save_and_render(ChangeSet.new(find_resource(params[:id])).prepopulate!, :edit)
+      validate_save_and_render(SubmissionChangeSet.new(find_resource(params[:id])).prepopulate!, :edit)
     end
 
-    # DELETE /work_objects/1
-    # DELETE /work_objects/1.json
+    # DELETE /works/1
+    # DELETE /works/1.json
     def destroy
-      change_set = ChangeSet.new(find_resource(params[:id]))
+      change_set = SubmissionChangeSet.new(find_resource(params[:id]))
       change_set_persister.buffer_into_index do |buffered_changeset_persister|
         buffered_changeset_persister.delete(resource: change_set)
       end
@@ -54,17 +54,12 @@ module WorkObject
         end
       end
 
-      # Never trust parameters from the scary internet, only allow the white list through.
-      def work_params
-        params.fetch(:work_object, {})
-      end
-
       def find_resource(id)
         query_service.find_by(id: Valkyrie::ID.new(id))
       end
 
       def resource_params
-        params[:work_object_deposit].to_unsafe_h
+        params[:work_submission].to_unsafe_h
       end
 
       def change_set_persister

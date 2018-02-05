@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-module WorkObject
-  class ChangeSet < Valkyrie::ChangeSet
-    # self.fields = WorkObject::WorkObject.fields
+module Work
+  class SubmissionChangeSet < Valkyrie::ChangeSet
     validates :work_type, presence: true
     property :work_type, multiple: false, required: true
 

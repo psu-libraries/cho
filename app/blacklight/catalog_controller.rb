@@ -155,7 +155,7 @@ class CatalogController < ApplicationController
     config.autocomplete_enabled = true
     config.autocomplete_path = 'suggest'
 
-    config.add_nav_action :work_object
+    config.add_nav_action :work
     config.add_nav_action :data_dictionary
   end
 end

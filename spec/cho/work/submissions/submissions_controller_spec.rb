@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe WorkObject::DepositsController, type: :controller do
+RSpec.describe Work::SubmissionsController, type: :controller do
   let(:metadata_adapter) { Valkyrie::MetadataAdapter.find(:indexing_persister) }
   let(:resource) { create_for_repository(:work) }
 
@@ -10,7 +10,7 @@ RSpec.describe WorkObject::DepositsController, type: :controller do
     it 'returns a success response' do
       get :new
       expect(response).to be_success
-      expect(assigns(:work)).to be_a(WorkObject::ChangeSet)
+      expect(assigns(:work)).to be_a(Work::SubmissionChangeSet)
     end
   end
 
@@ -18,23 +18,23 @@ RSpec.describe WorkObject::DepositsController, type: :controller do
     it 'returns a success response' do
       get :edit, params: { id: resource.id }
       expect(response).to be_success
-      expect(assigns(:work)).to be_a(WorkObject::ChangeSet)
+      expect(assigns(:work)).to be_a(Work::SubmissionChangeSet)
     end
   end
 
   describe 'POST #create' do
     let(:valid_attributes) { { title: 'New Title', work_type: 'type' } }
-    let(:resource) { WorkObject::Deposit.all.last }
+    let(:resource) { Work::Submission.all.last }
 
     context 'with valid params' do
-      it 'creates a new WorkObject' do
+      it 'creates a new Work' do
         expect {
-          post :create, params: { 'work_object_deposit': valid_attributes }
-        }.to change { WorkObject::Deposit.count }.by(1)
+          post :create, params: { 'work_submission': valid_attributes }
+        }.to change { Work::Submission.count }.by(1)
       end
 
       it 'redirects to the created work' do
-        post :create, params: { 'work_object_deposit': valid_attributes }
+        post :create, params: { 'work_submission': valid_attributes }
         expect(response).to redirect_to("/catalog/#{resource.id}")
       end
     end
@@ -43,7 +43,7 @@ RSpec.describe WorkObject::DepositsController, type: :controller do
       let(:invalid_attributes) { { title: 'Missing a work type' } }
 
       it "returns a success response (i.e. to display the 'new' template)" do
-        post :create, params: { 'work_object_deposit': invalid_attributes }
+        post :create, params: { 'work_submission': invalid_attributes }
         expect(response).to be_success
       end
     end
@@ -53,15 +53,15 @@ RSpec.describe WorkObject::DepositsController, type: :controller do
     let(:new_attributes) { { title: 'Updated Title' } }
 
     context 'with valid params' do
-      let(:updated_resource) { WorkObject::Deposit.find(resource.id) }
+      let(:updated_resource) { Work::Submission.find(resource.id) }
 
       it 'updates the requested work' do
-        put :update, params: { id: resource.to_param, 'work_object_deposit': new_attributes }
+        put :update, params: { id: resource.to_param, 'work_submission': new_attributes }
         expect(updated_resource.title).to contain_exactly('Updated Title')
       end
 
       it 'redirects to the work' do
-        put :update, params: { id: resource.to_param, 'work_object_deposit': new_attributes }
+        put :update, params: { id: resource.to_param, 'work_submission': new_attributes }
         expect(response).to redirect_to("/catalog/#{resource.id}")
       end
     end
@@ -70,7 +70,7 @@ RSpec.describe WorkObject::DepositsController, type: :controller do
       let(:invalid_attributes) { { title: '' } }
 
       it "returns a success response (i.e. to display the 'edit' template)" do
-        put :update, params: { id: resource.to_param, 'work_object_deposit': invalid_attributes }
+        put :update, params: { id: resource.to_param, 'work_submission': invalid_attributes }
         expect(response).to be_success
       end
     end

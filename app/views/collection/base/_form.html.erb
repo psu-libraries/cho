@@ -44,7 +44,7 @@
     <% end %>
   </p>
 
-  <%= render '/work_object/deposits/errors', work: collection if collection.errors.any? %>
+  <%= render '/work/submissions/errors', work: collection if collection.errors.any? %>
 
   <div class="actions">
     <%= form.submit %>

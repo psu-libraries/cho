@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module WorkObject
+module Work
   class Decorator < Draper::Decorator
     delegate_all
 

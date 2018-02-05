@@ -1,6 +1,6 @@
 <h1>New Work</h1>
 
-<%= form_for(@work.model, url: work_objects_path) do |form| %>
+<%= form_for(@work.model, url: works_path) do |form| %>
 
   <%- @work.fields.except('work_type').each do |field_name, field_value| %>
     <p>
@@ -21,4 +21,4 @@
   </div>
 <% end %>
 
-<%= link_to 'Back', work_objects_path %>
+<%= link_to 'Back', works_path %>
