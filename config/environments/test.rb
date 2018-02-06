@@ -1,5 +1,20 @@
 # frozen_string_literal: true
 
+# Remove any artifacts leftover in the database from a previous test run.
+#   Because fields are assigned dynamically, this must be done here before
+#   the test suite is initialized.
+conn = PG.connect(dbname: Rails.configuration.database_configuration['test']['database'])
+
+sql = "SELECT EXISTS (
+   SELECT 1
+   FROM   information_schema.tables
+   WHERE  table_schema = 'schema_name'
+   AND    table_name = 'orm_resources'
+   );"
+
+exists = conn.exec(sql).values.reduce
+conn.exec('truncate table orm_resources') unless exists.include?('f')
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
