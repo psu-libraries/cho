@@ -32,6 +32,32 @@ RSpec.describe ChangeSetPersister do
     end
   end
 
+  describe '#validate_and_save' do
+    let(:change_set) { DataDictionary::FieldChangeSet.new(DataDictionary::Field.new) }
+
+    it 'persists a change set to Postgres' do
+      expect {
+        change_set_persister.validate_and_save(change_set: change_set, resource_params: { label: 'abc123' })
+      }.to change { metadata_adapter.query_service.find_all.count }.by(1)
+    end
+  end
+
+  describe '#validate_and_save_with_buffer' do
+    let(:persister) { metadata_adapter.persister }
+    let(:change_set) { DataDictionary::FieldChangeSet.new(DataDictionary::Field.new) }
+
+    before do
+      allow(metadata_adapter).to receive(:persister).and_return(persister)
+    end
+
+    it 'persists a change set to Postgres' do
+      expect(persister).to receive(:buffer_into_index).and_call_original
+      expect {
+        change_set_persister.validate_and_save_with_buffer(change_set: change_set, resource_params: { label: 'abc123' })
+      }.to change { metadata_adapter.query_service.find_all.count }.by(1)
+    end
+  end
+
   context 'when the persister fails' do
     let(:mock_persister) { double }
     let(:change_set) { DataDictionary::FieldChangeSet.new(DataDictionary::Field.new) }
@@ -46,8 +72,39 @@ RSpec.describe ChangeSetPersister do
       end
 
       it 'reports the error in the change set' do
-        output = change_set_persister.save(change_set: change_set)
+        expect { change_set_persister.save(change_set: change_set) }.to raise_error(StandardError)
+      end
+    end
+
+    describe '#validate_and_save' do
+      before do
+        allow(mock_persister).to receive(:save).and_raise(StandardError, 'save was not successful')
+      end
+
+      it 'reports the error in the save' do
+        output = change_set_persister.validate_and_save(change_set: change_set, resource_params: { label: 'abc123' })
         expect(output.errors.messages).to eq(save: ['save was not successful'])
+      end
+
+      it 'reports the error in the parameters' do
+        output = change_set_persister.validate_and_save(change_set: change_set, resource_params: {})
+        expect(output.errors.messages).to eq(label: ['can\'t be blank'])
+      end
+    end
+
+    describe '#validate_and_save_with_buffer' do
+      before do
+        allow(mock_persister).to receive(:buffer_into_index).and_raise(StandardError, 'save was not successful')
+      end
+
+      it 'reports the error in the save' do
+        output = change_set_persister.validate_and_save_with_buffer(change_set: change_set, resource_params: { label: 'abc123' })
+        expect(output.errors.messages).to eq(save: ['save was not successful'])
+      end
+
+      it 'reports the error in the parameters' do
+        output = change_set_persister.validate_and_save_with_buffer(change_set: change_set, resource_params: {})
+        expect(output.errors.messages).to eq(label: ['can\'t be blank'])
       end
     end
 

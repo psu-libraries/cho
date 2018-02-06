@@ -5,6 +5,7 @@ require 'rails_helper'
 RSpec.describe Work::SubmissionsController, type: :controller do
   let(:metadata_adapter) { Valkyrie::MetadataAdapter.find(:indexing_persister) }
   let(:resource) { create_for_repository(:work) }
+  let(:index_solr)    { Valkyrie::MetadataAdapter.find(:index_solr) }
 
   describe 'GET #new' do
     it 'returns a success response' do
@@ -28,9 +29,11 @@ RSpec.describe Work::SubmissionsController, type: :controller do
 
     context 'with valid params' do
       it 'creates a new Work' do
+        expect(index_solr.query_service.find_all.to_a.length).to eq 0
         expect {
           post :create, params: { 'work_submission': valid_attributes }
         }.to change { Work::Submission.count }.by(1)
+        expect(index_solr.query_service.find_all.to_a.length).to eq 1
       end
 
       it 'redirects to the created work' do
