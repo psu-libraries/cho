@@ -25,6 +25,7 @@ Rails.application.routes.draw do
 
   get '/vue', to: 'application#index'
   get '/grid', to: 'application#grid'
+  get '/todo', to: 'application#todo'
 
   resources :work_submissions, as: 'works', path: '/works', except: [:show, :index], controller: 'work/submissions'
   resources :archival_collections, except: [:show, :index], controller: 'collection/archival_collections'
