@@ -7,7 +7,13 @@ module Work
 
     # GET /works/new
     def new
-      @work = SubmissionChangeSet.new(Submission.new).prepopulate!
+      work_type = params.fetch(:work_type, nil)
+      if work_type
+        @work = SubmissionChangeSet.new(Submission.new(work_type: work_type)).prepopulate!
+      else
+        flash[:alert] = 'You must specify a work type'
+        redirect_to(root_path)
+      end
     end
 
     # GET /works/1/edit

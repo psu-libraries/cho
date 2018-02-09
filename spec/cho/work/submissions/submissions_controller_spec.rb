@@ -8,10 +8,19 @@ RSpec.describe Work::SubmissionsController, type: :controller do
   let(:index_solr)    { Valkyrie::MetadataAdapter.find(:index_solr) }
 
   describe 'GET #new' do
-    it 'returns a success response' do
-      get :new
-      expect(response).to be_success
-      expect(assigns(:work)).to be_a(Work::SubmissionChangeSet)
+    context 'with a work type' do
+      it 'returns a success response' do
+        get :new, params: { work_type: 'type' }
+        expect(response).to be_success
+        expect(assigns(:work)).to be_a(Work::SubmissionChangeSet)
+      end
+    end
+
+    context 'without a work type' do
+      it 'redirects to the home page' do
+        get :new
+        expect(response).to redirect_to('/')
+      end
     end
   end
 
