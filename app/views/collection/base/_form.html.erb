@@ -1,48 +1,41 @@
 <%= form_with(model: collection) do |form| %>
+  <fieldset class="basic_metadata">
+    <legend><%= t('cho.form.metadata')%></legend>
+    <%= form.label :title do %>
+      Title<span class="required no_bold"> required</span>
+    <% end %>
+      <%= form.text_field :title, id: :title, :required => true %>
+    <%= form.label :subtitle %>
+      <%= form.text_field :subtitle, id: :subtitle %>
+    <%= form.label :description %>
+    <%= form.text_area :description, id: :description %>
+  </fieldset>
 
-  <p>
-    <%= form.label :title %><br>
-    <%= form.text_field :title %>
-  </p>
-
-  <p>
-    <%= form.label :subtitle %><br>
-    <%= form.text_field :subtitle %>
-  </p>
-
-  <p>
-    <%= form.label :description %><br>
-    <%= form.text_area :description %>
-  </p>
-
-  <p>
-    <%= form.label :workflow %><br>
-
-    <%= form.label :workflow_default do %>
-      <%= form.radio_button :workflow, "default" %> Publish immediately
+  <fieldset>
+    <legend><%= t('cho.form.workflow')%></legend>
+    <%= form.label :workflow_default, class: :no_bold do %>
+      <%= form.radio_button :workflow, "default", id: :workflow_default %> Publish immediately
     <% end %>
 
-    <%= form.label :workflow_mediated do %>
-      <%= form.radio_button :workflow, "mediated" %> Mediated
+    <%= form.label :workflow_mediated, class: :no_bold do %>
+      <%= form.radio_button :workflow, "mediated", id: :workflow_mediated %> Mediated
     <% end %>
-  </p>
+  </fieldset>
 
-
-  <p>
-    <%= form.label :visibility %><br>
-
-    <%= form.label :visibility_public do %>
-      <%= form.radio_button :visibility, "public" %> Public
+  <fieldset>
+    <legend><%= t('cho.form.visibility')%></legend>
+    <%= form.label :visibility_public, class: :no_bold do %>
+      <%= form.radio_button :visibility, "public", id: :visibility_public %> Public
     <% end %>
 
-    <%= form.label :visibility_authenticated do %>
-      <%= form.radio_button :visibility, "authenticated" %> Authenticated
+    <%= form.label :visibility_authenticated, class: :no_bold do %>
+      <%= form.radio_button :visibility, "authenticated", id: :visibility_authenticated %> Authenticated
     <% end %>
 
-    <%= form.label :visibility_private do %>
-      <%= form.radio_button :visibility, "private" %> Private
+    <%= form.label :visibility_private, class: :no_bold do %>
+      <%= form.radio_button :visibility, "private", id: :visibility_private %> Private
     <% end %>
-  </p>
+  </fieldset>
 
   <%= render '/work/submissions/errors', work: collection if collection.errors.any? %>
 

@@ -1,0 +1,13 @@
+// Place all the styles related to the Collection Form here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+h1        { margin-bottom: 2rem; }
+fieldset  { margin-bottom: 3rem; }
+legend    { border: none; }
+.basic_metadata input { margin-bottom: 1rem; }
+.no_bold  { font-weight: normal; }
+.required {
+  color: red;
+  vertical-align: super;
+}
