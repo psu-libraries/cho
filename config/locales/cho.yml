@@ -10,3 +10,18 @@ en:
       work_type: "Work Type"
       workflow: "Workflow"
       visibility: "Visibility"
+    work:
+      new:
+        heading: "New %{type} Submission"
+        submit: "Create Submission"
+        no_type: "Unable to find work type"
+        back_link: "Back"
+      edit:
+        heading: "Editing Work"
+        submit: "Update Work"
+        back_link: "Back"
+        show_link: "Show"
+        delete_link: "Delete Work"
+        delete_confirmation: "Are you sure?"
+      error: "%{count} prohibited this work from being saved:"
+
