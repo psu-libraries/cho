@@ -81,7 +81,8 @@ class CatalogController < ApplicationController
     #  (useful when user clicks "more" on a large facet and wants to navigate alphabetically across a large set of results)
     # :index_range can be an array or range of prefixes that will be used to create the navigation (note: It is case sensitive when searching values)
 
-    config.add_facet_field 'work_type_ssim', label: 'Work Type'
+    config.add_facet_field 'work_type_ssim', label: I18n.t('cho.field_label.work_type')
+    config.add_facet_field 'collection_type_ssim', label: I18n.t('cho.field_label.collection_type')
     # config.add_facet_field 'pub_date', label: 'Publication Year', single: true
     # config.add_facet_field 'subject_topic_facet', label: 'Topic', limit: 20, index_range: 'A'..'Z'
     # config.add_facet_field 'language_facet', label: 'Language', limit: true
@@ -104,15 +105,17 @@ class CatalogController < ApplicationController
 
     # solr fields to be displayed in the index (search results) view
     #   The ordering of the field names is the order of the display
-    config.add_index_field 'work_type_ssim', label: 'Work Type'
-    config.add_index_field 'visibility_ssim', label: 'Visibility'
-    config.add_index_field 'workflow_ssim', label: 'Workflow'
+    config.add_index_field 'work_type_ssim', label: I18n.t('cho.field_label.work_type')
+    config.add_index_field 'visibility_ssim', label: I18n.t('cho.field_label.visibility')
+    config.add_index_field 'workflow_ssim', label: I18n.t('cho.field_label.workflow')
+    config.add_index_field 'collection_type_ssim', label: I18n.t('cho.field_label.collection_type')
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
-    config.add_show_field 'work_type_ssim', label: 'Work Type'
-    config.add_show_field 'visibility_ssim', label: 'Visibility'
-    config.add_show_field 'workflow_ssim', label: 'Workflow'
+    config.add_show_field 'work_type_ssim', label: I18n.t('cho.field_label.work_type')
+    config.add_show_field 'visibility_ssim', label: I18n.t('cho.field_label.visibility')
+    config.add_show_field 'workflow_ssim', label: I18n.t('cho.field_label.workflow')
+    config.add_show_field 'collection_type_ssim', label: I18n.t('cho.field_label.collection_type')
 
     # "fielded" search configuration. Used by pulldown among other places.
     # For supported keys in hash, see rdoc for Blacklight::SearchFields
