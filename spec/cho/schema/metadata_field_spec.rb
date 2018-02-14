@@ -14,7 +14,8 @@ RSpec.describe Schema::MetadataField, type: :model do
                       default_value: 'abc123',
                       display_name: 'My Abc123',
                       display_transformation: 'no_transformation',
-                      multiple: false, validation: 'no_validation', order_index: 0 }
+                      multiple: false, validation: 'no_validation',
+                      core_field: false, order_index: 0 }
 
   it_behaves_like 'a Valkyrie::Resource'
 
@@ -49,6 +50,7 @@ RSpec.describe Schema::MetadataField, type: :model do
                                 requirement_designation: 'recommended',
                                 updated_at: saved_model.updated_at,
                                 validation: 'no_validation',
+                                core_field: false,
                                 order_index: 0 } }
 
     its(:attributes) { is_expected.to eq(expected_metadata) }

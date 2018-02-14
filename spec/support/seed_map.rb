@@ -25,7 +25,8 @@ class SeedMAP
         display_transformation: 'no_transformation',
         multiple: true,
         help_text: 'help me',
-        index_type: 'no_facet'
+        index_type: 'no_facet',
+        core_field: true
       )
     end
 
@@ -39,7 +40,8 @@ class SeedMAP
         display_transformation: 'no_transformation',
         multiple: true,
         help_text: 'help me',
-        index_type: 'no_facet'
+        index_type: 'no_facet',
+        core_field: false
       )
     end
 
@@ -53,7 +55,8 @@ class SeedMAP
         display_transformation: 'no_transformation',
         multiple: true,
         help_text: 'help me',
-        index_type: 'no_facet'
+        index_type: 'no_facet',
+        core_field: true
       )
     end
 

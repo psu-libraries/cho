@@ -28,6 +28,7 @@ RSpec.describe DataDictionary::Field, type: :model do
   it { is_expected.to respond_to(:display_transformation) }
   it { is_expected.to respond_to(:help_text) }
   it { is_expected.to respond_to(:index_type) }
+  it { is_expected.to respond_to(:core_field) }
 
   it 'can be optional' do
     model.optional!
@@ -86,7 +87,8 @@ RSpec.describe DataDictionary::Field, type: :model do
                                 multiple: false,
                                 requirement_designation: 'recommended',
                                 updated_at: saved_model.updated_at,
-                                validation: 'no_validation' } }
+                                validation: 'no_validation',
+                                core_field: false } }
 
     its(:attributes) { is_expected.to eq(expected_metadata) }
   end

@@ -16,6 +16,7 @@ module DataDictionary
     attribute :display_name, Valkyrie::Types::String
     attribute :multiple, Valkyrie::Types::Strict::Bool
     attribute :help_text, Valkyrie::Types::String
+    attribute :core_field, Valkyrie::Types::Strict::Bool
 
     def multiple?
       return false if multiple.nil?
