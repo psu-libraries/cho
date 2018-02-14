@@ -27,7 +27,15 @@ class FindUsing
   end
 
   def build_where_clause(query, model)
-    clause = ["metadata @> '{\"#{query.keys.first}\":\"#{query.values.first}\"}'"]
+    key = query.keys.first
+    value = query.values.first
+    clause = if value.is_a?(String)
+               ["metadata @> '{\"#{key}\":\"#{value}\"}'"]
+             elsif value.nil?
+               ["metadata->>'#{key}' is null"]
+             else
+               ["metadata @> '{\"#{key}\":#{value}}'"]
+             end
     clause.push("internal_resource = '#{model}'") if model
     clause.join(' AND ')
   end

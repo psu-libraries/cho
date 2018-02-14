@@ -8,6 +8,7 @@ RSpec.describe CommonQueries do
       include CommonQueries
       attribute :id, Valkyrie::Types::ID.optional
       attribute :label, Valkyrie::Types::String
+      attribute :bool_val, Valkyrie::Types::Strict::Bool
     end
   end
 
@@ -39,7 +40,7 @@ RSpec.describe CommonQueries do
   context 'with existing resources' do
     before do
       3.times do
-        Valkyrie.config.metadata_adapter.persister.save(resource: CommonResource.new)
+        Valkyrie.config.metadata_adapter.persister.save(resource: CommonResource.new(bool_val: false))
       end
     end
 
@@ -55,11 +56,11 @@ RSpec.describe CommonQueries do
   end
 
   context "with the resource we're looking for" do
-    let!(:common_resource) { Valkyrie.config.metadata_adapter.persister.save(resource: CommonResource.new) }
+    let!(:common_resource) { Valkyrie.config.metadata_adapter.persister.save(resource: CommonResource.new(bool_val: false)) }
 
     before do
       2.times do
-        Valkyrie.config.metadata_adapter.persister.save(resource: CommonResource.new)
+        Valkyrie.config.metadata_adapter.persister.save(resource: CommonResource.new(bool_val: false))
       end
     end
 
@@ -73,13 +74,33 @@ RSpec.describe CommonQueries do
   end
 
   context "with the resource we're looking for" do
-    let(:resource1) { CommonResource.new(label: 'first resource') }
-    let(:resource2) { CommonResource.new(label: 'second resource') }
+    let(:resource1) { CommonResource.new(label: 'first resource', bool_val: false) }
+    let(:resource2) { CommonResource.new(label: 'second resource', bool_val: false) }
+    let(:resource3) { CommonResource.new(label: 'third resource', bool_val: true) }
+    let(:resource4) { CommonResource.new(bool_val: false) }
 
     it 'retrieves a resource based on its label' do
       persisted_resource = Valkyrie.config.metadata_adapter.persister.save(resource: resource1)
       Valkyrie.config.metadata_adapter.persister.save(resource: resource2)
       results = CommonResource.find_using(label: 'first resource')
+      expect(results.count).to eq(1)
+      expect(results.first.id).to eq(persisted_resource.id)
+    end
+
+    it 'retrieves a resource based on its bool_val' do
+      Valkyrie.config.metadata_adapter.persister.save(resource: resource1)
+      Valkyrie.config.metadata_adapter.persister.save(resource: resource2)
+      persisted_resource = Valkyrie.config.metadata_adapter.persister.save(resource: resource3)
+      results = CommonResource.find_using(bool_val: true)
+      expect(results.count).to eq(1)
+      expect(results.first.id).to eq(persisted_resource.id)
+    end
+
+    it 'retrieves a resource based on an empty field' do
+      Valkyrie.config.metadata_adapter.persister.save(resource: resource1)
+      Valkyrie.config.metadata_adapter.persister.save(resource: resource2)
+      persisted_resource = Valkyrie.config.metadata_adapter.persister.save(resource: resource4)
+      results = CommonResource.find_using(label: nil)
       expect(results.count).to eq(1)
       expect(results.first.id).to eq(persisted_resource.id)
     end
