@@ -4,3 +4,9 @@ en:
       metadata: "Basic Metadata"
       workflow: "Workflow"
       visibility: "Visibility"
+    field_label:
+      # For fields that are not in the data dictionary
+      collection_type: "Collection Type"
+      work_type: "Work Type"
+      workflow: "Workflow"
+      visibility: "Visibility"
