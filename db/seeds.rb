@@ -11,7 +11,8 @@ def title_field
     display_transformation: 'no_transformation',
     multiple: true,
     help_text: 'help me',
-    index_type: 'no_facet'
+    index_type: 'no_facet',
+    core_field: true
   )
 end
 
@@ -26,7 +27,8 @@ def subtitle_field
     display_transformation: 'no_transformation',
     multiple: true,
     help_text: 'help me',
-    index_type: 'no_facet'
+    index_type: 'no_facet',
+    core_field: true
   )
 end
 
@@ -41,7 +43,8 @@ def description_field
     display_transformation: 'no_transformation',
     multiple: true,
     help_text: 'help me',
-    index_type: 'no_facet'
+    index_type: 'no_facet',
+    core_field: true
   )
 end
 
@@ -72,8 +75,8 @@ def seed_resource(resource)
   Valkyrie.config.metadata_adapter.persister.save(resource: resource)
 end
 
-seed_resource(default_metadata_schema)
 seed_resource(title_field)
 seed_resource(subtitle_field)
 seed_resource(description_field)
+seed_resource(default_metadata_schema)
 load_work_types

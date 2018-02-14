@@ -27,17 +27,21 @@ module DataDictionary
     property :index_type, multiple: false, default: 'no_facet'
     validates :index_type, inclusion: { in: Field::IndexTypes.values }
 
+    property :core_field, multiple: false, default: false
+    validates :core_field, with: :coerce_into_boolean
+
     # rubocop:disable Style/NumericPredicate
     # Rubocop wants to use {multiple.zero?} but that breaks things.
     # Need to find a better way to coerce booleans.
-    def coerce_into_boolean(_field)
-      return if multiple.is_a?(TrueClass) || multiple.is_a?(FalseClass)
-      if multiple == 'false' || multiple == '0' || multiple == 0
-        self.multiple = false
-      elsif multiple == 'true' || multiple == '1' || multiple == 1
-        self.multiple = true
+    def coerce_into_boolean(field)
+      field_value = self[field]
+      return if field_value.is_a?(TrueClass) || field_value.is_a?(FalseClass)
+      if ['false', '0', 0].include? field_value
+        send("#{field}=", false)
+      elsif ['true', '1', 1].include? field_value
+        send("#{field}=", true)
       else
-        errors.add(:multiple, 'is the wrong type')
+        errors.add(field, 'is the wrong type')
       end
     end
     # rubocop:enable Style/NumericPredicate
