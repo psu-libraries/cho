@@ -1,6 +1,6 @@
-Fixes # .
-
 ## Description
+
+References ticket: (if any)
 
 Why was this necessary?
 
