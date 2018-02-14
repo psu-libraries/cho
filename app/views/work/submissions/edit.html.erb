@@ -1,4 +1,5 @@
-<h1>Editing <%= @work.work_type.titleize %></h1>
+<h1><%= t('cho.work.edit.heading') %></h1>
+<h2><%= @work.title.first %></h2>
 
 <%= form_with(model: @work, url: work_path(@work)) do |form| %>
 
@@ -12,11 +13,11 @@
   <%= render 'errors', work: @work if @work.errors.any? %>
 
   <div class="actions">
-    <%= form.submit "Update #{@work.work_type.titleize}" %>
+    <%= form.submit t('cho.work.edit.submit') %>
   </div>
 <% end %>
 
-<%= link_to 'Show', work_path(@work) %> |
-<%= link_to 'Back', works_path %> |
-<%= link_to "Delete #{@work.work_type.titleize}", work_path(@work),
-            data: {:confirm => 'Are you sure?'}, :method => :delete %>
+<%= link_to t('cho.work.edit.show_link'), work_path(@work) %> |
+<%= link_to t('cho.work.edit.back_link'), works_path %> |
+<%= link_to t('cho.work.edit.delete_link'), work_path(@work),
+            data: {:confirm => t('cho.work.edit.delete_confirmation')}, :method => :delete %>

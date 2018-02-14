@@ -2,7 +2,7 @@
 <% work_type = Work::Type.find(Valkyrie::ID.new(@work.work_type)) %>
 
 <% if work_type %>
-  <h1>New <%= work_type.label %> Submission</h1>
+  <h1><%= t('cho.work.new.heading', type: work_type.label) %></h1>
 
   <%= form_for(@work.model, url: works_path) do |form| %>
 
@@ -18,14 +18,14 @@
     <%= render 'errors', work: @work if @work.errors.any? %>
 
     <div class="actions">
-      <%= form.submit %>
+      <%= form.submit t('cho.work.new.submit') %>
     </div>
   <% end %>
 
 <% else %>
 
-<p>Unable to find work type</p>
+<p><%= t('cho.work.new.no_type') %></p>
 
 <% end %>
 
-<%= link_to 'Back', works_path %>
+<%= link_to t('cho.work.new.back_link'), works_path %>
