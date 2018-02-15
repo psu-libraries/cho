@@ -36,7 +36,8 @@ module DataDictionary
     def self.default_attributes
       [:label, :field_type, :requirement_designation,
        :validation, :multiple, :controlled_vocabulary,
-       :default_value, :display_name, :display_transformation]
+       :default_value, :display_name, :display_transformation,
+       :index_type, :help_text, :core_field]
     end
   end
 end

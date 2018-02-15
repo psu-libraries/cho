@@ -3,8 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe DataDictionary::CsvImporter do
-  let(:header) { "Label,Field Type,Requirement Designation,Validation,Multiple,Controlled Vocabulary,Default Value,Display Name,Display Transformation,Core Field\n" }
-  let(:csv_field1) { "abc123_label,date,recommended,no_validation,false,no_vocabulary,abc123,My Abc123,no_transformation,true\n" }
+  let(:header) { "Label,Field Type,Requirement Designation,Validation,Multiple,Controlled Vocabulary,Default Value,Display Name,Display Transformation,Index Type,Help Text,Core Field\n" }
+  let(:csv_field1) { "abc123_label,date,recommended,no_validation,false,no_vocabulary,abc123,My Abc123,no_transformation,no_facet,help me,false\n" }
 
   let(:file) { StringIO.new(header + csv_field1) }
 

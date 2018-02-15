@@ -5,8 +5,8 @@ require 'rails_helper'
 RSpec.describe DataDictionary::CsvPresenter do
   let(:metdata_field1) { build :data_dictionary_field }
   let(:presenter) { described_class.new(field_list) }
-  let(:header) { "Label,Field Type,Requirement Designation,Validation,Multiple,Controlled Vocabulary,Default Value,Display Name,Display Transformation\n" }
-  let(:csv_field1) { "abc123_label,date,recommended,no_validation,false,no_vocabulary,abc123,My Abc123,no_transformation\n" }
+  let(:header) { "Label,Field Type,Requirement Designation,Validation,Multiple,Controlled Vocabulary,Default Value,Display Name,Display Transformation,Index Type,Help Text,Core Field\n" }
+  let(:csv_field1) { "abc123_label,date,recommended,no_validation,false,no_vocabulary,abc123,My Abc123,no_transformation,no_facet,help me,false\n" }
 
   describe '#to_csv' do
     subject { presenter.to_csv }
@@ -26,7 +26,7 @@ RSpec.describe DataDictionary::CsvPresenter do
     context 'multiple items in list' do
       let(:field_list) { [metdata_field1, metdata_field2] }
       let(:metdata_field2) { build :data_dictionary_field, label: 'field2' }
-      let(:csv_field2) { "field2,date,recommended,no_validation,false,no_vocabulary,abc123,My Abc123,no_transformation\n" }
+      let(:csv_field2) { "field2,date,recommended,no_validation,false,no_vocabulary,abc123,My Abc123,no_transformation,no_facet,help me,false\n" }
 
       it { is_expected.to eq(header + csv_field1 + csv_field2) }
     end
