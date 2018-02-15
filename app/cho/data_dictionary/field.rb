@@ -22,5 +22,9 @@ module DataDictionary
       return false if multiple.nil?
       multiple
     end
+
+    def self.core_fields
+      @core_fields ||= where(core_field: true)
+    end
   end
 end
