@@ -3,7 +3,7 @@
 RSpec.configure do |config|
   config.before(:suite) do
     DatabaseCleaner.clean_with(:deletion)
-    SeedMAP.create
+    Rails.application.load_seed # This call allows the UI to have access to the various work types
   end
 
   config.after(:suite) do

@@ -1,0 +1,10 @@
+Label,Field Type,Requirement Designation,Validation,Multiple,Controlled Vocabulary,Default Value,Display Name,Display Transformation,Index Type,Help Text,Core Field
+title,string,required_to_publish,no_validation,true,no_vocabulary,,,no_transformation,no_facet,help me,true
+subtitle,string,optional,no_validation,true,no_vocabulary,,,no_transformation,no_facet,help me,true
+description,string,optional,no_validation,true,no_vocabulary,,,no_transformation,no_facet,help me,true
+generic_field,string,optional,no_validation,true,no_vocabulary,,,no_transformation,no_facet,help me,false
+document_field,string,optional,no_validation,true,no_vocabulary,,,no_transformation,no_facet,help me,false
+still_image_field,string,optional,no_validation,true,no_vocabulary,,,no_transformation,no_facet,help me,false
+moving_image_field,string,optional,no_validation,true,no_vocabulary,,,no_transformation,no_facet,help me,false
+map_field,string,optional,no_validation,true,no_vocabulary,,,no_transformation,no_facet,help me,false
+audio_field,string,optional,no_validation,true,no_vocabulary,,,no_transformation,no_facet,help me,false

@@ -175,7 +175,7 @@ RSpec.describe DataDictionary::FieldsController, type: :controller do
 
       it 'redirects to the created dictionary_field' do
         post :create, params: { data_dictionary_field: valid_attributes }, session: valid_session
-        expect(response).to redirect_to(DataDictionary::Field.all.to_a.last)
+        expect(response).to redirect_to(DataDictionary::Field.all.sort_by(&:created_at).last)
       end
     end
 

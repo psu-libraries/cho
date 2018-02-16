@@ -45,6 +45,13 @@ RSpec.describe DataDictionary::Field, type: :model do
     expect(model.index_type).to eq('facet')
   end
 
+  # this test assumes the data dictionary has been seeded with 3 core fields
+  describe '#core' do
+    subject { described_class.core_fields.to_a.map(&:label) }
+
+    it { is_expected.to eq(['title', 'subtitle', 'description']) }
+  end
+
   describe '#multiple' do
     context 'when not set to a boolean' do
       it 'raises an error' do

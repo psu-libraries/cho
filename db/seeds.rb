@@ -1,82 +1,52 @@
 # Loads required fields, schemas, and work types for use with CHO
+class SeedMAP
+  class << self
 
-# @todo move this to a CSV-based process
-def title_field
-  DataDictionary::Field.new(
-    label: 'title',
-    requirement_designation: 'required_to_publish',
-    field_type: 'string',
-    validation: 'no_validation',
-    controlled_vocabulary: 'no_vocabulary',
-    display_transformation: 'no_transformation',
-    multiple: true,
-    help_text: 'help me',
-    index_type: 'no_facet',
-    core_field: true
-  )
-end
+    def load_data_dictionary
+      importer = DataDictionary::CsvImporter.new(File.new('data_dictionary.csv'))
+      importer.import
+    end
 
-# @todo move this to a CSV-based process
-def subtitle_field
-  DataDictionary::Field.new(
-    label: 'subtitle',
-    requirement_designation: 'optional',
-    field_type: 'string',
-    validation: 'no_validation',
-    controlled_vocabulary: 'no_vocabulary',
-    display_transformation: 'no_transformation',
-    multiple: true,
-    help_text: 'help me',
-    index_type: 'no_facet',
-    core_field: true
-  )
-end
+    def core_field_ids
+      @core_fields ||= Schema::MetadataCoreFields.generate(Valkyrie.config.metadata_adapter.persister).map(&:id)
+    end
 
-# @todo move this to a CSV-based process
-def description_field
-  DataDictionary::Field.new(
-    label: 'description',
-    requirement_designation: 'optional',
-    field_type: 'string',
-    validation: 'no_validation',
-    controlled_vocabulary: 'no_vocabulary',
-    display_transformation: 'no_transformation',
-    multiple: true,
-    help_text: 'help me',
-    index_type: 'no_facet',
-    core_field: true
-  )
-end
+    def metadata_schema(type)
+      data_dictionary_field = DataDictionary::Field.where(label: "#{type.parameterize(separator: '_')}_field").first
+      metadata_field = seed_resource(Schema::MetadataField.initialize_from_data_dictionary_field(data_dictionary_field))
+      Schema::Metadata.new(
+        label: type, core_fields: core_field_ids,
+                fields: [metadata_field.id]
+      )
+    end
 
-def default_metadata_schema
-  Schema::Metadata.new(
-    label: 'default',
-    core_fields: DataDictionary::Field.all.map(&:id)
-  )
-end
+    def work_type(type)
+      Work::Type.new(
+        label: type,
+        metadata_schema_id: Schema::Metadata.find_using(label: type).first.id,
+        processing_schema: 'default',
+        display_schema: 'default'
+      )
+    end
 
-def work_type(type)
-  Work::Type.new(
-    label: type,
-    metadata_schema_id: Schema::Metadata.find_using(label: 'default').first.id,
-    processing_schema: 'default',
-    display_schema: 'default'
-  )
-end
+    def load_work_types
+      ["Generic", "Document", "Still Image", "Map", "Moving Image", "Audio"].each do |type|
+        seed_resource(metadata_schema(type))
+        seed_resource(work_type(type))
+      end
+    end
 
-def load_work_types
-  ["Generic", "Document", "Still Image", "Map", "Moving Image", "Audio"].each do |type|
-    seed_resource(work_type(type))
+    def seed_resource(resource)
+      return if resource.class.where(label: resource.label).count > 0
+      Valkyrie.config.metadata_adapter.persister.save(resource: resource)
+    end
+
+    def create
+      return unless ActiveRecord::Base.connection.table_exists? 'orm_resources'
+      load_data_dictionary
+      load_work_types
+    end
   end
 end
 
-def seed_resource(resource)
-  return if resource.class.where(label: resource.label).count > 0
-  Valkyrie.config.metadata_adapter.persister.save(resource: resource)
-end
-
-seed_resource(title_field)
-seed_resource(subtitle_field)
-seed_resource(description_field)
-seed_resource(default_metadata_schema)
-load_work_types
+SeedMAP.create

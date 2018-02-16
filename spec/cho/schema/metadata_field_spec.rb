@@ -38,6 +38,7 @@ RSpec.describe Schema::MetadataField, type: :model do
     let(:expected_metadata) { { controlled_vocabulary: 'no_vocabulary',
                                 created_at: saved_model.created_at,
                                 default_value: 'abc123',
+                                data_dictionary_field_id: nil,
                                 display_name: 'My Abc123',
                                 display_transformation: 'no_transformation',
                                 field_type: 'date',
@@ -54,5 +55,31 @@ RSpec.describe Schema::MetadataField, type: :model do
                                 order_index: 0 } }
 
     its(:attributes) { is_expected.to eq(expected_metadata) }
+  end
+
+  describe '#initialize_from_data_dictionary_field' do
+    subject(:schema_field) { described_class.initialize_from_data_dictionary_field(data_dictionary_field) }
+
+    let(:data_dictionary_field) { DataDictionary::Field.where(label: 'title').first }
+    let(:expected_metadata) { { controlled_vocabulary: 'no_vocabulary',
+                                core_field: true,
+                                default_value: nil,
+                                display_name: nil,
+                                display_transformation: 'no_transformation',
+                                field_type: 'string',
+                                help_text: 'help me',
+                                index_type: 'no_facet',
+                                internal_resource: 'Schema::MetadataField',
+                                label: 'title',
+                                multiple: true,
+                                requirement_designation: 'required_to_publish',
+                                order_index: nil,
+                                validation: 'no_validation' } }
+
+    its(:attributes) { is_expected.to include(expected_metadata) }
+
+    it 'sets the data dictionry field id' do
+      expect(schema_field.data_dictionary_field_id.to_s).to eq(data_dictionary_field.id.to_s)
+    end
   end
 end
