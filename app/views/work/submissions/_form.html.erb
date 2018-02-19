@@ -1,0 +1,17 @@
+<%= form_for(work_form.model, url: work_form.form_path) do |form| %>
+
+  <%- work_form.fields.each do |metadata_field| %>
+    <p>
+      <%= form.label metadata_field.label, metadata_field.display_name %><br>
+      <%= form.text_field metadata_field.label %>
+    </p>
+  <%- end  %>
+
+  <%= form.hidden_field :work_type, value: work_form.work_type.id %>
+
+  <%= render 'errors', work: work_form if work_form.errors.any? %>
+
+  <div class="actions">
+    <%= form.submit work_form.submit_text %>
+  </div>
+<% end %>

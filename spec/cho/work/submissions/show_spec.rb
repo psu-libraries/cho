@@ -3,7 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe Work::Submission, type: :feature do
-  let(:work) { create_for_repository(:work, title: 'An editable file') }
+  let(:work) { create_for_repository(:work, title: 'An editable file', work_type: work_type.id) }
+  let(:work_type)  { Work::Type.where(label: 'Document').first }
 
   it 'displays its show page and links to the edit form' do
     visit(polymorphic_path([:solr_document], id: work.id))

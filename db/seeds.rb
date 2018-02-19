@@ -8,12 +8,14 @@ class SeedMAP
     end
 
     def core_field_ids
-      @core_fields ||= Schema::MetadataCoreFields.generate(Valkyrie.config.metadata_adapter.persister).map(&:id)
+      Schema::MetadataCoreFields.generate(Valkyrie.config.metadata_adapter.persister).map(&:id)
     end
 
     def metadata_schema(type)
       data_dictionary_field = DataDictionary::Field.where(label: "#{type.parameterize(separator: '_')}_field").first
-      metadata_field = seed_resource(Schema::MetadataField.initialize_from_data_dictionary_field(data_dictionary_field))
+      metadata_field = Schema::MetadataField.initialize_from_data_dictionary_field(data_dictionary_field)
+      metadata_field.order_index = 3
+      metadata_field = seed_resource(metadata_field)
       Schema::Metadata.new(
         label: type, core_fields: core_field_ids,
                 fields: [metadata_field.id]
@@ -37,7 +39,7 @@ class SeedMAP
     end
 
     def seed_resource(resource)
-      return if resource.class.where(label: resource.label).count > 0
+      return resource.class.where(label: resource.label).first if resource.class.where(label: resource.label).count > 0
       Valkyrie.config.metadata_adapter.persister.save(resource: resource)
     end
 

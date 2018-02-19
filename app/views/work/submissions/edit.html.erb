@@ -1,23 +1,9 @@
 <h1><%= t('cho.work.edit.heading') %></h1>
 <h2><%= @work.title.first %></h2>
 
-<%= form_with(model: @work, url: work_path(@work)) do |form| %>
+<%= render partial: 'form',  locals: { work_form: @work } %>
 
-  <%- @work.fields.except('work_type').each do |field_name, field_value| %>
-    <p>
-      <%= form.label field_name %><br>
-      <%= form.text_field field_name %>
-    </p>
-  <%- end  %>
-
-  <%= render 'errors', work: @work if @work.errors.any? %>
-
-  <div class="actions">
-    <%= form.submit t('cho.work.edit.submit') %>
-  </div>
-<% end %>
-
-<%= link_to t('cho.work.edit.show_link'), work_path(@work) %> |
+<%= link_to t('cho.work.edit.show_link'), work_path(@work.model) %> |
 <%= link_to t('cho.work.edit.back_link'), works_path %> |
-<%= link_to t('cho.work.edit.delete_link'), work_path(@work),
+<%= link_to t('cho.work.edit.delete_link'), work_path(@work.model),
             data: {:confirm => t('cho.work.edit.delete_confirmation')}, :method => :delete %>
