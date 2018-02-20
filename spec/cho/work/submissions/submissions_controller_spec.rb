@@ -12,7 +12,7 @@ RSpec.describe Work::SubmissionsController, type: :controller do
       it 'returns a success response' do
         get :new, params: { work_type: 'type' }
         expect(response).to be_success
-        expect(assigns(:work)).to be_a(Work::SubmissionChangeSet)
+        expect(assigns(:work)).to be_a(Work::Form)
       end
     end
 
@@ -28,7 +28,7 @@ RSpec.describe Work::SubmissionsController, type: :controller do
     it 'returns a success response' do
       get :edit, params: { id: resource.id }
       expect(response).to be_success
-      expect(assigns(:work)).to be_a(Work::SubmissionChangeSet)
+      expect(assigns(:work)).to be_a(Work::Form)
     end
   end
 

@@ -9,7 +9,7 @@ module Work
     def new
       work_type = params.fetch(:work_type, nil)
       if work_type
-        @work = SubmissionChangeSet.new(Submission.new(work_type: work_type)).prepopulate!
+        @work = Work::Form.new(SubmissionChangeSet.new(Submission.new(work_type: work_type)).prepopulate!)
       else
         flash[:alert] = 'You must specify a work type'
         redirect_to(root_path)
@@ -18,7 +18,7 @@ module Work
 
     # GET /works/1/edit
     def edit
-      @work = SubmissionChangeSet.new(find_resource(params[:id])).prepopulate!
+      @work = Work::Form.new(SubmissionChangeSet.new(find_resource(params[:id])).prepopulate!)
     end
 
     # POST /works
@@ -62,7 +62,7 @@ module Work
       end
 
       def respond_error(change_set, error_view)
-        @work = change_set
+        @work = Work::Form.new(change_set)
         render error_view
       end
 

@@ -12,8 +12,8 @@ en:
       visibility: "Visibility"
     work:
       new:
-        heading: "New %{type} Submission"
-        submit: "Create Submission"
+        heading: "New %{type} Work"
+        submit: "Create Work"
         no_type: "Unable to find work type"
         back_link: "Back"
       edit:

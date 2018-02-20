@@ -1,26 +1,7 @@
-<%# move this into the change set or some other kind of form object %>
-<% work_type = Work::Type.find(Valkyrie::ID.new(@work.work_type)) %>
+<% if @work.work_type %>
+  <h1><%= t('cho.work.new.heading', type: @work.work_type.label) %></h1>
 
-<% if work_type %>
-  <h1><%= t('cho.work.new.heading', type: work_type.label) %></h1>
-
-  <%= form_for(@work.model, url: works_path) do |form| %>
-
-    <%- @work.fields.except('work_type').each do |field_name, field_value| %>
-      <p>
-        <%= form.label field_name %><br>
-        <%= form.text_field field_name %>
-      </p>
-    <%- end  %>
-
-    <%= form.hidden_field :work_type, value: work_type.id %>
-
-    <%= render 'errors', work: @work if @work.errors.any? %>
-
-    <div class="actions">
-      <%= form.submit t('cho.work.new.submit') %>
-    </div>
-  <% end %>
+  <%= render partial: 'form',  locals: { work_form: @work } %>
 
 <% else %>
 
