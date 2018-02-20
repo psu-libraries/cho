@@ -1,39 +1,39 @@
-<%= form_with(model: collection) do |form| %>
+<%= form_for(@collection.model) do |form| %>
   <fieldset class="basic_metadata">
     <legend><%= t('cho.form.metadata')%></legend>
     <%= form.label :title do %>
       Title<span class="required no_bold"> required</span>
     <% end %>
-      <%= form.text_field :title, id: :title, :required => true %>
+      <%= form.text_field :title, :required => true %>
     <%= form.label :subtitle %>
-      <%= form.text_field :subtitle, id: :subtitle %>
+      <%= form.text_field :subtitle %>
     <%= form.label :description %>
-    <%= form.text_area :description, id: :description %>
+    <%= form.text_area :description %>
   </fieldset>
 
   <fieldset>
     <legend><%= t('cho.form.workflow')%></legend>
     <%= form.label :workflow_default, class: :no_bold do %>
-      <%= form.radio_button :workflow, "default", id: :workflow_default %> Publish immediately
+      <%= form.radio_button :workflow, "default" %> Publish immediately
     <% end %>
 
     <%= form.label :workflow_mediated, class: :no_bold do %>
-      <%= form.radio_button :workflow, "mediated", id: :workflow_mediated %> Mediated
+      <%= form.radio_button :workflow, "mediated" %> Mediated
     <% end %>
   </fieldset>
 
   <fieldset>
     <legend><%= t('cho.form.visibility')%></legend>
     <%= form.label :visibility_public, class: :no_bold do %>
-      <%= form.radio_button :visibility, "public", id: :visibility_public %> Public
+      <%= form.radio_button :visibility, "public" %> Public
     <% end %>
 
     <%= form.label :visibility_authenticated, class: :no_bold do %>
-      <%= form.radio_button :visibility, "authenticated", id: :visibility_authenticated %> Authenticated
+      <%= form.radio_button :visibility, "authenticated" %> Authenticated
     <% end %>
 
     <%= form.label :visibility_private, class: :no_bold do %>
-      <%= form.radio_button :visibility, "private", id: :visibility_private %> Private
+      <%= form.radio_button :visibility, "private" %> Private
     <% end %>
   </fieldset>
 
