@@ -4,6 +4,7 @@ module Work
   class SubmissionChangeSet < Valkyrie::ChangeSet
     validates :work_type, presence: true
     property :work_type, multiple: false, required: true
+    property :file, multiple: false, required: false
 
     include DataDictionary::FieldsForChangeSet
 

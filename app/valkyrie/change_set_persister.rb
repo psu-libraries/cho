@@ -26,6 +26,7 @@ class ChangeSetPersister
 
   def validate_and_save(change_set:, resource_params:)
     return change_set unless change_set.validate(resource_params)
+    change_set = store_files(change_set)
     change_set.sync
     change_set.class.new(persister.save(resource: change_set))
   rescue StandardError => error
@@ -56,6 +57,7 @@ class ChangeSetPersister
 
   def validate_and_save_with_buffer(change_set:, resource_params:)
     return change_set unless change_set.validate(resource_params)
+    change_set = store_files(change_set)
     change_set.sync
     obj = nil
     buffer_into_index do |buffered_changeset_persister|
@@ -66,6 +68,17 @@ class ChangeSetPersister
     change_set.errors.add(:save, error.message)
     change_set
   end
+
+  private
+
+    def store_files(change_set)
+      return change_set unless change_set.respond_to?(:file) && change_set.file.present?
+      adapter_file = storage_adapter.upload(file: change_set.file.tempfile, original_filename: change_set.file.original_filename, resource: change_set.model)
+      work_file = Work::File.new(file_identifier: adapter_file.id, original_filename: change_set.file.original_filename, use: [Valkyrie::Vocab::PCDMUse.OriginalFile])
+      saved_work_file = persister.save(resource: work_file)
+      change_set.model.files << saved_work_file.id
+      change_set
+    end
 
   # @note these are all private methods in the original.
 
