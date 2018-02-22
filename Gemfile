@@ -13,6 +13,7 @@ gem 'valkyrie', github: 'samvera-labs/valkyrie'
 
 # Supporting gems
 gem 'coffee-rails', '~> 4.2'
+gem 'devise_remote'
 gem 'execjs'
 gem 'jbuilder', '~> 2.5'
 gem 'jquery-rails'
