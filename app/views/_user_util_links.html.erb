@@ -7,22 +7,15 @@
     <%= render '/work/submissions/nav' %>
   </ul>
 
-  <% if has_user_authentication_provider? %>
-    <ul class="nav navbar-nav">
-      <% if current_user %>
+  <ul class="nav navbar-nav">
+    <% if current_user %>
       <li>
-        <%= link_to t('blacklight.header_links.logout'), destroy_user_session_path %>
+        <%= link_to t('blacklight.header_links.logout'), devise_remote.destroy_user_session_path %>
       </li>
-      <% unless current_user.to_s.blank? -%>
+    <% else %>
       <li>
-        <%= link_to current_user, edit_user_registration_path %>
+        <%= link_to t('blacklight.header_links.login'), devise_remote.new_user_session_path %>
       </li>
-      <% end %>
-      <% else %>
-      <li>
-        <%= link_to t('blacklight.header_links.login'), new_user_session_path %>
-      </li>
-      <% end %>
-      </ul>
-  <% end %>
+    <% end %>
+  </ul>
 </div>
