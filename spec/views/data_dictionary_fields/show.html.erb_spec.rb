@@ -7,6 +7,7 @@ RSpec.describe 'data_dictionary/fields/show', type: :view do
                                                   label: 'Label',
                                                   field_type: DataDictionary::Field::FieldTypes['numeric'],
                                                   requirement_designation: DataDictionary::Field::RequirementDesignations['required_to_publish'],
+                                                  core_field: true,
                                                   validation: 'no_validation',
                                                   multiple: false,
                                                   controlled_vocabulary: 'no_vocabulary',
@@ -25,8 +26,9 @@ RSpec.describe 'data_dictionary/fields/show', type: :view do
     expect(rendered).to match(/<dd>Label<\/dd>/)
     expect(rendered).to match(/<dd>numeric<\/dd>/)
     expect(rendered).to match(/<dd>required_to_publish<\/dd>/)
+    expect(rendered).to match(/<dt>Core Field<\/dt>\n    <dd>true<\/dd>/)
     expect(rendered).to match(/<dd>no_validation<\/dd>/)
-    expect(rendered).to match(/<dd>false<\/dd>/)
+    expect(rendered).to match(/<dt>Multiple<\/dt>\n    <dd>false<\/dd>/)
     expect(rendered).to match(/<dd>no_vocabulary<\/dd>/)
     expect(rendered).to match(/<dd>Default Value<\/dd>/)
     expect(rendered).to match(/<dd>Display Name<\/dd>/)
