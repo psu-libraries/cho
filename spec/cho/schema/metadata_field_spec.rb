@@ -72,7 +72,7 @@ RSpec.describe Schema::MetadataField, type: :model do
                                 internal_resource: 'Schema::MetadataField',
                                 label: 'title',
                                 multiple: true,
-                                requirement_designation: 'required_to_publish',
+                                requirement_designation: 'required',
                                 order_index: nil,
                                 validation: 'no_validation' } }
 

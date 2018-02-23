@@ -4,7 +4,7 @@
     <%= form.label :title do %>
       Title<span class="required no_bold"> required</span>
     <% end %>
-      <%= form.text_field :title, :required => true %>
+      <%= form.text_field :title, :required => true, 'aria-required' => true  %>
     <%= form.label :subtitle %>
       <%= form.text_field :subtitle %>
     <%= form.label :description %>
