@@ -12,5 +12,10 @@ FactoryGirl.define do
   factory :user do
     login
     email
+
+    factory :admin do
+      group_list 'umg/up.libraries.cho-admin'
+      groups_last_update { Time.now }
+    end
   end
 end

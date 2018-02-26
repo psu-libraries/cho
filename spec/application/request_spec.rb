@@ -7,7 +7,7 @@ RSpec.describe ApplicationController, type: :request do
     # Create a fake controller for our tests
     class ExamplesController < ApplicationController
       def index
-        render body: nil
+        render body: 'Hooray!'
       end
     end
 
@@ -33,10 +33,19 @@ RSpec.describe ApplicationController, type: :request do
       its(:body) { is_expected.to eq('<h1>Unauthorized</h1><p>Please <a href="/devise_remote/login">login</a></p>') }
     end
 
-    context 'with an authenticated user' do
+    context 'with an authenticated non-admin user' do
       let(:headers) { { 'REMOTE_USER' => 'user' } }
 
-      it { is_expected.to be_success }
+      it { is_expected.to have_http_status(:unauthorized) }
+      its(:body) { is_expected.to include('Access to CHO is restricted to certain users') }
+    end
+
+    context 'with an authenticated admin user' do
+      let(:admin) { create(:admin) }
+      let(:headers) { { 'REMOTE_USER' => admin.login } }
+
+      it { is_expected.to have_http_status(:success) }
+      its(:body) { is_expected.to eq('Hooray!') }
     end
   end
 end

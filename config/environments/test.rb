@@ -56,4 +56,7 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  # Don't wait for unwilling LDAP responses
+  config.ldap_unwilling_sleep = 0
 end
