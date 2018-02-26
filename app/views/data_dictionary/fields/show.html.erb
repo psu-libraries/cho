@@ -11,6 +11,9 @@
     <dt>Requirement Designation</dt>
     <dd><%= @data_dictionary_field.requirement_designation %></dd>
 
+    <dt>Core Field</dt>
+    <dd><%= @data_dictionary_field.core_field %></dd>
+
     <dt>Validation</dt>
     <dd><%= @data_dictionary_field.validation %></dd>
 
@@ -37,6 +40,5 @@
   </dl>
 </div>
 <div class="clearleft">
-  <%= link_to 'Edit', edit_data_dictionary_field_path(@data_dictionary_field) %> |
   <%= link_to 'Back', data_dictionary_fields_path %>
 </div>

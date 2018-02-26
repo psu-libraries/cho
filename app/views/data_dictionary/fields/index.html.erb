@@ -8,6 +8,7 @@
       <th>Label</th>
       <th>Field type</th>
       <th>Requirement designation</th>
+      <th>Core Field</th>
       <th>Validation</th>
       <th>Multiple</th>
       <th>Controlled vocabulary</th>
@@ -24,6 +25,7 @@
         <td><%= dictionary_field.label %></td>
         <td><%= dictionary_field.field_type %></td>
         <td><%= dictionary_field.requirement_designation.to_s %></td>
+        <td><%= dictionary_field.core_field %></td>
         <td><%= dictionary_field.validation %></td>
         <td><%= dictionary_field.multiple %></td>
         <td><%= dictionary_field.controlled_vocabulary %></td>
@@ -31,8 +33,6 @@
         <td><%= dictionary_field.display_name %></td>
         <td><%= dictionary_field.display_transformation %></td>
         <td><%= link_to 'Show', dictionary_field %></td>
-        <td><%= link_to 'Edit', edit_data_dictionary_field_path(dictionary_field) %></td>
-        <td><%= link_to 'Destroy', dictionary_field, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
