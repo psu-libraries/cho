@@ -9,7 +9,18 @@ en:
       collection_type: "Collection Type"
       work_type: "Work Type"
       workflow: "Workflow"
+      default: "Publish immediately"
+      mediated: "Mediated"
       visibility: "Visibility"
+      public: "Public"
+      authenticated: "Authenticated"
+      private: "Private"
+      title: "Title"
+      required: "required"
+    header_links:
+      create_collection: "Create Collection"
+      create_submission: "Create Work"
+      data_dictionary: "Data Dictionary"
     work:
       new:
         heading: "New %{type} Work"
@@ -24,4 +35,3 @@ en:
         delete_link: "Delete Work"
         delete_confirmation: "Are you sure?"
       error: "%{count} prohibited this work from being saved:"
-

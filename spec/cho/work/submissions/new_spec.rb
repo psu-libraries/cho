@@ -13,7 +13,7 @@ RSpec.describe Work::Submission, type: :feature do
   context 'when filling in all the required fields' do
     it 'creates a new work object' do
       visit(root_path)
-      click_link('Create Submission')
+      click_link('Create Work')
       click_link('Generic')
       expect(page).to have_content('New Generic Work')
       fill_in('work_submission[title]', with: 'New Title')
@@ -27,7 +27,7 @@ RSpec.describe Work::Submission, type: :feature do
   context 'without providing a title' do
     it 'reports the errors' do
       visit(root_path)
-      click_link('Create Submission')
+      click_link('Create Work')
       click_link('Document')
       expect(page).to have_content('New Document Work')
       expect(page).to have_link('Back')
