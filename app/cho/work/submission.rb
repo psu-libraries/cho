@@ -8,6 +8,7 @@ module Work
 
     attribute :id, Valkyrie::Types::ID.optional
     attribute :work_type, Valkyrie::Types::String
+    attribute :member_of_collection_ids, Valkyrie::Types::Set
 
     # A list of Work::Files.
     #  The stored valkyrie resource for files attached to a submission

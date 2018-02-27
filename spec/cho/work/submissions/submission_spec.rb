@@ -45,4 +45,23 @@ RSpec.describe Work::Submission do
       expect(resource_klass.fields).to include(:work_type)
     end
   end
+
+  describe '#member_of_collection_ids' do
+    it 'is empty when not set' do
+      expect(resource_klass.new.member_of_collection_ids).to be_empty
+    end
+
+    it 'can be set as an attribute' do
+      resource = resource_klass.new(member_of_collection_ids: ['1', '2'])
+      expect(resource.attributes[:member_of_collection_ids]).to contain_exactly('1', '2')
+    end
+
+    it 'is included in the list of attributes' do
+      expect(resource_klass.new.has_attribute?(:member_of_collection_ids)).to eq true
+    end
+
+    it 'is included in the list of fields' do
+      expect(resource_klass.fields).to include(:member_of_collection_ids)
+    end
+  end
 end

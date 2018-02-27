@@ -21,6 +21,10 @@ RSpec.describe Work::SubmissionChangeSet do
     it 'has a single work type' do
       expect(change_set).not_to be_multiple(:work_type)
     end
+
+    it 'has multiple parents' do
+      expect(change_set).to be_multiple(:member_of_collection_ids)
+    end
   end
 
   describe '#required?' do
@@ -38,6 +42,7 @@ RSpec.describe Work::SubmissionChangeSet do
     its(:title) { is_expected.to be_empty }
     its(:work_type) { is_expected.to be_nil }
     its(:file) { is_expected.to be_nil }
+    its(:member_of_collection_ids) { is_expected.to be_empty }
   end
 
   describe '#validate' do
@@ -61,6 +66,27 @@ RSpec.describe Work::SubmissionChangeSet do
       let(:params) { { work_type: 'work type', title: 'Title' } }
 
       its(:full_messages) { is_expected.to be_empty }
+    end
+
+    context 'with non-existent parents' do
+      let(:params) { { work_type: 'work type', title: 'Title', member_of_collection_ids: ['nothere'] } }
+
+      its(:full_messages) { is_expected.to include('Member of collection ids nothere does not exist') }
+    end
+
+    context 'with existing parents and all required fields' do
+      let(:collection) { create_for_repository(:archival_collection) }
+      let(:params) { { work_type: 'work type', title: 'Title', member_of_collection_ids: [collection.id] } }
+
+      its(:full_messages) { is_expected.to be_empty }
+    end
+  end
+
+  describe '#member_of_collection_ids' do
+    before { change_set.validate(member_of_collection_ids: ['1']) }
+
+    it 'casts ids to Valkyrie IDs' do
+      expect(change_set.member_of_collection_ids.first).to be_kind_of(Valkyrie::ID)
     end
   end
 end
