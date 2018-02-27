@@ -2,6 +2,8 @@
 
 module Work
   class SubmissionsController < ApplicationController
+    include ValkyrieControllerBehaviors
+
     delegate :metadata_adapter, :storage_adapter, to: :change_set_persister
     delegate :persister, :query_service, to: :metadata_adapter
 
@@ -9,7 +11,7 @@ module Work
     def new
       work_type = params.fetch(:work_type, nil)
       if work_type
-        @work = Work::Form.new(SubmissionChangeSet.new(Submission.new(work_type: work_type)).prepopulate!)
+        @work = Work::Form.new(initialize_change_set(work_type: work_type))
       else
         flash[:alert] = 'You must specify a work type'
         redirect_to(root_path)
@@ -18,25 +20,25 @@ module Work
 
     # GET /works/1/edit
     def edit
-      @work = Work::Form.new(SubmissionChangeSet.new(find_resource(params[:id])).prepopulate!)
+      @work = Work::Form.new(load_change_set)
     end
 
     # POST /works
     # POST /works.json
     def create
-      validate_save_and_respond(SubmissionChangeSet.new(Submission.new), :new)
+      validate_save_and_respond(change_set_class.new(resource_class.new), :new)
     end
 
     # PATCH/PUT /works/1
     # PATCH/PUT /works/1.json
     def update
-      validate_save_and_respond(SubmissionChangeSet.new(find_resource(params[:id])).prepopulate!, :edit)
+      validate_save_and_respond(load_change_set, :edit)
     end
 
     # DELETE /works/1
     # DELETE /works/1.json
     def destroy
-      change_set = SubmissionChangeSet.new(find_resource(params[:id]))
+      change_set = change_set_class.new(find_resource(params[:id]))
       change_set_persister.buffer_into_index do |buffered_changeset_persister|
         buffered_changeset_persister.delete(resource: change_set)
       end
@@ -45,17 +47,6 @@ module Work
     end
 
     private
-
-      def validate_save_and_respond(change_set, error_view)
-        # TODO when the model becomes more complex should we be buffering into Solr?
-        #   if so then we should use .validate_and_save_with_buffer
-        updated_change_set = change_set_persister.validate_and_save(change_set: change_set, resource_params: resource_params)
-        if updated_change_set.errors.blank?
-          respond_success(updated_change_set)
-        else
-          respond_error(updated_change_set, error_view)
-        end
-      end
 
       def respond_success(change_set)
         redirect_to(polymorphic_path([:solr_document], id: change_set.resource.id))
@@ -79,6 +70,14 @@ module Work
           metadata_adapter: Valkyrie::MetadataAdapter.find(:indexing_persister),
           storage_adapter: Valkyrie.config.storage_adapter
         )
+      end
+
+      def change_set_class
+        SubmissionChangeSet
+      end
+
+      def resource_class
+        Submission
       end
   end
 end

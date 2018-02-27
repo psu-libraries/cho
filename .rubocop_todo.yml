@@ -30,6 +30,7 @@ RSpec/BeforeAfterAll:
     - 'spec/cho/collection/change_set_behaviors_spec.rb'
     - 'spec/cho/collection/common_fields_spec.rb'
     - 'spec/cho/shared/common_queries_spec.rb'
+    - 'spec/cho/shared/valkyrie_controller_behavior_spec.rb'
     - 'spec/valkyrie/find_model_spec.rb'
     - 'spec/valkyrie/find_using_spec.rb'
 
