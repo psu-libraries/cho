@@ -16,7 +16,7 @@ RSpec.describe 'Home Page', type: :feature do
     expect(page).to have_content('New Library Collection')
     click_link('Curated Collection')
     expect(page).to have_content('New Curated Collection')
-    expect(page).to have_link('Create Submission')
+    expect(page).to have_link('Create Work')
     click_link('Generic')
     expect(page).to have_content('New Generic Work')
     click_link('Document')
