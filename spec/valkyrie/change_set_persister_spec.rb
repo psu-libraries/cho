@@ -40,6 +40,24 @@ RSpec.describe ChangeSetPersister do
         change_set_persister.validate_and_save(change_set: change_set, resource_params: { label: 'abc123' })
       }.to change { metadata_adapter.query_service.find_all.count }.by(1)
     end
+
+    context 'with files' do
+      let(:resource)   { build(:work, title: 'with a file') }
+      let(:change_set) { Work::SubmissionChangeSet.new(resource) }
+      let(:temp_file) { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'hello_world.txt')) }
+      let(:work_files) { Work::File.all }
+      let(:work_file) { work_files.first }
+
+      it 'saves the record and the file' do
+        saved_change_set = nil
+        expect {
+          saved_change_set = change_set_persister.validate_and_save(change_set: change_set, resource_params: { label: 'abc123', file: temp_file })
+        }.to change { metadata_adapter.query_service.find_all.count }.by(2)
+        expect(saved_change_set.model.files).to eq(work_files.map(&:id))
+        expect(work_file.original_filename).to eq('hello_world.txt')
+        expect(work_file.use.map(&:to_s)).to eq(['http://pcdm.org/use#OriginalFile'])
+      end
+    end
   end
 
   describe '#validate_and_save_with_buffer' do
@@ -53,7 +71,8 @@ RSpec.describe ChangeSetPersister do
     it 'persists a change set to Postgres' do
       expect(persister).to receive(:buffer_into_index).and_call_original
       expect {
-        change_set_persister.validate_and_save_with_buffer(change_set: change_set, resource_params: { label: 'abc123' })
+        saved_change_set = change_set_persister.validate_and_save_with_buffer(change_set: change_set, resource_params: { label: 'abc123' })
+        expect(saved_change_set.label).to eq('abc123')
       }.to change { metadata_adapter.query_service.find_all.count }.by(1)
     end
   end

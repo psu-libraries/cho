@@ -37,6 +37,7 @@ RSpec.describe Work::SubmissionChangeSet do
     before { change_set.prepopulate! }
     its(:title) { is_expected.to be_empty }
     its(:work_type) { is_expected.to be_nil }
+    its(:file) { is_expected.to be_nil }
   end
 
   describe '#validate' do

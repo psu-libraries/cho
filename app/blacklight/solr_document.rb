@@ -21,4 +21,10 @@ class SolrDocument
   def internal_resource
     Array.wrap(self['internal_resource_tsim']).first.constantize
   end
+
+  def files
+    Array.wrap(self['files_ssim']).map do |id|
+      Work::File.find(Valkyrie::ID.new(id.sub(/^id-/, '')))
+    end
+  end
 end
