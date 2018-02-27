@@ -41,7 +41,7 @@ RSpec.describe DataDictionary::FieldsController, type: :controller do
     {
       'label' => 'title',
       'field_type' => 'string',
-      'requirement_designation' => 'required_to_publish',
+      'requirement_designation' => 'required',
       'validation' => 'no_validation',
       'multiple' => true,
       'controlled_vocabulary' => 'no_vocabulary',
@@ -102,7 +102,7 @@ RSpec.describe DataDictionary::FieldsController, type: :controller do
         get :index, params: {}, session: valid_session, format: :csv
         expect(response.content_type).to eq('text/csv')
         expect(response.body).to include("Label,Field Type,Requirement Designation,Validation,Multiple,Controlled Vocabulary,Default Value,Display Name,Display Transformation,Index Type,Help Text,Core Field\n")
-        expect(response.body).to include("title,string,required_to_publish,no_validation,true,no_vocabulary,,,no_transformation,no_facet,help me,true\n")
+        expect(response.body).to include("title,string,required,no_validation,true,no_vocabulary,,,no_transformation,no_facet,help me,true\n")
         expect(response.body).to include("abc123_label,date,recommended,no_validation,false,no_vocabulary,abc123,My Abc123,no_transformation,no_facet,help me,false\n")
       end
     end

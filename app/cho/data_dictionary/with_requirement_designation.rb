@@ -3,10 +3,18 @@
 module DataDictionary::WithRequirementDesignation
   extend ActiveSupport::Concern
 
-  RequirementDesignations = Valkyrie::Types::String.enum('required_to_publish', 'recommended', 'optional')
+  RequirementDesignations = Valkyrie::Types::String.enum('required', 'required_to_publish', 'recommended', 'optional')
 
   included do
     attribute :requirement_designation, RequirementDesignations
+  end
+
+  def required!
+    self.requirement_designation = 'required'
+  end
+
+  def required?
+    requirement_designation == 'required'
   end
 
   def required_to_publish!
