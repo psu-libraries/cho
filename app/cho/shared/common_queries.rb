@@ -19,5 +19,18 @@ module CommonQueries
       Valkyrie.config.metadata_adapter.query_service.custom_queries.find_using(query)
     end
     alias_method :where, :find_using
+
+    # @param [String, Valkyrie::ID]
+    def exists?(parameter)
+      id = parameter.is_a?(Valkyrie::ID) ? parameter : Valkyrie::ID.new(parameter)
+      result = Valkyrie.config.metadata_adapter.query_service.find_by(id: id)
+      if result.class == self
+        true
+      else
+        raise TypeError, "Expecting #{self}, but found #{result.class} instead"
+      end
+    rescue Valkyrie::Persistence::ObjectNotFoundError
+      false
+    end
   end
 end

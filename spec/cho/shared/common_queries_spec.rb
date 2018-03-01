@@ -10,10 +10,16 @@ RSpec.describe CommonQueries do
       attribute :label, Valkyrie::Types::String
       attribute :bool_val, Valkyrie::Types::Strict::Bool
     end
+
+    class SampleResource < Valkyrie::Resource
+      include CommonQueries
+      attribute :id, Valkyrie::Types::ID.optional
+    end
   end
 
   after(:all) do
-    ActiveSupport::Dependencies.remove_constant('SpecialModel')
+    ActiveSupport::Dependencies.remove_constant('CommonResource')
+    ActiveSupport::Dependencies.remove_constant('SampleResource')
   end
 
   subject { CommonResource }
@@ -103,6 +109,42 @@ RSpec.describe CommonQueries do
       results = CommonResource.find_using(label: nil)
       expect(results.count).to eq(1)
       expect(results.first.id).to eq(persisted_resource.id)
+    end
+  end
+
+  describe '::exists?' do
+    subject { CommonResource.exists?(id) }
+
+    context 'when the string id does not exist' do
+      let(:id) { 'i-dont-exist' }
+
+      it { is_expected.to be_falsey }
+    end
+
+    context 'when the Valkyrie::ID does not exist' do
+      let(:id) { Valkyrie::ID.new('i-dont-exist') }
+
+      it { is_expected.to be_falsey }
+    end
+
+    context 'when the resource does exist' do
+      let(:resource) do
+        Valkyrie.config.metadata_adapter.persister.save(resource: CommonResource.new(bool_val: true))
+      end
+      let(:id) { resource.id }
+
+      it { is_expected.to be_truthy }
+    end
+
+    context 'when the found resource is a different class' do
+      let(:resource) do
+        Valkyrie.config.metadata_adapter.persister.save(resource: CommonResource.new(bool_val: true))
+      end
+      let(:id) { resource.id }
+
+      it 'raises an error' do
+        expect { SampleResource.exists?(id) }.to raise_error(TypeError, 'Expecting SampleResource, but found CommonResource instead')
+      end
     end
   end
 end
