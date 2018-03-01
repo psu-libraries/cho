@@ -3,6 +3,8 @@
 class CatalogController < ApplicationController
   include Blacklight::Catalog
 
+  helper LayoutHelperBehavior
+
   configure_blacklight do |config|
     ## Class for sending and receiving requests from a search index
     # config.repository_class = Blacklight::Solr::Repository

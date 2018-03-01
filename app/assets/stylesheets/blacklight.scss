@@ -10,3 +10,13 @@
   text-indent: 2%;
   width: 500px;
 }
+
+// styles to address inconsistent usage of search widgets
+.catalog_startOverLink:hover,
+.search-widgets .btn:hover { color: #FFF; }
+
+// addresses insufficient color contrast
+.dl-invert dt { color: #686868; }
+
+// Button visited link color
+.btn-danger:visited { color: #FFF; }
