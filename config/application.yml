@@ -1,0 +1,10 @@
+# Figaro configuration file
+# For further instructions see: http://sites.psu.edu/dltdocs/?p=4073
+
+development:
+  service_instance: "localhost"
+  virtual_host: "http://localhost:3000/"
+test:
+  service_instance: "example-test"
+  virtual_host: "http://test.com/"
+production:

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  mount DeviseRemote::Engine => '/devise_remote'
+  devise_for :users
   mount Blacklight::Engine => '/'
   root to: 'catalog#index'
   concern :searchable, Blacklight::Routes::Searchable.new
