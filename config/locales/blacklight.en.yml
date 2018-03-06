@@ -4,3 +4,6 @@ en:
     catalog:
       files:
       heading: 'Files'
+    search:
+      search_results_header: 'Search Results'
+      search_results: 'Listing of Search Results'
