@@ -4,6 +4,5 @@
 <%= render partial: 'form',  locals: { work_form: @work, with_collections: false } %>
 
 <%= link_to t('cho.work.edit.show_link'), work_path(@work.model) %> |
-<%= link_to t('cho.work.edit.back_link'), works_path %> |
 <%= link_to t('cho.work.edit.delete_link'), work_path(@work.model),
             data: {:confirm => t('cho.work.edit.delete_confirmation')}, :method => :delete %>

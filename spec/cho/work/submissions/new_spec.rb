@@ -35,7 +35,6 @@ RSpec.describe Work::Submission, type: :feature do
       click_link('Create Work')
       click_link('Document')
       expect(page).to have_content('New Document Work')
-      expect(page).to have_link('Back')
       click_button('Create Work')
       within('#error_explanation') do
         expect(page).to have_selector('h2', text: '2 errors prohibited this work from being saved:')

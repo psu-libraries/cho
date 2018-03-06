@@ -31,7 +31,6 @@ en:
       edit:
         heading: "Editing Work"
         submit: "Update Work"
-        back_link: "Back"
         show_link: "Show"
         delete_link: "Delete Work"
         delete_confirmation: "Are you sure?"
