@@ -13,4 +13,15 @@ FactoryGirl.define do
       Valkyrie::MetadataAdapter.find(:indexing_persister).persister.save(resource: resource)
     end
   end
+
+  trait :with_file do
+    to_create do |resource|
+      file = Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'hello_world.txt'))
+      change_set = Work::SubmissionChangeSet.new(resource, file: [file])
+      ChangeSetPersister.new(
+        metadata_adapter: Valkyrie::MetadataAdapter.find(:indexing_persister),
+        storage_adapter: Valkyrie.config.storage_adapter
+      ).validate_and_save(change_set: change_set, resource_params: { file: file })
+    end
+  end
 end

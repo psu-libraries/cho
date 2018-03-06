@@ -1,7 +1,7 @@
 <h1><%= t('cho.work.edit.heading') %></h1>
 <h2><%= @work.title.first %></h2>
 
-<%= render partial: 'form',  locals: { work_form: @work } %>
+<%= render partial: 'form',  locals: { work_form: @work, with_collections: false } %>
 
 <%= link_to t('cho.work.edit.show_link'), work_path(@work.model) %> |
 <%= link_to t('cho.work.edit.back_link'), works_path %> |

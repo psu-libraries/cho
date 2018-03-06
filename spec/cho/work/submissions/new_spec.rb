@@ -11,12 +11,15 @@ RSpec.describe Work::Submission, type: :feature do
   end
 
   context 'when filling in all the required fields' do
+    let!(:archival_collection) { create_for_repository(:archival_collection, title: 'Sample Collection') }
+
     it 'creates a new work object' do
       visit(root_path)
       click_link('Create Work')
       click_link('Generic')
       expect(page).to have_content('New Generic Work')
       fill_in('work_submission[title]', with: 'New Title')
+      fill_in('work_submission[member_of_collection_ids][]', with: archival_collection.id)
       click_button('Create Work')
       expect(page).to have_content('New Title')
       expect(page).to have_content('Generic')
@@ -25,6 +28,8 @@ RSpec.describe Work::Submission, type: :feature do
   end
 
   context 'without providing a title' do
+    let!(:archival_collection) { create_for_repository(:archival_collection, title: 'Sample Collection') }
+
     it 'reports the errors' do
       visit(root_path)
       click_link('Create Work')
@@ -32,9 +37,13 @@ RSpec.describe Work::Submission, type: :feature do
       expect(page).to have_content('New Document Work')
       expect(page).to have_link('Back')
       click_button('Create Work')
-      expect(page).to have_content('1 error prohibited this work from being saved:')
-      expect(page).to have_content("Title can't be blank")
+      within('#error_explanation') do
+        expect(page).to have_selector('h2', text: '2 errors prohibited this work from being saved:')
+        expect(page).to have_content("Title can't be blank")
+        expect(page).to have_content('Member of collection ids does not exist')
+      end
       fill_in('work_submission[title]', with: 'Required Title')
+      fill_in('work_submission[member_of_collection_ids][]', with: archival_collection.id)
       click_button('Create Work')
       expect(page).to have_content('Required Title')
       expect(page).to have_content('Document')

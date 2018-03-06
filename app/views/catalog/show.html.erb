@@ -2,12 +2,6 @@
 <div id="content" class="<%= show_content_classes %>">
   <%= render_document_main_content_partial %>
 
-  <h2><%=t('blacklight.catalog.files.heading')%></h2>
-  <ul>
-    <%- @document.files.each do |file| %>
-      <li><%= file.original_filename %></li>
-    <%- end %>
-  </ul>
   <%= link_to "Edit", edit_cho_resource_path %>
 </div>
 

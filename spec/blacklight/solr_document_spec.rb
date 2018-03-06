@@ -11,11 +11,11 @@ RSpec.describe SolrDocument, type: :model do
     ActiveSupport::Dependencies.remove_constant('MyResource')
   end
 
-  subject { SolrDocument.new(document) }
-
-  let(:document) { { 'internal_resource_tsim' => 'MyResource' } }
-
   describe '#internal_resource' do
+    subject { SolrDocument.new(document) }
+
+    let(:document) { { 'internal_resource_tsim' => 'MyResource' } }
+
     its(:internal_resource) { is_expected.to be(MyResource) }
   end
 
@@ -25,6 +25,19 @@ RSpec.describe SolrDocument, type: :model do
     let(:work_file) { create_for_repository :work_file }
     let(:document) { { 'internal_resource_tsim' => 'MyResource', files_ssim: [work_file.id.to_s] } }
 
-    its(:to_h) { is_expected.to include(original_filename: 'original_name', internal_resource: 'Work::File', id: work_file.id) }
+    its(:to_h) { is_expected.to include(original_filename: 'original_name',
+                                        internal_resource: 'Work::File',
+                                        id: work_file.id) }
+  end
+
+  describe '#member_of_collections' do
+    subject { SolrDocument.new(document).member_of_collections.first }
+
+    let(:collection) { create_for_repository(:archival_collection) }
+    let(:document) { { 'internal_resource_tsim' => 'MyResource', member_of_collection_ids_ssim: [collection.id.to_s] } }
+
+    its(:to_h) { is_expected.to include('title_tesim' => ['Archival Collection'],
+                                        'internal_resource_tesim' => ['Collection::Archival'],
+                                        'id' => collection.id.to_s) }
   end
 end
