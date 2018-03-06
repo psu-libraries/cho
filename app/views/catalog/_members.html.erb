@@ -1,0 +1,10 @@
+<h2><%= t('cho.collection.members.heading') %></h2>
+
+<%= render_document_index_with_view("members", facade.members) %>
+
+<% if facade.total_pages > 1 %>
+  <div class="pagination">
+    <%= paginate facade.query_response, outer_window: 2, theme: 'blacklight' %>
+    <div class="clearfix"></div>
+  </div><!-- /pager -->
+<% end %>

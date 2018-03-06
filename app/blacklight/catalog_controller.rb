@@ -2,8 +2,9 @@
 
 class CatalogController < ApplicationController
   include Blacklight::Catalog
+  include CollectionMembers
 
-  helper LayoutHelperBehavior
+  helper LocalHelperBehavior, LayoutHelperBehavior
 
   configure_blacklight do |config|
     ## Class for sending and receiving requests from a search index
@@ -56,7 +57,7 @@ class CatalogController < ApplicationController
     # config.index.thumbnail_field = 'thumbnail_path_ss'
 
     # solr field configuration for document/show views
-    config.show.display_type_field = 'work_type_ssim'
+    config.show.display_type_field = 'internal_resource_ssim'
     # config.show.thumbnail_field = 'thumbnail_path_ss'
 
     # solr fields that will be treated as facets by the blacklight application
@@ -112,12 +113,20 @@ class CatalogController < ApplicationController
     config.add_index_field 'workflow_ssim', label: I18n.t('cho.field_label.workflow')
     config.add_index_field 'collection_type_ssim', label: I18n.t('cho.field_label.collection_type')
 
+    config.add_index_field 'member_of_collection_ids_ssim',
+        label: I18n.t('cho.field_label.member_of_collections'),
+        helper_method: :render_link_to_collection
+
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
     config.add_show_field 'work_type_ssim', label: I18n.t('cho.field_label.work_type')
     config.add_show_field 'visibility_ssim', label: I18n.t('cho.field_label.visibility')
     config.add_show_field 'workflow_ssim', label: I18n.t('cho.field_label.workflow')
     config.add_show_field 'collection_type_ssim', label: I18n.t('cho.field_label.collection_type')
+
+    config.add_show_field 'member_of_collection_ids_ssim',
+        label: I18n.t('cho.field_label.member_of_collections'),
+        helper_method: :render_link_to_collection
 
     # "fielded" search configuration. Used by pulldown among other places.
     # For supported keys in hash, see rdoc for Blacklight::SearchFields

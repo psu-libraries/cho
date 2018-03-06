@@ -1,7 +1,7 @@
 <% if @work.work_type %>
   <h1><%= t('cho.work.new.heading', type: @work.work_type.label) %></h1>
 
-  <%= render partial: 'form',  locals: { work_form: @work } %>
+  <%= render partial: 'form',  locals: { work_form: @work, with_collections: true } %>
 
 <% else %>
 

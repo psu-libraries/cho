@@ -22,9 +22,17 @@ class SolrDocument
     Array.wrap(self['internal_resource_tsim']).first.constantize
   end
 
+  # @return [Array<Work::File>]
   def files
     Array.wrap(self['files_ssim']).map do |id|
       Work::File.find(Valkyrie::ID.new(id.sub(/^id-/, '')))
+    end
+  end
+
+  # @return [Array<SolrDocument>]
+  def member_of_collections
+    Array.wrap(self['member_of_collection_ids_ssim']).map do |id|
+      SolrDocument.find(id.sub(/^id-/, ''))
     end
   end
 end

@@ -1,0 +1,5 @@
+<%= render partial: 'show_default', locals: { document: @document } %>
+
+<% unless @document_facade.members.empty? %>
+  <%= render partial: 'members', locals: { facade: @document_facade } %>
+<% end %>

@@ -17,6 +17,7 @@ en:
       private: "Private"
       title: "Title"
       required: "required"
+      member_of_collections: "Collections"
     header_links:
       create_collection: "Create Collection"
       create_submission: "Create Work"
@@ -35,3 +36,10 @@ en:
         delete_link: "Delete Work"
         delete_confirmation: "Are you sure?"
       error: "%{count} prohibited this work from being saved:"
+      show:
+        files_heading: "Files"
+    collection:
+      members:
+        title: "Title"
+        date_created: "Date Created"
+        heading: "Items in this Collection"
