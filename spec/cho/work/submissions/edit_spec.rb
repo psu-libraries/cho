@@ -12,7 +12,6 @@ RSpec.describe 'Editing works', type: :feature do
       visit(edit_work_path(resource))
       expect(page).to have_content('Editing Work')
       expect(page).to have_selector('h2', text: 'Work to edit')
-      expect(page).to have_link('Back')
       expect(page).to have_link('Show')
       fill_in('work_submission[title]', with: 'Updated Work Title')
       click_button('Update Work')
