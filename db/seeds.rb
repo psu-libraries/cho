@@ -3,23 +3,33 @@ class SeedMAP
   class << self
 
     def load_data_dictionary
-      importer = DataDictionary::CsvImporter.new(File.new('data_dictionary.csv'))
+      dictionary_file = Rails.root.join('config', 'data_dictionary', "data_dictionary_#{Rails.env.downcase}.csv")
+      importer = DataDictionary::CsvImporter.new(File.new(dictionary_file))
       importer.import
     end
 
-    def core_field_ids
-      Schema::MetadataCoreFields.generate(Valkyrie.config.metadata_adapter.persister).map(&:id)
+    def schema_config
+      @schema_config ||= YAML.load_file(Rails.root.join('config', 'data_dictionary', "schema_fields.yml"))[Rails.env]
     end
 
     def metadata_schema(type)
-      data_dictionary_field = DataDictionary::Field.where(label: "#{type.parameterize(separator: '_')}_field").first
-      metadata_field = Schema::MetadataField.initialize_from_data_dictionary_field(data_dictionary_field)
-      metadata_field.order_index = 3
-      metadata_field = seed_resource(metadata_field)
+      core_field_ids = Schema::MetadataCoreFields.generate(Valkyrie.config.metadata_adapter.persister).map(&:id)
+      fields = schema_config.select { |config| config.fetch("schema") == type }.first.fetch("fields")
+      schema_fields = create_schema_fields(fields, core_field_ids)
       Schema::Metadata.new(
-        label: type, core_fields: core_field_ids,
-                fields: [metadata_field.id]
+        label: type,
+        core_fields: core_field_ids,
+        fields: schema_fields.map(&:id)
       )
+    end
+
+    def create_schema_fields(fields, core_field_ids)
+      fields.map do |field, attributes|
+        data_dictionary_field = DataDictionary::Field.where(label: field).first
+        metadata_field = Schema::MetadataField.initialize_from_data_dictionary_field(data_dictionary_field)
+        metadata_field.order_index = (attributes.fetch("order_index", "1") + core_field_ids.length)
+        seed_resource(metadata_field)
+      end
     end
 
     def work_type(type)
@@ -32,7 +42,7 @@ class SeedMAP
     end
 
     def load_work_types
-      ["Generic", "Document", "Still Image", "Map", "Moving Image", "Audio"].each do |type|
+      schema_config.map { |config| config.fetch("schema") }.each do |type|
         seed_resource(metadata_schema(type))
         seed_resource(work_type(type))
       end
