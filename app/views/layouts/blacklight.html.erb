@@ -26,18 +26,21 @@
   <%= content_for(:head) %>
 </head>
 <body class="<%= render_body_class %>">
+<div class="skip">
+  <a href="#main-container">Skip to main content</a>
+</div>
 <%= render :partial => 'shared/header_navbar' %>
 
 <%= render partial: 'shared/ajax_modal' %>
 
-<div id="main-container" class="<%= container_classes %>">
+<main id="main-container" class="<%= container_classes %>">
 
   <%= render :partial=>'/flash_msg', layout: 'shared/flash_messages' %>
 
   <div class="row">
     <%= yield %>
   </div>
-</div>
+</main>
 
 <%= render :partial => 'shared/footer' %>
 </body>
