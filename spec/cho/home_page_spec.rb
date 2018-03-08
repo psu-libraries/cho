@@ -6,6 +6,8 @@ RSpec.describe 'Home Page', type: :feature do
   it 'has all the navigation options' do
     visit('/')
     expect(page).to have_content('Cultural Heritage Objects')
+    expect(page).to have_link('Skip to main content')
+    expect(page).to have_selector('main')
     expect(page).to have_link('Data Dictionary')
     click_link('Data Dictionary')
     expect(page).to have_content('Data Dictionary Fields')

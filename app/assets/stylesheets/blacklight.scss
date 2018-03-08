@@ -28,3 +28,21 @@
   outline: 2px;
   outline: -webkit-focus-ring-color auto 5px;
 }
+
+// Adds a skip to content link for keyboard users, but only makes it visible when element receives focus
+.skip a
+{
+  position:absolute;
+  left:-10000px;
+  top:auto;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}
+
+.skip a:focus
+{
+  position:static;
+  width:auto;
+  height:auto;
+}
