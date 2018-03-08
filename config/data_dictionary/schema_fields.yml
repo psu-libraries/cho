@@ -1,0 +1,153 @@
+development: &development
+  - schema: 'Generic'
+    fields: []
+  - schema: 'Document'
+    fields:
+      contributor:
+        order_index: 2
+      time_period:
+        order_index: 1
+      language:
+        order_index: 3
+      physical_description:
+        order_index: 4
+      publisher:
+        order_index: 5
+      place:
+        order_index: 6
+      series:
+        order_index: 7
+      box:
+        order_index: 8
+      finding_aid:
+        order_index: 9
+      access_rights:
+        order_index: 10
+  - schema: 'Still Image'
+    fields:
+      alternate_title:
+        order_index: 1
+      contributor:
+        order_index: 2
+      physical_description:
+        order_index: 3
+      series:
+        order_index: 4
+      box:
+        order_index: 5
+      finding_aid:
+        order_index: 6
+      access_rights:
+        order_index: 7
+  - schema: 'Map'
+    fields:
+      alternate_title:
+        order_index: 1
+      contributor:
+        order_index: 2
+      time_period:
+        order_index: 3
+      language:
+        order_index: 4
+      physical_description:
+        order_index: 5
+      publisher:
+        order_index: 6
+      place:
+        order_index: 7
+      scale:
+        order_index: 8
+      projection:
+        order_index: 9
+      coordinates:
+        order_index: 10
+      long_west:
+        order_index: 11
+      long_east:
+        order_index: 12
+      lat_north:
+        order_index: 13
+      lat_south:
+        order_index: 14
+      series:
+        order_index: 15
+      box:
+        order_index: 16
+      finding_aid:
+        order_index: 17
+      access_rights:
+        order_index: 18
+  - schema: 'Moving Image'
+    fields:
+      alternate_title:
+        order_index: 1
+      contributor:
+        order_index: 2
+      time_period:
+        order_index: 3
+      language:
+        order_index: 4
+      physical_description:
+        order_index: 5
+      publisher:
+        order_index: 6
+      place:
+        order_index: 7
+      series:
+        order_index: 8
+      box:
+        order_index: 9
+      finding_aid:
+        order_index: 10
+      access_rights:
+        order_index: 11
+  - schema: 'Audio'
+    fields:
+      alternate_title:
+        order_index: 1
+      contributor:
+        order_index: 2
+      time_period:
+        order_index: 3
+      language:
+        order_index: 4
+      physical_description:
+        order_index: 5
+      publisher:
+        order_index: 6
+      place:
+        order_index: 7
+      series:
+        order_index: 8
+      box:
+        order_index: 9
+      finding_aid:
+        order_index: 10
+      access_rights:
+        order_index: 11
+test:
+  - schema: 'Generic'
+    fields:
+      generic_field:
+        order_index: 1
+  - schema: 'Document'
+    fields:
+      document_field:
+        order_index: 1
+  - schema: 'Still Image'
+    fields:
+      still_image_field:
+        order_index: 1
+  - schema: 'Map'
+    fields:
+      map_field:
+        order_index: 1
+  - schema: 'Moving Image'
+    fields:
+      moving_image_field:
+        order_index: 1
+  - schema: 'Audio'
+    fields:
+      audio_field:
+        order_index: 1
+production: *development

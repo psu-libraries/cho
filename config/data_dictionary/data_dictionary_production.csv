@@ -1,0 +1,34 @@
+Label,Field Type,Requirement Designation,Validation,Multiple,Controlled Vocabulary,Default Value,Display Name,Display Transformation,Index Type,Help Text,Core Field
+title,string,required,no_validation,false,no_vocabulary,,Title,no_transformation,no_facet,help me,true
+creator,string,optional,no_validation,true,no_vocabulary,,Creator,no_transformation,no_facet,help me,true
+date_created,string,required_to_publish,no_validation,true,no_vocabulary,,Date Created,no_transformation,no_facet,help me,true
+subject,string,optional,no_validation,true,no_vocabulary,,Subject,no_transformation,no_facet,help me,true
+location,string,optional,no_validation,true,no_vocabulary,,Location,no_transformation,no_facet,help me,true
+description,text,optional,no_validation,true,no_vocabulary,,Description,no_transformation,no_facet,help me,true
+genre,string,required_to_publish,no_validation,true,no_vocabulary,,Genre,no_transformation,no_facet,help me,true
+collection,string,required_to_publish,no_validation,true,no_vocabulary,,Collection,no_transformation,no_facet,help me,true
+repository,string,required_to_publish,no_validation,true,no_vocabulary,,Repository,no_transformation,no_facet,help me,true
+rights_statement,string,required_to_publish,no_validation,false,no_vocabulary,,Rights Statement,no_transformation,no_facet,help me,true
+identified,string,required_to_publish,no_validation,true,no_vocabulary,,Identifier,no_transformation,no_facet,help me,true
+resource_type,string,required_to_publish,no_validation,true,no_vocabulary,,Resource Type,no_transformation,no_facet,help me,true
+file_format,string,required_to_publish,no_validation,true,no_vocabulary,,File Format,no_transformation,no_facet,help me,true
+cataloger,string,optional,no_validation,true,no_vocabulary,,Cataloger,no_transformation,no_facet,help me,true
+date_cataloged,date,optional,no_validation,true,no_vocabulary,,Date Cataloged,no_transformation,no_facet,help me,true
+contributor,string,optional,no_validation,true,no_vocabulary,,Contributor,no_transformation,no_facet,help me,false
+time_period,string,optional,no_validation,true,no_vocabulary,,Time Period,no_transformation,no_facet,help me,false
+language,string,optional,no_validation,true,no_vocabulary,,Language,no_transformation,no_facet,help me,false
+physical_description,string,optional,no_validation,true,no_vocabulary,,Physical Description,no_transformation,no_facet,help me,false
+publisher,string,optional,no_validation,true,no_vocabulary,,Publisher,no_transformation,no_facet,help me,false
+place,string,optional,no_validation,true,no_vocabulary,,Place of Publication,no_transformation,no_facet,help me,false
+series,string,optional,no_validation,true,no_vocabulary,,Series,no_transformation,no_facet,help me,false
+box,string,optional,no_validation,true,no_vocabulary,,Box and Folder,no_transformation,no_facet,help me,false
+finding_aid,string,optional,no_validation,true,no_vocabulary,,Finding Aid,no_transformation,no_facet,help me,false
+access_rights,string,optional,no_validation,true,no_vocabulary,,Access Rights,no_transformation,no_facet,help me,false
+alternate_title,string,optional,no_validation,true,no_vocabulary,,Alternate Title,no_transformation,no_facet,help me,false
+scale,string,optional,no_validation,true,no_vocabulary,,Scale,no_transformation,no_facet,help me,false
+projection,string,optional,no_validation,true,no_vocabulary,,Projection,no_transformation,no_facet,help me,false
+coordinates,string,required_to_publish,no_validation,true,no_vocabulary,,Coordinates,no_transformation,no_facet,help me,false
+long_west,string,required_to_publish,no_validation,true,no_vocabulary,,Longitude West,no_transformation,no_facet,help me,false
+long_east,string,required_to_publish,no_validation,true,no_vocabulary,,Longitude East,no_transformation,no_facet,help me,false
+lat_north,string,required_to_publish,no_validation,true,no_vocabulary,,Latitude North,no_transformation,no_facet,help me,false
+lat_south,string,required_to_publish,no_validation,true,no_vocabulary,,Latitude South,no_transformation,no_facet,help me,false
