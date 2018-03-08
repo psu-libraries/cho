@@ -71,7 +71,7 @@ RSpec.shared_examples 'a collection controller' do
 
       it 'updates the requested collection' do
         put :update, params: { id: collection.to_param, resource_class.model_name.param_key.to_sym => new_attributes }, session: valid_session
-        expect(updated_collection.title).to eq('Updated collection')
+        expect(updated_collection.title).to contain_exactly('Updated collection')
       end
 
       it 'redirects to the collection' do

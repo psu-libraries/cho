@@ -28,17 +28,13 @@ RSpec.describe Collection::ChangeSetBehaviors do
 
   describe '#multiple?' do
     it 'has one title and description' do
-      expect(change_set).not_to be_multiple(:title)
-      expect(change_set).not_to be_multiple(:subtitle)
-      expect(change_set).not_to be_multiple(:description)
       expect(change_set).not_to be_multiple(:workflow)
       expect(change_set).not_to be_multiple(:visibility)
     end
   end
 
   describe '#required?' do
-    it 'has a required title' do
-      expect(change_set).to be_required(:title)
+    it 'has required fields' do
       expect(change_set).to be_required(:workflow)
       expect(change_set).to be_required(:visibility)
     end
@@ -46,9 +42,6 @@ RSpec.describe Collection::ChangeSetBehaviors do
 
   describe '#fields=' do
     before { change_set.prepopulate! }
-    its(:title) { is_expected.to be_nil }
-    its(:description) { is_expected.to be_nil }
-    its(:subtitle) { is_expected.to be_nil }
     its(:workflow) { is_expected.to be_nil }
     its(:visibility) { is_expected.to be_nil }
   end
@@ -59,7 +52,7 @@ RSpec.describe Collection::ChangeSetBehaviors do
     before { change_set.validate(params) }
 
     context 'without a title' do
-      let(:params) { { description: 'description' } }
+      let(:params) { {} }
 
       its(:full_messages) { is_expected.to include("Title can't be blank") }
     end
@@ -80,6 +73,12 @@ RSpec.describe Collection::ChangeSetBehaviors do
       let(:params) { { title: 'Title', description: 'My collection', workflow: 'default', visibility: 'public' } }
 
       its(:full_messages) { is_expected.to be_empty }
+    end
+  end
+
+  describe '#form_fields' do
+    it 'contains all the fields from the collection schema' do
+      expect(change_set.form_fields.map(&:label)).to contain_exactly('subtitle', 'description', 'title')
     end
   end
 end

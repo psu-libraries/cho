@@ -10,11 +10,6 @@ RSpec.describe Collection::Library, type: :model do
     expect(resource_klass.model_name.param_key).to eq('library_collection')
   end
 
-  describe '#members' do
-    subject { resource_klass.new }
-
-    its(:members) { is_expected.to be_empty }
-  end
-
+  it_behaves_like 'a collection'
   it_behaves_like 'a Valkyrie::Resource'
 end

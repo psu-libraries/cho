@@ -16,9 +16,6 @@ RSpec.describe Collection::CommonFields, type: :model do
   subject { MyCollection.new }
 
   it { is_expected.to respond_to(:id) }
-  it { is_expected.to respond_to(:title) }
-  it { is_expected.to respond_to(:subtitle) }
-  it { is_expected.to respond_to(:description) }
   it { is_expected.to respond_to(:workflow) }
   it { is_expected.to respond_to(:visibility) }
 end

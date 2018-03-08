@@ -1,14 +1,8 @@
 <%= form_for(@collection.model) do |form| %>
+
   <fieldset class="basic_metadata">
     <legend><%= t('cho.form.metadata') %></legend>
-    <%= form.label :title do %>
-      <%= t('cho.field_label.title') %><span class="required no_bold"> <%= t('cho.field_label.required') %></span>
-    <% end %>
-      <%= form.text_field :title, :required => true, 'aria-required' => true %>
-    <%= form.label :subtitle %>
-      <%= form.text_field :subtitle %>
-    <%= form.label :description %>
-    <%= form.text_area :description %>
+    <%= render 'shared/form_fields', resource: @collection, form: form %>
   </fieldset>
 
   <fieldset>

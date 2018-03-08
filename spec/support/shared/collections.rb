@@ -24,3 +24,30 @@ RSpec.shared_examples 'a collection with works' do
     end
   end
 end
+
+RSpec.shared_examples 'a collection' do
+  describe '#title' do
+    it 'is nil when not set' do
+      expect(resource_klass.new.title).to be_empty
+    end
+
+    it 'can be set as an attribute' do
+      resource = resource_klass.new(title: 'test')
+      expect(resource.attributes[:title]).to contain_exactly('test')
+    end
+
+    it 'is included in the list of attributes' do
+      expect(resource_klass.new.has_attribute?(:title)).to eq true
+    end
+
+    it 'is included in the list of fields' do
+      expect(resource_klass.fields).to include(:title)
+    end
+  end
+
+  describe '#members' do
+    subject { resource_klass.new }
+
+    its(:members) { is_expected.to be_empty }
+  end
+end
