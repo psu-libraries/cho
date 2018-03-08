@@ -16,7 +16,7 @@
 # server list. The second argument is a, or duck-types, Hash and is
 # used to set extended properties on the server.
 server 'choweb1qa.vmhost.psu.edu:1855', user: 'deploy', roles: %w(web app db), primary: true
-server 'chojobs1qa.vmhost.psu.edu:1855', user: 'deploy', roles: %w(app job)
+# server 'chojobs1qa.vmhost.psu.edu:1855', user: 'deploy', roles: %w(app job)
 # server 'example.com', user: 'deploy', roles: %w{web app}, my_property: :my_value
 
 # Custom SSH Options

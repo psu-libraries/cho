@@ -58,18 +58,16 @@ set :linked_files, fetch(:linked_files, []).push(
   'config/role_map.yml',
   'config/secrets.yml',
   'config/solr.yml',
-  'public/robots.txt',
-  'public/sitemap.xml'
+  'public/robots.txt'
 )
 
 set :linked_dirs, fetch(:linked_dirs, []).push(
   'log',
-  'public/system',
-  'public/uploads',
   'tmp/cache',
   'tmp/pids',
   'tmp/sockets',
   'tmp/uploads',
+  'tmp/files',
   'vendor/bundle'
 )
 
@@ -95,10 +93,6 @@ namespace :deploy do
   desc 'set up the shared directory to have the symbolic links to the appropriate directories shared between servers'
   task :symlink_shared_directories do
     on roles(:web, :job) do
-      execute "ln -sf /#{fetch(:application)}/upload_#{fetch(:stage)}/uploads/ /home/deploy/cho/shared/tmp/"
-      execute "ln -sf /#{fetch(:application)}/upload_#{fetch(:stage)}/uploads /home/deploy/cho/shared/public/"
-      execute "ln -sf /#{fetch(:application)}/shared_#{fetch(:stage)}/public/robots.txt /home/deploy/cho/shared/public/robots.txt"
-      execute "ln -sf /#{fetch(:application)}/shared_#{fetch(:stage)}/public/sitemap.xml /home/deploy/cho/shared/public/sitemap.xml"
       execute "ln -sf /#{fetch(:application)}/config_#{fetch(:stage)}/cho/ /home/deploy/cho/shared/config"
     end
   end
