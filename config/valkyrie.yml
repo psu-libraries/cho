@@ -8,4 +8,4 @@ test:
 
 production:
   metadata_adapter: postgres
-  storage_adapter: fedora
+  storage_adapter: disk
