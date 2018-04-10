@@ -1,11 +1,17 @@
-require: rubocop-rspec
+inherit_gem:
+  niftany: niftany_rubocop.yml
 
 inherit_from:
-  - https://raw.githubusercontent.com/psu-stewardship/guides/master/style/ruby/.rubocop.yml
   - .rubocop_todo.yml
 
 AllCops:
   TargetRubyVersion: 2.4.1
+  Exclude:
+    - 'db/**/*'
+    - 'script/**/*'
+    - 'tmp/**/*'
+    - 'vendor/**/*'
+    - 'bin/**/*'
 
 RSpec/DescribeClass:
   Exclude:
@@ -16,5 +22,9 @@ RSpec/ExampleLength:
     - 'spec/**/*'
 
 RSpec/MultipleExpectations:
+  Exclude:
+    - 'spec/**/*'
+
+RSpec/ContextWording:
   Exclude:
     - 'spec/**/*'

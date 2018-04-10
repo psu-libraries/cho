@@ -1,10 +1,10 @@
 <%= form_for(@collection.model) do |form| %>
   <fieldset class="basic_metadata">
-    <legend><%= t('cho.form.metadata')%></legend>
+    <legend><%= t('cho.form.metadata') %></legend>
     <%= form.label :title do %>
       <%= t('cho.field_label.title') %><span class="required no_bold"> <%= t('cho.field_label.required') %></span>
     <% end %>
-      <%= form.text_field :title, :required => true, 'aria-required' => true  %>
+      <%= form.text_field :title, :required => true, 'aria-required' => true %>
     <%= form.label :subtitle %>
       <%= form.text_field :subtitle %>
     <%= form.label :description %>
@@ -12,28 +12,28 @@
   </fieldset>
 
   <fieldset>
-    <legend><%= t('cho.form.workflow')%></legend>
+    <legend><%= t('cho.form.workflow') %></legend>
     <%= form.label :workflow_default, class: :no_bold do %>
-      <%= form.radio_button :workflow, "default" %> <%= t('cho.field_label.default') %>
+      <%= form.radio_button :workflow, 'default' %> <%= t('cho.field_label.default') %>
     <% end %>
 
     <%= form.label :workflow_mediated, class: :no_bold do %>
-      <%= form.radio_button :workflow, "mediated" %> <%= t('cho.field_label.mediated') %>
+      <%= form.radio_button :workflow, 'mediated' %> <%= t('cho.field_label.mediated') %>
     <% end %>
   </fieldset>
 
   <fieldset>
-    <legend><%= t('cho.form.visibility')%></legend>
+    <legend><%= t('cho.form.visibility') %></legend>
     <%= form.label :visibility_public, class: :no_bold do %>
-      <%= form.radio_button :visibility, "public" %> <%= t('cho.field_label.public') %>
+      <%= form.radio_button :visibility, 'public' %> <%= t('cho.field_label.public') %>
     <% end %>
 
     <%= form.label :visibility_authenticated, class: :no_bold do %>
-      <%= form.radio_button :visibility, "authenticated" %> <%= t('cho.field_label.authenticated') %>
+      <%= form.radio_button :visibility, 'authenticated' %> <%= t('cho.field_label.authenticated') %>
     <% end %>
 
     <%= form.label :visibility_private, class: :no_bold do %>
-      <%= form.radio_button :visibility, "private" %> <%= t('cho.field_label.private') %>
+      <%= form.radio_button :visibility, 'private' %> <%= t('cho.field_label.private') %>
     <% end %>
   </fieldset>
 
