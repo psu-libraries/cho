@@ -36,7 +36,7 @@ RSpec.describe ApplicationController, type: :request do
     context 'with an authenticated non-admin user' do
       let(:headers) { { 'REMOTE_USER' => 'user' } }
 
-      it { is_expected.to have_http_status(:unauthorized) }
+      it { is_expected.to have_http_status(:forbidden) }
       its(:body) { is_expected.to include('Access to CHO is restricted to certain users') }
     end
 
