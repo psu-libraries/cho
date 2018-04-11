@@ -2,12 +2,14 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-h1        { margin-bottom: 2rem; }
-fieldset  { margin-bottom: 3rem; }
-legend    { border: none; }
-input     { margin-bottom: 1rem; }
-.no_bold  { font-weight: normal; }
+h1 { margin-bottom: 2rem; }
+fieldset { margin-bottom: 3rem; }
+legend { border: 0; }
+input { margin-bottom: 1rem; }
+
+.no_bold { font-weight: normal; }
+
 .required {
-  color: #df0000;
+  color: $required-red;
   vertical-align: super;
 }
