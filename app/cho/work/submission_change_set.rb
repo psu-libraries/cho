@@ -12,6 +12,8 @@ module Work
              type: Types::Strict::Array.member(Valkyrie::Types::ID)
 
     include DataDictionary::FieldsForChangeSet
+    alias :work_type_id :work_type
+    delegate :url_helpers, to: 'Rails.application.routes'
 
     def initialize(*args)
       super(*args)
@@ -23,6 +25,33 @@ module Work
       members = self[field].map { |id| Member.new(id) }
       members.each do |member|
         errors.add(field, "#{member.id} does not exist") unless member.exists?
+      end
+    end
+
+    def form_fields
+      return @form_fields if @form_fields.present?
+      field_ids = metadata_schema.core_fields + metadata_schema.fields
+      unordered_fields = field_ids.map { |id| Schema::MetadataField.find(id) }
+      @form_fields = unordered_fields.sort_by(&:order_index)
+    end
+
+    def work_type_model
+      @work_type ||= Work::Type.find(Valkyrie::ID.new(work_type_id))
+    end
+
+    def submit_text
+      if model.persisted?
+        I18n.t('cho.work.edit.submit')
+      else
+        I18n.t('cho.work.new.submit')
+      end
+    end
+
+    def form_path
+      if model.persisted?
+        url_helpers.work_path(model)
+      else
+        url_helpers.works_path
       end
     end
 
@@ -40,5 +69,11 @@ module Work
         false
       end
     end
+
+    private
+
+      def metadata_schema
+        @metadata_schema ||= work_type_model.metadata_schema
+      end
   end
 end

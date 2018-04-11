@@ -11,7 +11,7 @@ module Work
     def new
       work_type = params.fetch(:work_type, nil)
       if work_type
-        @work = Work::Form.new(initialize_change_set(work_type: work_type))
+        @work = initialize_change_set(work_type: work_type)
       else
         flash[:alert] = 'You must specify a work type'
         redirect_to(root_path)
@@ -20,7 +20,7 @@ module Work
 
     # GET /works/1/edit
     def edit
-      @work = Work::Form.new(load_change_set)
+      @work = load_change_set
     end
 
     # POST /works
@@ -53,7 +53,7 @@ module Work
       end
 
       def respond_error(change_set, error_view)
-        @work = Work::Form.new(change_set)
+        @work = change_set
         render error_view
       end
 

@@ -1,6 +1,6 @@
 <%= form_for(work_form.model, url: work_form.form_path) do |form| %>
 
-  <%- work_form.fields.each do |metadata_field| %>
+  <%- work_form.form_fields.each do |metadata_field| %>
     <% if metadata_field.requirement_designation == 'required' %>
       <%= form.label metadata_field.label, metadata_field.display_name do %>
         <%= metadata_field.label.titleize %><span class="required no_bold"> required</span>
@@ -24,7 +24,7 @@
     </datalist>
   <% end %>
 
-  <%= form.hidden_field :work_type, value: work_form.work_type.id %>
+  <%= form.hidden_field :work_type, value: work_form.work_type_model.id %>
 
   <%= form.hidden_field :file, value: work_form.model.cached_file_data %>
 
