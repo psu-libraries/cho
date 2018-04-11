@@ -1,5 +1,5 @@
 <%# Overrides the view for better accessibility, heading structure, and swapping table for an unordered list %>
-<% @page_title = t('blacklight.saved_searches.page_title', :application_name => application_name) %>
+<% @page_title = t('blacklight.saved_searches.page_title', application_name: application_name) %>
 
 <div id="content" class="col-md-9">
   <h1 class='page-heading'><%= t('blacklight.saved_searches.title') %></h1>
@@ -9,7 +9,7 @@
     <h2 class='section-heading'><%= t('blacklight.saved_searches.no_searches') %></h2>
   <%- else -%>
     <p>
-      <%= link_to t('blacklight.saved_searches.clear.action_title'), blacklight.clear_saved_searches_path, :method => :delete, :data => { :confirm => t('blacklight.saved_searches.clear.action_confirm') } %>
+      <%= link_to t('blacklight.saved_searches.clear.action_title'), blacklight.clear_saved_searches_path, method: :delete, data: { confirm: t('blacklight.saved_searches.clear.action_confirm') } %>
     </p>
 
     <h2 class='section-heading'><%= t('blacklight.saved_searches.list_title') %></h2>

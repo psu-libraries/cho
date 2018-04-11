@@ -31,10 +31,9 @@ gem 'uglifier', '>= 1.3.0'
 
 group :development, :test do
   gem 'byebug', platform: :mri
+  gem 'niftany'
   gem 'pry-byebug'
   gem 'pry-rails'
-  gem 'rubocop'
-  gem 'rubocop-rspec'
   gem 'solr_wrapper', '>= 0.3'
   gem 'sqlite3'
 end

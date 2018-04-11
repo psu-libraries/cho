@@ -12,11 +12,11 @@ module Collection::ChangeSetBehaviors
     property :description, multiple: false, required: false
 
     property :workflow, multiple: false, required: true
-    validates :workflow, inclusion: { in: ::Collection::CommonFields::Workflow }
+    validates :workflow, inclusion: { in: ::Collection::CommonFields::WORKFLOW }
     validates :workflow, presence: true
 
     property :visibility, multiple: false, required: true
-    validates :visibility, inclusion: { in: ::Collection::CommonFields::Visibility }
+    validates :visibility, inclusion: { in: ::Collection::CommonFields::VISIBILITY }
     validates :visibility, presence: true
   end
 end

@@ -1,7 +1,7 @@
 <%= form_with(model: data_dictionary_field, local: true) do |form| %>
   <% if data_dictionary_field.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(data_dictionary_field.errors.count, "error") %> prohibited this data dictionary from being saved:</h2>
+      <h2><%= pluralize(data_dictionary_field.errors.count, 'error') %> prohibited this data dictionary from being saved:</h2>
 
       <ul>
       <% data_dictionary_field.errors.full_messages.each do |message| %>
@@ -66,12 +66,11 @@
     <%= form.text_field :help_text, id: :dictionary_field_help_text %>
   </div>
 
-
   <div class="field">
     <%= form.label :index_type %>
     <%= form.text_field :index_type, id: :dictionary_field_index_type %>
   </div>
-  
+
   <div class="actions">
     <%= form.submit %>
   </div>
