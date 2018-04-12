@@ -51,3 +51,13 @@ en:
           header: "Failed Import"
         success:
           header: "Successful Import"
+    metrics:
+      benchmark_heading: "User,System,Total,Real"
+      collection:
+        title: "Test Collection with Many Works"
+        description: "An example collection used for benchmarking with many works not containing files."
+        work_title: "Sample Work %{count}"
+      work:
+        title: "Test Collection with Works Containing Files"
+        description: "An example collection used for benchmarking with many works that each contain a 50 MB file."
+        work_title: "Sample Work with File %{count}"
