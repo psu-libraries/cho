@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'work/submissions/edit', type: :view do
-  let(:work) { build(:work, title: ['Editable title'], id: 'id', work_type: work_type.id) }
+  let(:work) { build(:work, title: ['Editable title'], id: 'id', work_type_id: work_type.id) }
   let(:work_type)  { Work::Type.where(label: 'Document').first }
   let(:change_set) { Work::SubmissionChangeSet.new(work) }
   let(:form) { change_set }

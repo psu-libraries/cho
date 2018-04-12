@@ -21,14 +21,14 @@ describe Work::SubmissionIndexer do
     end
 
     context "when the resource's work type isn't an id or doesn't exist" do
-      let(:resource) { instance_double('Resource', work_type: "I don't exist") }
+      let(:resource) { instance_double('Resource', work_type_id: "I don't exist") }
 
       it { is_expected.to eq(work_type_ssim: "I don't exist") }
     end
 
     context "when the resource's work type does exist" do
       let(:work_type) { create_for_repository(:work_type, label: 'Indexed Label') }
-      let(:resource) { instance_double('Resource', work_type: work_type.id) }
+      let(:resource) { instance_double('Resource', work_type_id: work_type.id) }
 
       it { is_expected.to eq(work_type_ssim: 'Indexed Label') }
     end

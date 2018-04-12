@@ -9,9 +9,9 @@ module Work
 
     # GET /works/new
     def new
-      work_type = params.fetch(:work_type, nil)
-      if work_type
-        @work = initialize_change_set(work_type: work_type)
+      work_type_id = params.fetch(:work_type_id, nil)
+      if work_type_id
+        @work = initialize_change_set(work_type_id: work_type_id)
       else
         flash[:alert] = 'You must specify a work type'
         redirect_to(root_path)

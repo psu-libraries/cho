@@ -10,7 +10,7 @@ RSpec.describe Work::SubmissionsController, type: :controller do
   describe 'GET #new' do
     context 'with a work type' do
       it 'returns a success response' do
-        get :new, params: { work_type: 'type' }
+        get :new, params: { work_type_id: 'type' }
         expect(response).to be_success
         expect(assigns(:work)).to be_a(Work::SubmissionChangeSet)
       end
@@ -33,7 +33,8 @@ RSpec.describe Work::SubmissionsController, type: :controller do
   end
 
   describe 'POST #create' do
-    let(:valid_attributes) { { title: 'New Title', work_type: 'type' } }
+    let(:work_type_id) { Work::Type.find_using(label: 'Generic') }
+    let(:valid_attributes) { { title: 'New Title', work_type_id: work_type_id } }
     let(:resource) { Work::Submission.all.last }
 
     context 'with valid params' do

@@ -1,5 +1,5 @@
-<% if @work.work_type_model %>
-  <h1><%= t('cho.work.new.heading', type: @work.work_type_model.label) %></h1>
+<% if @work.work_type %>
+  <h1><%= t('cho.work.new.heading', type: @work.work_type.label) %></h1>
 
   <%= render partial: 'form', locals: { work_form: @work, with_collections: true } %>
 
