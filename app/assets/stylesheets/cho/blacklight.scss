@@ -5,44 +5,42 @@
 @import 'blacklight/blacklight';
 
 #header-navbar .navbar-brand {
-  color: #fff;
-  background: none;
+  background: $header-black;
+  color: $primary-white;
   text-indent: 2%;
   width: 500px;
 }
 
 // styles to address inconsistent usage of search widgets
 .catalog_startOverLink:hover,
-.search-widgets .btn:hover { color: #FFF; }
+.search-widgets .btn:hover { color: $primary-white; }
 
 // addresses insufficient color contrast
-.dl-invert dt { color: #686868; }
+.dl-invert dt { color: $gray-middle; }
 
 // Button visited link color
-.btn-danger:visited { color: #FFF; }
+.btn-danger:visited { color: $primary-white; }
 
 // Adds the colored focus around the Bootstrap dropdown
 .dropdown-toggle:focus {
-  border-color: #66aFe9;
-  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
+  border-color: $blue-light;
+  box-shadow: inset 0 1px 1px $focus-shadow-color-inset, $focus-shadow-color;
   outline: 2px;
   outline: -webkit-focus-ring-color auto 5px;
 }
 
 // Adds a skip to content link for keyboard users, but only makes it visible when element receives focus
-.skip a
-{
-  position:absolute;
-  left:-10000px;
-  top:auto;
-  width:1px;
-  height:1px;
-  overflow:hidden;
+.skip a {
+  height: 1px;
+  left: -10000px;
+  overflow: hidden;
+  position: absolute;
+  top: auto;
+  width: 1px;
 }
 
-.skip a:focus
-{
-  position:static;
-  width:auto;
-  height:auto;
+.skip a:focus {
+  height: auto;
+  position: static;
+  width: auto;
 }
