@@ -6,7 +6,7 @@ RSpec.describe 'work/submissions/edit', type: :view do
   let(:work) { build(:work, title: ['Editable title'], id: 'id', work_type: work_type.id) }
   let(:work_type)  { Work::Type.where(label: 'Document').first }
   let(:change_set) { Work::SubmissionChangeSet.new(work) }
-  let(:form) { Work::Form.new(change_set) }
+  let(:form) { change_set }
 
   before do
     @work = assign(:work, form)

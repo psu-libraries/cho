@@ -52,6 +52,7 @@ RSpec/NestedGroups:
     - 'spec/cho/data_dictionary/fields_controller_spec.rb'
     - 'spec/cho/shared/item_factory_spec.rb'
     - 'spec/devise/ldap_user_spec.rb'
+    - 'spec/cho/work/submissions/change_set_spec.rb'
 
 # Offense count: 1
 Rails/FilePath:
