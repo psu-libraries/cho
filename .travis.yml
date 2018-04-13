@@ -14,16 +14,11 @@ jdk:
 env:
   global:
     - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
-  matrix:
-    - TEST_SUITE=rspec
-    - TEST_SUITE=rubocop
-before_install:
-  - mkdir -p dep_cache
-before_script:
-  - cp config/travis/hydra-ldap.yml config/hydra-ldap.yml
-  - cp config/travis/database.yml config/database.yml
-  - psql -c 'create database travis_ci_test;' -U postgres
-  - bundle exec solr_wrapper --config config/travis/solr_wrapper_test.yml &
-  - bin/jetty_wait
-script:
-  - bundle exec rake cho:travis:$TEST_SUITE
+stages:
+  - niftany
+  - test
+jobs:
+  include:
+    - script: ./travis/test.sh
+    - stage: niftany
+      script: bundle exec niftany
