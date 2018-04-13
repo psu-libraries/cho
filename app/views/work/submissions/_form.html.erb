@@ -1,17 +1,6 @@
 <%= form_for(work_form.model, url: work_form.form_path) do |form| %>
 
-  <%- work_form.form_fields.each do |metadata_field| %>
-    <% if metadata_field.requirement_designation == 'required' %>
-      <%= form.label metadata_field.label, metadata_field.display_name do %>
-        <%= metadata_field.label.titleize %><span class="required no_bold"> required</span>
-      <% end %>
-      <%= form.text_field metadata_field.label, :required => true, 'aria-required' => true %>
-    <% else %>
-      <%= form.label metadata_field.label, metadata_field.display_name %>
-      <%= form.text_field metadata_field.label %>
-    <% end %>
-
-  <%- end %>
+  <%= render 'shared/form_fields', resource: work_form, form: form %>
 
   <% if with_collections %>
     <%= form.label :member_of_collection_ids %>

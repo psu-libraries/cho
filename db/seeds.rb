@@ -44,7 +44,7 @@ class SeedMAP
     def load_work_types
       schema_config.map { |config| config.fetch("schema") }.each do |type|
         seed_resource(metadata_schema(type))
-        seed_resource(work_type(type))
+        seed_resource(work_type(type)) unless type == 'Collection'
       end
     end
 

@@ -1,6 +1,8 @@
 development: &development
   - schema: 'Generic'
     fields: []
+  - schema: 'Collection'
+    fields: []
   - schema: 'Document'
     fields:
       contributor:
@@ -150,4 +152,6 @@ test:
     fields:
       audio_field:
         order_index: 1
+  - schema: 'Collection'
+    fields: []
 production: *development
