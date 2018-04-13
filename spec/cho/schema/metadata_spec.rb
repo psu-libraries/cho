@@ -37,8 +37,8 @@ RSpec.describe Schema::Metadata, type: :model do
   context 'loading template' do
     subject { reloaded_model }
 
-    let(:core_fields) { [create_for_repository(:schema_metadata_field, label: 'core1')] }
-    let(:fields) { [create_for_repository(:schema_metadata_field, label: 'field1')] }
+    let(:core_fields) { [create(:schema_metadata_field, label: 'core1')] }
+    let(:fields) { [create(:schema_metadata_field, label: 'field1')] }
 
     let(:saved_model) { Valkyrie.config.metadata_adapter.persister.save(resource: model) }
     let(:reloaded_model) { Schema::Metadata.find(saved_model.id) }

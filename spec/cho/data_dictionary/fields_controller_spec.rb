@@ -73,7 +73,7 @@ RSpec.describe DataDictionary::FieldsController, type: :controller do
   let(:valid_session) { {} }
 
   context 'valid object created' do
-    let!(:dictionary_field) { create_for_repository(:data_dictionary_field) }
+    let!(:dictionary_field) { create(:data_dictionary_field) }
     let(:title_field) { DataDictionary::Field.all.to_a.keep_if { |f| f.label == 'title' }.first }
     let(:reloaded_dictionary_field) { Valkyrie.config.metadata_adapter.query_service.find_by(id: dictionary_field.id) }
 

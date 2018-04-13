@@ -22,7 +22,7 @@ RSpec.describe 'Catalog page', type: :feature do
   context 'with an existing work' do
     let(:query) { 'exceptional' }
 
-    before { create_for_repository(:work, title: 'Some exceptional content') }
+    before { create(:work, title: 'Some exceptional content') }
 
     it 'searches and facets on the item' do
       visit('/catalog')

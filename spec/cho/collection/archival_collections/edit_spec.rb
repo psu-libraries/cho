@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Collection::Archival, type: :feature do
-  let(:resource) { create_for_repository(:archival_collection, title: 'Archival collection to edit') }
+  let(:resource) { create(:archival_collection, title: 'Archival collection to edit') }
   let(:adapter) { Valkyrie::MetadataAdapter.find(:indexing_persister) }
 
   context 'with all the required metadata' do

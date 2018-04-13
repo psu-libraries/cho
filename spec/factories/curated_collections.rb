@@ -7,9 +7,5 @@ FactoryGirl.define do
     subtitle 'subtitle for a curated collection'
     workflow 'default'
     visibility 'public'
-
-    to_create do |resource|
-      Valkyrie::MetadataAdapter.find(:indexing_persister).persister.save(resource: resource)
-    end
   end
 end

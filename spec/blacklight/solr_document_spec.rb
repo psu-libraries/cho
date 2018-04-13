@@ -22,18 +22,18 @@ RSpec.describe SolrDocument, type: :model do
   describe '#files' do
     subject { SolrDocument.new(document).files.first }
 
-    let(:work_file) { create_for_repository :work_file }
+    let(:work_file) { create :work_file }
     let(:document) { { 'internal_resource_tsim' => 'MyResource', files_ssim: [work_file.id.to_s] } }
 
     its(:to_h) { is_expected.to include(original_filename: 'original_name',
                                         internal_resource: 'Work::File',
-                                        id: work_file.id) }
+                                        id: Valkyrie::ID.new(work_file.id)) }
   end
 
   describe '#member_of_collections' do
     subject { SolrDocument.new(document).member_of_collections.first }
 
-    let(:collection) { create_for_repository(:archival_collection) }
+    let(:collection) { create(:archival_collection) }
     let(:document) { { 'internal_resource_tsim' => 'MyResource', member_of_collection_ids_ssim: [collection.id.to_s] } }
 
     its(:to_h) { is_expected.to include('title_tesim' => ['Archival Collection'],

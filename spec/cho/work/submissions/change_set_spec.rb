@@ -76,7 +76,7 @@ RSpec.describe Work::SubmissionChangeSet do
     end
 
     context 'with existing parents and all required fields' do
-      let(:collection) { create_for_repository(:archival_collection) }
+      let(:collection) { create :archival_collection }
       let(:params) { { work_type_id: 'work type', title: 'Title', member_of_collection_ids: [collection.id] } }
 
       its(:full_messages) { is_expected.to be_empty }

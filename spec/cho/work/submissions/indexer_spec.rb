@@ -27,7 +27,7 @@ describe Work::SubmissionIndexer do
     end
 
     context "when the resource's work type does exist" do
-      let(:work_type) { create_for_repository(:work_type, label: 'Indexed Label') }
+      let(:work_type) { create :work_type, label: 'Indexed Label' }
       let(:resource) { instance_double('Resource', work_type_id: work_type.id) }
 
       it { is_expected.to eq(work_type_ssim: 'Indexed Label') }

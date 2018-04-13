@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Collection::Archival, type: :feature do
-  let(:collection) { create_for_repository(:archival_collection) }
+  let(:collection) { create :archival_collection }
 
   context 'when the collection has no member works' do
     it 'displays its show page and links to the edit form' do
