@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Collection::Curated, type: :feature do
-  let(:resource) { create_for_repository(:curated_collection, title: 'Curated collection to edit') }
+  let(:resource) { create(:curated_collection, title: 'Curated collection to edit') }
   let(:adapter) { Valkyrie::MetadataAdapter.find(:indexing_persister) }
 
   context 'with all the required metadata' do

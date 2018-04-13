@@ -11,7 +11,7 @@ RSpec.describe Work::Submission, type: :feature do
   end
 
   context 'when filling in all the required fields' do
-    let!(:archival_collection) { create_for_repository(:archival_collection, title: 'Sample Collection') }
+    let!(:archival_collection) { create(:archival_collection, title: 'Sample Collection') }
 
     it 'creates a new work object' do
       visit(root_path)
@@ -28,7 +28,7 @@ RSpec.describe Work::Submission, type: :feature do
   end
 
   context 'without providing a title' do
-    let!(:archival_collection) { create_for_repository(:archival_collection, title: 'Sample Collection') }
+    let!(:archival_collection) { create(:archival_collection, title: 'Sample Collection') }
 
     it 'reports the errors' do
       visit(root_path)

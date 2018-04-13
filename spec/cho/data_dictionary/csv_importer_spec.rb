@@ -17,7 +17,7 @@ RSpec.describe DataDictionary::CsvImporter do
   end
 
   context 'record exists' do
-    before { create_for_repository(:data_dictionary_field) }
+    before { create(:data_dictionary_field) }
 
     it 'will update records' do
       expect {

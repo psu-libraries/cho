@@ -3,10 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe Work::Submission, type: :feature do
-  let(:collection) { create_for_repository(:library_collection) }
+  let(:collection) { create :library_collection }
 
   before do
-    create_for_repository(:work, title: 'Work Index View', member_of_collection_ids: [collection.id])
+    create :work, title: 'Work Index View', member_of_collection_ids: [collection.id]
   end
 
   it 'displays a list of fields in the search result view' do

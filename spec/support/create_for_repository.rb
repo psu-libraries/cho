@@ -23,4 +23,4 @@ class CreateStategyForRepositoryPattern
     result
   end
 end
-FactoryGirl.register_strategy(:create_for_repository, CreateStategyForRepositoryPattern)
+FactoryGirl.register_strategy(:create, CreateStategyForRepositoryPattern)

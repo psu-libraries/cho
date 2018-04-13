@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Collection::Curated, type: :feature do
-  before { create_for_repository(:curated_collection, title: 'Curated collection index view') }
+  before { create(:curated_collection, title: 'Curated collection index view') }
 
   it 'displays facets and the collection in an index view' do
     visit(root_path)

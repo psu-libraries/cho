@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Collection::Library, type: :feature do
-  let(:resource) { create_for_repository(:library_collection, title: 'Library collection to edit') }
+  let(:resource) { create(:library_collection, title: 'Library collection to edit') }
   let(:adapter) { Valkyrie::MetadataAdapter.find(:indexing_persister) }
 
   context 'with all the required metadata' do

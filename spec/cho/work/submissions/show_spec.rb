@@ -6,8 +6,8 @@ RSpec.describe Work::Submission, type: :feature do
   let(:work_type) { Work::Type.where(label: 'Document').first }
 
   context 'when the work has no files' do
-    let(:collection) { create_for_repository(:library_collection) }
-    let(:work) do create_for_repository(:work,
+    let(:collection) { create(:library_collection) }
+    let(:work) do create(:work,
       title: 'No files',
       member_of_collection_ids: [collection.id],
       work_type_id: work_type.id)
@@ -29,7 +29,7 @@ RSpec.describe Work::Submission, type: :feature do
   end
 
   context 'when the work has a file' do
-    let(:work) { create_for_repository(:work, :with_file, title: 'An editable file', work_type_id: work_type.id) }
+    let(:work) { create(:work, :with_file, title: 'An editable file', work_type_id: work_type.id) }
 
     it 'displays metadata and files' do
       visit(polymorphic_path([:solr_document], id: work.id))

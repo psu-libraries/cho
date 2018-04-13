@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Work::SubmissionsController, type: :controller do
   let(:metadata_adapter) { Valkyrie::MetadataAdapter.find(:indexing_persister) }
-  let(:resource) { create_for_repository(:work) }
+  let(:resource) { create :work }
   let(:index_solr)    { Valkyrie::MetadataAdapter.find(:index_solr) }
 
   describe 'GET #new' do

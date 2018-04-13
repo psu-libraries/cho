@@ -20,7 +20,7 @@ RSpec.describe Collection::WithMembers do
       it 'returns the members associated with the resource' do
         change_set = Valkyrie::ChangeSet.new(ParentResource.new)
         parent = Valkyrie.config.metadata_adapter.persister.save(resource: change_set)
-        member = create_for_repository(:work, member_of_collection_ids: [parent.id])
+        member = create(:work, member_of_collection_ids: [parent.id])
         reloaded_parent = Valkyrie.config.metadata_adapter.query_service.find_by(id: parent.id)
         expect(reloaded_parent.members.map(&:id)).to contain_exactly(member.id)
       end
