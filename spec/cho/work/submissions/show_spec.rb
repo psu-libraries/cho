@@ -10,7 +10,7 @@ RSpec.describe Work::Submission, type: :feature do
     let(:work) do create_for_repository(:work,
       title: 'No files',
       member_of_collection_ids: [collection.id],
-      work_type: work_type.id)
+      work_type_id: work_type.id)
     end
 
     it 'displays only metadata' do
@@ -29,7 +29,7 @@ RSpec.describe Work::Submission, type: :feature do
   end
 
   context 'when the work has a file' do
-    let(:work) { create_for_repository(:work, :with_file, title: 'An editable file', work_type: work_type.id) }
+    let(:work) { create_for_repository(:work, :with_file, title: 'An editable file', work_type_id: work_type.id) }
 
     it 'displays metadata and files' do
       visit(polymorphic_path([:solr_document], id: work.id))

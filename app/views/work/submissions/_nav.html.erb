@@ -4,7 +4,7 @@
   </a>
   <ul class="dropdown-menu">
     <% Work::Type.all.each do |type| %>
-      <li><%= link_to type.label, new_work_path(work_type: type.id) %></li>
+      <li><%= link_to type.label, new_work_path(work_type_id: type.id) %></li>
     <% end %>
   </ul>
 </li>

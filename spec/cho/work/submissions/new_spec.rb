@@ -52,7 +52,7 @@ RSpec.describe Work::Submission, type: :feature do
 
   context 'with a non-existent work type' do
     it 'reports the error in the form' do
-      visit(new_work_path(work_type: 'bogus-work-type-id'))
+      visit(new_work_path(work_type_id: 'bogus-work-type-id'))
       expect(page).to have_content('Unable to find work type')
     end
   end

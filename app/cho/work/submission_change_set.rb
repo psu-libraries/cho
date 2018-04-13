@@ -2,8 +2,8 @@
 
 module Work
   class SubmissionChangeSet < Valkyrie::ChangeSet
-    validates :work_type, presence: true
-    property :work_type, multiple: false, required: true
+    validates :work_type_id, presence: true
+    property :work_type_id, multiple: false, required: true, type: Valkyrie::Types::ID
     property :file, multiple: false, required: false
     validates :member_of_collection_ids, with: :validate_members!
     property :member_of_collection_ids,
@@ -12,7 +12,6 @@ module Work
              type: Types::Strict::Array.member(Valkyrie::Types::ID)
 
     include DataDictionary::FieldsForChangeSet
-    alias :work_type_id :work_type
     delegate :url_helpers, to: 'Rails.application.routes'
 
     def initialize(*args)
@@ -35,7 +34,7 @@ module Work
       @form_fields = unordered_fields.sort_by(&:order_index)
     end
 
-    def work_type_model
+    def work_type
       @work_type ||= Work::Type.find(Valkyrie::ID.new(work_type_id))
     end
 
@@ -73,7 +72,7 @@ module Work
     private
 
       def metadata_schema
-        @metadata_schema ||= work_type_model.metadata_schema
+        @metadata_schema ||= work_type.metadata_schema
       end
   end
 end

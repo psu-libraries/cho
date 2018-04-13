@@ -19,7 +19,7 @@ RSpec.describe Work::SubmissionChangeSet do
     end
 
     it 'has a single work type' do
-      expect(change_set).not_to be_multiple(:work_type)
+      expect(change_set).not_to be_multiple(:work_type_id)
     end
 
     it 'has multiple parents' do
@@ -33,15 +33,15 @@ RSpec.describe Work::SubmissionChangeSet do
     end
 
     it 'has a required work type' do
-      expect(change_set).to be_required(:work_type)
+      expect(change_set).to be_required(:work_type_id)
     end
   end
 
   describe '#fields=' do
     before { change_set.prepopulate! }
     its(:title) { is_expected.to be_empty }
+    its(:work_type_id) { is_expected.to eq(Valkyrie::ID.new(nil)) }
     its(:work_type) { is_expected.to be_nil }
-    its(:work_type_model) { is_expected.to be_nil }
     its(:file) { is_expected.to be_nil }
     its(:member_of_collection_ids) { is_expected.to be_empty }
   end
@@ -52,7 +52,7 @@ RSpec.describe Work::SubmissionChangeSet do
     before { change_set.validate(params) }
 
     context 'without a title' do
-      let(:params) { { work_type: 'work type' } }
+      let(:params) { { work_type_id: 'work type' } }
 
       its(:full_messages) { is_expected.to include("Title can't be blank") }
     end
@@ -64,20 +64,20 @@ RSpec.describe Work::SubmissionChangeSet do
     end
 
     context 'with all required fields' do
-      let(:params) { { work_type: 'work type', title: 'Title' } }
+      let(:params) { { work_type_id: 'work type', title: 'Title' } }
 
       its(:full_messages) { is_expected.to be_empty }
     end
 
     context 'with non-existent parents' do
-      let(:params) { { work_type: 'work type', title: 'Title', member_of_collection_ids: ['nothere'] } }
+      let(:params) { { work_type_id: 'work type', title: 'Title', member_of_collection_ids: ['nothere'] } }
 
       its(:full_messages) { is_expected.to include('Member of collection ids nothere does not exist') }
     end
 
     context 'with existing parents and all required fields' do
       let(:collection) { create_for_repository(:archival_collection) }
-      let(:params) { { work_type: 'work type', title: 'Title', member_of_collection_ids: [collection.id] } }
+      let(:params) { { work_type_id: 'work type', title: 'Title', member_of_collection_ids: [collection.id] } }
 
       its(:full_messages) { is_expected.to be_empty }
     end
@@ -114,12 +114,13 @@ RSpec.describe Work::SubmissionChangeSet do
   end
 
   context 'with a defined work type' do
-    let(:resource) { Work::Submission.new(work_type: work_type.id) }
+    let(:resource) { Work::Submission.new(work_type_id: work_type.id) }
     let(:work_type) { Work::Type.find_using(label: 'Generic').first }
 
     describe '#model' do
       its(:model) { is_expected.to eq(resource) }
-      its(:work_type_model) { is_expected.to eq(work_type) }
+      its(:work_type) { is_expected.to eq(work_type) }
+      its(:work_type_id) { is_expected.to eq(work_type.id) }
     end
 
     describe '#fields' do

@@ -7,7 +7,7 @@ require Rails.root.join('spec', 'support', 'seed_map')
 FactoryGirl.define do
   factory :work_submission, aliases: [:work], class: Work::Submission do
     title 'Sample Generic Work'
-    work_type 'Generic'
+    work_type_id { Work::Type.find_using(label: 'Generic').first.id }
 
     to_create do |resource|
       Valkyrie::MetadataAdapter.find(:indexing_persister).persister.save(resource: resource)
