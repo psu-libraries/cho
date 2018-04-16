@@ -1,0 +1,13 @@
+<ol>
+  <% @results.each do |result| %>
+    <li>
+      <%= result.title %>
+      <%= result.errors %>
+    </li>
+  <% end %>
+</ol>
+
+<%= form_tag(controller: 'csv', action: 'run_import') do |form| %>
+ <%= hidden_field_tag(:file_name, @file_name) %>
+ <%= submit_tag(t('cho.csv.import.submit')) %>
+<% end %>
