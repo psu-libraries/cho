@@ -33,7 +33,7 @@ RSpec.describe Work::SubmissionsController, type: :controller do
   end
 
   describe 'POST #create' do
-    let(:work_type_id) { Work::Type.find_using(label: 'Generic') }
+    let(:work_type_id) { Work::Type.find_using(label: 'Generic').first }
     let(:valid_attributes) { { title: 'New Title', work_type_id: work_type_id } }
     let(:resource) { Work::Submission.all.last }
 

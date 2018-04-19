@@ -3,6 +3,7 @@
 module Work
   class SubmissionChangeSet < Valkyrie::ChangeSet
     validates :work_type_id, presence: true
+    validates :work_type_id, with: :validate_work_type_id!
     property :work_type_id, multiple: false, required: true, type: Valkyrie::Types::ID
     property :file, multiple: false, required: false
     validates :member_of_collection_ids, with: :validate_members!
@@ -27,6 +28,10 @@ module Work
       end
     end
 
+    def validate_work_type_id!(field)
+      errors.add(field, "#{work_type_id} does not exist") if work_type.blank?
+    end
+
     def form_fields
       return @form_fields if @form_fields.present?
       field_ids = metadata_schema.core_fields + metadata_schema.fields
@@ -35,7 +40,13 @@ module Work
     end
 
     def work_type
-      @work_type ||= Work::Type.find(Valkyrie::ID.new(work_type_id))
+      # TODO - This code can be removed when we upgrade to Valkyrie 1.0 as it now takes either a string or and ID
+      id = if work_type_id.is_a?(Valkyrie::ID)
+             work_type_id
+           else
+             Valkyrie::ID.new(work_type_id)
+           end
+      @work_type ||= Work::Type.find(id)
     end
 
     def submit_text
