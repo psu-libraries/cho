@@ -23,14 +23,22 @@ describe Work::SubmissionIndexer do
     context "when the resource's work type isn't an id or doesn't exist" do
       let(:resource) { instance_double('Resource', work_type_id: "I don't exist") }
 
-      it { is_expected.to eq(work_type_ssim: "I don't exist") }
+      it { is_expected.to eq(work_type_ssim: "I don't exist", member_of_collection_ssim: nil) }
     end
 
     context "when the resource's work type does exist" do
       let(:work_type) { create :work_type, label: 'Indexed Label' }
       let(:resource) { instance_double('Resource', work_type_id: work_type.id) }
 
-      it { is_expected.to eq(work_type_ssim: 'Indexed Label') }
+      it { is_expected.to eq(work_type_ssim: 'Indexed Label', member_of_collection_ssim: nil) }
+    end
+
+    context "When the resource's collection id is present" do
+      let(:work_type) { create :work_type, label: 'Indexed Label' }
+      let(:collection) { create :library_collection, title: 'My Collection' }
+      let(:resource) { instance_double('Resource', work_type_id: work_type.id, member_of_collection_ids: [collection.id]) }
+
+      it { is_expected.to eq(work_type_ssim: 'Indexed Label', member_of_collection_ssim: ['My Collection']) }
     end
   end
 end

@@ -2,6 +2,7 @@
 
 class SolrDocument
   include Blacklight::Solr::Document
+  include DataDictionary::FieldsForSolrDocument
 
   # self.unique_key = 'id'
 

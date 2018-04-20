@@ -40,4 +40,12 @@ RSpec.describe SolrDocument, type: :model do
                                         'internal_resource_tesim' => ['Collection::Archival'],
                                         'id' => collection.id.to_s) }
   end
+
+  describe 'data dictionary field accessors' do
+    subject { SolrDocument.new(document) }
+
+    let(:document) { { 'internal_resource_tsim' => 'MyResource', title_tesim: ['my_title'] } }
+
+    its(:title) { is_expected.to eq ['my_title'] }
+  end
 end
