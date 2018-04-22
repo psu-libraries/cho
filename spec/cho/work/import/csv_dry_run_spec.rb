@@ -51,5 +51,28 @@ RSpec.describe Work::Import::CsvDryRun do
         expect(dry_run_results[2]).not_to be_valid
       end
     end
+
+    context 'Work Type string included ' do
+      let(:csv_data) { "member_of_collection_ids,work_type,title\n#{collection.id},Generic,\"My Stuff\"\n#{collection.id},Generic,\"My Awsome work\",\n#{collection.id},Generic,\"My Awsome work\"" }
+
+      it 'returns a list of change sets' do
+        is_expected.to be_a Array
+        expect(dry_run_results.count).to eq(3)
+        expect(dry_run_results[0]).to be_valid
+        expect(dry_run_results[1]).to be_valid
+        expect(dry_run_results[2]).to be_valid
+      end
+    end
+    context 'Work Type string included ' do
+      let(:file_name) { Rails.root.join('spec', 'fixtures', 'hello_world.txt') }
+      let(:csv_data) { "member_of_collection_ids,work_type,title,file_name\n#{collection.id},Generic,\"My Stuff\",#{file_name}" }
+
+      it 'returns a list of change sets' do
+        is_expected.to be_a Array
+        expect(dry_run_results.count).to eq(1)
+        expect(dry_run_results[0]).to be_valid
+        expect(dry_run_results[0].file).to be_a(ActionDispatch::Http::UploadedFile)
+      end
+    end
   end
 end

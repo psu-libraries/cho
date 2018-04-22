@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'csv'
+
 module Work
   module Import
     class CsvReader
@@ -8,7 +10,7 @@ module Work
       delegate :each, :map, to: :csv_hashes
 
       def initialize(csv_file)
-        csv_data = CSV.parse(csv_file)
+        csv_data = ::CSV.parse(csv_file)
         @headers = csv_data.shift
         @csv_hashes = csv_data.map { |a| Hash[@headers.zip(a)] }
       end

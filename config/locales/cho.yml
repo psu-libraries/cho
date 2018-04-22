@@ -42,3 +42,12 @@ en:
         title: "Title"
         date_created: "Date Created"
         heading: "Items in this Collection"
+    csv:
+      dry_run:
+        submit: "Dry Run"
+      import:
+        submit: "Perform Import"
+        failure:
+          header: "Failed Import"
+        success:
+          header: "Successful Import"
