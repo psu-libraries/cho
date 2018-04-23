@@ -29,6 +29,7 @@ module Work
     end
 
     def validate_work_type_id!(field)
+      return if work_type_id.blank?
       errors.add(field, "#{work_type_id} does not exist") if work_type.blank?
     end
 
