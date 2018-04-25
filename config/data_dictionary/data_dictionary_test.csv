@@ -2,6 +2,7 @@ Label,Field Type,Requirement Designation,Validation,Multiple,Controlled Vocabula
 title,string,required,no_validation,true,no_vocabulary,,,no_transformation,no_facet,help me,true
 subtitle,string,optional,no_validation,true,no_vocabulary,,,no_transformation,no_facet,help me,true
 description,string,optional,no_validation,true,no_vocabulary,,,no_transformation,no_facet,help me,true
+created,date,optional,no_validation,true,no_vocabulary,,,no_transformation,no_facet,help me,false
 generic_field,string,optional,no_validation,true,no_vocabulary,,,no_transformation,no_facet,help me,false
 document_field,string,optional,no_validation,true,no_vocabulary,,,no_transformation,no_facet,help me,false
 still_image_field,string,optional,no_validation,true,no_vocabulary,,,no_transformation,no_facet,help me,false

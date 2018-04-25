@@ -19,8 +19,15 @@ class SolrDocument
   # Recommendation: Use field names from Dublin Core
   use_extension(Blacklight::Document::DublinCore)
 
+  # csv extension
+  use_extension(Document::Csv)
+
   def internal_resource
-    Array.wrap(self['internal_resource_tsim']).first.constantize
+    internal_resource_name.constantize
+  end
+
+  def internal_resource_name
+    Array.wrap(self['internal_resource_tsim']).first
   end
 
   # @return [Array<Work::File>]
@@ -35,5 +42,9 @@ class SolrDocument
     Array.wrap(self['member_of_collection_ids_ssim']).map do |id|
       SolrDocument.find(id.sub(/^id-/, ''))
     end
+  end
+
+  def collection?
+    internal_resource_name.include?('Collection')
   end
 end
