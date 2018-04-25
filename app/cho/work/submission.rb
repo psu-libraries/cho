@@ -20,5 +20,16 @@ module Work
     #  to the controller
     # For the moment we are uploading a single file.
     attr_accessor :file_data, :cached_file_data, :file
+
+    def self.model_name
+      Name.new(self)
+    end
+
+    # @note Use a custom Name class just to override i18n_key
+    class Name < ActiveModel::Name
+      def i18n_key
+        'work'
+      end
+    end
   end
 end

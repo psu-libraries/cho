@@ -64,4 +64,12 @@ RSpec.describe Work::Submission do
       expect(resource_klass.fields).to include(:member_of_collection_ids)
     end
   end
+
+  describe '::model_name' do
+    context 'with a custom i18n key' do
+      subject { described_class.model_name }
+
+      its(:i18n_key) { is_expected.to eq('work') }
+    end
+  end
 end

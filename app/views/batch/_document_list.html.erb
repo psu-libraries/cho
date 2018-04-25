@@ -1,0 +1,15 @@
+<%# container for all documents in index list view -%>
+<div id="documents" class="documents-<%= document_index_view_type %>">
+  <%= form_for(:delete, url: batch_delete_path, method: :post) do |form| %>
+    Select resources to delete:
+    <ol>
+      <% documents.each do |document| %>
+        <li>
+          <%= link_to_document document, document_show_link_field(document) %>
+          [ <%= form.check_box :ids, { multiple: true }, document.id, nil %> Delete ]
+        </li>
+      <% end %>
+      <%= form.submit t('cho.batch.delete.submit') %>
+    </ol>
+  <% end %>
+</div>

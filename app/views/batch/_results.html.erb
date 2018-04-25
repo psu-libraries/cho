@@ -1,0 +1,7 @@
+<p><%= t('cho.delete.index.message') %></p>
+
+<ul>
+  <% flash[:deleted_titles].each do |title| %>
+    <li><%= title %></li>
+  <% end %>
+</ul>

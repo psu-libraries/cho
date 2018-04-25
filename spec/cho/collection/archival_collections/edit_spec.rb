@@ -27,8 +27,12 @@ RSpec.describe Collection::Archival, type: :feature do
   context 'when deleting the collection' do
     it 'removes it from the system' do
       visit(edit_archival_collection_path(resource))
-      click_link('Delete Archival collection')
-      expect(page).to have_content('Archival collection to edit has been deleted')
+      click_button('Delete Archival collection')
+      expect(page).to have_content('The following resources will be deleted')
+      expect(page).to have_content(resource.title.first)
+      click_button('Continue')
+      expect(page).to have_content('You have successfully deleted the following items')
+      expect(page).to have_content(resource.title.first)
       expect(Collection::Archival.all.count).to eq(0)
       expect(adapter.index_adapter.query_service.find_all.count).to eq(0)
     end

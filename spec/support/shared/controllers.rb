@@ -89,18 +89,4 @@ RSpec.shared_examples 'a collection controller' do
       end
     end
   end
-
-  describe 'DELETE #destroy' do
-    before { collection }
-    it 'destroys the requested collection' do
-      expect {
-        delete :destroy, params: { id: collection.to_param }, session: valid_session
-      }.to change(resource_class, :count).by(-1)
-    end
-
-    it 'redirects to the collections list' do
-      delete :destroy, params: { id: collection.to_param }, session: valid_session
-      expect(response).to redirect_to('/')
-    end
-  end
 end

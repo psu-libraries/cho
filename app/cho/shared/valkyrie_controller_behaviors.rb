@@ -33,4 +33,17 @@ module ValkyrieControllerBehaviors
   def respond_error(_change_set, _error_view)
     raise StandardError.new('This needs to be define in the class including this module')
   end
+
+  private
+
+    def find_resource(id)
+      resource_class.find(Valkyrie::ID.new(id))
+    end
+
+    def change_set_persister
+      @change_set_persister ||= ChangeSetPersister.new(
+        metadata_adapter: Valkyrie::MetadataAdapter.find(:indexing_persister),
+        storage_adapter: Valkyrie.config.storage_adapter
+      )
+    end
 end

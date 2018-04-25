@@ -88,18 +88,4 @@ RSpec.describe Work::SubmissionsController, type: :controller do
       end
     end
   end
-
-  describe 'DELETE #destroy' do
-    before { resource }
-    it 'destroys the requested work' do
-      expect {
-        delete :destroy, params: { id: resource.to_param }
-      }.to change { metadata_adapter.query_service.find_all.to_a.count }.by(-1)
-    end
-
-    it 'redirects to the works list' do
-      delete :destroy, params: { id: resource.to_param }
-      expect(response).to redirect_to('/')
-    end
-  end
 end

@@ -17,6 +17,12 @@ RSpec.describe 'work/submissions/edit', type: :view do
     assert_form('document_field')
   end
 
+  it 'renders the delete form' do
+    assert_select 'form[action=?][method=?]', batch_delete_path, 'post' do
+      assert_select 'input[type=hidden][name=?][value=?]', 'delete[ids][]', 'id'
+    end
+  end
+
   context 'Map type' do
     let(:work_type)  { Work::Type.where(label: 'Map').first }
 
