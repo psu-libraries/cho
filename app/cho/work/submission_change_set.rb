@@ -10,7 +10,7 @@ module Work
     property :member_of_collection_ids,
              multiple: true,
              required: false,
-             type: Types::Strict::Array.member(Valkyrie::Types::ID)
+             type: Types::Strict::Array.of(Valkyrie::Types::ID)
 
     include DataDictionary::FieldsForChangeSet
     delegate :url_helpers, to: 'Rails.application.routes'

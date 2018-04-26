@@ -9,7 +9,7 @@ module Collection::CommonFields
 
   included do
     attribute :id, Valkyrie::Types::ID.optional
-    attribute :workflow, Valkyrie::Types::Set.member(Valkyrie::Types::String.enum(*WORKFLOW))
-    attribute :visibility, Valkyrie::Types::Set.member(Valkyrie::Types::String.enum(*VISIBILITY))
+    attribute :workflow, Valkyrie::Types::Set.of(Valkyrie::Types::String.enum(*WORKFLOW))
+    attribute :visibility, Valkyrie::Types::Set.of(Valkyrie::Types::String.enum(*VISIBILITY))
   end
 end
