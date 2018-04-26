@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :work_type, class: Work::Type do
     label 'Sample Work Type'
 

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :curated_collection, class: Collection::Curated do
     title 'Curated Collection'
     description 'Sample curated collection'
