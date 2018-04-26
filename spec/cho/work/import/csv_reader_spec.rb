@@ -36,5 +36,12 @@ RSpec.describe Work::Import::CsvReader do
     subject { reader.csv_hashes }
 
     it { is_expected.to eq(csv_hash) }
+
+    context 'value has multiple items' do
+      let(:csv_file) { StringIO.new("header1,header2\ndata1,data2\ndataA1|dataA2,dataB") }
+      let(:csv_hash) { [{ 'header1' => 'data1', 'header2' => 'data2' }, { 'header1' => ['dataA1', 'dataA2'], 'header2' => 'dataB' }] }
+
+      it { is_expected.to eq(csv_hash) }
+    end
   end
 end

@@ -27,7 +27,11 @@ module Work
 
       def collection_labels_for_ids
         return unless resource.respond_to?(:member_of_collection_ids)
-        resource.member_of_collection_ids.map { |id| SolrDocument.find(id).title }.flatten
+        resource.member_of_collection_ids.map { |id| SolrDocument.find(id).send(title_field_method) }.flatten
+      end
+
+      def title_field_method
+        @title_field ||= DataDictionary::Field.find_using(label: 'title').first.method_name
       end
   end
 end
