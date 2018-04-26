@@ -4,7 +4,7 @@
 #   work object gets autoloaded.  This supports the title field being defined on the object
 require Rails.root.join('spec', 'support', 'seed_map')
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :work_submission, aliases: [:work], class: Work::Submission do
     title 'Sample Generic Work'
     work_type_id { Work::Type.find_using(label: 'Generic').first.id }

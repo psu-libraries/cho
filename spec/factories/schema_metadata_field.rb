@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :schema_metadata_field, class: Schema::MetadataField do
     sequence(:id)
     label 'abc123_label'

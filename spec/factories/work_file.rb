@@ -4,7 +4,7 @@
 #   work object gets autoloaded.  This supports the title field being defined on the object
 require Rails.root.join('spec', 'support', 'seed_map')
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :work_file, class: Work::File do
     original_filename 'original_name'
     use [Valkyrie::Vocab::PCDMUse.OriginalFile]

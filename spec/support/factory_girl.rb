@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 RSpec.configure do |config|
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
 end
 
-FactoryGirl.define do
+FactoryBot.define do
   to_create do |resource|
     Valkyrie::MetadataAdapter.find(:indexing_persister).persister.save(resource: resource)
   end
