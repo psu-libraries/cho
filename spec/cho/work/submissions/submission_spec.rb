@@ -53,7 +53,7 @@ RSpec.describe Work::Submission do
 
     it 'can be set as an attribute' do
       resource = resource_klass.new(member_of_collection_ids: ['1', '2'])
-      expect(resource.attributes[:member_of_collection_ids]).to contain_exactly('1', '2')
+      expect(resource.attributes[:member_of_collection_ids].map(&:id)).to contain_exactly('1', '2')
     end
 
     it 'is included in the list of attributes' do
