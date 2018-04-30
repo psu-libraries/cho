@@ -8,7 +8,9 @@ module Work
 
     attribute :id, Valkyrie::Types::ID.optional
     attribute :work_type_id, Valkyrie::Types::ID.optional
-    attribute :member_of_collection_ids, Valkyrie::Types::Set
+
+    # TODO  The default canbe removed after we upgrade to Valkyrie 1.0
+    attribute :member_of_collection_ids, Valkyrie::Types::Set.of(Valkyrie::Types::ID).default([])
 
     # A list of Work::Files.
     #  The stored valkyrie resource for files attached to a submission
