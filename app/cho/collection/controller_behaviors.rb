@@ -63,6 +63,7 @@ module Collection::ControllerBehaviors
     end
 
     def respond_error(change_set, error_view)
+      change_set.sync
       @collection = change_set
       render error_view
     end

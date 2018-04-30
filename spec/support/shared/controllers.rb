@@ -51,6 +51,7 @@ RSpec.shared_examples 'a collection controller' do
       it "returns a success response (i.e. to display the 'new' template)" do
         post :create, params: { resource_class.model_name.param_key.to_sym => invalid_attributes }, session: valid_session
         expect(response).to be_success
+        expect(assigns[:collection].model.description).to eq(['A sample collection'])
       end
     end
   end
@@ -81,11 +82,12 @@ RSpec.shared_examples 'a collection controller' do
     end
 
     context 'with invalid params' do
-      let(:invalid_attributes) { { title: '' } }
+      let(:invalid_attributes) { { title: '', description: 'My Updated description' } }
 
       it "returns a success response (i.e. to display the 'edit' template)" do
         put :update, params: { id: collection.to_param, resource_class.model_name.param_key.to_sym => invalid_attributes }, session: valid_session
         expect(response).to be_success
+        expect(assigns[:collection].model.description).to eq(['My Updated description'])
       end
     end
   end
