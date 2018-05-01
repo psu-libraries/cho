@@ -53,6 +53,7 @@ module Work
       end
 
       def respond_error(change_set, error_view)
+        change_set.sync
         @work = change_set
         render error_view
       end

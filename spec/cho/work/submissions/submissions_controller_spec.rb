@@ -58,6 +58,7 @@ RSpec.describe Work::SubmissionsController, type: :controller do
       it "returns a success response (i.e. to display the 'new' template)" do
         post :create, params: { 'work_submission': invalid_attributes }
         expect(response).to be_success
+        expect(assigns(:work).model.title).to eq(['Missing a work type'])
       end
     end
   end
@@ -80,11 +81,12 @@ RSpec.describe Work::SubmissionsController, type: :controller do
     end
 
     context 'with an invalid change set' do
-      let(:invalid_attributes) { { title: '' } }
+      let(:invalid_attributes) { { title: '', description: 'my new description' } }
 
       it "returns a success response (i.e. to display the 'edit' template)" do
         put :update, params: { id: resource.to_param, 'work_submission': invalid_attributes }
         expect(response).to be_success
+        expect(assigns(:work).model.description).to eq(['my new description'])
       end
     end
   end
