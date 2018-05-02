@@ -15,7 +15,7 @@ RSpec.describe 'collection/archival_collections/edit', type: :view do
     assert_select 'form[action=?][method=?]', archival_collection_path(@collection), 'post' do
       assert_select 'input[name=?]', 'archival_collection[title]'
       assert_select 'input[name=?]', 'archival_collection[subtitle]'
-      assert_select 'input[name=?]', 'archival_collection[description]'
+      assert_select 'textarea[name=?]', 'archival_collection[description]'
       assert_select 'input[name=?]', 'archival_collection[workflow]'
       assert_select 'input[name=?]', 'archival_collection[visibility]'
       # Added to make sure accessibility changes are in place

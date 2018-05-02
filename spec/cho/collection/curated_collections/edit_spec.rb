@@ -9,9 +9,12 @@ RSpec.describe Collection::Curated, type: :feature do
   context 'with all the required metadata' do
     it 'updates an existing work with new metadata' do
       visit(edit_curated_collection_path(resource))
+      expect(page).to have_field('Description', type: 'textarea', with: 'Sample curated collection')
       fill_in('curated_collection[title]', with: 'Updated Curated Collection Title')
+      fill_in('curated_collection[description]', with: 'Updated curated collection description')
       click_button('Update Curated collection')
       expect(page).to have_content('Updated Curated Collection Title')
+      expect(page).to have_content('Updated curated collection description')
     end
   end
 

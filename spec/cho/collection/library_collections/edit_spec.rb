@@ -9,9 +9,12 @@ RSpec.describe Collection::Library, type: :feature do
   context 'with all the required metadata' do
     it 'updates an existing work with new metadata' do
       visit(edit_library_collection_path(resource))
+      expect(page).to have_field('Description', type: 'textarea', with: 'Sample library collection')
       fill_in('library_collection[title]', with: 'Updated Library Collection Title')
+      fill_in('library_collection[description]', with: 'Updated library collection description')
       click_button('Update Library collection')
       expect(page).to have_content('Updated Library Collection Title')
+      expect(page).to have_content('Updated library collection description')
     end
   end
 
