@@ -40,6 +40,12 @@ module Work
       @form_fields = unordered_fields.sort_by(&:order_index)
     end
 
+    # @param [ActionView::Helpers::FormBuilder] form
+    # @return [Array<Schema::InputField>]
+    def input_fields(form)
+      form_fields.map { |field| Schema::InputField.new(form: form, metadata_field: field) }
+    end
+
     def work_type
       # TODO - This code can be removed when we upgrade to Valkyrie 1.0 as it now takes either a string or and ID
       id = if work_type_id.is_a?(Valkyrie::ID)

@@ -67,7 +67,7 @@ RSpec.describe 'work/submissions/edit', type: :view do
     assert_select 'form[action=?][method=?]', work_path(@work.model), 'post' do
       assert_select 'input[name=?]', 'work_submission[title]'
       assert_select 'input[name=?]', 'work_submission[subtitle]'
-      assert_select 'input[name=?]', 'work_submission[description]'
+      assert_select 'textarea[name=?]', 'work_submission[description]'
       assert_select 'input[name=?]', "work_submission[#{specific_field}]"
     end
   end

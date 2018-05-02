@@ -1,12 +1,10 @@
-<%- resource.form_fields.each do |metadata_field| %>
-  <% if metadata_field.requirement_designation == 'required' %>
-    <%= form.label metadata_field.label, metadata_field.display_name do %>
-      <%= metadata_field.label.titleize %><span class="required no_bold"> required</span>
+<%- resource.input_fields(form).each do |input| %>
+  <%= input.label do %>
+    <%= input.label_text.titleize %>
+    <% if input.required? %>
+      <span class="required no_bold"> required</span>
     <% end %>
-    <%= form.text_field metadata_field.label, :required => true, 'aria-required' => true %>
-  <% else %>
-    <%= form.label metadata_field.label, metadata_field.display_name %>
-    <%= form.text_field metadata_field.label %>
   <% end %>
 
+  <%= input.field %>
 <%- end %>
