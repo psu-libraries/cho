@@ -1,13 +1,10 @@
 <h1><%= t('cho.csv.import.success.header') %></h1>
-<ol>
+<ul class="result-list">
   <% @created.each do |result| %>
     <li>
-      <%= link_to result.title, solr_document_path(result.id) %>
+      <%= link_to result.title.join(', '), solr_document_path(result.id) %>
     </li>
   <% end %>
-</ol>
+</ul>
 
-<%= form_tag(controller: 'csv', action: 'run_import') do |form| %>
- <%= hidden_field_tag(:results, value: @results) %>
- <%= submit_tag('Perform Import') %>
-<% end %>
+<%= link_to t('cho.csv.import.success.new_import'), :new_csv_file, class: 'btn btn-link' %>
