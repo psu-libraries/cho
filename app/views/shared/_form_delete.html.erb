@@ -1,0 +1,4 @@
+<%= form_for(:delete, url: batch_delete_path, method: :post) do |form| %>
+  <%= form.hidden_field :ids, multiple: true, value: resource.id %>
+  <%= form.submit t("cho.#{resource.model_name.i18n_key}.edit.delete_link") %>
+<% end %>

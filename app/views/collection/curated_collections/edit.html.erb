@@ -1,7 +1,5 @@
 <h1>Editing Collection</h1>
 
 <%= render 'collection/base/form', collection: @collection %>
-
-<%= link_to 'Show', @collection %> |
-<%= link_to "Delete #{@collection.title.first}", curated_collection_path(@collection),
-            data: { confirm: 'Are you sure?' }, method: :delete %>
+<%= render 'shared/form_delete', resource: @collection %>
+<%= link_to 'Show', @collection %>

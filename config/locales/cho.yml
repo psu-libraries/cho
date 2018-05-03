@@ -22,6 +22,7 @@ en:
       create_collection: "Create Collection"
       create_submission: "Create Work"
       data_dictionary: "Data Dictionary"
+      select: "Select Resources"
     work:
       new:
         heading: "New %{type} Work"
@@ -42,6 +43,15 @@ en:
         title: "Title"
         date_created: "Date Created"
         heading: "Items in this Collection"
+    archival_collection:
+      edit:
+        delete_link: "Delete Archival collection"
+    library_collection:
+      edit:
+        delete_link: "Delete Library collection"
+    curated_collection:
+      edit:
+        delete_link: "Delete Curated collection"
     csv:
       dry_run:
         submit: "Dry Run"
@@ -61,3 +71,15 @@ en:
         title: "Test Collection with Works Containing Files"
         description: "An example collection used for benchmarking with many works that each contain a 50 MB file."
         work_title: "Sample Work with File %{count}"
+    batch:
+      select:
+        heading: "Select Resources"
+        message: "Search for items to delete from the repository"
+      delete:
+        heading: "Delete Confirmation"
+        message: "The following resources will be deleted"
+        continue: "Continue"
+        success: "You have successfully deleted the following items: %{list}"
+        cancel: "Cancel"
+        submit: "Delete Selected Resources"
+

@@ -77,6 +77,22 @@ RSpec.describe ChangeSetPersister do
     end
   end
 
+  describe '#delete' do
+    let!(:change_set) { create(:work, :with_file) }
+
+    it 'deletes the work and file from Postgres and Solr, and the file from disk' do
+      expect(Work::Submission.all.count).to eq(1)
+      expect(Work::File.all.count).to eq(1)
+      expect(metadata_adapter.index_adapter.query_service.find_all.count).to eq(2)
+      expect(File.exists?('tmp/files/hello_world.txt')).to be(true)
+      change_set_persister.delete(change_set: change_set)
+      expect(Work::Submission.all.count).to eq(0)
+      expect(Work::File.all.count).to eq(0)
+      expect(metadata_adapter.index_adapter.query_service.find_all.count).to eq(0)
+      expect(File.exists?('tmp/files/hello_world.txt')).to be(false)
+    end
+  end
+
   context 'when the persister fails' do
     let(:mock_persister) { double }
     let(:change_set) { DataDictionary::FieldChangeSet.new(DataDictionary::Field.new) }

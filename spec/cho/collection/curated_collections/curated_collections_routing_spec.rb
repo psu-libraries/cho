@@ -25,7 +25,7 @@ RSpec.describe Collection::ArchivalCollectionsController, type: :routing do
     end
 
     it 'routes to #destroy' do
-      expect(delete: '/curated_collections/1').to route_to('collection/curated_collections#destroy', id: '1')
+      expect(delete: '/curated_collections/1').not_to route_to('collection/curated_collections#destroy', id: '1')
     end
   end
 end

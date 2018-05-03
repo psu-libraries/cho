@@ -28,14 +28,4 @@ RSpec.describe 'Editing works', type: :feature do
       expect(page).to have_content('1 error prohibited this work from being saved:')
     end
   end
-
-  context 'when deleting a work' do
-    it 'removes the work from the system' do
-      visit(edit_work_path(resource))
-      click_link('Delete Work')
-      expect(page).to have_content('Work to edit has been deleted')
-      expect(Work::Submission.all.count).to eq(0)
-      expect(adapter.index_adapter.query_service.find_all.count).to eq(0)
-    end
-  end
 end
