@@ -10,5 +10,13 @@ module Schema
       field.data_dictionary_field_id = data_dictionary_field.id
       field
     end
+
+    def input_type
+      if text?
+        :text_area
+      else
+        :text_field
+      end
+    end
   end
 end

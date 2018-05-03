@@ -82,4 +82,18 @@ RSpec.describe Schema::MetadataField, type: :model do
       expect(schema_field.data_dictionary_field_id.to_s).to eq(data_dictionary_field.id.to_s)
     end
   end
+
+  describe '#input_type' do
+    subject { model.input_type }
+
+    context 'by default' do
+      it { is_expected.to eq(:text_field) }
+    end
+
+    context 'by default' do
+      let(:model) { described_class.new(field_type: 'text') }
+
+      it { is_expected.to eq(:text_area) }
+    end
+  end
 end
