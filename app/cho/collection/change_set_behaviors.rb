@@ -19,6 +19,12 @@ module Collection::ChangeSetBehaviors
     @form_fields ||= ordered_form_fields
   end
 
+  # @param [ActionView::Helpers::FormBuilder] form
+  # @return [Array<Schema::InputField>]
+  def input_fields(form)
+    form_fields.map { |field| Schema::InputField.new(form: form, metadata_field: field) }
+  end
+
   private
 
     def ordered_form_fields

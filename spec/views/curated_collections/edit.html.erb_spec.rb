@@ -15,12 +15,12 @@ RSpec.describe 'collection/curated_collections/edit', type: :view do
     assert_select 'form[action=?][method=?]', curated_collection_path(@collection), 'post' do
       assert_select 'input[name=?]', 'curated_collection[title]'
       assert_select 'input[name=?]', 'curated_collection[subtitle]'
-      assert_select 'input[name=?]', 'curated_collection[description]'
+      assert_select 'textarea[name=?]', 'curated_collection[description]'
       assert_select 'input[name=?]', 'curated_collection[workflow]'
       assert_select 'input[name=?]', 'curated_collection[visibility]'
       # Added to make sure accessibility changes are in place
       assert_select 'legend', 'Basic Metadata'
-      assert_select 'label', 'Title required'
+      assert_select 'label', /Title\s.* required/
       assert_select 'legend', 'Workflow'
       assert_select 'legend', 'Visibility'
     end

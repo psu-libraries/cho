@@ -14,12 +14,12 @@ RSpec.describe 'collection/archival_collections/new', type: :view do
     assert_select 'form[action=?][method=?]', archival_collections_path, 'post' do
       assert_select 'input[name=?]', 'archival_collection[title]'
       assert_select 'input[name=?]', 'archival_collection[subtitle]'
-      assert_select 'input[name=?]', 'archival_collection[description]'
+      assert_select 'textarea[name=?]', 'archival_collection[description]'
       assert_select 'input[name=?]', 'archival_collection[workflow]'
       assert_select 'input[name=?]', 'archival_collection[visibility]'
       # Added to make sure accessibility changes are in place
       assert_select 'legend', 'Basic Metadata'
-      assert_select 'label', 'Title required'
+      assert_select 'label', /Title\s.* required/
       assert_select 'legend', 'Workflow'
       assert_select 'legend', 'Visibility'
     end

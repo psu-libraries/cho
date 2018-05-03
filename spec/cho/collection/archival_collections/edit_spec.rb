@@ -9,9 +9,12 @@ RSpec.describe Collection::Archival, type: :feature do
   context 'with all the required metadata' do
     it 'updates an existing work with new metadata' do
       visit(edit_archival_collection_path(resource))
+      expect(page).to have_field('Description', type: 'textarea', with: 'Sample archival collection')
       fill_in('archival_collection[title]', with: 'Updated Archival Collection Title')
+      fill_in('archival_collection[description]', with: 'Updated archival collection description')
       click_button('Update Archival collection')
       expect(page).to have_content('Updated Archival Collection Title')
+      expect(page).to have_content('Updated archival collection description')
     end
   end
 
