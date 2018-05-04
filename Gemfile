@@ -69,7 +69,6 @@ group :test do
   gem 'selenium-webdriver'
 end
 
-# @todo https://github.com/psu-libraries/cho-req/issues/225
 group :production do
-  # gem 'newrelic_rpm'
+  gem 'newrelic_rpm'
 end
