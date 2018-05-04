@@ -2,9 +2,11 @@
 # For further instructions see: http://sites.psu.edu/dltdocs/?p=4073
 
 development:
+  service_name: "localhost"
   service_instance: "localhost"
   virtual_host: "http://localhost:3000/"
 test:
+  service_name: "example-test"
   service_instance: "example-test"
   virtual_host: "http://test.com/"
 production:
