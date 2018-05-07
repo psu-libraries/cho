@@ -46,7 +46,7 @@ RSpec.shared_examples 'a collection' do
   end
 
   describe '#members' do
-    subject { resource_klass.new }
+    subject { resource_klass.new(new_record: false) }
 
     its(:members) { is_expected.to be_empty }
   end

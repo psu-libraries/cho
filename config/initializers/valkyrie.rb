@@ -5,17 +5,17 @@ Rails.application.config.to_prepare do
   # Metadata Adapters
 
   Valkyrie::MetadataAdapter.register(
-    Valkyrie::Persistence::Postgres::MetadataAdapter.new,
+    Postgres::SingularMetadataAdapter.new,
     :postgres
   )
 
   Valkyrie::MetadataAdapter.register(
-    Valkyrie::Persistence::Memory::MetadataAdapter.new,
+    Memory::SingularMetadataAdapter.new,
     :memory
   )
 
   Valkyrie::MetadataAdapter.register(
-    Valkyrie::Persistence::Solr::MetadataAdapter.new(
+    Solr::SingularMetadataAdapter.new(
       connection: Blacklight.default_index.connection,
       resource_indexer: Valkyrie::Persistence::Solr::CompositeIndexer.new(
         Valkyrie::Indexers::AccessControlsIndexer,

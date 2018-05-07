@@ -92,6 +92,7 @@ RSpec.describe DataDictionary::Field, type: :model do
                                 internal_resource: 'DataDictionary::Field',
                                 label: 'abc123_label',
                                 multiple: false,
+                                new_record: false,
                                 requirement_designation: 'recommended',
                                 updated_at: saved_model.updated_at,
                                 validation: 'no_validation',

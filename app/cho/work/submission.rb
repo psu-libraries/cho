@@ -31,5 +31,9 @@ module Work
         'work'
       end
     end
+
+    def attributes
+      super
+    end
   end
 end
