@@ -7,6 +7,7 @@ module Work
     property :work_type_id, multiple: false, required: true, type: Valkyrie::Types::ID
     property :file, multiple: false, required: false
     validates :member_of_collection_ids, with: :validate_members!
+    validates :member_of_collection_ids, presence: true
     property :member_of_collection_ids,
              multiple: true,
              required: false,

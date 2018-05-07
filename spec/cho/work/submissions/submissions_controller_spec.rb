@@ -33,17 +33,25 @@ RSpec.describe Work::SubmissionsController, type: :controller do
   end
 
   describe 'POST #create' do
+    let!(:collection) { create(:collection) }
     let(:work_type_id) { Work::Type.find_using(label: 'Generic').first }
-    let(:valid_attributes) { { title: 'New Title', work_type_id: work_type_id } }
     let(:resource) { Work::Submission.all.last }
 
     context 'with valid params' do
+      let(:valid_attributes) do
+        {
+          title: 'New Title',
+          work_type_id: work_type_id,
+          member_of_collection_ids: [collection.id]
+        }
+      end
+
       it 'creates a new Work' do
-        expect(index_solr.query_service.find_all.to_a.length).to eq 0
+        expect(index_solr.query_service.find_all.to_a.length).to eq 1
         expect {
           post :create, params: { 'work_submission': valid_attributes }
         }.to change { Work::Submission.count }.by(1)
-        expect(index_solr.query_service.find_all.to_a.length).to eq 1
+        expect(index_solr.query_service.find_all.to_a.length).to eq 2
       end
 
       it 'redirects to the created work' do

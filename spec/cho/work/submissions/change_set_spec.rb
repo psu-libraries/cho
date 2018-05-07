@@ -69,16 +69,17 @@ RSpec.describe Work::SubmissionChangeSet do
 
       its(:full_messages) { is_expected.to include('Work type bad one does not exist') }
     end
-    context 'with all required fields' do
-      let(:params) { { work_type_id: work_type_id, title: 'Title' } }
-
-      its(:full_messages) { is_expected.to be_empty }
-    end
 
     context 'with non-existent parents' do
       let(:params) { { work_type_id: work_type_id, title: 'Title', member_of_collection_ids: ['nothere'] } }
 
       its(:full_messages) { is_expected.to include('Member of collection ids nothere does not exist') }
+    end
+
+    context 'without collection membership' do
+      let(:params) { { work_type_id: work_type_id, title: 'Title', member_of_collection_ids: [] } }
+
+      its(:full_messages) { is_expected.to include("Member of collection ids can't be blank") }
     end
 
     context 'with existing parents and all required fields' do
