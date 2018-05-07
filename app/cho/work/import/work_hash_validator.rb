@@ -7,24 +7,43 @@
 module Work
   module Import
     class WorkHashValidator
-      attr_reader :change_set
+      attr_reader :change_set, :work_hash
 
       def initialize(work_hash)
-        validate_change_set(work_hash)
+        @work_hash = work_hash
+        @change_set = build_change_set
+        clean_hash
+        @change_set.validate(work_hash)
       end
 
       private
 
-        def validate_change_set(work_hash)
-          @change_set = SubmissionChangeSet.new(Submission.new)
-          @change_set.validate(clean_hash(work_hash))
+        def updating?
+          work_hash.key?('id')
         end
 
-        def clean_hash(work_hash)
-          work_hash['member_of_collection_ids'] = translate_collection_ids(work_hash['member_of_collection_ids'])
-          work_hash['work_type_id'] = translate_work_type(work_hash['work_type']) if work_hash['work_type_id'].blank?
-          work_hash['file'] = translate_file_name(work_hash['file_name'])
-          work_hash
+        def build_change_set
+          if submission.nil?
+            MissingChangeSet.new(MissingResource.new)
+          else
+            SubmissionChangeSet.new(submission)
+          end
+        end
+
+        def submission
+          @submission ||= if updating?
+                            Submission.find(Valkyrie::ID.new(work_hash['id']))
+                          else
+                            Submission.new
+                          end
+        end
+
+        def clean_hash
+          work_hash['member_of_collection_ids'] = Array.wrap(work_hash['member_of_collection_ids'])
+          unless updating?
+            work_hash['work_type_id'] = translate_work_type(work_hash['work_type']) if work_hash['work_type_id'].blank?
+            work_hash['file'] = translate_file_name(work_hash['file_name'])
+          end
         end
 
         def translate_work_type(work_type)
@@ -36,20 +55,27 @@ module Work
           work_type_model.id
         end
 
-        def translate_collection_ids(member_of_collection_ids)
-          if member_of_collection_ids.is_a?(Array)
-            member_of_collection_ids
-          else
-            [member_of_collection_ids]
-          end
-        end
-
         def translate_file_name(file_name)
           return nil if file_name.blank?
 
           FileUtils.cp(file_name, Rails.root.join('tmp'))
           file = ::File.new(Rails.root.join('tmp', ::File.basename(file_name)))
           ActionDispatch::Http::UploadedFile.new(tempfile: file, filename: ::File.basename(file_name))
+        end
+
+        class MissingResource < Valkyrie::Resource
+        end
+
+        class MissingChangeSet < Valkyrie::ChangeSet
+          def errors
+            current_errors = super
+            current_errors.add(:id, 'does not exist') unless current_errors.key?(:id)
+            current_errors
+          end
+
+          def valid?
+            false
+          end
         end
     end
   end

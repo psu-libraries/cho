@@ -487,6 +487,8 @@ GEM
     selenium-webdriver (3.6.0)
       childprocess (~> 0.5)
       rubyzip (~> 1.0)
+    shoulda-matchers (3.1.2)
+      activesupport (>= 4.0.0)
     shrine (2.9.0)
       down (~> 4.1)
     simplecov (0.15.1)
@@ -625,6 +627,7 @@ DEPENDENCIES
   rspec-rails
   sass-rails (~> 5.0)
   selenium-webdriver
+  shoulda-matchers (~> 3.1)
   shrine
   solr_wrapper!
   spring

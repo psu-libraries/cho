@@ -5,10 +5,17 @@ module Work
     # Presents the results of the dry run in a nice way for display
     class CsvDryRunResultsPresenter
       delegate :each, :to_a, to: :change_set_list
-      attr_reader :change_set_list
+      delegate :update?, to: :dry_run
 
-      def initialize(change_set_list)
-        @change_set_list = change_set_list
+      attr_reader :dry_run
+
+      # @param [CsvDryRun] dry_run
+      def initialize(dry_run)
+        @dry_run = dry_run
+      end
+
+      def change_set_list
+        dry_run.results
       end
 
       def invalid_rows

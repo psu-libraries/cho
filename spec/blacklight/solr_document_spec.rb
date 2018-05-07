@@ -69,7 +69,7 @@ RSpec.describe SolrDocument, type: :model do
       let(:work1_csv) { "#{work.id},#{collection.id},Work One,,,,,,,,," }
       let(:work2) { create :work, member_of_collection_ids: [collection.id], title: 'Work Two' }
       let(:work2_csv) { "#{work2.id},#{collection.id},Work Two,,,,,,,,," }
-      let(:csv_header) { 'id,members_of_collection_id,title,subtitle,description,created,generic_field,document_field,still_image_field,moving_image_field,map_field,audio_field' }
+      let(:csv_header) { 'id,member_of_collection_ids,title,subtitle,description,created,generic_field,document_field,still_image_field,moving_image_field,map_field,audio_field' }
       let(:document) { { 'internal_resource_tsim' => 'MyCollection', id: collection.id, title_tesim: ['my_collection'] } }
 
       before do

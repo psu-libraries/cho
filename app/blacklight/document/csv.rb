@@ -40,7 +40,7 @@ module Document::Csv
 
     def export_collection
       ::CSV.generate do |csv|
-        csv << ['id', 'members_of_collection_id'] + fields.map(&:label)
+        csv << ['id', 'member_of_collection_ids'] + fields.map(&:label)
         export_members(csv)
       end
     end

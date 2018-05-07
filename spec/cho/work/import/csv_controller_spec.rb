@@ -7,73 +7,154 @@ RSpec.describe Work::Import::CsvController, type: :controller do
   let(:work_1_file_name) { Rails.root.join('spec', 'fixtures', 'hello_world.txt') }
   let(:work_2_file_name) { Rails.root.join('spec', 'fixtures', 'hello_world2.txt') }
   let(:work_3_file_name) { Rails.root.join('spec', 'fixtures', 'hello_world3.txt') }
+
   let(:csv_file) do
-    csv_file = Tempfile.new('csv_file.csv')
-
-    csv_file.write("member_of_collection_ids,work_type,title,file_name\n")
-    csv_file.write("#{collection.id},Generic,My Work 1,#{work_1_file_name}\n")
-    csv_file.write("#{collection.id},Generic,My Work 2,#{work_2_file_name}\n")
-    csv_file.write("#{collection.id},Generic,My Work 3,#{work_3_file_name}\n")
-    csv_file.close
-
-    csv_file
+    CsvFactory::Generic.new(
+      member_of_collection_ids: [collection.id, collection.id, collection.id],
+      work_type: ['Generic', 'Generic', 'Generic'],
+      title: ['My Work 1', 'My Work 2', 'My Work 3'],
+      file_name: [work_1_file_name, work_2_file_name, work_3_file_name]
+    )
   end
 
-  describe 'GET #new' do
-    subject(:new_call) { get :new }
+  after { csv_file.unlink }
+
+  describe 'GET #create' do
+    subject(:call) { get :create }
 
     it 'returns a success response' do
-      expect(new_call).to render_template('new')
+      expect(call).to render_template('create')
       expect(response).to be_success
     end
   end
 
-  describe 'POST #create' do
-    subject(:create_call) { post :create, params: { 'work_import_csv_file': { file: file } } }
+  describe 'GET #update' do
+    subject(:call) { get :update }
+
+    it 'returns a success response' do
+      expect(call).to render_template('update')
+      expect(response).to be_success
+    end
+  end
+
+  describe 'POST #validate' do
+    subject(:call) { post :validate, params: { 'work_import_csv_file': { file: file } } }
 
     let(:file) { Rack::Test::UploadedFile.new(csv_file.path) }
+    let(:referrer) { 'http://test.host.com/csv/create' }
 
-    it 'runs a dry run on the file' do
-      expect(create_call).to render_template('dry_run_results')
-      expect(response).to be_success
-      expect(assigns(:presenter)).to be_a(Work::Import::CsvDryRunResultsPresenter)
-      expect(assigns(:presenter).change_set_list.map(&:valid?)).to eq([true, true, true])
-      expect(File).to be_exist(assigns(:file_name))
-    end
+    before { request.headers['HTTP_REFERER'] = referrer }
 
-    context 'invalid csv' do
-      let(:csv_file) do
-        csv_file = Tempfile.new('csv_file.csv')
-
-        csv_file.write("member_of_collection_ids,work_type,title,file_name\n")
-        csv_file.write(",Generic,My Work 1,#{work_1_file_name}\n")
-        csv_file.write("#{collection.id},Bad,My Work 2,#{work_2_file_name}\n")
-        csv_file.write("bad,Generic,,#{work_3_file_name}\n")
-        csv_file.close
-
-        csv_file
-      end
-
-      it 'runs a dry run on the file' do
-        expect(create_call).to render_template('dry_run_results')
+    context 'when creating new works with a valid csv' do
+      it 'validates the file' do
+        expect(call).to render_template('dry_run_results')
         expect(response).to be_success
         expect(assigns(:presenter)).to be_a(Work::Import::CsvDryRunResultsPresenter)
-        expect(assigns(:presenter).change_set_list.map(&:valid?)).to eq([false, false, false])
-        expect(assigns(:presenter).change_set_list.map(&:errors).map(&:messages)).to eq([{ member_of_collection_ids: [' does not exist'] }, { work_type_id: ["can't be blank"] }, { member_of_collection_ids: ['bad does not exist'], title: ["can't be blank"] }])
+        expect(assigns(:presenter).change_set_list.map(&:valid?)).to eq([true, true, true])
         expect(File).to be_exist(assigns(:file_name))
       end
     end
+
+    context 'when creating new works with errors' do
+      let(:csv_file) do
+        CsvFactory::Generic.new(
+          member_of_collection_ids: [nil, collection.id, 'bad'],
+          work_type: ['Generic', 'Bad', 'Generic'],
+          title: ['My Work 1', 'My Work 2', nil],
+          file_name: [work_1_file_name, work_2_file_name, work_3_file_name]
+        )
+      end
+
+      it 'validates the file and reports the errors' do
+        expect(call).to render_template('dry_run_results')
+        expect(response).to be_success
+        expect(assigns(:presenter)).to be_a(Work::Import::CsvDryRunResultsPresenter)
+        expect(assigns(:presenter).change_set_list.map(&:valid?)).to eq([false, false, false])
+        expect(assigns(:presenter).change_set_list.map(&:errors).map(&:messages)).to eq(
+          [
+            { member_of_collection_ids: ["can't be blank"] },
+            { work_type_id: ["can't be blank"] },
+            { member_of_collection_ids: ['bad does not exist'], title: ["can't be blank"] }
+          ]
+        )
+        expect(File).to be_exist(assigns(:file_name))
+      end
+    end
+
+    context 'when creating new works with a csv that has invalid columns' do
+      let(:csv_file) do
+        CsvFactory::Generic.new(
+          member_of_collection_ids: [collection.id, collection.id],
+          work_type: ['Generic', 'Generic'],
+          title: ['My Work 1', 'My Work 2'],
+          invalid_column: ['bad value 1', nil]
+        )
+      end
+
+      it 'redirects to the create page' do
+        expect(call).to redirect_to(csv_create_path)
+        expect(flash[:error]).to eq("Unexpected column(s): 'invalid_column'")
+      end
+    end
+
+    context 'when updating works with a csv with missing required columns' do
+      let(:referrer) { 'http://test.host.com/csv/update' }
+
+      it 'redirects to the update page' do
+        expect(call).to redirect_to(csv_update_path)
+        expect(flash[:error]).to eq('Missing id column for update')
+      end
+    end
   end
 
-  describe 'POST #run_import' do
-    subject(:import_call) { post :run_import, params: { file_name: csv_file.path } }
+  describe 'POST #import' do
+    subject(:call) { post :import, params: { file_name: csv_file.path, update: update } }
 
-    it 'runs an import on the file' do
-      expect(import_call).to render_template('import_success')
-      expect(response).to be_success
-      expect(assigns(:created)).to be_a(Array)
-      expect(assigns(:created).map(&:valid?)).to eq([true, true, true])
-      expect(assigns(:created).map(&:title)).to eq([['My Work 1'], ['My Work 2'], ['My Work 3']])
+    context 'when using create' do
+      let(:update) { 'false' }
+
+      it 'creates new works from the csv file' do
+        expect(call).to render_template('import_success')
+        expect(response).to be_success
+        expect(assigns(:created)).to be_a(Array)
+        expect(assigns(:created).map(&:valid?)).to eq([true, true, true])
+        expect(assigns(:created).map(&:title)).to eq([['My Work 1'], ['My Work 2'], ['My Work 3']])
+      end
+    end
+
+    context 'when using update' do
+      let(:update) { 'true' }
+
+      let(:csv_file) do
+        CsvFactory::Update.new(
+          { title: 'My Updated Work 1' },
+          { title: 'My Updated Work 2' },
+          title: 'My Updated Work 3'
+        )
+      end
+
+      it 'updates works from the csv file' do
+        expect(call).to render_template('import_success')
+        expect(response).to be_success
+        expect(assigns(:created)).to be_a(Array)
+        expect(assigns(:created).map(&:valid?)).to eq([true, true, true])
+        expect(assigns(:created).map(&:title))
+          .to eq([['My Updated Work 1'], ['My Updated Work 2'], ['My Updated Work 3']])
+      end
+    end
+
+    context 'when the importer fails' do
+      let(:update) { 'false' }
+      let(:errors) { ['bad', 'no good', 'worse'] }
+      let(:mock_importer) { instance_double(Work::Import::CsvImporter, run: false, errors: errors) }
+
+      before { allow(Work::Import::CsvImporter).to receive(:new).and_return(mock_importer) }
+
+      it 'renders the failure page' do
+        expect(call).to render_template('import_failure')
+        expect(response).to be_success
+        expect(assigns(:errors)).to contain_exactly('bad', 'no good', 'worse')
+      end
     end
   end
 end
