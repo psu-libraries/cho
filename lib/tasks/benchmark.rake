@@ -15,5 +15,10 @@ namespace :cho do
       metric.file_size = file_size
       metric.run
     end
+
+    desc 'Clean out the application and re-seed the database'
+    task reset: :environment do
+      Metrics::Repository.reset
+    end
   end
 end
