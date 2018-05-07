@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
+require 'newrelic_rpm'
+
 module Metrics
   class Collection
+    include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
+
     attr_reader :length
 
     # @param [Integer] length how many times the metric will be run
@@ -18,6 +22,7 @@ module Metrics
       benchmark
       $stdout = current_stdout
     end
+    add_transaction_tracer :run, category: :task
 
     def benchmark
       Benchmark.benchmark("#{I18n.t('cho.metrics.benchmark_heading')}\n", 0, "%u,%y,%t,%r\n") do |bench|
