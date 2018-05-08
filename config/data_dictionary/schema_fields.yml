@@ -6,6 +6,7 @@ development: &development
   - schema: 'Document'
     fields:
       contributor:
+        display_name: 'My contributor'
         order_index: 2
       time_period:
         order_index: 1
@@ -46,6 +47,7 @@ development: &development
       alternate_title:
         order_index: 1
       contributor:
+        display_name: 'My contributor'
         order_index: 2
       time_period:
         order_index: 3

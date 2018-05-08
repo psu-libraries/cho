@@ -6,6 +6,12 @@ module DataDictionary
   class CsvImporter
     attr_reader :file, :lines, :attributes
 
+    def self.load_dictionary(dictionary_file = nil)
+      dictionary_file ||= Rails.root.join('config', 'data_dictionary', "data_dictionary_#{Rails.env.downcase}.csv")
+      importer = new(File.new(dictionary_file))
+      importer.import
+    end
+
     def initialize(file)
       @file = file
     end
