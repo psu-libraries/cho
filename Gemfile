@@ -8,8 +8,9 @@ git_source(:github) do |repo_name|
 end
 
 # Main gems
+gem 'blacklight'
 gem 'rails', '~> 5.1.3'
-gem 'valkyrie', github: 'samvera-labs/valkyrie'
+gem 'valkyrie', '~> 1.0'
 
 # Supporting gems
 gem 'coffee-rails', '~> 4.2'

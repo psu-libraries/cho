@@ -23,15 +23,18 @@ RSpec.describe Schema::Metadata, type: :model do
     subject { saved_model }
 
     let(:saved_model) { Valkyrie.config.metadata_adapter.persister.save(resource: model) }
-    let(:expected_metadata) { { core_fields: core_fields.map(&:id),
-                                created_at: saved_model.created_at,
-                                fields: fields.map(&:id),
+    let(:expected_metadata) { { created_at: saved_model.created_at,
                                 id: saved_model.id,
                                 internal_resource: 'Schema::Metadata',
                                 label: 'abc123_label',
+                                new_record: false,
                                 updated_at: saved_model.updated_at } }
 
-    its(:attributes) { is_expected.to eq(expected_metadata) }
+    it 'has the correct attributes' do
+      expect(saved_model.attributes[:core_fields].map(&:id)).to eq(core_fields.map(&:id).map(&:id))
+      expect(saved_model.attributes[:fields].map(&:id)).to eq(fields.map(&:id).map(&:id))
+      expect(saved_model.attributes).to include(expected_metadata)
+    end
   end
 
   context 'loading template' do

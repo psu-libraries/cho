@@ -48,6 +48,7 @@ RSpec.describe Schema::MetadataField, type: :model do
                                 internal_resource: 'Schema::MetadataField',
                                 label: 'abc123_label',
                                 multiple: false,
+                                new_record: false,
                                 requirement_designation: 'recommended',
                                 updated_at: saved_model.updated_at,
                                 validation: 'no_validation',
