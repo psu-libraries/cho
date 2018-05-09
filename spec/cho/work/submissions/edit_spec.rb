@@ -6,6 +6,7 @@ RSpec.describe 'Editing works', type: :feature do
   let(:resource) { create(:work, title: 'Work to edit', work_type_id: work_type.id) }
   let(:work_type)  { Work::Type.where(label: 'Document').first }
   let(:adapter) { Valkyrie::MetadataAdapter.find(:indexing_persister) }
+  let(:solr_document) { SolrDocument.find(resource.id) }
 
   context 'with all the required metadata' do
     it 'updates an existing work with new metadata' do
@@ -19,6 +20,8 @@ RSpec.describe 'Editing works', type: :feature do
       click_button('Update Work')
       expect(page).to have_content('Updated Work Title')
       expect(page).to have_content('Updated description')
+      expect(solr_document.title_data_dictionary_field).to eq(['Updated Work Title'])
+      expect(solr_document.description_data_dictionary_field).to eq(['Updated description'])
     end
   end
 

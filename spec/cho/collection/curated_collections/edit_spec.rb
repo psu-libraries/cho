@@ -5,6 +5,7 @@ require 'rails_helper'
 RSpec.describe Collection::Curated, type: :feature do
   let(:resource) { create(:curated_collection, title: 'Curated collection to edit') }
   let(:adapter) { Valkyrie::MetadataAdapter.find(:indexing_persister) }
+  let(:solr_document) { SolrDocument.find(resource.id) }
 
   context 'with all the required metadata' do
     it 'updates an existing work with new metadata' do
@@ -15,6 +16,8 @@ RSpec.describe Collection::Curated, type: :feature do
       click_button('Update Curated collection')
       expect(page).to have_content('Updated Curated Collection Title')
       expect(page).to have_content('Updated curated collection description')
+      expect(solr_document.title_data_dictionary_field).to eq(['Updated Curated Collection Title'])
+      expect(solr_document.description_data_dictionary_field).to eq(['Updated curated collection description'])
     end
   end
 

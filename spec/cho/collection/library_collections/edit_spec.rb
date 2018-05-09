@@ -5,6 +5,7 @@ require 'rails_helper'
 RSpec.describe Collection::Library, type: :feature do
   let(:resource) { create(:library_collection, title: 'Library collection to edit') }
   let(:adapter) { Valkyrie::MetadataAdapter.find(:indexing_persister) }
+  let(:solr_document) { SolrDocument.find(resource.id) }
 
   context 'with all the required metadata' do
     it 'updates an existing work with new metadata' do
@@ -15,6 +16,8 @@ RSpec.describe Collection::Library, type: :feature do
       click_button('Update Library collection')
       expect(page).to have_content('Updated Library Collection Title')
       expect(page).to have_content('Updated library collection description')
+      expect(solr_document.title_data_dictionary_field).to eq(['Updated Library Collection Title'])
+      expect(solr_document.description_data_dictionary_field).to eq(['Updated library collection description'])
     end
   end
 
