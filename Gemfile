@@ -13,6 +13,7 @@ gem 'rails', '~> 5.1.3'
 gem 'valkyrie', '~> 1.0'
 
 # Supporting gems
+gem 'bootsnap', require: false
 gem 'coffee-rails', '~> 4.2'
 gem 'devise_remote'
 gem 'execjs'
