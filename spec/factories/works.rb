@@ -9,6 +9,14 @@ FactoryBot.define do
     title 'Sample Generic Work'
     work_type_id { Work::Type.find_using(label: 'Generic').first.id }
 
+    member_of_collection_ids do
+      if @build_strategy.is_a? FactoryBot::Strategy::Build
+        [build(:collection).id]
+      else
+        [create(:collection).id]
+      end
+    end
+
     to_create do |resource|
       Valkyrie::MetadataAdapter.find(:indexing_persister).persister.save(resource: resource)
     end

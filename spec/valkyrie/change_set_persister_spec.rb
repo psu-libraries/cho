@@ -42,7 +42,8 @@ RSpec.describe ChangeSetPersister do
     end
 
     context 'with files' do
-      let(:resource)   { build(:work, title: 'with a file') }
+      let!(:collection) { create(:collection) }
+      let(:resource) { build(:work, title: 'with a file', member_of_collection_ids: [collection.id]) }
       let(:change_set) { Work::SubmissionChangeSet.new(resource) }
       let(:temp_file) { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'hello_world.txt')) }
       let(:work_files) { Work::File.all }
@@ -80,15 +81,15 @@ RSpec.describe ChangeSetPersister do
   describe '#delete' do
     let!(:change_set) { create(:work, :with_file) }
 
-    it 'deletes the work and file from Postgres and Solr, and the file from disk' do
+    it "deletes the work and file from Postgres and Solr, the file from disk, and retains the work's collection" do
       expect(Work::Submission.all.count).to eq(1)
       expect(Work::File.all.count).to eq(1)
-      expect(metadata_adapter.index_adapter.query_service.find_all.count).to eq(2)
+      expect(metadata_adapter.index_adapter.query_service.find_all.count).to eq(3)
       expect(File.exists?('tmp/files/hello_world.txt')).to be(true)
       change_set_persister.delete(change_set: change_set)
       expect(Work::Submission.all.count).to eq(0)
       expect(Work::File.all.count).to eq(0)
-      expect(metadata_adapter.index_adapter.query_service.find_all.count).to eq(0)
+      expect(metadata_adapter.index_adapter.query_service.find_all.count).to eq(1)
       expect(File.exists?('tmp/files/hello_world.txt')).to be(false)
     end
   end
