@@ -172,5 +172,6 @@ class CatalogController < ApplicationController
 
     config.add_nav_action :data_dictionary
     config.add_nav_action :select
+    config.add_nav_action :csv_import
   end
 end

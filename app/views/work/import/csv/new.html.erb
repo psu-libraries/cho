@@ -1,3 +1,5 @@
+<h1>CSV Import</h1>
+
 <%= form_for(@csv_file, url: csv_file_index_path) do |form| %>
 
   <%= form.hidden_field :file, value: @csv_file.cached_file_data %>

@@ -11,7 +11,7 @@ module Work
       # POST /csv_file
       def create
         file = params[:work_import_csv_file][:file]
-        @results = CsvDryRun.run(file.path)
+        @presenter = CsvDryRunResultsPresenter.new(CsvDryRun.run(file.path))
         @file_name = file.path
         render :dry_run_results
       end

@@ -36,8 +36,8 @@ RSpec.describe Work::Import::CsvController, type: :controller do
     it 'runs a dry run on the file' do
       expect(create_call).to render_template('dry_run_results')
       expect(response).to be_success
-      expect(assigns(:results)).to be_a(Array)
-      expect(assigns(:results).map(&:valid?)).to eq([true, true, true])
+      expect(assigns(:presenter)).to be_a(Work::Import::CsvDryRunResultsPresenter)
+      expect(assigns(:presenter).change_set_list.map(&:valid?)).to eq([true, true, true])
       expect(File).to be_exist(assigns(:file_name))
     end
 
@@ -57,9 +57,9 @@ RSpec.describe Work::Import::CsvController, type: :controller do
       it 'runs a dry run on the file' do
         expect(create_call).to render_template('dry_run_results')
         expect(response).to be_success
-        expect(assigns(:results)).to be_a(Array)
-        expect(assigns(:results).map(&:valid?)).to eq([false, false, false])
-        expect(assigns(:results).map(&:errors).map(&:messages)).to eq([{ member_of_collection_ids: [' does not exist'] }, { work_type_id: ["can't be blank"] }, { member_of_collection_ids: ['bad does not exist'], title: ["can't be blank"] }])
+        expect(assigns(:presenter)).to be_a(Work::Import::CsvDryRunResultsPresenter)
+        expect(assigns(:presenter).change_set_list.map(&:valid?)).to eq([false, false, false])
+        expect(assigns(:presenter).change_set_list.map(&:errors).map(&:messages)).to eq([{ member_of_collection_ids: [' does not exist'] }, { work_type_id: ["can't be blank"] }, { member_of_collection_ids: ['bad does not exist'], title: ["can't be blank"] }])
         expect(File).to be_exist(assigns(:file_name))
       end
     end

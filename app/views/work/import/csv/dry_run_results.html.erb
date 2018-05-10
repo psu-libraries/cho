@@ -1,13 +1,20 @@
-<ol>
-  <% @results.each do |result| %>
-    <li>
-      <%= result.title %>
-      <%= result.errors %>
-    </li>
-  <% end %>
-</ol>
+<h1>Import Preview</h1>
+<p><%= t('cho.csv.dry_run.error_count_message', count: @presenter.error_count) %></p>
 
-<%= form_tag(controller: 'csv', action: 'run_import') do |form| %>
+<table class="table table-responsive table-striped">
+  <thead>
+  <tr>
+    <th><%= t('cho.csv.dry_run.preview_table.title') %></th>
+    <th><%= t('cho.csv.dry_run.preview_table.status') %></th>
+  </tr>
+  </thead>
+  <tbody>
+    <%= render partial: 'dry_run_result', collection: @presenter %>
+  </tbody>
+</table>
+
+<%= form_tag({ controller: 'csv', action: 'run_import' }, class: 'form-inline') do %>
  <%= hidden_field_tag(:file_name, @file_name) %>
- <%= submit_tag(t('cho.csv.import.submit')) %>
+  <%= submit_tag(t('cho.csv.import.submit'), disabled: @presenter.invalid?) %>
+  <%= link_to t('cho.csv.import.cancel'), :back, class: 'btn btn-link' %>
 <% end %>

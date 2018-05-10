@@ -23,6 +23,7 @@ en:
       create_submission: "Create Work"
       data_dictionary: "Data Dictionary"
       select: "Select Resources"
+      csv_import: "Import CSV"
     work:
       new:
         heading: "New %{type} Work"
@@ -54,13 +55,19 @@ en:
         delete_link: "Delete Curated collection"
     csv:
       dry_run:
-        submit: "Dry Run"
+        submit: "Preview Import"
+        error_count_message: "Total Number of Works with Errors %{count}"
+        preview_table:
+          title: "Title"
+          status: "Status"
       import:
         submit: "Perform Import"
+        cancel: "Cancel"
         failure:
           header: "Failed Import"
         success:
           header: "Successful Import"
+          new_import: "Perform Additional Import"
     metrics:
       benchmark_heading: "User,System,Total,Real"
       collection:
