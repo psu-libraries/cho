@@ -37,7 +37,7 @@ group :development, :test do
   gem 'niftany'
   gem 'pry-byebug'
   gem 'pry-rails'
-  gem 'solr_wrapper', '>= 0.3'
+  gem 'solr_wrapper', github: 'cbeer/solr_wrapper', branch: 'master'
   gem 'sqlite3'
 end
 
