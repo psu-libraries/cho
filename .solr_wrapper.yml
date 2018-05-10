@@ -3,6 +3,7 @@ version: 7.1.0
 port: 8983
 instance_dir: tmp/solr-development
 download_dir: tmp
+mirror_url: http://lib-solr-mirror.princeton.edu/dist/
 collection:
   persist: true
   dir: solr/config

@@ -1,4 +1,15 @@
 GIT
+  remote: https://github.com/cbeer/solr_wrapper.git
+  revision: 55910f63ca58cf7cdc1ab0ec3bb75ace22bbe1ba
+  branch: master
+  specs:
+    solr_wrapper (1.2.0)
+      faraday
+      retriable
+      ruby-progressbar
+      rubyzip
+
+GIT
   remote: https://github.com/stympy/faker.git
   revision: f8e1b81f8da82ea9eb88c4939a3a6801f97e5ac1
   branch: master
@@ -487,11 +498,6 @@ GEM
       tilt (~> 2.0)
     slop (4.6.2)
     smart_properties (1.13.1)
-    solr_wrapper (1.1.0)
-      faraday
-      retriable
-      ruby-progressbar
-      rubyzip
     solrizer (4.1.0)
       activesupport
       nokogiri
@@ -616,7 +622,7 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   selenium-webdriver
   shrine
-  solr_wrapper (>= 0.3)
+  solr_wrapper!
   spring
   spring-watcher-listen (~> 2.0.0)
   sqlite3
