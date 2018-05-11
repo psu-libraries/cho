@@ -1,19 +1,27 @@
-@import 'bootstrap-sprockets';
-
 @import 'bootstrap';
 
 @import 'blacklight/blacklight';
 
-#header-navbar .navbar-brand {
-  background: $header-black;
-  color: $primary-white;
-  text-indent: 2%;
-  width: 500px;
+.navbar-brand {
+  background: none;
+  overflow: visible;
+  text-indent: .25%;
+
+  a:link,
+  a:hover,
+  a:visited {
+    color: $primary-white;
+    font-size: 1rem;
+  }
 }
 
+.navbar-collapse { font-size: .8rem; }
+
 // styles to address inconsistent usage of search widgets
+// scss-lint:disable SelectorFormat
 .catalog_startOverLink:hover,
 .search-widgets .btn:hover { color: $primary-white; }
+// scss-lint:enable SelectorFormat
 
 // addresses insufficient color contrast
 .dl-invert dt { color: $gray-middle; }

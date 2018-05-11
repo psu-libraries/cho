@@ -36,7 +36,9 @@ Rails.application.routes.draw do
   post '/csv/validate', to: 'work/import/csv#validate'
   post '/csv/import', to: 'work/import/csv#import'
 
-  get '/select', to: 'batch/select#index'
+  resource :select, only: [:index], as: 'select', path: 'select', controller: 'batch/select' do
+    concerns :searchable
+  end
 
   get '/batch/delete', to: 'batch/delete#index'
   post '/batch/delete', to: 'batch/delete#confirm'

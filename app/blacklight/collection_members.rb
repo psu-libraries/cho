@@ -45,7 +45,7 @@ module CollectionMembers
 
     def document_facade
       SolrFacade.new(
-        repository: repository,
+        repository: search_service.repository,
         query: query_for_collection_members,
         current_page: current_page,
         per_page: per_page

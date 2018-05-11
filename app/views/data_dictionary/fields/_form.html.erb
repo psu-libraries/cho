@@ -1,6 +1,6 @@
 <%= form_with(model: data_dictionary_field, local: true) do |form| %>
   <% if data_dictionary_field.errors.any? %>
-    <div id="error_explanation">
+    <div class="error-explanation">
       <h2><%= pluralize(data_dictionary_field.errors.count, 'error') %> prohibited this data dictionary from being saved:</h2>
 
       <ul>

@@ -7,7 +7,9 @@ fieldset { margin-bottom: 3rem; }
 legend { border: 0; }
 input { margin-bottom: 1rem; }
 
-.no_bold { font-weight: normal; }
+.twitter-typeahead input { margin-bottom: 0; } // Fixes site-wide input styling until forms are reworked
+
+.no-bold { font-weight: normal; }
 
 .required {
   color: $required-red;

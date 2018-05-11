@@ -86,7 +86,7 @@ module Document::Csv
 
     def document_facade(current_page = 1)
       SolrFacade.new(
-        repository: CatalogController.new.repository,
+        repository: Blacklight.default_index,
         query: CollectionMemberSearchBuilder.new(self).page(current_page).rows(rows).query
       )
     end

@@ -32,7 +32,7 @@ RSpec.shared_examples 'a search form' do |path|
         expect(page).to have_content("You searched for: #{query}")
       end
       expect(page).to have_content('Some exceptional content')
-      within('.facet_limit.blacklight-work_type_ssim') do
+      within('.facet-limit.blacklight-work_type_ssim') do
         click_link('Generic')
       end
       within('.constraints-container') do

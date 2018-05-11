@@ -13,8 +13,12 @@
 //= require rails-ujs
 //= require turbolinks
 //
-// Required by Blacklight
+// Required by Blacklight to use sprockets
 //= require jquery
+//= require popper
+//= require twitter/typeahead
+//= require bootstrap
+//
 //= require blacklight/blacklight
-
+//
 //= require_tree .
