@@ -46,4 +46,32 @@ RSpec.describe DataDictionary::CsvImporter do
       }.to change(DataDictionary::Field, :count).by(0).and(raise_error(Dry::Struct::Error))
     end
   end
+
+  describe 'load_dictionary' do
+    it 'loads the default (which is already loaded)' do
+      expect {
+        described_class.load_dictionary
+      }.to change(DataDictionary::Field, :count).by(0)
+    end
+
+    context 'another file' do
+      let(:csv_file) do
+        file = Tempfile.new
+        file.write(header)
+        file.write(csv_field1)
+        file.close
+        file
+      end
+
+      after do
+        csv_file.unlink
+      end
+
+      it 'loads the new fields' do
+        expect {
+          described_class.load_dictionary(csv_file.path)
+        }.to change(DataDictionary::Field, :count).by(1)
+      end
+    end
+  end
 end

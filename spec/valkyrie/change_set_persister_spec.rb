@@ -94,6 +94,29 @@ RSpec.describe ChangeSetPersister do
     end
   end
 
+  describe '#find_or_save' do
+    subject(:find_or_save_call) { change_set_persister.update_or_create(resource, unique_attribute: :label) }
+
+    let(:metadata_adapter) { Valkyrie.config.metadata_adapter }
+    let(:resource) { build :data_dictionary_field, label: 'new_label' }
+
+    it 'saves the resource and returns it' do
+      expect { find_or_save_call }.to change(DataDictionary::Field, :count).by(1)
+      expect(find_or_save_call.label).to eq('new_label')
+    end
+
+    context 'An existing field' do
+      let(:existing_field) { create :data_dictionary_field, label: 'new_label' }
+
+      before { existing_field }
+
+      it 'does not save the field' do
+        expect { find_or_save_call }.to change(DataDictionary::Field, :count).by(0)
+        expect(find_or_save_call.id).to eq(existing_field.id)
+      end
+    end
+  end
+
   context 'when the persister fails' do
     let(:mock_persister) { double }
     let(:change_set) { DataDictionary::FieldChangeSet.new(DataDictionary::Field.new) }

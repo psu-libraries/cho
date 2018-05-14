@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Schema::MetadataCoreFields, type: :model do
-  let(:core_fields) { described_class.generate(Valkyrie.config.metadata_adapter.persister) }
+  let(:core_fields) { described_class.generate(Valkyrie.config.metadata_adapter) }
   let(:title_field) { Schema::MetadataField.where(label: 'title').first }
 
   it 'generates the core fields' do

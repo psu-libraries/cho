@@ -14,6 +14,12 @@ class ChangeSetPersister
     persister.save(resource: change_set.resource)
   end
 
+  def update_or_create(resource, unique_attribute:)
+    attribute_value = resource.send(unique_attribute)
+    return resource.class.where(unique_attribute => attribute_value).first if resource.class.where(label: attribute_value).count.positive?
+    save(change_set: Valkyrie::ChangeSet.new(resource))
+  end
+
   def validate_and_save(change_set:, resource_params:)
     return change_set unless change_set.validate(resource_params)
     change_set = store_files(change_set)
