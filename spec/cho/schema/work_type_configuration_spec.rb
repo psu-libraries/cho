@@ -11,7 +11,7 @@ RSpec.describe Schema::WorkTypeConfiguration, type: :model do
 
     let(:work_type) { 'Still Image' }
 
-    it { is_expected.to eq('still_image_field' => { 'order_index' => 1 }) }
+    it { is_expected.to eq('still_image_field' => { 'order_index' => 1, 'display_name' => 'Photograph' }) }
 
     context 'a non existing work type' do
       let(:work_type) { 'Foo' }

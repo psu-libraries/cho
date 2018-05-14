@@ -59,9 +59,10 @@ RSpec.describe Schema::MetadataField, type: :model do
   end
 
   describe '#initialize_from_data_dictionary_field' do
-    subject(:schema_field) { described_class.initialize_from_data_dictionary_field(data_dictionary_field) }
+    subject(:schema_field) { described_class.initialize_from_data_dictionary_field(data_dictionary_field, schema_field_config) }
 
     let(:data_dictionary_field) { DataDictionary::Field.where(label: 'title').first }
+    let(:schema_field_config) {}
     let(:expected_metadata) { { controlled_vocabulary: 'no_vocabulary',
                                 core_field: true,
                                 default_value: nil,
@@ -79,8 +80,48 @@ RSpec.describe Schema::MetadataField, type: :model do
 
     its(:attributes) { is_expected.to include(expected_metadata) }
 
-    it 'sets the data dictionry field id' do
+    it 'sets the data dictionary field id' do
       expect(schema_field.data_dictionary_field_id.to_s).to eq(data_dictionary_field.id.to_s)
+    end
+
+    context 'additional configuration from the schema' do
+      let(:schema_field_config) { { controlled_vocabulary: 'no_vocabulary',
+                                    default_value: 'My Awsome Work',
+                                    display_name: 'Silly Title',
+                                    display_transformation: 'no_transformation',
+                                    help_text: 'help me with my silly title',
+                                    index_type: 'facet',
+                                    label: 'title123',
+                                    requirement_designation: 'required_to_publish',
+                                    core_field: false,
+                                    order_index: 20,
+                                    validation: 'no_validation' } }
+
+      let(:expected_metadata) { { controlled_vocabulary: 'no_vocabulary',
+                                  core_field: true,
+                                  default_value: 'My Awsome Work',
+                                  display_name: 'Silly Title',
+                                  display_transformation: 'no_transformation',
+                                  field_type: 'string',
+                                  help_text: 'help me with my silly title',
+                                  index_type: 'facet',
+                                  internal_resource: 'Schema::MetadataField',
+                                  label: 'title',
+                                  multiple: true,
+                                  requirement_designation: 'required',
+                                  order_index: 20,
+                                  validation: 'no_validation' } }
+
+      its(:attributes) { is_expected.to include(expected_metadata) }
+    end
+
+    context 'additional configuration from the schema' do
+      let(:schema_field_config) { { blah: 'no_vocabulary',
+                                    not_found: 'My Awesome Work',
+                                    here: 'Silly Title',
+                                    there: 'no_transformation' } }
+
+      its(:attributes) { is_expected.to include(expected_metadata) }
     end
   end
 end
