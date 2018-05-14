@@ -31,8 +31,10 @@ Rails.application.routes.draw do
   resources :curated_collections, except: [:show, :index, :destroy], controller: 'collection/curated_collections'
   resources :data_dictionary_fields, controller: 'data_dictionary/fields'
 
-  resources :work_import_csvfile, as: 'csv_file', path: '/csv_file', only: [:new, :create], controller: 'work/import/csv'
-  post '/csv_file/run_import', to: 'work/import/csv#run_import'
+  get '/csv/create', to: 'work/import/csv#create'
+  get '/csv/update', to: 'work/import/csv#update'
+  post '/csv/validate', to: 'work/import/csv#validate'
+  post '/csv/import', to: 'work/import/csv#import'
 
   get '/select', to: 'batch/select#index'
 

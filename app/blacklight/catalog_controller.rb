@@ -169,9 +169,5 @@ class CatalogController < ApplicationController
     # Configuration for autocomplete suggestor
     config.autocomplete_enabled = true
     config.autocomplete_path = 'suggest'
-
-    config.add_nav_action :data_dictionary
-    config.add_nav_action :select
-    config.add_nav_action :csv_import
   end
 end

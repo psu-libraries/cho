@@ -1,4 +1,11 @@
-<h1>Import Preview</h1>
+<h1><%= t('cho.csv.dry_run.heading') %></h1>
+
+<% if @presenter.update? %>
+  <p><%= t('cho.csv.dry_run.update_description') %></p>
+<% else %>
+  <p><%= t('cho.csv.dry_run.create_description') %></p>
+<% end %>
+
 <p><%= t('cho.csv.dry_run.error_count_message', count: @presenter.error_count) %></p>
 
 <table class="table table-responsive table-striped">
@@ -13,8 +20,9 @@
   </tbody>
 </table>
 
-<%= form_tag({ controller: 'csv', action: 'run_import' }, class: 'form-inline') do %>
- <%= hidden_field_tag(:file_name, @file_name) %>
-  <%= submit_tag(t('cho.csv.import.submit'), disabled: @presenter.invalid?) %>
-  <%= link_to t('cho.csv.import.cancel'), :back, class: 'btn btn-link' %>
+<%= form_tag({ controller: 'csv', action: 'import' }, class: 'form-inline') do %>
+  <%= hidden_field_tag(:file_name, @file_name) %>
+  <%= hidden_field_tag(:update, @presenter.update?) %>
+  <%= submit_tag(t('cho.csv.dry_run.submit'), disabled: @presenter.invalid?) %>
+  <%= link_to t('cho.csv.dry_run.cancel'), :back, class: 'btn btn-link' %>
 <% end %>

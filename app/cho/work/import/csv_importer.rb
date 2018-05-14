@@ -44,8 +44,6 @@ module Work
           state
         end
 
-        def persist_changeset(change_set); end
-
         def change_set_persister
           @change_set_persister ||= ChangeSetPersister.new(
             metadata_adapter: Valkyrie::MetadataAdapter.find(:indexing_persister),

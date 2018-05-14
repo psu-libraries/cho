@@ -1,0 +1,11 @@
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+    <%= t('cho.header_links.manage') %> <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu">
+    <li><%= link_to t('cho.header_links.csv_create'), csv_create_path, class: 'nav-link' %></li>
+    <li><%= link_to t('cho.header_links.csv_update'), csv_update_path, class: 'nav-link' %></li>
+    <li><%= link_to t('cho.header_links.select'), select_path, class: 'nav-link' %></li>
+    <li><%= link_to t('cho.header_links.data_dictionary'), data_dictionary_fields_path, class: 'nav-link' %></li>
+  </ul>
+</li>

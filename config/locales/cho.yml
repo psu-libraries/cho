@@ -23,7 +23,9 @@ en:
       create_submission: "Create Work"
       data_dictionary: "Data Dictionary"
       select: "Select Resources"
-      csv_import: "Import CSV"
+      csv_create: "Import New Works"
+      csv_update: "Update Works"
+      manage: "Manage"
     work:
       new:
         heading: "New %{type} Work"
@@ -54,15 +56,25 @@ en:
       edit:
         delete_link: "Delete Curated collection"
     csv:
+      create:
+        heading: 'CSV Import'
+        description: 'Import a csv that creates new works.'
+        submit: 'Preview Import'
+      update:
+        heading: 'CSV Import'
+        description: 'Import a csv that updates existing works.'
+        submit: 'Preview Import'
       dry_run:
-        submit: "Preview Import"
+        heading: 'Import Preview'
+        create_description: 'The following new works will be created'
+        update_description: 'The following works will be updated'
         error_count_message: "Total Number of Works with Errors %{count}"
         preview_table:
           title: "Title"
           status: "Status"
-      import:
         submit: "Perform Import"
         cancel: "Cancel"
+      import:
         failure:
           header: "Failed Import"
         success:
