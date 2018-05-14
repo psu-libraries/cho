@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+# An internal CHO resource used for defining terms on collections and works.
+# Data dictionary terms are not indexed in Solr and are only persisted in Postgres via
+# the {Postgres::SingularMetadataAdapter}.
 module DataDictionary
   class Field < Valkyrie::Resource
     include WithRequirementDesignation

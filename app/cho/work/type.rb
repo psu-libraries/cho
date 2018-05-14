@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+# An internal CHO resource used for defining the kinds {Schema::MetadataField} resources assigned
+# to a {Work::Submission}.
+# Work types are not indexed in Solr and are only persisted in Postgres via the {Postgres::SingularMetadataAdapter}.
 module Work
   class Type < Valkyrie::Resource
     include Valkyrie::Resource::AccessControls

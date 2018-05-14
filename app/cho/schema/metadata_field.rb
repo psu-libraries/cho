@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+# An internal CHO resource used for defining a new instance of {DataDictionary::Field} and changing its attributes.
+# Metadata fields are not indexed in Solr and are only persisted in Postgres via
+# the {Postgres::SingularMetadataAdapter}.
 module Schema
   class MetadataField < DataDictionary::Field
     attribute :order_index, Valkyrie::Types::Int
