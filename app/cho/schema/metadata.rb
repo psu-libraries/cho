@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+# An internal CHO resource used for grouping different {Schema::MetadataField} resources and assigning them to
+# a {Work::Type} resource.
+# Schemas are not indexed in Solr and are only persisted in Postgres via the {Postgres::SingularMetadataAdapter}
 module Schema
   class Metadata < Valkyrie::Resource
     include CommonQueries

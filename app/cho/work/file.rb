@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# A primary resource type in CHO, a file contains binary data and description.
+# Files are indexed both in Solr and and Postgres using the {IndexingAdapter}.
 class Work::File < Valkyrie::Resource
   include CommonQueries
 

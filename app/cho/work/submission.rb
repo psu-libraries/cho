@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+# A primary resource type in CHO, a work contains {Work::File} resources as well as other works with attributes
+# for description.
+# Works are indexed both in Solr and and Postgres using the {IndexingAdapter}.
 module Work
   class Submission < Valkyrie::Resource
     include Valkyrie::Resource::AccessControls
