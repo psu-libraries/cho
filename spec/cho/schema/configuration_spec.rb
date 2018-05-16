@@ -11,7 +11,7 @@ RSpec.describe Schema::Configuration, type: :model do
   its(:schema_config) { is_expected.to eq([{ 'schema' => 'Generic', 'fields' => { 'generic_field' => { 'order_index' => 1 } } },
                                            { 'schema' => 'Document', 'fields' => { 'document_field' => { 'order_index' => 1 } } },
                                            { 'schema' => 'Still Image',
-                                             'fields' => { 'still_image_field' => { 'order_index' => 1 } } },
+                                             'fields' => { 'still_image_field' => { 'order_index' => 1, 'display_name' => 'Photograph' } } },
                                            { 'schema' => 'Map', 'fields' => { 'map_field' => { 'order_index' => 1 } } },
                                            { 'schema' => 'Moving Image',
                                              'fields' => { 'moving_image_field' => { 'order_index' => 1 } } },

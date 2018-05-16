@@ -142,6 +142,7 @@ test:
     fields:
       still_image_field:
         order_index: 1
+        display_name: 'Photograph'
   - schema: 'Map'
     fields:
       map_field:

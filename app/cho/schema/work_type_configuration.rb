@@ -39,7 +39,7 @@ module Schema
 
       fields.map do |field, attributes|
         data_dictionary_field = DataDictionary::Field.where(label: field).first
-        metadata_field = Schema::MetadataField.initialize_from_data_dictionary_field(data_dictionary_field)
+        metadata_field = Schema::MetadataField.initialize_from_data_dictionary_field(data_dictionary_field, attributes)
         metadata_field.order_index = (attributes.fetch('order_index', '1') + schema_configuration.core_field_count)
         find_or_save(metadata_field)
       end
