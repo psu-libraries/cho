@@ -7,7 +7,7 @@ RSpec.describe User, type: :model do
 
   describe '#populate_attributes' do
     before do
-      allow(LdapUser).to receive(:get_groups).with(user.login).and_return(groups)
+      allow(PsuDir::LdapUser).to receive(:get_groups).with(user.login).and_return(groups)
     end
 
     context 'when the user has groups' do
@@ -46,7 +46,7 @@ RSpec.describe User, type: :model do
       let(:groups) { ['group1', 'group2'] }
 
       it 'returns a list of groups from the database' do
-        expect(LdapUser).to receive(:get_groups).with(user.login).and_return(groups)
+        expect(PsuDir::LdapUser).to receive(:get_groups).with(user.login).and_return(groups)
         expect(user.groups).to contain_exactly('group1', 'group2')
       end
     end
@@ -56,7 +56,7 @@ RSpec.describe User, type: :model do
       let(:groups) { ['group1', 'group2'] }
 
       it 'returns a list of groups from the database' do
-        expect(LdapUser).to receive(:get_groups).with(user.login).and_return(groups)
+        expect(PsuDir::LdapUser).to receive(:get_groups).with(user.login).and_return(groups)
         expect(user.groups).to contain_exactly('group1', 'group2')
       end
     end

@@ -15,7 +15,7 @@ class User < ApplicationRecord
   end
 
   def populate_attributes
-    list = LdapUser.get_groups(login).sort!
+    list = PsuDir::LdapUser.get_groups(login).sort!
     return if list.empty?
     Rails.logger.debug "$#{login}$ groups = #{list}"
     update_attributes(group_list: list.join(';?;'), groups_last_update: Time.now)
