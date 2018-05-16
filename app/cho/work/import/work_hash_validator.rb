@@ -58,9 +58,14 @@ module Work
         def translate_file_name(file_name)
           return nil if file_name.blank?
 
-          FileUtils.cp(file_name, Rails.root.join('tmp'))
+          absolute_path = ::File.join(csv_base_path, file_name)
+          FileUtils.cp(absolute_path, Rails.root.join('tmp'))
           file = ::File.new(Rails.root.join('tmp', ::File.basename(file_name)))
           ActionDispatch::Http::UploadedFile.new(tempfile: file, filename: ::File.basename(file_name))
+        end
+
+        def csv_base_path
+          @csv_base_path ||= ::File.absolute_path(ENV['csv_base_path'])
         end
 
         class MissingResource < Valkyrie::Resource
