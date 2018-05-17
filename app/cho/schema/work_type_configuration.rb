@@ -48,7 +48,10 @@ module Schema
     private
 
       def change_set_persister
-        @change_set_persister ||= ChangeSetPersister.new(metadata_adapter: Valkyrie.config.metadata_adapter, storage_adapter: nil)
+        @change_set_persister ||= ChangeSetPersister.new(
+          metadata_adapter: Valkyrie.config.metadata_adapter,
+          storage_adapter: nil
+        )
       end
 
       def find_or_save(resource)

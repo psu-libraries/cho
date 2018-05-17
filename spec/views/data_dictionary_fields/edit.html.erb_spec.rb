@@ -5,14 +5,19 @@ require 'rails_helper'
 RSpec.describe 'data_dictionary/fields/edit', type: :view do
   let(:model) { build(:data_dictionary_field, field_attributes) }
   let(:data_dictionary_field) { DataDictionary::FieldChangeSet.new(model) }
-  let(:field_attributes) { { field_type:  DataDictionary::Field::FieldTypes['numeric'],
-                             requirement_designation: DataDictionary::Field::RequirementDesignations['required_to_publish'],
-                             validation: 'no_validation',
-                             multiple: false,
-                             controlled_vocabulary: 'no_vocabulary',
-                             default_value: 'MyString',
-                             display_name: 'MyString',
-                             display_transformation: 'no_transformation' } }
+
+  let(:field_attributes) do
+    {
+      field_type:  DataDictionary::Field::FieldTypes['numeric'],
+      requirement_designation: DataDictionary::Field::RequirementDesignations['required_to_publish'],
+      validation: 'no_validation',
+      multiple: false,
+      controlled_vocabulary: 'no_vocabulary',
+      default_value: 'MyString',
+      display_name: 'MyString',
+      display_transformation: 'no_transformation'
+    }
+  end
 
   before do
     assign(:data_dictionary_field, data_dictionary_field)

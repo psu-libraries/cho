@@ -36,7 +36,9 @@ describe Work::SubmissionIndexer do
     context "When the resource's collection id is present" do
       let(:work_type) { create :work_type, label: 'Indexed Label' }
       let(:collection) { create :library_collection, title: 'My Collection' }
-      let(:resource) { instance_double('Resource', work_type_id: work_type.id, member_of_collection_ids: [collection.id]) }
+      let(:resource) do
+        instance_double('Resource', work_type_id: work_type.id, member_of_collection_ids: [collection.id])
+      end
 
       it { is_expected.to eq(work_type_ssim: 'Indexed Label', member_of_collection_ssim: ['My Collection']) }
     end

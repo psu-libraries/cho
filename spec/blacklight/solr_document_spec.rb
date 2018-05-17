@@ -34,7 +34,10 @@ RSpec.describe SolrDocument, type: :model do
     subject { solr_document.member_of_collections.first }
 
     let(:collection) { create(:archival_collection) }
-    let(:document) { { 'internal_resource_tsim' => 'MyResource', member_of_collection_ids_ssim: [collection.id.to_s] } }
+
+    let(:document) do
+      { 'internal_resource_tsim' => 'MyResource', member_of_collection_ids_ssim: [collection.id.to_s] }
+    end
 
     its(:to_h) { is_expected.to include('title_tesim' => ['Archival Collection'],
                                         'internal_resource_tesim' => ['Collection::Archival'],
@@ -42,7 +45,9 @@ RSpec.describe SolrDocument, type: :model do
   end
 
   describe 'data dictionary field accessors' do
-    let(:document) { { 'internal_resource_tsim' => 'MyResource', title_tesim: ['my_title'], created_dtsi: ['2018-04-19T15:46:46Z'] } }
+    let(:document) do
+      { 'internal_resource_tsim' => 'MyResource', title_tesim: ['my_title'], created_dtsi: ['2018-04-19T15:46:46Z'] }
+    end
 
     its(:title_data_dictionary_field) { is_expected.to eq ['my_title'] }
     its(:created_data_dictionary_field) { is_expected.to eq ['2018-04-19T15:46:46Z'] }
@@ -59,7 +64,14 @@ RSpec.describe SolrDocument, type: :model do
   describe 'export_as_csv' do
     subject { solr_document.export_as_csv }
 
-    let(:document) { { 'internal_resource_tsim' => 'MyResource', id: 'abc123', title_tesim: ['my_title'], generic_field_tesim: ['value1', 'value2'] } }
+    let(:document) do
+      {
+        'internal_resource_tsim' => 'MyResource',
+        id: 'abc123',
+        title_tesim: ['my_title'],
+        generic_field_tesim: ['value1', 'value2']
+      }
+    end
 
     it { is_expected.to eq("abc123,,my_title,,,,value1|value2,,,,,\n") }
 
@@ -69,8 +81,15 @@ RSpec.describe SolrDocument, type: :model do
       let(:work1_csv) { "#{work.id},#{collection.id},Work One,,,,,,,,," }
       let(:work2) { create :work, member_of_collection_ids: [collection.id], title: 'Work Two' }
       let(:work2_csv) { "#{work2.id},#{collection.id},Work Two,,,,,,,,," }
-      let(:csv_header) { 'id,member_of_collection_ids,title,subtitle,description,created,generic_field,document_field,still_image_field,moving_image_field,map_field,audio_field' }
-      let(:document) { { 'internal_resource_tsim' => 'MyCollection', id: collection.id, title_tesim: ['my_collection'] } }
+
+      let(:csv_header) do
+        'id,member_of_collection_ids,title,subtitle,description,created,generic_field,document_field,'\
+        'still_image_field,moving_image_field,map_field,audio_field'
+      end
+
+      let(:document) do
+        { 'internal_resource_tsim' => 'MyCollection', id: collection.id, title_tesim: ['my_collection'] }
+      end
 
       before do
         work

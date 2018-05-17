@@ -62,7 +62,9 @@ RSpec.describe CommonQueries do
   end
 
   context "with the resource we're looking for" do
-    let!(:common_resource) { Valkyrie.config.metadata_adapter.persister.save(resource: CommonResource.new(bool_val: false)) }
+    let!(:common_resource) do
+      Valkyrie.config.metadata_adapter.persister.save(resource: CommonResource.new(bool_val: false))
+    end
 
     before do
       2.times do
@@ -143,7 +145,9 @@ RSpec.describe CommonQueries do
       let(:id) { resource.id }
 
       it 'raises an error' do
-        expect { SampleResource.exists?(id) }.to raise_error(TypeError, 'Expecting SampleResource, but found CommonResource instead')
+        expect { SampleResource.exists?(id) }.to raise_error(
+          TypeError, 'Expecting SampleResource, but found CommonResource instead'
+        )
       end
     end
   end

@@ -10,7 +10,10 @@ module ValkyrieControllerBehaviors
   end
 
   def validate_save_and_respond(change_set, error_view)
-    updated_change_set = change_set_persister.validate_and_save(change_set: change_set, resource_params: resource_params)
+    updated_change_set = change_set_persister.validate_and_save(
+      change_set: change_set,
+      resource_params: resource_params
+    )
     if updated_change_set.errors.blank?
       respond_success(updated_change_set)
     else

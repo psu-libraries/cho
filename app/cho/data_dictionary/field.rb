@@ -30,10 +30,9 @@ module DataDictionary
       @core_fields ||= where(core_field: true)
     end
 
-    # this defined how the field should be addressed when creating dynamic methods for access
-    #  in other classes such as the SolrDocument
-    # @note Just the plain label is not necissarily unique enough to be used so we are adding a suffix to avoid collisions
-    #       with other methods
+    # @note This defined how the field should be addressed when creating dynamic methods for access
+    #       in other classes such as the SolrDocument. Just the plain label is not necessarily unique enough
+    #       to be used so we are adding a suffix to avoid collisions with other methods
     def method_name
       "#{label}_data_dictionary_field"
     end

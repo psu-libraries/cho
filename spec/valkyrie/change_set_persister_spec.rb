@@ -52,7 +52,10 @@ RSpec.describe ChangeSetPersister do
       it 'saves the record and the file' do
         saved_change_set = nil
         expect {
-          saved_change_set = change_set_persister.validate_and_save(change_set: change_set, resource_params: { label: 'abc123', file: temp_file })
+          saved_change_set = change_set_persister.validate_and_save(
+            change_set: change_set,
+            resource_params: { label: 'abc123', file: temp_file }
+          )
         }.to change { metadata_adapter.query_service.find_all.count }.by(2)
         expect(saved_change_set.model.files).to eq(work_files.map(&:id))
         expect(work_file.original_filename).to eq('hello_world.txt')
@@ -72,7 +75,10 @@ RSpec.describe ChangeSetPersister do
     it 'persists a change set to Postgres' do
       expect(persister).to receive(:buffer_into_index).and_call_original
       expect {
-        saved_change_set = change_set_persister.validate_and_save_with_buffer(change_set: change_set, resource_params: { label: 'abc123' })
+        saved_change_set = change_set_persister.validate_and_save_with_buffer(
+          change_set: change_set,
+          resource_params: { label: 'abc123' }
+        )
         expect(saved_change_set.label).to eq('abc123')
       }.to change { metadata_adapter.query_service.find_all.count }.by(1)
     end
@@ -157,7 +163,10 @@ RSpec.describe ChangeSetPersister do
       end
 
       it 'reports the error in the save' do
-        output = change_set_persister.validate_and_save_with_buffer(change_set: change_set, resource_params: { label: 'abc123' })
+        output = change_set_persister.validate_and_save_with_buffer(
+          change_set: change_set,
+          resource_params: { label: 'abc123' }
+        )
         expect(output.errors.messages).to eq(save: ['save was not successful'])
       end
 

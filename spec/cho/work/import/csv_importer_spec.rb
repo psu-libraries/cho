@@ -5,10 +5,18 @@ require 'rails_helper'
 RSpec.describe Work::Import::CsvImporter do
   let(:collection) { create :library_collection }
   let(:work_type_id) { Work::Type.find_using(label: 'Generic').first.id }
-  let(:work_hash_1) { { member_of_collection_ids: [collection.id], work_type_id: [work_type_id], title: 'My first work' } }
-  let(:work_hash_2) { { member_of_collection_ids: [collection.id], work_type_id: [work_type_id], title: 'My second work' } }
+
+  let(:work_hash_1) do
+    { member_of_collection_ids: [collection.id], work_type_id: [work_type_id], title: 'My first work' }
+  end
+
+  let(:work_hash_2) do
+    { member_of_collection_ids: [collection.id], work_type_id: [work_type_id], title: 'My second work' }
+  end
+
   let(:change_set_list) { [Work::SubmissionChangeSet.new(Work::Submission.new(work_hash_1)),
                            Work::SubmissionChangeSet.new(Work::Submission.new(work_hash_2))] }
+
   let(:importer) { described_class.new(change_set_list) }
 
   it 'creates the works' do
@@ -38,14 +46,29 @@ RSpec.describe Work::Import::CsvImporter do
       expect(status).to be_falsey
       expect(importer.errors.count).to eq(2)
       expect(importer.errors.map(&:class)).to eq([Work::SubmissionChangeSet, Work::SubmissionChangeSet])
-      expect(importer.errors.map(&:errors).map(&:full_messages)).to eq([["Save ChangeSetPersister#persister delegated to metadata_adapter.persister, but metadata_adapter is nil: #{bad_persister.inspect}"],
-                                                                        ["Save ChangeSetPersister#persister delegated to metadata_adapter.persister, but metadata_adapter is nil: #{bad_persister.inspect}"]])
+      expect(importer.errors.map(&:errors).map(&:full_messages)).to eq(
+        [
+          ['Save ChangeSetPersister#persister delegated to metadata_adapter.persister, '\
+           "but metadata_adapter is nil: #{bad_persister.inspect}"],
+          ['Save ChangeSetPersister#persister delegated to metadata_adapter.persister, '\
+           "but metadata_adapter is nil: #{bad_persister.inspect}"]
+        ]
+      )
     end
   end
 
   context 'with a file' do
     let(:file_name) { Rails.root.join('spec', 'fixtures', 'hello_world.txt') }
-    let(:work_hash_1) { { member_of_collection_ids: [collection.id], work_type_id: [work_type_id], title: 'My first work', file_name: file_name } }
+
+    let(:work_hash_1) do
+      {
+        member_of_collection_ids: [collection.id],
+        work_type_id: [work_type_id],
+        title: 'My first work',
+        file_name: file_name
+      }
+    end
+
     let(:change_set_list) { [Work::SubmissionChangeSet.new(Work::Submission.new(work_hash_1))] }
 
     it 'creates the works' do

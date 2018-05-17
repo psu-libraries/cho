@@ -6,7 +6,9 @@ require 'valkyrie/specs/shared_specs'
 RSpec.describe Work::File do
   let(:resource_klass) { described_class }
   let(:file) { described_class.new }
-  let(:binary_content) { Valkyrie.config.storage_adapter.upload(file: temp_file, original_filename: 'My File.txt', resource: file) }
+  let(:binary_content) do
+    Valkyrie.config.storage_adapter.upload(file: temp_file, original_filename: 'My File.txt', resource: file)
+  end
   let(:temp_file) { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'hello_world.txt')) }
 
   it_behaves_like 'a Valkyrie::Resource'

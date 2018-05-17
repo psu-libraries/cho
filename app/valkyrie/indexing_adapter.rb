@@ -92,7 +92,10 @@ class IndexingAdapter
     end
 
     def buffered_persister
-      @buffered_persister ||= Valkyrie::Persistence::BufferedPersister.new(persister, buffer_class: Memory::SingularDeleteTrackingBuffer)
+      @buffered_persister ||= Valkyrie::Persistence::BufferedPersister.new(
+        persister,
+        buffer_class: Memory::SingularDeleteTrackingBuffer
+      )
     end
   end
 end
