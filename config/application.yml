@@ -5,8 +5,10 @@ development:
   service_name: "localhost"
   service_instance: "localhost"
   virtual_host: "http://localhost:3000/"
+  csv_base_path: 'tmp'
 test:
   service_name: "example-test"
   service_instance: "example-test"
   virtual_host: "http://test.com/"
+  csv_base_path: 'spec/fixtures'
 production:

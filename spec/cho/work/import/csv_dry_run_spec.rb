@@ -101,7 +101,7 @@ RSpec.describe Work::Import::CsvDryRun do
     end
 
     context 'Work Type string included ' do
-      let(:file_name) { Rails.root.join('spec', 'fixtures', 'hello_world.txt') }
+      let(:file_name) { 'hello_world.txt' }
 
       let(:csv_file) do
         CsvFactory::Generic.new(

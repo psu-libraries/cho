@@ -4,9 +4,9 @@ require 'rails_helper'
 
 RSpec.describe 'Preview of CSV Import', type: :feature do
   let(:collection) { create :library_collection, title: 'my collection' }
-  let(:work_1_file_name) { Rails.root.join('spec', 'fixtures', 'hello_world.txt') }
-  let(:work_2_file_name) { Rails.root.join('spec', 'fixtures', 'hello_world2.txt') }
-  let(:work_3_file_name) { Rails.root.join('spec', 'fixtures', 'hello_world3.txt') }
+  let(:work_1_file_name) { 'hello_world.txt' }
+  let(:work_2_file_name) { 'hello_world2.txt' }
+  let(:work_3_file_name) { 'hello_world3.txt' }
 
   context 'with a valid csv' do
     let(:csv_file) do
