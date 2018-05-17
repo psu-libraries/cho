@@ -3,7 +3,7 @@
 module Batch
   class SelectController < ApplicationController
     include Blacklight::Catalog
-    include Blacklight::Configurable
+    include Blacklight::DefaultComponentConfiguration
 
     copy_blacklight_config_from(CatalogController)
 

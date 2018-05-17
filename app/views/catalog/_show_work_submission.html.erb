@@ -1,4 +1,4 @@
-<%= render partial: 'show_default', locals: { document: @document } %>
+<%= render partial: 'show', locals: { document: @document } %>
 
 <% unless @document.files.empty? %>
   <%= render partial: 'files', locals: { files: @document.files } %>

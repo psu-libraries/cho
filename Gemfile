@@ -8,9 +8,14 @@ git_source(:github) do |repo_name|
 end
 
 # Main gems
-gem 'blacklight'
+gem 'blacklight', '7.0.0.rc1'
 gem 'rails', '~> 5.1.3'
 gem 'valkyrie', '~> 1.0'
+
+# For Blacklight with Sprockets
+gem 'bootstrap', '~> 4.0'
+gem 'popper_js'
+gem 'twitter-typeahead-rails', '0.11.1.pre.corejavascript'
 
 # Supporting gems
 gem 'bootsnap', require: false

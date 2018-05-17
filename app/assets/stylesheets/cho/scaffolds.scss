@@ -2,14 +2,6 @@ body {
   background-color: $primary-white;
   color: $body-text-color;
   font-family: verdana, arial, helvetica, sans-serif;
-  font-size: 13px;
-  line-height: 18px;
-}
-
-p, ol, ul, td {
-  font-family: verdana, arial, helvetica, sans-serif;
-  font-size: 13px;
-  line-height: 18px;
 }
 
 pre {
@@ -40,22 +32,17 @@ td {
 }
 
 div {
-  &.field, &.actions {
+  &.field,
+  &.actions {
     margin-bottom: 10px;
   }
 }
 
-#notice {
+.notice {
   color: $green-notice;
 }
 
-.field_with_errors {
-  background-color: $required-red;
-  display: table;
-  padding: 2px;
-}
-
-#error_explanation {
+.error-explanation {
   background-color: $primary-white;
   border: 2px solid $required-red;
   margin-bottom: 20px;

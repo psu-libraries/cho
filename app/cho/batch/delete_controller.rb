@@ -24,7 +24,7 @@ module Batch
         change_set_persister.delete(change_set: DeleteSet.new(resource))
       end
       flash[:success] = t('cho.batch.delete.success', list: resources.map(&:title).flatten.join(', '))
-      redirect_to(select_path)
+      redirect_to(search_select_path)
     end
 
     private

@@ -36,7 +36,7 @@ RSpec.describe Work::Submission, type: :feature do
       click_link('Document')
       expect(page).to have_content('New Document Work')
       click_button('Create Work')
-      within('#error_explanation') do
+      within('.error-explanation') do
         expect(page).to have_selector('h2', text: '2 errors prohibited this work from being saved:')
         expect(page).to have_content("Title can't be blank")
         expect(page).to have_content('Member of collection ids does not exist')

@@ -7,26 +7,26 @@
 
   <fieldset>
     <legend><%= t('cho.form.workflow') %></legend>
-    <%= form.label :workflow_default, class: :no_bold do %>
+    <%= form.label :workflow_default do %>
       <%= form.radio_button :workflow, 'default' %> <%= t('cho.field_label.default') %>
     <% end %>
 
-    <%= form.label :workflow_mediated, class: :no_bold do %>
+    <%= form.label :workflow_mediated do %>
       <%= form.radio_button :workflow, 'mediated' %> <%= t('cho.field_label.mediated') %>
     <% end %>
   </fieldset>
 
   <fieldset>
     <legend><%= t('cho.form.visibility') %></legend>
-    <%= form.label :visibility_public, class: :no_bold do %>
+    <%= form.label :visibility_public do %>
       <%= form.radio_button :visibility, 'public' %> <%= t('cho.field_label.public') %>
     <% end %>
 
-    <%= form.label :visibility_authenticated, class: :no_bold do %>
+    <%= form.label :visibility_authenticated do %>
       <%= form.radio_button :visibility, 'authenticated' %> <%= t('cho.field_label.authenticated') %>
     <% end %>
 
-    <%= form.label :visibility_private, class: :no_bold do %>
+    <%= form.label :visibility_private do %>
       <%= form.radio_button :visibility, 'private' %> <%= t('cho.field_label.private') %>
     <% end %>
   </fieldset>

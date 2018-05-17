@@ -1,10 +1,15 @@
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+<li class="nav-item dropdown">
+  <a class="nav-link dropdown-toggle" href="#"
+                                      id="createCollectionDropdown"
+                                      role="button"
+                                      data-toggle="dropdown"
+                                      aria-haspopup="true"
+                                      aria-expanded="false">
     <%= t('cho.header_links.create_collection') %> <span class="caret"></span>
   </a>
-  <ul class="dropdown-menu">
-    <li><%= link_to t('cho.header_links.archival_collection'), new_archival_collection_path, class: 'nav-link' %></li>
-    <li><%= link_to t('cho.header_links.library_collection'), new_library_collection_path, class: 'nav-link' %></li>
-    <li><%= link_to t('cho.header_links.curated_collection'), new_curated_collection_path, class: 'nav-link' %></li>
-  </ul>
+  <div class="dropdown-menu" aria-labelledby="createCollectionDropdown">
+    <%= link_to t('cho.header_links.archival_collection'), new_archival_collection_path, class: 'dropdown-item' %>
+    <%= link_to t('cho.header_links.library_collection'), new_library_collection_path, class: 'dropdown-item' %>
+    <%= link_to t('cho.header_links.curated_collection'), new_curated_collection_path, class: 'dropdown-item' %>
+  </div>
 </li>

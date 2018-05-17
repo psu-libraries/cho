@@ -1,10 +1,16 @@
-<%# Overrides Blacklight view so that we can put the content before the sidebar for accessibility %>
-<div id="content" class="<%= show_content_classes %>">
-  <%= render_document_main_content_partial %>
+<%# Overriding Blacklight to render edit link %>
 
-  <%= link_to 'Edit', edit_cho_resource_path %>
-</div>
+<% if current_search_session %>
+  <div id="appliedParams" class="clearfix constraints-container">
+    <%= link_to t('blacklight.search.start_over'), start_over_path, class: 'catalog_startOverLink btn btn-primary' %>
+    <%= link_back_to_catalog class: 'btn btn-outline-secondary' %>
+  </div>
+<% end %>
 
-<div id="sidebar" class="<%= show_sidebar_classes %>">
-   <%= render_document_sidebar_partial %>
-</div>
+<%= render_document_main_content_partial %>
+
+<%= link_to 'Edit', edit_cho_resource_path %>
+
+<% content_for(:sidebar) do %>
+  <%= render_document_sidebar_partial %>
+<% end %>
