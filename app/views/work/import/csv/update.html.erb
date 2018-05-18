@@ -1,10 +1,11 @@
 <h1><%= t('cho.csv.update.heading') %></h1>
 
-<p><%= t('cho.csv.update.description') %></p>
-
 <%= form_for(@csv_file, url: csv_validate_path) do |form| %>
 
   <%= form.hidden_field :file, value: @csv_file.cached_file_data %>
+  <%= label_tag(:work_import_csv_file_file) do %>
+    <%= t('cho.csv.update.description') %>
+  <% end %>
   <%= form.file_field :file %>
 
   <div class="actions">

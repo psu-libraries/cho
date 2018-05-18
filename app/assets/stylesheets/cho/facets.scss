@@ -1,0 +1,14 @@
+// Bootstrap overrides for color contrast needs to be heavy handed because they use the !important declaration
+// scss-lint:disable ImportantRule
+.text-success,
+.facet-values li .selected { color: $green-bg-text !important;}
+
+.facet-limit-active {
+  border-color: $green-bg-text !important;
+
+  .card-header {
+    background-color: $green-bg-text !important;
+    color: $primary-white;
+  }
+}
+// scss-lint:enable ImportantRule

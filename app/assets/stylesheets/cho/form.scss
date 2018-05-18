@@ -15,3 +15,12 @@ input { margin-bottom: 1rem; }
   color: $required-red;
   vertical-align: super;
 }
+
+label {
+  display: block;
+}
+
+// Overrides the block labels in the forms because they are generated inputs from the Data Dictionary.
+// They are hard to style using Bootstrap and override because they are not standard Rails or HTML.
+// This is a work around.
+.select-resources label { display: inline; }
