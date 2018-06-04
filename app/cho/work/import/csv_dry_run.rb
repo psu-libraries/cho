@@ -3,12 +3,13 @@
 module Work
   module Import
     # Creates a list of change sets from the CSV file
-    #  Each item in the list is a change set that can be persisted if valid
+    #  Each item in the list is a change set that can be persisted if valid.
+    # @example
     #
-    # change_set_list = CSVDryRun.run('csv_data.csv')
+    #   change_set_list = CSVDryRun.run('csv_data.csv')
     #
-    # The first line of the csv file is expected to be the header.  The header items correspond to field in the datadictionary
-    # member_of_collection_ids,work_type_id,title
+    #   The first line of the csv file is expected to be the header.
+    #   The header items correspond to a field in the data dictionary: member_of_collection_ids, work_type_id, title.
     #
     class CsvDryRun
       attr_reader :update, :results, :reader

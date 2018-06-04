@@ -3,8 +3,15 @@
 require 'rails_helper'
 
 RSpec.describe DataDictionary::CsvImporter do
-  let(:header) { "Label,Field Type,Requirement Designation,Validation,Multiple,Controlled Vocabulary,Default Value,Display Name,Display Transformation,Index Type,Help Text,Core Field\n" }
-  let(:csv_field1) { "abc123_label,date,recommended,no_validation,false,no_vocabulary,abc123,My Abc123,no_transformation,no_facet,help me,false\n" }
+  let(:header) do
+    'Label,Field Type,Requirement Designation,Validation,Multiple,Controlled Vocabulary,Default Value,'\
+    "Display Name,Display Transformation,Index Type,Help Text,Core Field\n"
+  end
+
+  let(:csv_field1) do
+    'abc123_label,date,recommended,no_validation,false,no_vocabulary,abc123,'\
+    "My Abc123,no_transformation,no_facet,help me,false\n"
+  end
 
   let(:file) { StringIO.new(header + csv_field1) }
 
@@ -37,7 +44,11 @@ RSpec.describe DataDictionary::CsvImporter do
   end
 
   context 'incorrect fields' do
-    let(:csv_field1) { "abc123_label,date,recommended,unknown_validation,false,no_vocabulary,abc123,My Abc123,no_transformation\n" }
+    let(:csv_field1) do
+      'abc123_label,date,recommended,unknown_validation,false,no_vocabulary,abc123,'\
+      "My Abc123,no_transformation\n"
+    end
+
     let(:file) { StringIO.new(csv_field1) }
 
     it 'uses the default' do

@@ -22,7 +22,8 @@ server 'choweb1qa.vmhost.psu.edu:1855', user: 'deploy', roles: %w(web app db), p
 # Custom SSH Options
 # ==================
 # You may pass any option but keep in mind that net/ssh understands a
-# limited set of options, consult[net/ssh documentation](http://net-ssh.github.io/net-ssh/classes/Net/SSH.html#method-c-start).
+# limited set of options, consult
+# [net/ssh documentation](http://net-ssh.github.io/net-ssh/classes/Net/SSH.html#method-c-start).
 #
 # Global options
 # --------------

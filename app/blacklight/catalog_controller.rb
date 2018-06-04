@@ -28,8 +28,9 @@ class CatalogController < ApplicationController
     # items to show per page, each number in the array represent another option to choose from.
     # config.per_page = [10,20,50,100]
 
-    ## Default parameters to send on single-document requests to Solr. These settings are the Blackligt defaults (see SearchHelper#solr_doc_params) or
-    ## parameters included in the Blacklight-jetty document requestHandler.
+    ## Default parameters to send on single-document requests to Solr.
+    #  These settings are the Blackligt defaults (see SearchHelper#solr_doc_params) or
+    #  parameters included in the Blacklight-jetty document requestHandler.
     #
     # config.default_document_solr_params = {
     #  qt: 'document',
@@ -82,8 +83,9 @@ class CatalogController < ApplicationController
     # facet bar
     #
     # set :index_range to true if you want the facet pagination view to have facet prefix-based navigation
-    #  (useful when user clicks "more" on a large facet and wants to navigate alphabetically across a large set of results)
-    # :index_range can be an array or range of prefixes that will be used to create the navigation (note: It is case sensitive when searching values)
+    #  (useful when user clicks "more" on a large facet and wants to navigate alphabetically across a large
+    #  set of results) index_range can be an array or range of prefixes that will be used to create the navigation
+    #  (note: It is case sensitive when searching values)
 
     config.add_facet_field 'work_type_ssim', label: I18n.t('cho.field_label.work_type')
     config.add_facet_field 'collection_type_ssim', label: I18n.t('cho.field_label.collection_type')

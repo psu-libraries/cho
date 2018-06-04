@@ -22,7 +22,9 @@ module DisplayTransformation
         end
 
         def send_error(error_list)
-          raise DisplayTransformation::Error.new("Invalid display transformation(s) in transformation list: #{error_list}")
+          raise DisplayTransformation::Error.new(
+            "Invalid display transformation(s) in transformation list: #{error_list}"
+          )
         end
     end
   end

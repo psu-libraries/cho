@@ -29,13 +29,33 @@ RSpec.describe DataDictionary::FieldsController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # MetadataField. As you add validations to MetadataField, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    { 'label' => 'My Field', 'field_type' => 'numeric', 'requirement_designation' => 'optional', 'validation' => 'no_validation', 'multiple' => '0', 'controlled_vocabulary' => 'no_vocabulary', 'default_value' => 'blah', 'display_name' => 'blah', 'display_transformation' => 'no_transformation' }
-  }
+  let(:valid_attributes) do
+    {
+      'label' => 'My Field',
+      'field_type' => 'numeric',
+      'requirement_designation' => 'optional',
+      'validation' => 'no_validation',
+      'multiple' => '0',
+      'controlled_vocabulary' => 'no_vocabulary',
+      'default_value' => 'blah',
+      'display_name' => 'blah',
+      'display_transformation' => 'no_transformation'
+    }
+  end
 
-  let(:invalid_attributes) {
-    { 'label' => 'My Field', 'field_type' => 'numeric', 'requirement_designation' => 'optional_invalid', 'validation' => 'no_validation', 'multiple' => '0', 'controlled_vocabulary' => 'no_vocabulary', 'default_value' => 'blah', 'display_name' => 'blah', 'display_transformation' => 'no_transformation' }
-  }
+  let(:invalid_attributes) do
+    {
+      'label' => 'My Field',
+      'field_type' => 'numeric',
+      'requirement_designation' => 'optional_invalid',
+      'validation' => 'no_validation',
+      'multiple' => '0',
+      'controlled_vocabulary' => 'no_vocabulary',
+      'default_value' => 'blah',
+      'display_name' => 'blah',
+      'display_transformation' => 'no_transformation'
+    }
+  end
 
   let(:title) do
     {
@@ -75,7 +95,9 @@ RSpec.describe DataDictionary::FieldsController, type: :controller do
   context 'valid object created' do
     let!(:dictionary_field) { create(:data_dictionary_field) }
     let(:title_field) { DataDictionary::Field.all.to_a.keep_if { |f| f.label == 'title' }.first }
-    let(:reloaded_dictionary_field) { Valkyrie.config.metadata_adapter.query_service.find_by(id: dictionary_field.id) }
+    let(:reloaded_dictionary_field) do
+      Valkyrie.config.metadata_adapter.query_service.find_by(id: dictionary_field.id)
+    end
 
     describe 'GET #index' do
       it 'returns a success response' do
@@ -101,9 +123,17 @@ RSpec.describe DataDictionary::FieldsController, type: :controller do
       it 'returns csv' do
         get :index, params: {}, session: valid_session, format: :csv
         expect(response.content_type).to eq('text/csv')
-        expect(response.body).to include("Label,Field Type,Requirement Designation,Validation,Multiple,Controlled Vocabulary,Default Value,Display Name,Display Transformation,Index Type,Help Text,Core Field\n")
-        expect(response.body).to include("title,string,required,no_validation,true,no_vocabulary,,,no_transformation,no_facet,help me,true\n")
-        expect(response.body).to include("abc123_label,date,recommended,no_validation,false,no_vocabulary,abc123,My Abc123,no_transformation,no_facet,help me,false\n")
+        expect(response.body).to include(
+          'Label,Field Type,Requirement Designation,Validation,Multiple,Controlled Vocabulary,'\
+          "Default Value,Display Name,Display Transformation,Index Type,Help Text,Core Field\n"
+        )
+        expect(response.body).to include(
+          "title,string,required,no_validation,true,no_vocabulary,,,no_transformation,no_facet,help me,true\n"
+        )
+        expect(response.body).to include(
+          'abc123_label,date,recommended,no_validation,false,no_vocabulary,abc123,My Abc123,'\
+          "no_transformation,no_facet,help me,false\n"
+        )
       end
     end
 
@@ -124,12 +154,23 @@ RSpec.describe DataDictionary::FieldsController, type: :controller do
 
     describe 'PUT #update' do
       context 'with valid params' do
-        let(:new_attributes) {
-          { 'label' => 'My Field', 'field_type' => 'text', 'requirement_designation' => 'required_to_publish', 'validation' => 'no_validation', 'multiple' => '0', 'controlled_vocabulary' => 'no_vocabulary', 'default_value' => 'new', 'display_name' => 'new display', 'display_transformation' => 'no_transformation' }
-        }
+        let(:new_attributes) do
+          {
+            'label' => 'My Field',
+            'field_type' => 'text',
+            'requirement_designation' => 'required_to_publish',
+            'validation' => 'no_validation',
+            'multiple' => '0',
+            'controlled_vocabulary' => 'no_vocabulary',
+            'default_value' => 'new',
+            'display_name' => 'new display',
+            'display_transformation' => 'no_transformation'
+          }
+        end
 
         it 'updates the requested dictionary_field' do
-          put :update, params: { id: dictionary_field.to_param, data_dictionary_field: new_attributes }, session: valid_session
+          put :update, params: { id: dictionary_field.to_param, data_dictionary_field: new_attributes },
+                       session: valid_session
           expect(response).to redirect_to(reloaded_dictionary_field)
           expect(reloaded_dictionary_field.multiple).to be_falsey
         end
@@ -137,7 +178,8 @@ RSpec.describe DataDictionary::FieldsController, type: :controller do
 
       context 'with invalid params' do
         it "returns a success response (i.e. to display the 'edit' template)" do
-          put :update, params: { id: dictionary_field.to_param, data_dictionary_field: invalid_attributes }, session: valid_session
+          put :update, params: { id: dictionary_field.to_param, data_dictionary_field: invalid_attributes },
+                       session: valid_session
           expect(response).to be_success
         end
       end
@@ -183,7 +225,8 @@ RSpec.describe DataDictionary::FieldsController, type: :controller do
       it "returns a success response (i.e. to display the 'new' template)" do
         post :create, params: { data_dictionary_field: invalid_attributes }, session: valid_session
         expect(response).to be_success
-        expect(assigns[:data_dictionary_field].errors.first).to eq([:requirement_designation, 'is not included in the list'])
+        expect(assigns[:data_dictionary_field].errors.first)
+          .to eq([:requirement_designation, 'is not included in the list'])
       end
     end
 

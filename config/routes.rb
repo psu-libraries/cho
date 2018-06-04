@@ -25,7 +25,8 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :work_submissions, as: 'works', path: '/works', except: [:show, :index, :destroy], controller: 'work/submissions'
+  resources :work_submissions, as: 'works', path: '/works', except: [:show, :index, :destroy],
+                               controller: 'work/submissions'
   resources :archival_collections, except: [:show, :index, :destroy], controller: 'collection/archival_collections'
   resources :library_collections, except: [:show, :index, :destroy], controller: 'collection/library_collections'
   resources :curated_collections, except: [:show, :index, :destroy], controller: 'collection/curated_collections'

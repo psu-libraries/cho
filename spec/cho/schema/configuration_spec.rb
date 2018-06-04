@@ -8,16 +8,25 @@ RSpec.describe Schema::Configuration, type: :model do
 
   let(:schema_file) {}
 
-  its(:schema_config) { is_expected.to eq([{ 'schema' => 'Generic', 'fields' => { 'generic_field' => { 'order_index' => 1 } } },
-                                           { 'schema' => 'Document', 'fields' => { 'document_field' => { 'order_index' => 1 } } },
-                                           { 'schema' => 'Still Image',
-                                             'fields' => { 'still_image_field' => { 'order_index' => 1, 'display_name' => 'Photograph' } } },
-                                           { 'schema' => 'Map', 'fields' => { 'map_field' => { 'order_index' => 1 } } },
-                                           { 'schema' => 'Moving Image',
-                                             'fields' => { 'moving_image_field' => { 'order_index' => 1 } } },
-                                           { 'schema' => 'Audio', 'fields' => { 'audio_field' => { 'order_index' => 1 } } },
-                                           { 'schema' => 'Collection', 'fields' => [] }])}
-  its(:work_types) { is_expected.to eq(['Generic', 'Document', 'Still Image', 'Map', 'Moving Image', 'Audio', 'Collection']) }
+  its(:schema_config) do
+    is_expected.to eq(
+      [
+        { 'schema' => 'Generic', 'fields' => { 'generic_field' => { 'order_index' => 1 } } },
+        { 'schema' => 'Document', 'fields' => { 'document_field' => { 'order_index' => 1 } } },
+        { 'schema' => 'Still Image',
+          'fields' => { 'still_image_field' => { 'order_index' => 1, 'display_name' => 'Photograph' } } },
+        { 'schema' => 'Map', 'fields' => { 'map_field' => { 'order_index' => 1 } } },
+        { 'schema' => 'Moving Image',
+          'fields' => { 'moving_image_field' => { 'order_index' => 1 } } },
+        { 'schema' => 'Audio', 'fields' => { 'audio_field' => { 'order_index' => 1 } } },
+        { 'schema' => 'Collection', 'fields' => [] }
+      ]
+    )
+  end
+
+  its(:work_types) do
+    is_expected.to eq(['Generic', 'Document', 'Still Image', 'Map', 'Moving Image', 'Audio', 'Collection'])
+  end
 
   describe '#load_work_types' do
     it 'does nothing since the default types were already loaded' do
@@ -42,7 +51,9 @@ RSpec.describe Schema::Configuration, type: :model do
       schema.unlink
     end
 
-    its(:schema_config) { is_expected.to eq([{ 'schema' => 'Other', 'fields' => { 'other_field' => { 'order_index' => 1 } } }]) }
+    its(:schema_config) do
+      is_expected.to eq([{ 'schema' => 'Other', 'fields' => { 'other_field' => { 'order_index' => 1 } } }])
+    end
 
     describe '#load_work_types' do
       let(:other_field) { create :data_dictionary_field, label: 'other_field' }

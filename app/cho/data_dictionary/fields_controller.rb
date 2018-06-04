@@ -63,7 +63,9 @@ module DataDictionary
       def respond_success(change_set)
         @data_dictionary_field = change_set
         respond_to do |format|
-          format.html { redirect_to @data_dictionary_field.resource, notice: 'Metadata field was successfully updated.' }
+          format.html do
+            redirect_to @data_dictionary_field.resource, notice: 'Metadata field was successfully updated.'
+          end
           format.json { render :show, status: :ok, location: @data_dictionary_field.resource }
         end
       end

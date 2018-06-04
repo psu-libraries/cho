@@ -29,7 +29,11 @@ RSpec.describe ControlledVocabulary::Factory, type: :model do
     context 'invalid vocabularies set' do
       let(:vocabularies) { { mine: MyVocab.new, abc: '123' } }
 
-      it { within_block_is_expected.to raise_exception(ControlledVocabulary::Error, 'Invalid controlled vocabularies(s) in vocabulary list: abc') }
+      it 'raises an error' do
+        within_block_is_expected.to raise_exception(
+          ControlledVocabulary::Error, 'Invalid controlled vocabularies(s) in vocabulary list: abc'
+        )
+      end
     end
   end
 

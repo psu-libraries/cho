@@ -5,7 +5,9 @@ require 'rails_helper'
 RSpec.describe Work::Import::CsvReader do
   let(:reader) { described_class.new(csv_file) }
   let(:csv_file) { StringIO.new("header1,header2\ndata1,data2\ndataA,dataB") }
-  let(:csv_hash) { [{ 'header1' => 'data1', 'header2' => 'data2' }, { 'header1' => 'dataA', 'header2' => 'dataB' }] }
+  let(:csv_hash) do
+    [{ 'header1' => 'data1', 'header2' => 'data2' }, { 'header1' => 'dataA', 'header2' => 'dataB' }]
+  end
 
   describe '#each' do
     it 'iterates over the data' do
@@ -39,7 +41,9 @@ RSpec.describe Work::Import::CsvReader do
 
     context 'value has multiple items' do
       let(:csv_file) { StringIO.new("header1,header2\ndata1,data2\ndataA1|dataA2,dataB") }
-      let(:csv_hash) { [{ 'header1' => 'data1', 'header2' => 'data2' }, { 'header1' => ['dataA1', 'dataA2'], 'header2' => 'dataB' }] }
+      let(:csv_hash) do
+        [{ 'header1' => 'data1', 'header2' => 'data2' }, { 'header1' => ['dataA1', 'dataA2'], 'header2' => 'dataB' }]
+      end
 
       it { is_expected.to eq(csv_hash) }
     end

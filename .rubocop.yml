@@ -28,3 +28,13 @@ RSpec/MultipleExpectations:
 RSpec/ContextWording:
   Exclude:
     - 'spec/**/*'
+
+Metrics/LineLength:
+  Exclude:
+    - 'config/initializers/devise.rb'
+    - 'config/deploy.rb'
+    - 'app/views/data_dictionary/fields/_dictionary_field.json.jbuilder'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'

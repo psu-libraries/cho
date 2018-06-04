@@ -6,7 +6,11 @@ RSpec.describe DataDictionary::CsvField do
   let (:field) { build :data_dictionary_field }
   let (:attributes) { described_class.default_attributes }
   let (:field_attributes) { field.attributes.slice(*attributes) }
-  let(:csv_line) { "abc123_label,date,recommended,no_validation,false,no_vocabulary,abc123,My Abc123,no_transformation,no_facet,help me,false\n" }
+
+  let(:csv_line) do
+    'abc123_label,date,recommended,no_validation,false,no_vocabulary,abc123,My Abc123,'\
+    "no_transformation,no_facet,help me,false\n"
+  end
 
   describe '#to_csv' do
     subject { described_class.new(field).to_csv }

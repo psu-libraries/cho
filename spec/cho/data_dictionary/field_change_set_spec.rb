@@ -43,7 +43,9 @@ RSpec.describe DataDictionary::FieldChangeSet do
     context 'label is not unique but it is the same id' do
       subject { described_class.new(my_resource) }
 
-      let(:my_resource) { Valkyrie.config.metadata_adapter.query_service.custom_queries.find_using(label: 'taken').first }
+      let(:my_resource) do
+        Valkyrie.config.metadata_adapter.query_service.custom_queries.find_using(label: 'taken').first
+      end
 
       before do
         create :data_dictionary_field, label: 'taken'

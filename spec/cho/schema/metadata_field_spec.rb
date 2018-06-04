@@ -59,7 +59,9 @@ RSpec.describe Schema::MetadataField, type: :model do
   end
 
   describe '#initialize_from_data_dictionary_field' do
-    subject(:schema_field) { described_class.initialize_from_data_dictionary_field(data_dictionary_field, schema_field_config) }
+    subject(:schema_field) do
+      described_class.initialize_from_data_dictionary_field(data_dictionary_field, schema_field_config)
+    end
 
     let(:data_dictionary_field) { DataDictionary::Field.where(label: 'title').first }
     let(:schema_field_config) {}

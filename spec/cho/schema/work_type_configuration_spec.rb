@@ -4,7 +4,9 @@ require 'rails_helper'
 require 'valkyrie/specs/shared_specs'
 
 RSpec.describe Schema::WorkTypeConfiguration, type: :model do
-  subject(:work_type_configuration) { described_class.new(schema_configuration: Schema::Configuration.new, work_type: work_type) }
+  subject(:work_type_configuration) do
+    described_class.new(schema_configuration: Schema::Configuration.new, work_type: work_type)
+  end
 
   describe '#fields' do
     subject { work_type_configuration.fields }
