@@ -6,17 +6,15 @@
     <%= render '/manage' %>
     <%= render '/collection/nav' %>
     <%= render '/work/submissions/nav' %>
-  </ul>
+    <li>
+      <% if current_user %>
 
-  <ul class="nav navbar-nav">
-    <% if current_user %>
-      <li>
-        <%= link_to t('blacklight.header_links.logout'), devise_remote.destroy_user_session_path %>
-      </li>
-    <% else %>
-      <li>
-        <%= link_to t('blacklight.header_links.login'), devise_remote.new_user_session_path %>
-      </li>
-    <% end %>
+        <%= link_to t('blacklight.header_links.logout'), devise_remote.destroy_user_session_path,
+                    class: 'nav-link' %>
+      <% else %>
+        <%= link_to t('blacklight.header_links.login'), devise_remote.new_user_session_path,
+                    class: 'nav-link' %>
+      <% end %>
+    </li>
   </ul>
 </div>

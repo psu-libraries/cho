@@ -15,7 +15,7 @@
   }
 }
 
-.navbar-collapse { font-size: .8rem; }
+.navbar-collapse { font-size: .9rem; }
 
 // styles to address inconsistent usage of search widgets
 // scss-lint:disable SelectorFormat
@@ -27,7 +27,11 @@
 .dl-invert dt { color: $gray-middle; }
 
 // Button visited link color
-.btn-danger:visited { color: $primary-white; }
+.btn-danger:visited,
+.btn-primary:visited { color: $primary-white; }
+
+// Button background color
+.btn-primary { background-color: $btn-primary-color; }
 
 // Adds the colored focus around the Bootstrap dropdown
 .dropdown-toggle:focus {

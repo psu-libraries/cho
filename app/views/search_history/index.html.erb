@@ -7,15 +7,15 @@
     <h2 class='section-heading'><%= t('blacklight.search_history.no_history') %></h2>
   <% else %>
     <p>
-    <%= link_to t('blacklight.search_history.clear.action_title'),
-                blacklight.clear_search_history_path,
-                method: :delete,
-                data: { confirm: t('blacklight.search_history.clear.action_confirm') },
-                class: 'btn btn-danger float-md-right' %>
+      <%= link_to t('blacklight.search_history.clear.action_title'),
+                  blacklight.clear_search_history_path,
+                  method: :delete,
+                  data: { confirm: t('blacklight.search_history.clear.action_confirm') },
+                  class: 'btn btn-danger float-md-right' %>
     </p>
     <h2 class='section-heading'><%= t('blacklight.search_history.recent') %></h2>
     <ul>
-      <% @searches.each_with_index do |search,index| %>
+      <% @searches.select { |search| search.query_params.key?('q') }.each_with_index do |search,index| %>
         <%= content_tag :li, id: "document_#{index + 1}" do %>
           <span><%= link_to_previous_search(search_state.reset(search.query_params).to_hash) %></span>
         <% end #content_tag %>
