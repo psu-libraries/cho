@@ -3,6 +3,10 @@ development: &development
     fields: []
   - schema: 'Collection'
     fields: []
+    work_type: 'false'
+  - schema: 'FileSet'
+    fields: []
+    work_type: 'false'
   - schema: 'Document'
     fields:
       contributor:
@@ -157,4 +161,8 @@ test:
         order_index: 1
   - schema: 'Collection'
     fields: []
+    work_type: 'false'
+  - schema: 'FileSet'
+    fields: []
+    work_type: 'false'
 production: *development
