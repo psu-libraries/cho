@@ -8,6 +8,7 @@ RSpec.describe CommonQueries do
       include CommonQueries
       attribute :id, Valkyrie::Types::ID.optional
       attribute :label, Valkyrie::Types::String
+      attribute :other, Valkyrie::Types::String
       attribute :bool_val, Valkyrie::Types::Strict::Bool
     end
 
@@ -86,6 +87,8 @@ RSpec.describe CommonQueries do
     let(:resource2) { CommonResource.new(label: 'second resource', bool_val: false) }
     let(:resource3) { CommonResource.new(label: 'third resource', bool_val: true) }
     let(:resource4) { CommonResource.new(bool_val: false) }
+    let(:resource5) { CommonResource.new(label: 'same label', other: 'other key', bool_val: true) }
+    let(:resource6) { CommonResource.new(label: 'same label', other: 'my key', bool_val: true) }
 
     it 'retrieves a resource based on its label' do
       persisted_resource = Valkyrie.config.metadata_adapter.persister.save(resource: resource1)
@@ -109,6 +112,14 @@ RSpec.describe CommonQueries do
       Valkyrie.config.metadata_adapter.persister.save(resource: resource2)
       persisted_resource = Valkyrie.config.metadata_adapter.persister.save(resource: resource4)
       results = CommonResource.find_using(label: nil)
+      expect(results.count).to eq(1)
+      expect(results.first.id).to eq(persisted_resource.id)
+    end
+
+    it 'retrieves a resource based on its label and other key' do
+      Valkyrie.config.metadata_adapter.persister.save(resource: resource5)
+      persisted_resource = Valkyrie.config.metadata_adapter.persister.save(resource: resource6)
+      results = CommonResource.find_using(label: 'same label', other: 'my key')
       expect(results.count).to eq(1)
       expect(results.first.id).to eq(persisted_resource.id)
     end

@@ -15,7 +15,6 @@ class FindUsing
 
   def find_using(query)
     model = query.delete(:model)
-    raise ArgumentError, 'only one query term is supported' if query.length > 1
     sql = "SELECT * FROM orm_resources WHERE #{build_where_clause(query, model)};"
     run_query(sql)
   end
@@ -27,16 +26,19 @@ class FindUsing
   end
 
   def build_where_clause(query, model)
-    key = query.keys.first
-    value = query.values.first
-    clause = if value.is_a?(String)
-               ["metadata @> '{\"#{key}\":\"#{value}\"}'"]
-             elsif value.nil?
-               ["metadata->>'#{key}' is null"]
-             else
-               ["metadata @> '{\"#{key}\":#{value}}'"]
-             end
-    clause.push("internal_resource = '#{model}'") if model
-    clause.join(' AND ')
+    clauses = []
+    query.each_key do |key|
+      value = query[key]
+      clause = if value.is_a?(String)
+                 "metadata @> '{\"#{key}\":\"#{value}\"}'"
+               elsif value.nil?
+                 "metadata->>'#{key}' is null"
+               else
+                 "metadata @> '{\"#{key}\":#{value}}'"
+               end
+      clauses.push(clause)
+    end
+    clauses.push("internal_resource = '#{model}'") if model
+    clauses.join(' AND ')
   end
 end

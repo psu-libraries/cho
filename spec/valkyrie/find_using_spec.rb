@@ -12,6 +12,7 @@ RSpec.describe FindUsing do
       include DataDictionary::FieldsForObject
       attribute :id, Valkyrie::Types::ID.optional
       attribute :framjam, Valkyrie::Types::String
+      attribute :flimjam, Valkyrie::Types::String
     end
 
     class SimilarResource < Valkyrie::Resource
@@ -34,20 +35,26 @@ RSpec.describe FindUsing do
     let(:retrieved_resource) { query_service.custom_queries.find_using(framjam: 'some label').first }
 
     its(:framjam) { is_expected.to eq(retrieved_resource.framjam) }
+
+    context 'when providing multiple terms' do
+      before do
+        resource = SampleResource.new(framjam: 'some label', flimjam: 'label')
+        Valkyrie.config.metadata_adapter.persister.save(resource: resource)
+      end
+
+      let(:sample_resource)    { SampleResource.new(framjam: 'some label', flimjam: 'another label') }
+      let(:retrieved_resource) {
+        query_service.custom_queries.find_using(framjam: 'some label', flimjam: 'another label').first
+      }
+
+      its(:id) { is_expected.to eq(retrieved_resource.id) }
+    end
   end
 
   context 'without a saved resource' do
     subject { query_service.custom_queries.find_using(framjam: 'some label').first }
 
     it { is_expected.to be_nil }
-  end
-
-  context 'when providing multiple terms' do
-    it 'raises and error' do
-      expect {
-        query_service.custom_queries.find_using(framjam: 'some label', flimjam: 'another label')
-      }.to raise_error(ArgumentError, 'only one query term is supported')
-    end
   end
 
   context 'when providing a model' do
