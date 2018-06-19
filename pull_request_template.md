@@ -1,6 +1,6 @@
 ## Description
 
-References ticket: (if any)
+Fixes: #[issue number, if applicable]
 
 Why was this necessary?
 
