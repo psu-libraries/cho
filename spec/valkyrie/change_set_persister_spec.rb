@@ -41,6 +41,26 @@ RSpec.describe ChangeSetPersister do
       }.to change { metadata_adapter.query_service.find_all.count }.by(1)
     end
 
+    context 'with a saved resource' do
+      let(:field) { create :data_dictionary_field, label: 'other', display_name: 'other name' }
+      let(:change_set) { DataDictionary::FieldChangeSet.new(field) }
+      let(:reloaded_dictionary_field) do
+        Valkyrie.config.metadata_adapter.query_service.find_by(id: field.id)
+      end
+
+      it 'persists a change set to Postgres' do
+        field # create the field prior to the expect
+        expect {
+          updated_change_set = change_set_persister.validate_and_save(
+            change_set: change_set,
+            resource_params: field.attributes.merge(display_name: 'my name')
+          )
+          expect(updated_change_set).to be_valid
+          expect(updated_change_set.resource.display_name).to eq('my name')
+        }.to change { metadata_adapter.query_service.find_all.count }.by(0)
+      end
+    end
+
     context 'with files' do
       let!(:collection) { create(:collection) }
       let(:resource) { build(:work, title: 'with a file', member_of_collection_ids: [collection.id]) }
@@ -100,15 +120,15 @@ RSpec.describe ChangeSetPersister do
     end
   end
 
-  describe '#find_or_save' do
-    subject(:find_or_save_call) { change_set_persister.update_or_create(resource, unique_attribute: :label) }
+  describe '#update_or_create' do
+    subject(:update_or_create_call) { change_set_persister.update_or_create(resource, unique_attribute: :label) }
 
     let(:metadata_adapter) { Valkyrie.config.metadata_adapter }
     let(:resource) { build :data_dictionary_field, label: 'new_label' }
 
     it 'saves the resource and returns it' do
-      expect { find_or_save_call }.to change(DataDictionary::Field, :count).by(1)
-      expect(find_or_save_call.label).to eq('new_label')
+      expect { update_or_create_call }.to change(DataDictionary::Field, :count).by(1)
+      expect(update_or_create_call.label).to eq('new_label')
     end
 
     context 'An existing field' do
@@ -117,8 +137,43 @@ RSpec.describe ChangeSetPersister do
       before { existing_field }
 
       it 'does not save the field' do
-        expect { find_or_save_call }.to change(DataDictionary::Field, :count).by(0)
-        expect(find_or_save_call.id).to eq(existing_field.id)
+        expect { update_or_create_call }.to change(DataDictionary::Field, :count).by(0)
+        expect(update_or_create_call.id).to eq(existing_field.id)
+      end
+    end
+
+    context 'when label is not the attribute' do
+      subject(:update_or_create_call) {
+        change_set_persister.update_or_create(existing_field, unique_attribute: :help_text)
+      }
+
+      let(:existing_field) { create :data_dictionary_field, help_text: 'Not used in another place' }
+
+      before { existing_field }
+
+      it 'does not save the field' do
+        expect { update_or_create_call }.to change(DataDictionary::Field, :count).by(0)
+        expect(update_or_create_call.id).to eq(existing_field.id)
+      end
+    end
+
+    context 'with multiple attributes' do
+      subject(:update_or_create_call) {
+        change_set_persister.update_or_create(resource, unique_attributes: [:help_text, :label])
+      }
+
+      let(:resource) { build :data_dictionary_field,
+                             help_text: 'Help text',
+                             label: 'new_title',
+                             display_name: 'my display' }
+      let(:existing_field) { create :data_dictionary_field, help_text: 'Help text', label: 'new_title' }
+
+      before { existing_field }
+
+      it 'does not save the field' do
+        expect { update_or_create_call }.to change(DataDictionary::Field, :count).by(0)
+        expect(update_or_create_call.id).to eq(existing_field.id)
+        expect(update_or_create_call.display_name).to eq('my display')
       end
     end
   end
