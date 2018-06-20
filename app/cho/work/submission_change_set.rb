@@ -48,13 +48,7 @@ module Work
     end
 
     def work_type
-      # TODO - This code can be removed when we upgrade to Valkyrie 1.0 as it now takes either a string or and ID
-      id = if work_type_id.is_a?(Valkyrie::ID)
-             work_type_id
-           else
-             Valkyrie::ID.new(work_type_id)
-           end
-      @work_type ||= Work::Type.find(id)
+      @work_type ||= Work::Type.find(work_type_id)
     end
 
     def submit_text
