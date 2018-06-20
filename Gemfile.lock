@@ -358,7 +358,7 @@ GEM
     public_suffix (3.0.2)
     puma (3.10.0)
     rack (2.0.5)
-    rack-protection (2.0.1)
+    rack-protection (2.0.3)
       rack
     rack-test (1.0.0)
       rack (>= 1.0, < 3)
@@ -501,10 +501,10 @@ GEM
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.2)
-    sinatra (2.0.1)
+    sinatra (2.0.3)
       mustermann (~> 1.0)
       rack (~> 2.0)
-      rack-protection (= 2.0.1)
+      rack-protection (= 2.0.3)
       tilt (~> 2.0)
     slop (4.6.2)
     smart_properties (1.13.1)
@@ -650,4 +650,4 @@ DEPENDENCIES
   xray-rails
 
 BUNDLED WITH
-   1.16.1
+   1.16.2
