@@ -89,8 +89,7 @@ class ChangeSetPersister
     def work_file(change_set:, adapter_file:)
       Work::File.new(
         file_identifier: adapter_file.id,
-        original_filename: change_set.file.original_filename,
-        use: [Valkyrie::Vocab::PCDMUse.OriginalFile]
+        original_filename: change_set.file.original_filename
       )
     end
 

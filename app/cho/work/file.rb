@@ -4,10 +4,10 @@
 # Files are indexed both in Solr and and Postgres using the {IndexingAdapter}.
 class Work::File < Valkyrie::Resource
   include CommonQueries
+  include WithUseType
 
   attribute :id, Valkyrie::Types::ID.optional
   attribute :original_filename, Valkyrie::Types::String
-  attribute :use, Valkyrie::Types::Set
   attribute :file_identifier, Valkyrie::Types::ID.optional
 
   # @return [String] path to binary file
