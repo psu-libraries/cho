@@ -14,12 +14,22 @@ class ChangeSetPersister
     persister.save(resource: change_set.resource)
   end
 
-  def update_or_create(resource, unique_attribute:)
-    attribute_value = resource.send(unique_attribute)
-    if resource.class.where(label: attribute_value).count.positive?
-      return resource.class.where(unique_attribute => attribute_value).first
+  def update_or_create(resource, unique_attribute: nil, unique_attributes: nil)
+    unique_attributes ||= [unique_attribute]
+    attribute_values = {}
+    unique_attributes.each do |attribute|
+      attribute_values[attribute] = resource.send(attribute)
     end
-    save(change_set: Valkyrie::ChangeSet.new(resource))
+
+    change_set_class = change_set_class(resource)
+
+    if resource.class.where(attribute_values).count.positive?
+      change_set = validate_and_save(change_set: change_set_class.new(resource.class.where(attribute_values).first),
+                                     resource_params: resource.attributes.merge(new_record: false))
+      change_set.resource
+    else
+      save(change_set: change_set_class.new(resource))
+    end
   end
 
   def validate_and_save(change_set:, resource_params:)
@@ -102,5 +112,11 @@ class ChangeSetPersister
     def delete_file(resource:)
       FileUtils.rm(resource.path)
       persister.delete(resource: resource)
+    end
+
+    def change_set_class(resource)
+      Object.const_get("#{resource.class}ChangeSet")
+    rescue StandardError
+      Valkyrie::ChangeSet
     end
 end
