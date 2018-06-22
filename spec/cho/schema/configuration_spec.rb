@@ -19,13 +19,27 @@ RSpec.describe Schema::Configuration, type: :model do
         { 'schema' => 'Moving Image',
           'fields' => { 'moving_image_field' => { 'order_index' => 1 } } },
         { 'schema' => 'Audio', 'fields' => { 'audio_field' => { 'order_index' => 1 } } },
-        { 'schema' => 'Collection', 'fields' => [] }
+        { 'schema' => 'Collection', 'fields' => [], 'work_type' => 'false' },
+        { 'schema' => 'FileSet', 'fields' => [], 'work_type' => 'false' }
       ]
     )
   end
 
-  its(:work_types) do
-    is_expected.to eq(['Generic', 'Document', 'Still Image', 'Map', 'Moving Image', 'Audio', 'Collection'])
+  describe '#schemas' do
+    it 'reads each schema from the config file' do
+      expect(schema_configuration.schemas.first).to be_a(Struct::Schema)
+      expect(schema_configuration.schemas.map(&:type)).to contain_exactly(
+        'Generic', 'Document', 'Still Image', 'Map', 'Moving Image', 'Audio', 'Collection', 'FileSet'
+      )
+      expect(schema_configuration.schemas.select { |s| s.type == 'Generic' }.first).to be_work_type
+      expect(schema_configuration.schemas.select { |s| s.type == 'Document' }.first).to be_work_type
+      expect(schema_configuration.schemas.select { |s| s.type == 'Still Image' }.first).to be_work_type
+      expect(schema_configuration.schemas.select { |s| s.type == 'Map' }.first).to be_work_type
+      expect(schema_configuration.schemas.select { |s| s.type == 'Moving Image' }.first).to be_work_type
+      expect(schema_configuration.schemas.select { |s| s.type == 'Audio' }.first).to be_work_type
+      expect(schema_configuration.schemas.select { |s| s.type == 'Collection' }.first).not_to be_work_type
+      expect(schema_configuration.schemas.select { |s| s.type == 'FileSet' }.first).not_to be_work_type
+    end
   end
 
   describe '#load_work_types' do
