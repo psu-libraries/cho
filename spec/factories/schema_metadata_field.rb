@@ -16,6 +16,8 @@ FactoryBot.define do
     index_type 'no_facet'
     core_field false
     order_index 0
+    work_type 'Generic'
+    data_dictionary_field_id 1
 
     to_create do |resource|
       Valkyrie.config.metadata_adapter.persister.save(resource: resource)
