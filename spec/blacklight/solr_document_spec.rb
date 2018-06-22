@@ -73,7 +73,7 @@ RSpec.describe SolrDocument, type: :model do
       }
     end
 
-    it { is_expected.to eq("abc123,,my_title,,,,value1|value2,,,,,\n") }
+    it { is_expected.to eq("abc123,,my_title,,,,,,value1|value2,,,\n") }
 
     context 'a collection' do
       let(:collection) { create :library_collection }
@@ -83,8 +83,8 @@ RSpec.describe SolrDocument, type: :model do
       let(:work2_csv) { "#{work2.id},#{collection.id},Work Two,,,,,,,,," }
 
       let(:csv_header) do
-        'id,member_of_collection_ids,title,subtitle,description,created,generic_field,document_field,'\
-        'still_image_field,moving_image_field,map_field,audio_field'
+        'id,member_of_collection_ids,title,subtitle,description,audio_field,'\
+        'created,document_field,generic_field,map_field,moving_image_field,still_image_field'
       end
 
       let(:document) do
