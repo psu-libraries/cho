@@ -1,6 +1,6 @@
 <%- resource.input_fields(form).each do |input| %>
   <%= input.label do %>
-    <%= input.label_text.titleize %>
+    <%= input.display_label %>
     <% if input.required? %>
       <span class="required no-bold"> required</span>
     <% end %>

@@ -66,7 +66,7 @@ RSpec.describe DataDictionary::FieldsController, type: :controller do
       'multiple' => true,
       'controlled_vocabulary' => 'no_vocabulary',
       'default_value' => nil,
-      'display_name' => nil,
+      'display_name' => 'Object Title',
       'display_transformation' => 'no_transformation',
       'url' => "http://test.host/data_dictionary_fields/#{title_field.id}.json"
     }
@@ -128,7 +128,8 @@ RSpec.describe DataDictionary::FieldsController, type: :controller do
           "Default Value,Display Name,Display Transformation,Index Type,Help Text,Core Field\n"
         )
         expect(response.body).to include(
-          "title,string,required,no_validation,true,no_vocabulary,,,no_transformation,no_facet,help me,true\n"
+          'title,string,required,no_validation,true,no_vocabulary,,Object Title,'\
+          "no_transformation,no_facet,help me,true\n"
         )
         expect(response.body).to include(
           'abc123_label,date,recommended,no_validation,false,no_vocabulary,abc123,My Abc123,'\

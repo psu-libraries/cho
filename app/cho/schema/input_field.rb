@@ -25,6 +25,10 @@ module Schema
       metadata_field.label
     end
 
+    def display_label
+      metadata_field.display_name || metadata_field.label.titleize
+    end
+
     def field
       if text?
         form.text_area metadata_field.label, options_for_text_area
