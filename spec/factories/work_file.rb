@@ -7,7 +7,7 @@ require Rails.root.join('spec', 'support', 'seed_map')
 FactoryBot.define do
   factory :work_file, class: Work::File do
     original_filename 'original_name'
-    use [Valkyrie::Vocab::PCDMUse.OriginalFile]
+    use [Valkyrie::Vocab::PCDMUse.PreservationMasterFile]
 
     to_create do |resource|
       Valkyrie.config.metadata_adapter.persister.save(resource: resource)

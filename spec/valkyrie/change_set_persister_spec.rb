@@ -79,7 +79,7 @@ RSpec.describe ChangeSetPersister do
         }.to change { metadata_adapter.query_service.find_all.count }.by(2)
         expect(saved_change_set.model.files).to eq(work_files.map(&:id))
         expect(work_file.original_filename).to eq('hello_world.txt')
-        expect(work_file.use.map(&:to_s)).to eq(['http://pcdm.org/use#OriginalFile'])
+        expect(work_file.use.map(&:to_s)).to eq(['http://pcdm.org/use#PreservationMasterFile'])
       end
     end
   end
