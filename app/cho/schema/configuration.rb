@@ -12,14 +12,18 @@ module Schema
       @schemas = schema_config.map do |config|
         Struct::Schema.new(config.fetch('schema'), (config.fetch('work_type', 'true') == 'true'))
       end
+      @core_field_ids = {}
     end
 
-    def core_field_count
-      core_field_ids.length
+    def core_field_count(work_type)
+      core_field_ids(work_type).length
     end
 
-    def core_field_ids
-      @core_field_ids ||= Schema::MetadataCoreFields.generate(Valkyrie.config.metadata_adapter).map(&:id)
+    def core_field_ids(work_type)
+      return @core_field_ids[work_type] if @core_field_ids.keys.include?(work_type)
+
+      @core_field_ids[work_type] =
+        Schema::MetadataCoreFields.generate(Valkyrie.config.metadata_adapter, work_type: work_type).map(&:id)
     end
 
     def load_work_types

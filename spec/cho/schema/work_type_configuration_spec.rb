@@ -31,6 +31,7 @@ RSpec.describe Schema::WorkTypeConfiguration, type: :model do
       expect(schema_fields.count).to eq(1)
       expect(schema_fields.first.order_index).to eq(4)
       expect(schema_fields.first.label).to eq('generic_field')
+      expect(schema_fields.first.work_type).to eq(work_type)
     end
 
     context 'a non existing work type' do

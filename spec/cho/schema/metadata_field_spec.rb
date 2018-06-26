@@ -15,7 +15,8 @@ RSpec.describe Schema::MetadataField, type: :model do
                       display_name: 'My Abc123',
                       display_transformation: 'no_transformation',
                       multiple: false, validation: 'no_validation',
-                      core_field: false, order_index: 0 }
+                      core_field: false, order_index: 0,
+                      work_type: 'something'}
 
   it_behaves_like 'a Valkyrie::Resource'
 
@@ -38,7 +39,7 @@ RSpec.describe Schema::MetadataField, type: :model do
     let(:expected_metadata) { { controlled_vocabulary: 'no_vocabulary',
                                 created_at: saved_model.created_at,
                                 default_value: 'abc123',
-                                data_dictionary_field_id: nil,
+                                data_dictionary_field_id: Valkyrie::ID.new(1),
                                 display_name: 'My Abc123',
                                 display_transformation: 'no_transformation',
                                 field_type: 'date',
@@ -53,7 +54,8 @@ RSpec.describe Schema::MetadataField, type: :model do
                                 updated_at: saved_model.updated_at,
                                 validation: 'no_validation',
                                 core_field: false,
-                                order_index: 0 } }
+                                order_index: 0,
+                                work_type: 'something' } }
 
     its(:attributes) { is_expected.to eq(expected_metadata) }
   end

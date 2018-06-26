@@ -70,7 +70,7 @@ module Document::Csv
     end
 
     def fields
-      @fields ||= DataDictionary::Field.all
+      @fields ||= load_fields
     end
 
     # cleans up ids and converts arrays to a single string
@@ -93,5 +93,20 @@ module Document::Csv
 
     def rows
       100
+    end
+
+    def load_fields
+      sorted_fields = DataDictionary::Field.all.sort_by { |a, _b| a.created_at }
+      sorted_fields.sort do |a, b|
+        if a.core_field & b.core_field
+          0
+        elsif a.core_field
+          -1
+        elsif b.core_field
+          1
+        else
+          a.label <=> b.label
+        end
+      end
     end
 end

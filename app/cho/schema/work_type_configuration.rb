@@ -15,7 +15,7 @@ module Schema
 
       metadata_schema = Schema::Metadata.new(
         label: work_type,
-        core_fields: schema_configuration.core_field_ids,
+        core_fields: core_fields,
         fields: schema_fields.map(&:id)
       )
       find_or_save(metadata_schema)
@@ -36,11 +36,14 @@ module Schema
 
     def initialize_schema_fields
       return [] if fields.nil?
-
       fields.map do |field, attributes|
+        attributes ||= {}
         data_dictionary_field = DataDictionary::Field.where(label: field).first
-        metadata_field = Schema::MetadataField.initialize_from_data_dictionary_field(data_dictionary_field, attributes)
-        metadata_field.order_index = (attributes.fetch('order_index', '1') + schema_configuration.core_field_count)
+        metadata_field = Schema::MetadataField.initialize_from_data_dictionary_field(
+          data_dictionary_field,
+          attributes.merge(work_type: work_type)
+        )
+        metadata_field.order_index = (attributes.fetch('order_index', '1').to_i + core_field_count)
         find_or_save(metadata_field)
       end
     end
@@ -55,7 +58,9 @@ module Schema
       end
 
       def find_or_save(resource)
-        change_set_persister.update_or_create(resource, unique_attribute: :label)
+        attributes = [:label]
+        attributes << :work_type if resource.instance_of? Schema::MetadataField
+        change_set_persister.update_or_create(resource, unique_attributes: attributes)
       end
 
       def initialize_fields
@@ -63,6 +68,14 @@ module Schema
         return nil if work_type_config.blank?
 
         work_type_config.first.fetch('fields')
+      end
+
+      def core_field_count
+        @core_field_count ||= core_fields.count
+      end
+
+      def core_fields
+        @core_fields ||= schema_configuration.core_field_ids(work_type)
       end
   end
 end
