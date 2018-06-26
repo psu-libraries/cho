@@ -70,7 +70,7 @@ RSpec.describe Schema::MetadataField, type: :model do
     let(:expected_metadata) { { controlled_vocabulary: 'no_vocabulary',
                                 core_field: true,
                                 default_value: nil,
-                                display_name: nil,
+                                display_name: 'Object Title',
                                 display_transformation: 'no_transformation',
                                 field_type: 'string',
                                 help_text: 'help me',
