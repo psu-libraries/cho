@@ -47,4 +47,20 @@ class SolrDocument
   def collection?
     internal_resource_name.include?('Collection')
   end
+
+  def work_type
+    @work_type ||= Array.wrap(self[:work_type_ssim]).first
+  end
+
+  def schema
+    @schema ||= Schema::Metadata.where(label: schema_label).first
+  end
+
+  def schema_label
+    @schema_label ||= if collection?
+                        'Collection'
+                      else
+                        work_type
+                      end
+  end
 end
