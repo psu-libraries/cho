@@ -14,12 +14,12 @@ RSpec.describe Work::Submission, type: :feature do
     fill_in(:q, with: 'Work Index View')
     click_button('Search')
     within('div#documents') do
-      expect(page).to have_blacklight_label('title_tesim').with('Title')
-      expect(page).to have_blacklight_field('title_tesim').with('No files')
+      expect(page).to have_blacklight_label('title_tesim').with('Object Title')
+      expect(page).to have_blacklight_field('title_tesim').with('Work Index View')
       expect(page).to have_blacklight_label('work_type_ssim').with('Work Type')
       expect(page).to have_blacklight_field('work_type_ssim').with('Generic')
-      expect(page).to have_blacklight_label('member_of_collections_ssim').with('Collections')
-      expect(page).to have_blacklight_field('member_of_collections_ssim').with('Library Collection')
+      expect(page).to have_blacklight_label('member_of_collection_ids_ssim').with('Collections')
+      expect(page).to have_blacklight_field('member_of_collection_ids_ssim').with('Library Collection')
       expect(page).to have_link('Library Collection')
     end
   end

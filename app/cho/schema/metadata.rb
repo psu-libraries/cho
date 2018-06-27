@@ -33,6 +33,11 @@ module Schema
       @loaded_fields ||= load_fields(@fields)
     end
 
+    def field(label)
+      loaded_core_fields.select { |field| field.label == label }.first ||
+        loaded_fields.select { |field| field.label == label }.first
+    end
+
     private
 
       def gather_field_ids(new_fields)

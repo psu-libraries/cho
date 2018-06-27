@@ -118,4 +118,18 @@ RSpec.describe SolrDocument, type: :model do
       it { is_expected.to be_truthy }
     end
   end
+
+  describe '#schema' do
+    subject { solr_document.schema }
+
+    let(:document) { { 'internal_resource_tsim' => 'Work::Submission', work_type_ssim: ['Document'] } }
+
+    its(:label) { is_expected.to eq('Document') }
+
+    context 'for a collection' do
+      let(:document) { { 'internal_resource_tsim' => 'ArchivalCollection' } }
+
+      its(:label) { is_expected.to eq('Collection') }
+    end
+  end
 end

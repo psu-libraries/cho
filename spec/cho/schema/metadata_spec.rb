@@ -76,4 +76,16 @@ RSpec.describe Schema::Metadata, type: :model do
       reloaded_model.loaded_fields
     end
   end
+
+  describe '#field' do
+    subject { model.field('core1') }
+
+    it { is_expected.to eq(core_fields[0]) }
+
+    context 'not a core field' do
+      subject { model.field('field1') }
+
+      it { is_expected.to eq(fields[0]) }
+    end
+  end
 end
