@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+require 'dry/container'
+require 'dry/transaction'
+require 'dry/transaction/operation'
+
 module Transaction
   module Operations
     class Container
