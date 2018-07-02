@@ -18,6 +18,7 @@ gem 'popper_js'
 gem 'twitter-typeahead-rails', '0.11.1.pre.corejavascript'
 
 # Supporting gems
+gem 'bagit'
 gem 'bootsnap', require: false
 gem 'coffee-rails', '~> 4.2'
 gem 'devise_remote'
