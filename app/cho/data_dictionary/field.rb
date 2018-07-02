@@ -27,7 +27,7 @@ module DataDictionary
     end
 
     def self.core_fields
-      @core_fields ||= where(core_field: true)
+      @core_fields ||= where(core_field: true).sort_by(&:created_at)
     end
 
     # @note This defined how the field should be addressed when creating dynamic methods for access

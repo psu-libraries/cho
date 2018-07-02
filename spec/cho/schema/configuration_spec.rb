@@ -18,7 +18,8 @@ RSpec.describe Schema::Configuration, type: :model do
         { 'schema' => 'Map', 'fields' => { 'map_field' => { 'order_index' => 1 } } },
         { 'schema' => 'Moving Image',
           'fields' => { 'moving_image_field' => { 'order_index' => 1 } } },
-        { 'schema' => 'Audio', 'fields' => { 'audio_field' => { 'order_index' => 1 } } },
+        { 'schema' => 'Audio', 'fields' => { 'subtitle' => { 'order_index' => 25, 'display_name' => 'Additional Info' },
+                                             'audio_field' => { 'order_index' => 1 } } },
         { 'schema' => 'Collection', 'fields' => [], 'work_type' => 'false' },
         { 'schema' => 'FileSet', 'fields' => [], 'work_type' => 'false' }
       ]

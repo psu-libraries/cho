@@ -20,6 +20,13 @@ RSpec.describe Schema::WorkTypeConfiguration, type: :model do
 
       it { is_expected.to be_nil }
     end
+
+    context 'a work type with overridden core fields' do
+      let(:work_type) { 'Audio' }
+
+      it { is_expected.to eq('audio_field' => { 'order_index' => 1 },
+                             'subtitle' => { 'order_index' => 25, 'display_name' => 'Additional Info' }) }
+    end
   end
 
   describe '#initialize_schema_fields' do
@@ -38,6 +45,21 @@ RSpec.describe Schema::WorkTypeConfiguration, type: :model do
       let(:work_type) { 'Foo' }
 
       it { is_expected.to eq([]) }
+    end
+
+    context 'a work type with overridden core fields' do
+      let(:work_type) { 'Audio' }
+
+      it 'creates a field based on the work type' do
+        expect(schema_fields.count).to eq(2)
+        expect(schema_fields.first.order_index).to eq(25)
+        expect(schema_fields.first.label).to eq('subtitle')
+        expect(schema_fields.first.work_type).to eq(work_type)
+        expect(schema_fields.first.display_name).to eq('Additional Info')
+        expect(schema_fields.last.order_index).to eq(4)
+        expect(schema_fields.last.label).to eq('audio_field')
+        expect(schema_fields.last.work_type).to eq(work_type)
+      end
     end
   end
 
@@ -76,6 +98,21 @@ RSpec.describe Schema::WorkTypeConfiguration, type: :model do
         expect(metadata_schema).to be_a(Schema::Metadata)
         expect(metadata_schema.label).to eq(work_type)
         expect(metadata_schema.fields.count).to eq(0)
+      end
+    end
+
+    context 'a work type with overridden core fields' do
+      let(:work_type) { 'Audio' }
+
+      it 'creates a field based on the work type' do
+        expect(metadata_schema).to be_a(Schema::Metadata)
+        expect(metadata_schema.label).to eq(work_type)
+        expect(metadata_schema.fields.count).to eq(2)
+        field = Schema::MetadataField.find(Valkyrie::ID.new(metadata_schema.fields.first.id))
+        expect(field.order_index).to eq(25)
+        expect(field.label).to eq('subtitle')
+        expect(field.display_name).to eq('Additional Info')
+        expect(field.work_type).to eq(work_type)
       end
     end
   end

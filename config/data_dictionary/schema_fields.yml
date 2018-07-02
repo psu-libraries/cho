@@ -181,6 +181,9 @@ test:
         order_index: 1
   - schema: 'Audio'
     fields:
+      subtitle:
+        order_index: 25
+        display_name: 'Additional Info'
       audio_field:
         order_index: 1
   - schema: 'Collection'

@@ -43,7 +43,12 @@ module Schema
           data_dictionary_field,
           attributes.merge(work_type: work_type)
         )
-        metadata_field.order_index = (attributes.fetch('order_index', '1').to_i + core_field_count)
+        metadata_field.order_index = if metadata_field.core_field
+                                       attributes.fetch('order_index',
+                                                        core_field_hash[metadata_field.label].order_index).to_i
+                                     else
+                                       (attributes.fetch('order_index', '1').to_i + core_field_count)
+                                     end
         find_or_save(metadata_field)
       end
     end
@@ -76,6 +81,14 @@ module Schema
 
       def core_fields
         @core_fields ||= schema_configuration.core_field_ids(work_type)
+      end
+
+      def core_field_hash
+        @core_field_hash ||= Hash[loaded_core_fields.map { |item| [item.label, item] }]
+      end
+
+      def loaded_core_fields
+        @loaded_core_fields ||= core_fields.map { |id| MetadataField.find(id) }
       end
   end
 end
