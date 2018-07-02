@@ -205,15 +205,29 @@ GEM
     dry-core (0.4.5)
       concurrent-ruby (~> 1.0)
     dry-equalizer (0.2.1)
+    dry-events (0.1.0)
+      concurrent-ruby (~> 1.0)
+      dry-core (~> 0.4)
+      dry-equalizer (~> 0.2)
     dry-logic (0.4.2)
       dry-container (~> 0.2, >= 0.2.6)
       dry-core (~> 0.2)
       dry-equalizer (~> 0.2)
+    dry-matcher (0.7.0)
+    dry-monads (1.0.0)
+      concurrent-ruby (~> 1.0)
+      dry-core (~> 0.4, >= 0.4.4)
+      dry-equalizer
     dry-struct (0.4.0)
       dry-core (~> 0.4, >= 0.4.1)
       dry-equalizer (~> 0.2)
       dry-types (~> 0.12, >= 0.12.2)
       ice_nine (~> 0.11)
+    dry-transaction (0.13.0)
+      dry-container (>= 0.2.8)
+      dry-events (>= 0.1.0)
+      dry-matcher (>= 0.7.0)
+      dry-monads (>= 0.4.0)
     dry-types (0.12.2)
       concurrent-ruby (~> 1.0)
       dry-configurable (~> 0.1)
@@ -610,6 +624,7 @@ DEPENDENCIES
   coveralls
   database_cleaner
   devise_remote
+  dry-transaction
   execjs
   factory_bot_rails
   faker!

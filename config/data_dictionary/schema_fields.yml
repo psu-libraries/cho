@@ -1,13 +1,21 @@
 development: &development
-  - schema: 'Generic'
-    fields: []
   - schema: 'Collection'
     fields: []
     work_type: 'false'
   - schema: 'FileSet'
     fields: []
     work_type: 'false'
+  - schema: 'Generic'
+    file:
+      create: Transaction::File::Create
+      update: Transaction::File::Update
+      delete: Transaction::File::Delete
+    fields: []
   - schema: 'Document'
+    file:
+      create: Transaction::File::Create
+      update: Transaction::File::Update
+      delete: Transaction::File::Delete
     fields:
       contributor:
         display_name: 'My contributor'
@@ -31,6 +39,10 @@ development: &development
       access_rights:
         order_index: 10
   - schema: 'Still Image'
+    file:
+      create: Transaction::File::Create
+      update: Transaction::File::Update
+      delete: Transaction::File::Delete
     fields:
       alternate_title:
         order_index: 1
@@ -47,6 +59,10 @@ development: &development
       access_rights:
         order_index: 7
   - schema: 'Map'
+    file:
+      create: Transaction::File::Create
+      update: Transaction::File::Update
+      delete: Transaction::File::Delete
     fields:
       alternate_title:
         order_index: 1
@@ -86,6 +102,10 @@ development: &development
       access_rights:
         order_index: 18
   - schema: 'Moving Image'
+    file:
+      create: Transaction::File::Create
+      update: Transaction::File::Update
+      delete: Transaction::File::Delete
     fields:
       alternate_title:
         order_index: 1
@@ -110,6 +130,10 @@ development: &development
       access_rights:
         order_index: 11
   - schema: 'Audio'
+    file:
+      create: Transaction::File::Create
+      update: Transaction::File::Update
+      delete: Transaction::File::Delete
     fields:
       alternate_title:
         order_index: 1
