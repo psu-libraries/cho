@@ -9,6 +9,7 @@ class Work::File < Valkyrie::Resource
   attribute :id, Valkyrie::Types::ID.optional
   attribute :original_filename, Valkyrie::Types::String
   attribute :file_identifier, Valkyrie::Types::ID.optional
+  attribute :fits_output, Valkyrie::Types::String
 
   # @return [String] path to binary file
   def path

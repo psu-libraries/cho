@@ -7,5 +7,7 @@ module Work
 
     property :original_filename, multiple: false, required: true
     validates :original_filename, presence: true
+
+    property :fits_output, multiple: false, required: false
   end
 end
