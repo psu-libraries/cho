@@ -21,22 +21,29 @@ class ChangeSetPersister
       attribute_values[attribute] = resource.send(attribute)
     end
 
-    change_set_class = change_set_class(resource)
-
+    additional_attributes = {}
     if resource.class.where(attribute_values).count.positive?
-      change_set = validate_and_save(change_set: change_set_class.new(resource.class.where(attribute_values).first),
-                                     resource_params: resource.attributes.merge(new_record: false))
-      change_set.resource
-    else
-      save(change_set: change_set_class.new(resource))
+      additional_attributes = resource.attributes.merge(new_record: false)
+      resource = resource.class.where(attribute_values).first
     end
+
+    result = Transaction::Shared::SaveWithResource.new
+      .with_step_args(validate: [additional_attributes: additional_attributes],
+                      save: [persister: persister])
+      .call(resource)
+    result.success
   end
 
-  def validate_and_save(change_set:, resource_params:)
-    return change_set unless change_set.validate(resource_params)
-    change_set = store_files(change_set)
-    change_set.sync
-    change_set.class.new(persister.save(resource: change_set))
+  def validate_and_save(change_set: nil, resource_params:)
+    result = Transaction::Shared::SaveWithChangeSet.new
+      .with_step_args(validate: [additional_attributes: resource_params],
+                      save: [persister: persister])
+      .call(change_set)
+    if result.success?
+      change_set.class.new(result.success)
+    else
+      result.failure
+    end
   rescue StandardError => error
     change_set.errors.add(:save, error.message)
     change_set
@@ -63,27 +70,24 @@ class ChangeSetPersister
   end
 
   def validate_and_save_with_buffer(change_set:, resource_params:)
-    return change_set unless change_set.validate(resource_params)
-    change_set = store_files(change_set)
-    change_set.sync
-    obj = nil
+    result = nil
     buffer_into_index do |buffered_changeset_persister|
-      obj = buffered_changeset_persister.save(resource: change_set)
+      result = Transaction::Shared::SaveWithChangeSet.new
+        .with_step_args(validate: [additional_attributes: resource_params],
+                        save: [persister: buffered_changeset_persister])
+        .call(change_set)
     end
-    change_set.class.new(obj)
+    if result.success?
+      change_set.class.new(result.success)
+    else
+      result.failure
+    end
   rescue StandardError => error
     change_set.errors.add(:save, error.message)
     change_set
   end
 
   private
-
-    # @return [Valkyrie::ChangeSet] change set for the resource, such as a work or collection
-    def store_files(change_set)
-      result = Transaction::File::Create.new.call(change_set)
-      return change_set if result.failure?
-      result.success
-    end
 
     def before_delete(change_set:)
       return unless change_set.resource.try(:files)
@@ -95,11 +99,5 @@ class ChangeSetPersister
     def delete_file(resource:)
       FileUtils.rm(resource.path)
       persister.delete(resource: resource)
-    end
-
-    def change_set_class(resource)
-      Object.const_get("#{resource.class}ChangeSet")
-    rescue StandardError
-      Valkyrie::ChangeSet
     end
 end

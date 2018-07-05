@@ -102,6 +102,11 @@ RSpec.describe ChangeSetPersister do
         expect(saved_change_set.label).to eq('abc123')
       }.to change { metadata_adapter.query_service.find_all.count }.by(1)
     end
+
+    it 'reports the error in the parameters' do
+      output = change_set_persister.validate_and_save_with_buffer(change_set: change_set, resource_params: {})
+      expect(output.errors.messages).to eq(label: ['can\'t be blank'])
+    end
   end
 
   describe '#delete' do
@@ -223,11 +228,6 @@ RSpec.describe ChangeSetPersister do
           resource_params: { label: 'abc123' }
         )
         expect(output.errors.messages).to eq(save: ['save was not successful'])
-      end
-
-      it 'reports the error in the parameters' do
-        output = change_set_persister.validate_and_save_with_buffer(change_set: change_set, resource_params: {})
-        expect(output.errors.messages).to eq(label: ['can\'t be blank'])
       end
     end
 
