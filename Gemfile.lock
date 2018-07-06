@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/cbeer/solr_wrapper.git
-  revision: 55910f63ca58cf7cdc1ab0ec3bb75ace22bbe1ba
+  revision: 4c412aba182a33c28fddf77736f86d7c8c304102
   branch: master
   specs:
-    solr_wrapper (1.2.0)
+    solr_wrapper (2.0.0)
       faraday
       retriable
       ruby-progressbar
@@ -11,7 +11,7 @@ GIT
 
 GIT
   remote: https://github.com/samvera-labs/valkyrie.git
-  revision: 4d5dd4d8b05ff5e2113aa7eaa40ec60c85361f6c
+  revision: a0f1bfd933038f72457d1029cf8ad918d68a3898
   branch: update_dry_struct
   specs:
     valkyrie (1.1.2)
@@ -477,7 +477,7 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
-    retriable (3.1.1)
+    retriable (3.1.2)
     rsolr (2.2.0)
       builder (>= 2.1.2)
       faraday (>= 0.9.0)
