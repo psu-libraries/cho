@@ -10,6 +10,28 @@ GIT
       rubyzip
 
 GIT
+  remote: https://github.com/samvera-labs/valkyrie.git
+  revision: 4d5dd4d8b05ff5e2113aa7eaa40ec60c85361f6c
+  branch: update_dry_struct
+  specs:
+    valkyrie (1.1.2)
+      active-fedora
+      active-triples
+      activemodel
+      activerecord
+      activesupport
+      draper
+      dry-struct
+      dry-types (~> 0.13.0)
+      json
+      json-ld
+      pg
+      railties
+      rdf
+      reform
+      reform-rails
+
+GIT
   remote: https://github.com/stympy/faker.git
   revision: f8e1b81f8da82ea9eb88c4939a3a6801f97e5ac1
   branch: master
@@ -54,11 +76,11 @@ GEM
       rsolr (>= 1.1.2, < 3)
       ruby-progressbar (~> 1.0)
       solrizer (>= 3.4, < 5)
-    active-triples (1.0.0)
+    active-triples (1.1.0)
       activemodel (>= 3.0.0)
       activesupport (>= 3.0.0)
-      rdf (~> 2.0, >= 2.0.2)
-      rdf-vocab (~> 2.0)
+      rdf (>= 2.0.2, < 4.0)
+      rdf-vocab (>= 2.0, < 4.0)
     activejob (5.1.6)
       activesupport (= 5.1.6)
       globalid (>= 0.3.6)
@@ -184,7 +206,7 @@ GEM
       devise (~> 4.0)
       rails (~> 5.0)
     diff-lcs (1.3)
-    disposable (0.4.3)
+    disposable (0.4.4)
       declarative (>= 0.0.9, < 1.0.0)
       declarative-builder (< 0.2.0)
       declarative-option (< 0.2.0)
@@ -213,6 +235,7 @@ GEM
       concurrent-ruby (~> 1.0)
       dry-core (~> 0.4)
       dry-equalizer (~> 0.2)
+    dry-inflector (0.1.2)
     dry-logic (0.4.2)
       dry-container (~> 0.2, >= 0.2.6)
       dry-core (~> 0.2)
@@ -222,24 +245,23 @@ GEM
       concurrent-ruby (~> 1.0)
       dry-core (~> 0.4, >= 0.4.4)
       dry-equalizer
-    dry-struct (0.4.0)
-      dry-core (~> 0.4, >= 0.4.1)
+    dry-struct (0.5.0)
+      dry-core (~> 0.4, >= 0.4.3)
       dry-equalizer (~> 0.2)
-      dry-types (~> 0.12, >= 0.12.2)
+      dry-types (~> 0.13)
       ice_nine (~> 0.11)
     dry-transaction (0.13.0)
       dry-container (>= 0.2.8)
       dry-events (>= 0.1.0)
       dry-matcher (>= 0.7.0)
       dry-monads (>= 0.4.0)
-    dry-types (0.12.2)
+    dry-types (0.13.2)
       concurrent-ruby (~> 1.0)
-      dry-configurable (~> 0.1)
       dry-container (~> 0.3)
-      dry-core (~> 0.2, >= 0.2.1)
+      dry-core (~> 0.4, >= 0.4.4)
       dry-equalizer (~> 0.2)
+      dry-inflector (~> 0.1, >= 0.1.2)
       dry-logic (~> 0.4, >= 0.4.2)
-      inflecto (~> 0.0.0, >= 0.0.2)
     ebnf (1.1.2)
       rdf (>= 2.2, < 4.0)
       sxp (~> 1.0)
@@ -280,7 +302,6 @@ GEM
     i18n (1.0.1)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
-    inflecto (0.0.2)
     jbuilder (2.7.0)
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
@@ -412,16 +433,16 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
-    rdf (2.2.12)
+    rdf (3.0.2)
       hamster (~> 3.0)
       link_header (~> 0.0, >= 0.0.8)
-    rdf-isomorphic (2.2.0)
-      rdf (>= 2.0, < 4.0)
-    rdf-turtle (2.2.2)
+    rdf-isomorphic (3.0.0)
+      rdf (~> 3.0)
+    rdf-turtle (3.0.1)
       ebnf (~> 1.1)
-      rdf (>= 2.2, < 4.0)
-    rdf-vocab (2.2.9)
-      rdf (>= 2.2, < 4.0)
+      rdf (~> 3.0)
+    rdf-vocab (3.0.3)
+      rdf (~> 3.0)
     redis (3.3.3)
     redis-namespace (1.5.3)
       redis (~> 3.0, >= 3.0.4)
@@ -574,22 +595,6 @@ GEM
     unf_ext (0.0.7.4)
     unicode-display_width (1.3.2)
     validatable (1.6.7)
-    valkyrie (1.0.0)
-      active-fedora
-      active-triples
-      activemodel
-      activerecord
-      activesupport
-      draper
-      dry-struct
-      dry-types
-      json
-      json-ld
-      pg (< 1.0)
-      railties
-      rdf
-      reform
-      reform-rails
     vegas (0.1.11)
       rack (>= 1.0.0)
     warden (1.2.7)
@@ -666,7 +671,7 @@ DEPENDENCIES
   turbolinks (~> 5)
   twitter-typeahead-rails (= 0.11.1.pre.corejavascript)
   uglifier (>= 1.3.0)
-  valkyrie (~> 1.0)
+  valkyrie!
   web-console (>= 3.3.0)
   xray-rails
 
