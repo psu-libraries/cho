@@ -9,14 +9,19 @@ module Transaction
         include Dry::Transaction::Operation
 
         def call(change_set)
-          saved_work_file = metadata_adapter.persister.save(resource: work_file(change_set))
-          change_set.model.files << saved_work_file.id
+          saved_work_file_set = metadata_adapter.persister.save(resource: work_file_set(change_set))
+          change_set.model.file_set_ids << saved_work_file_set.id
           Success(change_set)
         rescue StandardError => e
           Failure("Error persisting file: #{e.message}")
         end
 
         private
+
+          def work_file_set(change_set)
+            file = metadata_adapter.persister.save(resource: work_file(change_set))
+            Work::FileSet.new(member_ids: [file.id], title: change_set.file.original_filename)
+          end
 
           def work_file(change_set)
             Work::File.new(

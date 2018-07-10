@@ -90,9 +90,16 @@ class ChangeSetPersister
   private
 
     def before_delete(change_set:)
-      return unless change_set.resource.try(:files)
-      change_set.resource.files.each do |file_id|
+      return unless change_set.resource.try(:file_set_ids)
+      change_set.resource.file_set_ids.each do |file_set_id|
+        delete_file_set(resource: Work::FileSet.find(file_set_id))
+      end
+    end
+
+    def delete_file_set(resource:)
+      resource.member_ids.each do |file_id|
         delete_file(resource: Work::File.find(file_id))
+        persister.delete(resource: resource)
       end
     end
 

@@ -1,7 +1,7 @@
 <h2><%= t('cho.work.show.files_heading') %></h2>
 
 <ul>
-  <%- files.each do |file| %>
-    <li><%= file.original_filename %></li>
+  <%- file_sets.each do |file_set| %>
+    <li><%= file_set.title %></li>
   <%- end %>
 </ul>

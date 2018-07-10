@@ -30,10 +30,10 @@ class SolrDocument
     Array.wrap(self['internal_resource_tsim']).first
   end
 
-  # @return [Array<Work::File>]
-  def files
-    Array.wrap(self['files_ssim']).map do |id|
-      Work::File.find(Valkyrie::ID.new(id.sub(/^id-/, '')))
+  # @return [Array<Work::FileSet>]
+  def file_sets
+    Array.wrap(self['file_set_ids_ssim']).map do |id|
+      Work::FileSet.find(Valkyrie::ID.new(id.sub(/^id-/, '')))
     end
   end
 
