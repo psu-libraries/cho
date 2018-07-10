@@ -274,6 +274,8 @@ GEM
     http-cookie (1.0.3)
       domain_name (~> 0.5)
     http_logger (0.5.1)
+    hydra-file_characterization (0.3.3)
+      activesupport (>= 3.0.0)
     hydra-ldap (0.1.0)
       net-ldap
       rails
@@ -635,6 +637,7 @@ DEPENDENCIES
   factory_bot_rails
   faker!
   figaro
+  hydra-file_characterization (~> 0.3.3)
   hydra-ldap
   jbuilder (~> 2.5)
   jquery-rails
