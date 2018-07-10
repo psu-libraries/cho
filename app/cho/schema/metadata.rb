@@ -16,21 +16,21 @@ module Schema
     alias field_ids fields
 
     def core_fields=(new_fields)
-      @core_fields = gather_field_ids(new_fields)
+      set_value(:core_fields, gather_field_ids(new_fields))
       @loaded_core_fields = new_fields
     end
 
     def fields=(new_fields)
-      @fields = gather_field_ids(new_fields)
+      set_value(:fields, gather_field_ids(new_fields))
       @loaded_fields = new_fields
     end
 
     def loaded_core_fields
-      @loaded_core_fields ||= load_fields(@core_fields)
+      @loaded_core_fields ||= load_fields(attributes[:core_fields])
     end
 
     def loaded_fields
-      @loaded_fields ||= load_fields(@fields)
+      @loaded_fields ||= load_fields(attributes[:fields])
     end
 
     def field(label)

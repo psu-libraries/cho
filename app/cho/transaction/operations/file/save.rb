@@ -10,7 +10,7 @@ module Transaction
 
         def call(change_set)
           saved_work_file = metadata_adapter.persister.save(resource: work_file(change_set))
-          change_set.model.files << saved_work_file.id
+          change_set.model.files += [saved_work_file.id]
           Success(change_set)
         rescue StandardError => e
           Failure("Error persisting file: #{e.message}")
