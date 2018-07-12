@@ -72,4 +72,24 @@ RSpec.describe Work::Submission do
       its(:i18n_key) { is_expected.to eq('work') }
     end
   end
+
+  describe '#file_set_ids' do
+    it 'is empty when not set' do
+      expect(resource_klass.new.file_set_ids).to be_empty
+    end
+
+    it 'can be set as an attribute' do
+      resource = resource_klass.new(file_set_ids: ['1', '2'])
+      expect(resource.attributes[:file_set_ids].map(&:id)).to contain_exactly('1', '2')
+      expect(resource.attributes[:file_set_ids].first.class).to eq(Valkyrie::ID)
+    end
+
+    it 'is included in the list of attributes' do
+      expect(resource_klass.new.has_attribute?(:file_set_ids)).to eq true
+    end
+
+    it 'is included in the list of fields' do
+      expect(resource_klass.fields).to include(:file_set_ids)
+    end
+  end
 end

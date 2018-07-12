@@ -19,15 +19,15 @@ RSpec.describe SolrDocument, type: :model do
     its(:internal_resource) { is_expected.to be(MyResource) }
   end
 
-  describe '#files' do
-    subject { solr_document.files.first }
+  describe '#file_sets' do
+    subject { solr_document.file_sets.first }
 
-    let(:work_file) { create :work_file }
-    let(:document) { { 'internal_resource_tsim' => 'MyResource', files_ssim: [work_file.id.to_s] } }
+    let(:file_set) { create :file_set }
+    let(:document) { { 'internal_resource_tsim' => 'MyResource', file_set_ids_ssim: [file_set.id.to_s] } }
 
-    its(:to_h) { is_expected.to include(original_filename: 'original_name',
-                                        internal_resource: 'Work::File',
-                                        id: Valkyrie::ID.new(work_file.id)) }
+    its(:to_h) { is_expected.to include(title: ['Original File Name'],
+                                        internal_resource: 'Work::FileSet',
+                                        id: Valkyrie::ID.new(file_set.id)) }
   end
 
   describe '#member_of_collections' do

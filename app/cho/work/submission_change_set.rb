@@ -5,13 +5,22 @@ module Work
     validates :work_type_id, presence: true
     validates :work_type_id, with: :validate_work_type_id!
     property :work_type_id, multiple: false, required: true, type: Valkyrie::Types::ID
-    property :file, multiple: false, required: false
+
     validates :member_of_collection_ids, with: :validate_members!
     validates :member_of_collection_ids, presence: true
     property :member_of_collection_ids,
              multiple: true,
              required: false,
              type: Types::Strict::Array.of(Valkyrie::Types::ID)
+
+    validates :file_set_ids, with: :validate_members!
+    property :file_set_ids,
+             multiple: true,
+             required: false,
+             type: Types::Strict::Array.of(Valkyrie::Types::ID)
+
+    # File submitted via the GUI upload
+    property :file, multiple: false, required: false
 
     include DataDictionary::FieldsForChangeSet
     include WithValidMembers

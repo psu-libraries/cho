@@ -66,18 +66,18 @@ RSpec.describe ChangeSetPersister do
       let(:resource) { build(:work, title: 'with a file', member_of_collection_ids: [collection.id]) }
       let(:change_set) { Work::SubmissionChangeSet.new(resource) }
       let(:temp_file) { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'hello_world.txt')) }
-      let(:work_files) { Work::File.all }
-      let(:work_file) { work_files.first }
+      let(:file_sets) { Work::FileSet.all }
+      let(:work_file) { Work::File.all.first }
 
-      it 'saves the record and the file' do
+      it 'saves the record, file, and the file set' do
         saved_change_set = nil
         expect {
           saved_change_set = change_set_persister.validate_and_save(
             change_set: change_set,
             resource_params: { label: 'abc123', file: temp_file }
           )
-        }.to change { metadata_adapter.query_service.find_all.count }.by(2)
-        expect(saved_change_set.model.files).to eq(work_files.map(&:id))
+        }.to change { metadata_adapter.query_service.find_all.count }.by(3)
+        expect(saved_change_set.model.file_set_ids).to eq(file_sets.map(&:id))
         expect(work_file.original_filename).to eq('hello_world.txt')
         expect(work_file.use.map(&:to_s)).to eq(['http://pcdm.org/use#PreservationMasterFile'])
       end
@@ -112,10 +112,10 @@ RSpec.describe ChangeSetPersister do
   describe '#delete' do
     let!(:change_set) { create(:work, :with_file) }
 
-    it "deletes the work and file from Postgres and Solr, the file from disk, and retains the work's collection" do
+    it "deletes all the resources Postgres and Solr, the file from disk, and retains the work's collection" do
       expect(Work::Submission.all.count).to eq(1)
       expect(Work::File.all.count).to eq(1)
-      expect(metadata_adapter.index_adapter.query_service.find_all.count).to eq(3)
+      expect(metadata_adapter.index_adapter.query_service.find_all.count).to eq(4)
       expect(File.exists?('tmp/files/hello_world.txt')).to be(true)
       change_set_persister.delete(change_set: change_set)
       expect(Work::Submission.all.count).to eq(0)

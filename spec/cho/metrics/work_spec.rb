@@ -6,7 +6,8 @@ RSpec.describe Metrics::Work do
   let(:metric)    { described_class.new(length: 1, output: report) }
   let(:report)    { StringIO.new }
   let(:work)      { ::Work::Submission.all.first }
-  let(:file_uri)  { URI(Work::File.find(work.files.first).file_identifier.to_s) }
+  let(:file_set)  { Work::FileSet.find(work.file_set_ids.first) }
+  let(:file_uri)  { URI(Work::File.find(file_set.member_ids.first).file_identifier.to_s) }
 
   describe '#file_size' do
     subject { metric }

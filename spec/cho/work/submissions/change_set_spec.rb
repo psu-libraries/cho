@@ -26,6 +26,10 @@ RSpec.describe Work::SubmissionChangeSet do
     it 'has multiple parents' do
       expect(change_set).to be_multiple(:member_of_collection_ids)
     end
+
+    it 'has multiple file sets' do
+      expect(change_set).to be_multiple(:file_set_ids)
+    end
   end
 
   describe '#required?' do
@@ -45,6 +49,7 @@ RSpec.describe Work::SubmissionChangeSet do
     its(:work_type) { is_expected.to be_nil }
     its(:file) { is_expected.to be_nil }
     its(:member_of_collection_ids) { is_expected.to be_empty }
+    its(:file_set_ids) { is_expected.to be_empty }
   end
 
   describe '#validate' do
@@ -95,6 +100,14 @@ RSpec.describe Work::SubmissionChangeSet do
 
     it 'casts ids to Valkyrie IDs' do
       expect(change_set.member_of_collection_ids.first).to be_kind_of(Valkyrie::ID)
+    end
+  end
+
+  describe '#file_set_ids' do
+    before { change_set.validate(file_set_ids: ['1']) }
+
+    it 'casts ids to Valkyrie IDs' do
+      expect(change_set.file_set_ids.first).to be_kind_of(Valkyrie::ID)
     end
   end
 

@@ -1,5 +1,5 @@
 <%= render partial: 'show', locals: { document: @document } %>
 
-<% unless @document.files.empty? %>
-  <%= render partial: 'files', locals: { files: @document.files } %>
+<% unless @document.file_sets.empty? %>
+  <%= render partial: 'file_sets', locals: { file_sets: @document.file_sets } %>
 <% end %>
