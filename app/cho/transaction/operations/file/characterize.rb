@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'dry/transaction/operation'
-
 module Transaction
   module Operations
     module File
