@@ -5,13 +5,14 @@ class Import::Bag
 
   FILENAME_SEPARATOR = '_'
 
-  attr_reader :bag, :date, :batch_id, :work_paths, :works
+  attr_reader :bag, :date, :batch_id, :work_paths, :works, :path
 
   validates_presence_of :batch_id
   validate :bag_directory_must_be_dated, :bag_must_be_valid, :works_must_be_valid
 
   # @param [Pathname] path to the bag
   def initialize(path)
+    @path = path
     @bag = BagIt::Bag.new(path)
     @batch_id, @date = bag.bag_dir.basename.to_s.split(FILENAME_SEPARATOR)
     @work_paths = Pathname.new(@bag.data_dir).children
