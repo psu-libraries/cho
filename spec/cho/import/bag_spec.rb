@@ -10,7 +10,7 @@ RSpec.describe Import::Bag do
         data: {
           workID: [
             'workID_preservation.tif',
-            'workID_preservation_redacted.tif',
+            'workID_preservation-redacted.tif',
             'workID_service.jp2',
             'workID_text.txt',
             'workID_thumb.jpg'
@@ -81,6 +81,28 @@ RSpec.describe Import::Bag do
         ["expected #{path}/data/workID/workID_preservation.tif to have Digest::SHA256: " \
          '0000000000000000000000000000000000000000000000000000000000000000, actual is ' \
          '3d9f6b983f4ba463f7dae1e578d6ebf1c9236fd4f55e5156a7b094e497d5f927', 'is invalid'])
+    end
+  end
+
+  describe 'a bag with invalid works' do
+    subject(:bag) do
+      ImportFactory::Bag.create(
+        batch_id: 'batchID_2008-07-12',
+        data: {
+          workID: [
+            'badID_01_preservation.tif',
+            'workID_01_service.jp2',
+            'workID_01_text.txt',
+            'workID_01_thumb.jpg'
+          ]
+        }
+      )
+    end
+
+    it do
+      expect(bag).not_to be_valid
+      expect(bag.errors.messages)
+        .to include(works: ['File badID_01_preservation.tif does not match the parent directory'])
     end
   end
 end

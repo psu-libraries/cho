@@ -5,7 +5,7 @@ class Import::Work
 
   validate :must_have_valid_files, :must_have_valid_file_sets
 
-  attr_reader :path, :files, :nested_works
+  attr_reader :files, :nested_works
 
   # @param [Pathname]
   def initialize(path)
