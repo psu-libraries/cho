@@ -1,12 +1,10 @@
 # frozen_string_literal: true
 
-require 'dry/transaction/operation'
-
 module Transaction
   module Operations
     module File
       class Validate
-        include ::Dry::Transaction::Operation
+        include Dry::Transaction::Operation
 
         # @note We return a failure if the change set doesn't support files or doesn't contain
         #  any files to save. It's unclear whether this is a correct usage for a transactions,
