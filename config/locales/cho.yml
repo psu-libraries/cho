@@ -4,6 +4,7 @@ en:
       metadata: "Basic Metadata"
       workflow: "Workflow"
       visibility: "Visibility"
+      file_selection: "File Selection"
     field_label:
       # For fields that are not in the data dictionary
       collection_type: "Collection Type"
