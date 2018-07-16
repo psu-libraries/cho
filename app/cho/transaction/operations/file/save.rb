@@ -20,27 +20,16 @@ module Transaction
         private
 
           def work_file_set(change_set)
-            file = metadata_adapter.persister.save(resource: work_file(change_set))
+            file = work_file(change_set)
             Work::FileSet.new(member_ids: [file.id], title: change_set.file.original_filename)
           end
 
           def work_file(change_set)
-            Work::File.new(
-              file_identifier: adapter_file(change_set).id,
-              original_filename: change_set.file.original_filename
-            )
-          end
-
-          def adapter_file(change_set)
-            storage_adapter.upload(
-              file: change_set.file.tempfile,
-              original_filename: change_set.file.original_filename,
-              resource: change_set.model
-            )
-          end
-
-          def storage_adapter
-            @storage_adapter ||= Valkyrie.config.storage_adapter
+            file = Work::File.new(original_filename: change_set.file.original_filename)
+            file_change_set = Work::FileChangeSet.new(file)
+            response = Create.new.call(file_change_set, temp_file: change_set.file.tempfile)
+            raise response.failure if response.failure?
+            response.success.model
           end
 
           def metadata_adapter
