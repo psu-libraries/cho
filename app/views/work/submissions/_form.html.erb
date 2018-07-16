@@ -17,12 +17,12 @@
 
   <%= form.hidden_field :file, value: work_form.model.cached_file_data %>
 
-  <%= form.label :file, class: 'sr-only' %>
+  <%= form.label :file, t('cho.form.file_selection') %>
   <%= form.file_field :file %>
 
   <%= render 'errors', work: work_form if work_form.errors.any? %>
 
-  <div class="actions">
+  <div class="actions pt-4">
     <%= form.submit work_form.submit_text %>
   </div>
 <% end %>
