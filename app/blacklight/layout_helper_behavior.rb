@@ -20,13 +20,13 @@ module LayoutHelperBehavior
   # Classes used for sizing the main content of a Blacklight page
   # @return [String]
   def main_content_classes
-    'col-sm-8 col-sm-push-4 col-md-9 col-md-push-3'
+    'col-sm-8 col-md-9 order-2'
   end
 
   ##
   # Classes used for sizing the sidebar content of a Blacklight page
   # @return [String]
   def sidebar_classes
-    'col-sm-4 col-sm-pull-8 col-md-3 col-md-pull-9'
+    'col-sm-4 col-md-3 order-1'
   end
 end

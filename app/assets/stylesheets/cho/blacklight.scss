@@ -6,13 +6,7 @@
   background: none;
   overflow: visible;
   text-indent: .25%;
-
-  a:link,
-  a:hover,
-  a:visited {
-    color: $primary-white;
-    font-size: 1rem;
-  }
+  width: auto;
 }
 
 .navbar-collapse { font-size: .9rem; }
