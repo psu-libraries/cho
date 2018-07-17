@@ -9,7 +9,7 @@ genre,string,required_to_publish,no_validation,true,no_vocabulary,,Genre,no_tran
 collection,string,required_to_publish,no_validation,true,no_vocabulary,,Collection,no_transformation,no_facet,help me,true
 repository,string,required_to_publish,no_validation,true,no_vocabulary,,Repository,no_transformation,no_facet,help me,true
 rights_statement,string,required_to_publish,no_validation,false,no_vocabulary,,Rights Statement,no_transformation,no_facet,help me,true
-identified,string,required_to_publish,no_validation,true,no_vocabulary,,Identifier,no_transformation,no_facet,help me,true
+identifier,string,required_to_publish,no_validation,true,no_vocabulary,,Identifier,no_transformation,no_facet,help me,true
 resource_type,string,required_to_publish,no_validation,true,no_vocabulary,,Resource Type,no_transformation,no_facet,help me,true
 file_format,string,required_to_publish,no_validation,true,no_vocabulary,,File Format,no_transformation,no_facet,help me,true
 cataloger,string,optional,no_validation,true,no_vocabulary,,Cataloger,no_transformation,no_facet,help me,true
