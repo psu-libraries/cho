@@ -32,6 +32,15 @@ module Transaction
           Operations::Shared::Save.new
         end
       end
+
+      namespace 'import' do
+        register 'extract' do
+          Operations::Import::Extract.new
+        end
+        register 'validate' do
+          Operations::Import::Validate.new
+        end
+      end
     end
   end
 end
