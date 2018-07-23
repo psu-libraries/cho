@@ -105,4 +105,12 @@ RSpec.describe Import::Bag do
         .to include(works: ['File badID_01_preservation.tif does not match the parent directory'])
     end
   end
+
+  describe 'a bag with a non-existent path' do
+    let(:path) { Rails.root.join('spec', 'fixtures', 'bags', 'non-existent-bag') }
+
+    it 'raises an error' do
+      expect { described_class.new(path) }.to raise_error(IOError, 'path to bag does not exist or is not readable')
+    end
+  end
 end
