@@ -30,6 +30,10 @@ RSpec.describe Work::SubmissionChangeSet do
     it 'has multiple file sets' do
       expect(change_set).to be_multiple(:file_set_ids)
     end
+
+    it 'has a single batch id' do
+      expect(change_set).not_to be_multiple(:batch_id)
+    end
   end
 
   describe '#required?' do
@@ -50,6 +54,7 @@ RSpec.describe Work::SubmissionChangeSet do
     its(:file) { is_expected.to be_nil }
     its(:member_of_collection_ids) { is_expected.to be_empty }
     its(:file_set_ids) { is_expected.to be_empty }
+    its(:batch_id) { is_expected.to be_nil }
   end
 
   describe '#validate' do

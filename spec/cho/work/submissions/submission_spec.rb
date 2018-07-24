@@ -92,4 +92,23 @@ RSpec.describe Work::Submission do
       expect(resource_klass.fields).to include(:file_set_ids)
     end
   end
+
+  describe '#batch_id' do
+    it 'is nil when not set' do
+      expect(resource_klass.new.batch_id).to be_nil
+    end
+
+    it 'can be set as an attribute' do
+      resource = resource_klass.new(batch_id: Valkyrie::ID.new('123'))
+      expect(resource.attributes[:batch_id].to_s).to eq('123')
+    end
+
+    it 'is included in the list of attributes' do
+      expect(resource_klass.new.has_attribute?(:batch_id)).to eq true
+    end
+
+    it 'is included in the list of fields' do
+      expect(resource_klass.fields).to include(:batch_id)
+    end
+  end
 end

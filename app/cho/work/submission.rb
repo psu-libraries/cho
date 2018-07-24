@@ -18,6 +18,8 @@ module Work
     #  The stored valkyrie ids for file sets attached to the submission
     attribute :file_set_ids, Valkyrie::Types::Set.of(Valkyrie::Types::ID)
 
+    attribute :batch_id, Valkyrie::Types::String.optional
+
     # Accessors needed for shrine to send the temporary uploaded file
     #  to the controller
     # For the moment we are uploading a single file.
