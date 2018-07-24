@@ -49,7 +49,7 @@ RSpec.describe DataDictionary::Field, type: :model do
   describe '#core' do
     subject { described_class.core_fields.to_a.map(&:label) }
 
-    it { is_expected.to eq(['title', 'subtitle', 'description']) }
+    it { is_expected.to eq(['title', 'subtitle', 'description', 'identifier']) }
   end
 
   describe '#multiple' do

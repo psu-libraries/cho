@@ -9,3 +9,4 @@ still_image_field,string,optional,no_validation,true,no_vocabulary,,,no_transfor
 moving_image_field,string,optional,no_validation,true,no_vocabulary,,,no_transformation,no_facet,help me,false
 map_field,string,optional,no_validation,true,no_vocabulary,,,no_transformation,no_facet,help me,false
 audio_field,string,optional,no_validation,true,no_vocabulary,,,no_transformation,no_facet,help me,false
+identifier,string,required_to_publish,no_validation,true,no_vocabulary,,Identifier,no_transformation,no_facet,help me,true

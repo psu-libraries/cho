@@ -27,6 +27,8 @@ module Work
     include DataDictionary::FieldsForChangeSet
     include WithValidMembers
 
+    attr_accessor :import_work
+
     delegate :url_helpers, to: 'Rails.application.routes'
 
     def initialize(*args)

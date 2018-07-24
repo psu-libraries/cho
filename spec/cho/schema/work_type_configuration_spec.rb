@@ -36,7 +36,7 @@ RSpec.describe Schema::WorkTypeConfiguration, type: :model do
 
     it 'creates a field based on the work type' do
       expect(schema_fields.count).to eq(1)
-      expect(schema_fields.first.order_index).to eq(4)
+      expect(schema_fields.first.order_index).to eq(5)
       expect(schema_fields.first.label).to eq('generic_field')
       expect(schema_fields.first.work_type).to eq(work_type)
     end
@@ -56,7 +56,7 @@ RSpec.describe Schema::WorkTypeConfiguration, type: :model do
         expect(schema_fields.first.label).to eq('subtitle')
         expect(schema_fields.first.work_type).to eq(work_type)
         expect(schema_fields.first.display_name).to eq('Additional Info')
-        expect(schema_fields.last.order_index).to eq(4)
+        expect(schema_fields.last.order_index).to eq(5)
         expect(schema_fields.last.label).to eq('audio_field')
         expect(schema_fields.last.work_type).to eq(work_type)
       end
