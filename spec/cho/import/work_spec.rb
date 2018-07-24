@@ -23,6 +23,8 @@ RSpec.describe Import::Work do
       expect(work.nested_works.count).to eq(0)
       expect(work.file_sets.count).to eq(1)
       expect(work.file_sets.first).to be_representative
+      expect(work.path).to eq(Rails.root.join('tmp', 'workID'))
+      expect(work.identifier).to eq('workID')
     end
   end
 

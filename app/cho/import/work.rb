@@ -5,10 +5,11 @@ class Import::Work
 
   validate :must_have_valid_files, :must_have_valid_file_sets
 
-  attr_reader :files, :nested_works
+  attr_reader :files, :nested_works, :path
 
   # @param [Pathname]
   def initialize(path)
+    @path = path
     @files = path.children.select(&:file?).map { |file| Import::File.new(file) }
     @nested_works = path.children.select(&:directory?).map { |directory| self.class.new(directory) }
   end
@@ -18,6 +19,10 @@ class Import::Work
     file_set_ids.map do |id|
       Import::FileSet.new(files.select { |file| file.file_set_id == id })
     end
+  end
+
+  def identifier
+    path.basename.to_s
   end
 
   private
