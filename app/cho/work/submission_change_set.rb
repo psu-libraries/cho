@@ -19,6 +19,8 @@ module Work
              required: false,
              type: Types::Strict::Array.of(Valkyrie::Types::ID)
 
+    property :batch_id, multiple: false, required: false
+
     # File submitted via the GUI upload
     property :file, multiple: false, required: false
 
