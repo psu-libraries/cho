@@ -4,18 +4,30 @@ require 'rails_helper'
 
 RSpec.describe 'Preview of CSV Import', type: :feature do
   let(:collection) { create :library_collection, title: 'my collection' }
-  let(:work_1_file_name) { 'hello_world.txt' }
-  let(:work_2_file_name) { 'hello_world2.txt' }
-  let(:work_3_file_name) { 'hello_world3.txt' }
+  let(:bag) do
+    ImportFactory::Bag.create(
+      batch_id: 'batch1_2018-07-12',
+      data: {
+        work1: ['work1_preservation.tif'],
+        work2: ['work2_preservation.tif'],
+        work3: ['work3_preservation.tif']
+      }
+    )
+  end
 
   context 'with a valid csv' do
     let(:csv_file) do
       CsvFactory::Generic.new(
+        identifier: ['work1', 'work2', 'work3'],
         member_of_collection_ids: [collection.id, collection.id, collection.id],
         work_type: ['Generic', 'Generic', 'Generic'],
         title: ['My Work 1', 'My Work 2', 'My Work 3'],
-        file_name: [work_1_file_name, work_2_file_name, work_3_file_name]
+        batch_id: ['batch1_2018-07-12', 'batch1_2018-07-12', 'batch1_2018-07-12']
       )
+    end
+
+    before do
+      ImportFactory::Zip.create(bag)
     end
 
     it 'successfully imports the csv' do
@@ -40,6 +52,17 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
         expect(page).to have_selector('li a', text: 'My Work 2')
         expect(page).to have_selector('li a', text: 'My Work 3')
       end
+
+      # Verify each work has a file set and a file
+      Work::Submission.all.each do |work|
+        expect(work.batch_id).to eq('batch1_2018-07-12')
+        expect(work.file_set_ids.count).to eq(1)
+        file_set = Work::FileSet.find(Valkyrie::ID.new(work.file_set_ids.first))
+        expect(file_set.member_ids.count).to eq(1)
+        file = Work::File.find(Valkyrie::ID.new(file_set.member_ids.first))
+        expect(file_set.title).to contain_exactly(file.original_filename)
+        expect(file.original_filename).to eq("#{work.identifier.first}_preservation.tif")
+      end
     end
   end
 
@@ -49,7 +72,7 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
         member_of_collection_ids: [collection.id, collection.id, collection.id],
         work_type: ['Generic', 'Generic', 'Generic'],
         title: ['My Work 1', 'My Work 2', 'My Work 3'],
-        file_name: [work_1_file_name, work_2_file_name, work_3_file_name],
+        batch_id: ['batch1_2018-07-12', 'batch1_2018-07-12', 'batch1_2018-07-12'],
         invalid_column: ['wrong', 'bad', nil]
       )
     end
@@ -71,7 +94,7 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
         member_of_collection_ids: [nil, collection.id, collection.id],
         work_type: ['Generic', 'Generic', 'Generic'],
         title: ['My Work 1', nil, 'My Work 3'],
-        file_name: [work_1_file_name, work_2_file_name, work_3_file_name]
+        batch_id: ['batch1_2018-07-12', 'batch1_2018-07-12', 'batch1_2018-07-12']
       )
     end
 

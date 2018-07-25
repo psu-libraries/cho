@@ -28,6 +28,11 @@ class Import::File
   def to_s
     file.basename.to_s
   end
+  alias_method :original_filename, :to_s
+
+  def path
+    file.to_s
+  end
 
   def work_id
     @work_id ||= parts.first

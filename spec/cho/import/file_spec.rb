@@ -109,6 +109,12 @@ RSpec.describe Import::File do
     its(:to_s) { is_expected.to eq('workID_0001_preservation.tif') }
   end
 
+  describe '#path' do
+    subject { ImportFactory::File.create('workID_0001_preservation.tif') }
+
+    its(:path) { is_expected.to eq(Rails.root.join('tmp', 'workID', 'workID_0001_preservation.tif').to_s) }
+  end
+
   describe '#service?' do
     context 'with a service file' do
       subject { ImportFactory::File.create('workID_0001_service.jp2') }
