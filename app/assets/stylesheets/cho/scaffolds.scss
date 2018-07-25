@@ -16,11 +16,6 @@ a {
   &:visited {
     color: $gray-middle;
   }
-
-  &:hover {
-    background-color: $primary-black;
-    color: $primary-white;
-  }
 }
 
 th {
