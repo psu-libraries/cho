@@ -5,7 +5,7 @@ module ImportFactory
   class Work
     # @param [Hash] data
     # @return [Import::Work]
-    def self.new_create(data)
+    def self.create(data)
       service = new(data)
       Import::Work.new(service.base_dir)
     end

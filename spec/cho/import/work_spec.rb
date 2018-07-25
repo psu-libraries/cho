@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe Import::Work do
   describe 'a simple work' do
     subject(:work) do
-      ImportFactory::Work.new_create(
+      ImportFactory::Work.create(
         workID: [
           'workID_preservation.tif',
           'workID_preservation-redacted.tif',
@@ -30,7 +30,7 @@ RSpec.describe Import::Work do
 
   describe 'a multi-page work' do
     subject(:work) do
-      ImportFactory::Work.new_create(
+      ImportFactory::Work.create(
         workID: [
           'workID_00001_01_preservation.tif',
           'workID_00001_01_preservation-redacted.tif',
@@ -64,7 +64,7 @@ RSpec.describe Import::Work do
 
   describe 'a two-sided audio recording' do
     subject(:work) do
-      ImportFactory::Work.new_create(
+      ImportFactory::Work.create(
         workID: [
           'workID_00001_preservation.wav',
           'workID_00001_front.jpg',
@@ -92,7 +92,7 @@ RSpec.describe Import::Work do
 
   describe 'a folder of manuscript materials' do
     subject(:work) do
-      ImportFactory::Work.new_create(
+      ImportFactory::Work.create(
         workID: [
           {
             workID_00001: [
@@ -144,7 +144,7 @@ RSpec.describe Import::Work do
 
   describe 'a two-sided audio recording' do
     subject(:work) do
-      ImportFactory::Work.new_create(
+      ImportFactory::Work.create(
         workID: [
           {
             workID_00001: [
@@ -186,7 +186,7 @@ RSpec.describe Import::Work do
 
   describe 'a work with a invalid file type' do
     subject(:work) do
-      ImportFactory::Work.new_create(
+      ImportFactory::Work.create(
         workID: [
           'workID_preservation.tif',
           'workID_preservation-redacted.tif',
@@ -210,7 +210,7 @@ RSpec.describe Import::Work do
 
   describe 'a work with a incorrect file object id' do
     subject(:work) do
-      ImportFactory::Work.new_create(
+      ImportFactory::Work.create(
         workID: [
           'workID_preservation.tif',
           'workID_preservation-redacted.tif',
@@ -237,7 +237,7 @@ RSpec.describe Import::Work do
 
   describe 'a work with an invalid representative file set' do
     subject(:work) do
-      ImportFactory::Work.new_create(
+      ImportFactory::Work.create(
         workID: [
           'workID_preservation-redacted.tif',
           'workID_text.txt',
@@ -254,7 +254,7 @@ RSpec.describe Import::Work do
 
   describe 'a work with an invalid file set' do
     subject(:work) do
-      ImportFactory::Work.new_create(
+      ImportFactory::Work.create(
         workID: [
           'workID_00001_01_preservation-redacted.tif',
           'workID_00001_01_access.jp2',
@@ -275,7 +275,7 @@ RSpec.describe Import::Work do
 
   describe 'an invalid nested work' do
     subject(:work) do
-      ImportFactory::Work.new_create(
+      ImportFactory::Work.create(
         workID: [
           {
             workID_00001: [
