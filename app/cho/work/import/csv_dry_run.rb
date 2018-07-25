@@ -71,7 +71,6 @@ module Work
             'member_of_collection_ids',
             'work_type',
             'work_type_id',
-            'file_name',
             'batch_id',
             'id'
           ]

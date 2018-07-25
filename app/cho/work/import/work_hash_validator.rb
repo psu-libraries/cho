@@ -42,7 +42,6 @@ module Work
           work_hash['member_of_collection_ids'] = Array.wrap(work_hash['member_of_collection_ids'])
           unless updating?
             work_hash['work_type_id'] = translate_work_type(work_hash['work_type']) if work_hash['work_type_id'].blank?
-            work_hash['file'] = translate_file_name(work_hash['file_name'])
           end
         end
 
@@ -53,15 +52,6 @@ module Work
           return nil if work_type_model.blank?
 
           work_type_model.id
-        end
-
-        def translate_file_name(file_name)
-          return nil if file_name.blank?
-
-          absolute_path = ::File.join(csv_base_path, file_name)
-          FileUtils.cp(absolute_path, Rails.root.join('tmp'))
-          file = ::File.new(Rails.root.join('tmp', ::File.basename(file_name)))
-          ActionDispatch::Http::UploadedFile.new(tempfile: file, filename: ::File.basename(file_name))
         end
 
         def csv_base_path

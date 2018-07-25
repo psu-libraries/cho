@@ -4,16 +4,12 @@ require 'rails_helper'
 
 RSpec.describe Work::Import::CsvController, type: :controller do
   let(:collection) { create :library_collection, title: 'my collection' }
-  let(:work_1_file_name) { 'hello_world.txt' }
-  let(:work_2_file_name) { 'hello_world2.txt' }
-  let(:work_3_file_name) { 'hello_world3.txt' }
 
   let(:csv_file) do
     CsvFactory::Generic.new(
       member_of_collection_ids: [collection.id, collection.id, collection.id],
       work_type: ['Generic', 'Generic', 'Generic'],
-      title: ['My Work 1', 'My Work 2', 'My Work 3'],
-      file_name: [work_1_file_name, work_2_file_name, work_3_file_name]
+      title: ['My Work 1', 'My Work 2', 'My Work 3']
     )
   end
 
@@ -51,7 +47,6 @@ RSpec.describe Work::Import::CsvController, type: :controller do
         expect(response).to be_success
         expect(assigns(:presenter)).to be_a(Work::Import::CsvDryRunResultsPresenter)
         expect(assigns(:presenter).change_set_list.map(&:valid?)).to eq([true, true, true])
-        expect(File).to be_exist(assigns(:file_name))
       end
     end
 
@@ -60,8 +55,7 @@ RSpec.describe Work::Import::CsvController, type: :controller do
         CsvFactory::Generic.new(
           member_of_collection_ids: [nil, collection.id, 'bad'],
           work_type: ['Generic', 'Bad', 'Generic'],
-          title: ['My Work 1', 'My Work 2', nil],
-          file_name: [work_1_file_name, work_2_file_name, work_3_file_name]
+          title: ['My Work 1', 'My Work 2', nil]
         )
       end
 
