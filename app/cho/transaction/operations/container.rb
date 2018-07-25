@@ -40,6 +40,9 @@ module Transaction
         register 'validate' do
           Operations::Import::Validate.new
         end
+        register 'work' do
+          Operations::Import::Work.new
+        end
       end
     end
   end

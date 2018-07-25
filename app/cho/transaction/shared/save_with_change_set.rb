@@ -8,6 +8,7 @@ module Transaction
       # Operations will be resolved from the `Container` specified above
       step :validate, with: 'shared.validate'
       step :save_file, with: 'file.save'
+      step :import_work, with: 'import.work'
       step :save, with: 'shared.save'
 
       def save_file(change_set)
