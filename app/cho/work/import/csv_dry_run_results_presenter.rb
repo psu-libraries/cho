@@ -5,7 +5,7 @@ module Work
     # Presents the results of the dry run in a nice way for display
     class CsvDryRunResultsPresenter
       delegate :each, :to_a, to: :change_set_list
-      delegate :update?, to: :dry_run
+      delegate :update?, :bag, to: :dry_run
 
       attr_reader :dry_run
 
@@ -27,15 +27,20 @@ module Work
       end
 
       def invalid?
-        invalid_rows.present?
+        invalid_rows.present? || bag_errors.present?
       end
 
       def valid?
-        valid_rows.present?
+        valid_rows.present? && bag_errors.empty?
       end
 
       def error_count
         invalid_rows.count
+      end
+
+      def bag_errors
+        return [] if bag.success? || update?
+        bag.failure.errors.full_messages
       end
     end
   end
