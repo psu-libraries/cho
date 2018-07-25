@@ -23,10 +23,15 @@ module Work
         @reader = CsvReader.new(::File.new(csv_file_name, 'r'))
         validate_structure
         build_results
+        add_import_works
       end
 
       def update?
         update
+      end
+
+      def bag
+        @bag ||= Transaction::Import::ImportFromZip.new.call(batch_id)
       end
 
       private
@@ -44,6 +49,16 @@ module Work
           end
         end
 
+        # @todo see https://github.com/psu-libraries/cho/issues/605
+        # @note if there's more than one work in the bag with the same identifier, the duplicates will be ignored.
+        def add_import_works
+          return if bag.failure?
+
+          results.each do |change_set|
+            change_set.import_work = bag.success.works.select { |work| work.identifier == change_set.identifier }.first
+          end
+        end
+
         # @param [CsvReader] reader
         # @return [Array] of fields that are invalid and do not exist in the data dictionary
         def invalid_fields
@@ -57,8 +72,15 @@ module Work
             'work_type',
             'work_type_id',
             'file_name',
+            'batch_id',
             'id'
           ]
+        end
+
+        def batch_id
+          ids = results.map { |validator| validator['batch_id'] }.uniq
+          raise InvalidCsvError, 'CSV contains multiple or missing batch ids' if ids.count > 1
+          ids.first
         end
     end
   end

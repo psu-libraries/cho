@@ -153,10 +153,10 @@ RSpec.describe Work::SubmissionChangeSet do
 
       let(:work_field) { Schema::MetadataField.find_using(label: 'generic_field').first }
 
-      its(:count) { is_expected.to eq(4) }
+      its(:count) { is_expected.to eq(5) }
 
       it 'is ordered' do
-        expect(fields.map(&:label)).to eq(['title', 'subtitle', 'description', 'generic_field'])
+        expect(fields.map(&:label)).to eq(['title', 'subtitle', 'description', 'identifier', 'generic_field'])
       end
 
       context 'fields are reordered' do
@@ -166,7 +166,7 @@ RSpec.describe Work::SubmissionChangeSet do
         end
 
         it 'is ordered' do
-          expect(fields.map(&:label)).to eq(['generic_field', 'title', 'subtitle', 'description'])
+          expect(fields.map(&:label)).to eq(['generic_field', 'title', 'subtitle', 'description', 'identifier'])
         end
       end
     end
@@ -178,6 +178,7 @@ RSpec.describe Work::SubmissionChangeSet do
         expect(change_set.input_fields(form).map(&:label_text)).to contain_exactly('subtitle',
                                                                                    'description',
                                                                                    'generic_field',
+                                                                                   'identifier',
                                                                                    'title')
       end
     end

@@ -27,6 +27,7 @@ RSpec.describe Work::Import::CsvDryRun do
       let(:mock_reader) { instance_double(Work::Import::CsvReader, headers: ['id'], map: []) }
 
       it { is_expected.to be_update }
+      its(:bag) { is_expected.to be_a(Dry::Monads::Result::Failure) }
     end
   end
 
@@ -134,6 +135,23 @@ RSpec.describe Work::Import::CsvDryRun do
       end
     end
 
+    context 'with multiple batch ids' do
+      let(:csv_file) do
+        CsvFactory::Generic.new(
+          member_of_collection_ids: [collection.id, collection.id],
+          work_type: ['Generic', 'Generic'],
+          title: ['My Work 1', 'My Work 2'],
+          batch_id: ['1', '2']
+        )
+      end
+
+      it 'raises an error' do
+        expect { dry_run_results }.to raise_error(
+          Work::Import::CsvDryRun::InvalidCsvError, 'CSV contains multiple or missing batch ids'
+        )
+      end
+    end
+
     context 'without an id column during an update' do
       let(:update) { true }
 
@@ -147,6 +165,99 @@ RSpec.describe Work::Import::CsvDryRun do
         expect { dry_run_results }.to raise_error(
           Work::Import::CsvDryRun::InvalidCsvError, 'Missing id column for update'
         )
+      end
+    end
+  end
+
+  describe '#bag' do
+    let(:dry_run) { described_class.new(csv_file.path, update: update) }
+
+    context 'with a bag for import' do
+      let(:csv_file) do
+        CsvFactory::Generic.new(
+          member_of_collection_ids: [collection.id],
+          work_type_id: [work_type_id],
+          title: ['My Awesome Work'],
+          batch_id: ['batch1_2018-07-23'],
+          identifier: ['work1']
+        )
+      end
+
+      let(:bag) do
+        ImportFactory::Bag.create(
+          batch_id: 'batch1_2018-07-23',
+          data: {
+            work1: ['work1_preservation.tif']
+          }
+        )
+      end
+
+      before { ImportFactory::Zip.create(bag) }
+
+      it 'adds the import work to the change set' do
+        expect(dry_run.results.count).to eq(1)
+        expect(dry_run.results.first).to be_valid
+        expect(dry_run.results.first.title).to eq('My Awesome Work')
+        expect(dry_run.results.first.identifier).to eq('work1')
+        expect(dry_run.bag).to be_a(Dry::Monads::Result::Success)
+        expect(dry_run.results.first.import_work.identifier).to eq('work1')
+      end
+    end
+
+    context 'with a missing import work' do
+      let(:csv_file) do
+        CsvFactory::Generic.new(
+          member_of_collection_ids: [collection.id],
+          work_type_id: [work_type_id],
+          title: ['My Awesome Work'],
+          batch_id: ['batch-missing-import-work_2018-07-24'],
+          identifier: ['work1']
+        )
+      end
+
+      let(:bag) do
+        ImportFactory::Bag.create(
+          batch_id: 'batch-missing-import-work_2018-07-24',
+          data: {
+            work2: ['work2_preservation.tif']
+          }
+        )
+      end
+
+      let(:import_work) { dry_run_results.first.import_work }
+
+      before { ImportFactory::Zip.create(bag) }
+
+      it 'does not have an import work' do
+        expect(dry_run.results.count).to eq(1)
+        expect(dry_run.results.first).to be_valid
+        expect(dry_run.results.first.title).to eq('My Awesome Work')
+        expect(dry_run.results.first.identifier).to eq('work1')
+        expect(dry_run.bag).to be_a(Dry::Monads::Result::Success)
+        expect(dry_run.results.first.import_work).to be_nil
+      end
+    end
+
+    context 'with an invalid or missing bag' do
+      let(:csv_file) do
+        CsvFactory::Generic.new(
+          member_of_collection_ids: [collection.id],
+          work_type_id: [work_type_id],
+          title: ['My Awesome Work'],
+          batch_id: ['bad-batch_2018-07-24'],
+          identifier: ['work1']
+        )
+      end
+
+      let(:import_work) { dry_run_results.first.import_work }
+
+      it 'does not have an import work' do
+        expect(dry_run.results.count).to eq(1)
+        expect(dry_run.results.first).to be_valid
+        expect(dry_run.results.first.title).to eq('My Awesome Work')
+        expect(dry_run.results.first.identifier).to eq('work1')
+        expect(dry_run.bag).to be_a(Dry::Monads::Result::Failure)
+        expect(dry_run.results.first.import_work).to be_nil
       end
     end
   end
