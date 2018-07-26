@@ -75,6 +75,10 @@ en:
           status: "Status"
         submit: "Perform Import"
         cancel: "Cancel"
+        bag_status: Bag Status
+        bag_failure: "The bag contains %{count} error(s)"
+        bag_success: "The bag is valid and contains no errors"
+        csv_status: CSV Status
       import:
         failure:
           header: "Failed Import"

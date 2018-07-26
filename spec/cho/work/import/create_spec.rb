@@ -4,16 +4,6 @@ require 'rails_helper'
 
 RSpec.describe 'Preview of CSV Import', type: :feature do
   let(:collection) { create :library_collection, title: 'my collection' }
-  let(:bag) do
-    ImportFactory::Bag.create(
-      batch_id: 'batch1_2018-07-12',
-      data: {
-        work1: ['work1_preservation.tif'],
-        work2: ['work2_preservation.tif'],
-        work3: ['work3_preservation.tif']
-      }
-    )
-  end
 
   context 'with a valid csv' do
     let(:csv_file) do
@@ -23,6 +13,17 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
         work_type: ['Generic', 'Generic', 'Generic'],
         title: ['My Work 1', 'My Work 2', 'My Work 3'],
         batch_id: ['batch1_2018-07-12', 'batch1_2018-07-12', 'batch1_2018-07-12']
+      )
+    end
+
+    let(:bag) do
+      ImportFactory::Bag.create(
+        batch_id: 'batch1_2018-07-12',
+        data: {
+          work1: ['work1_preservation.tif'],
+          work2: ['work2_preservation.tif'],
+          work3: ['work3_preservation.tif']
+        }
       )
     end
 
@@ -36,6 +37,9 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
       attach_file('work_import_csv_file_file', csv_file.path)
       click_button('Preview Import')
       expect(page).to have_selector('h1', text: 'Import Preview')
+      expect(page).to have_selector('h2', text: 'Bag Status')
+      expect(page).to have_selector('h2', text: 'CSV Status')
+      expect(page).to have_content('The bag is valid and contains no errors')
       expect(page).to have_content('The following new works will be created')
       expect(page).to have_content('Total Number of Works with Errors 0')
       within('table') do
@@ -109,6 +113,44 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
         expect(page).to have_content("Member of collection ids can't be blank")
         expect(page).to have_content("Title can't be blank")
       end
+    end
+  end
+
+  context 'with an invalid bag' do
+    let(:csv_file) do
+      CsvFactory::Generic.new(
+        identifier: ['work1', 'work2', 'work3'],
+        member_of_collection_ids: [collection.id, collection.id, collection.id],
+        work_type: ['Generic', 'Generic', 'Generic'],
+        title: ['My Work 1', 'My Work 2', 'My Work 3'],
+        batch_id: ['batch2_2018-07-12', 'batch2_2018-07-12', 'batch2_2018-07-12']
+      )
+    end
+
+    let(:bag) do
+      ImportFactory::Bag.create(
+        batch_id: 'batch2_2018-07-12',
+        data: {
+          work1: ['badId_preservation.tif'],
+          work2: ['work2_preservation.tif'],
+          work3: ['work3_preservation.tif']
+        }
+      )
+    end
+
+    before do
+      ImportFactory::Zip.create(bag)
+    end
+
+    it 'displays the bag errors in the dry run page' do
+      visit(csv_create_path)
+      expect(page).to have_selector('h1', text: 'CSV Import')
+      attach_file('work_import_csv_file_file', csv_file.path)
+      click_button('Preview Import')
+      expect(page).to have_content('The bag contains 1 error(s)')
+      expect(page).to have_content(
+        'Works File badId_preservation.tif does not match the parent directory'
+      )
     end
   end
 end

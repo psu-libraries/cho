@@ -1,5 +1,20 @@
 <h1><%= t('cho.csv.dry_run.heading') %></h1>
 
+<h2><%= t('cho.csv.dry_run.bag_status') %></h2>
+
+<% if @presenter.bag_errors.present? %>
+  <p><%= t('cho.csv.dry_run.bag_failure', count: @presenter.bag_errors.count) %></p>
+  <ul>
+    <% @presenter.bag_errors.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p><%= t('cho.csv.dry_run.bag_success') %></p>
+<% end %>
+
+<h2><%= t('cho.csv.dry_run.csv_status') %></h2>
+
 <% if @presenter.update? %>
   <p><%= t('cho.csv.dry_run.update_description') %></p>
 <% else %>
