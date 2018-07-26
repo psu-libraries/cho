@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'dry/transaction/operation'
+require 'zip'
 
 module Transaction
   module Operations
