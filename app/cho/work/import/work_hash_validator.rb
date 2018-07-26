@@ -54,10 +54,6 @@ module Work
           work_type_model.id
         end
 
-        def csv_base_path
-          @csv_base_path ||= ::File.absolute_path(ENV['csv_base_path'])
-        end
-
         class MissingResource < Valkyrie::Resource
         end
 

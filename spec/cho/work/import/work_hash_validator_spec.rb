@@ -27,45 +27,6 @@ RSpec.describe Work::Import::WorkHashValidator do
         expect(change_set.work_type_id).to eq(generic_work_type.id)
         expect(change_set.member_of_collection_ids).to eq([collection.id])
       end
-
-      context 'with a file' do
-        let(:work_hash) do
-          {
-            'member_of_collection_ids' => [collection.id],
-            'work_type_id' => generic_work_type.id,
-            'title' => 'my awesome work',
-            'description' => '',
-            'file_name' => 'hello_world.txt'
-          }
-        end
-
-        it 'is valid and has a work type and a file set' do
-          expect(change_set).to be_a(Work::SubmissionChangeSet)
-          expect(change_set).to be_valid
-          expect(change_set.model).to be_a(Work::Submission)
-          expect(change_set.work_type_id).to eq(generic_work_type.id)
-          expect(change_set.member_of_collection_ids).to eq([collection.id])
-        end
-
-        context 'with an absolute path configured' do
-          before do
-            @original_path = ENV['csv_base_path']
-            ENV['csv_base_path'] = fixture_path
-          end
-
-          after do
-            ENV['csv_base_path'] = @original_path
-          end
-
-          it 'is valid and has a work type and a file set' do
-            expect(change_set).to be_a(Work::SubmissionChangeSet)
-            expect(change_set).to be_valid
-            expect(change_set.model).to be_a(Work::Submission)
-            expect(change_set.work_type_id).to eq(generic_work_type.id)
-            expect(change_set.member_of_collection_ids).to eq([collection.id])
-          end
-        end
-      end
     end
 
     context 'invalid new work' do
