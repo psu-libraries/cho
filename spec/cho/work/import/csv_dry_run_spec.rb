@@ -51,7 +51,7 @@ RSpec.describe Work::Import::CsvDryRun do
       end
     end
 
-    context 'invalid data' do
+    context 'with invalid data' do
       let(:csv_file) do
         CsvFactory::Generic.new(
           member_of_collection_ids: [collection.id], work_type_id: [work_type_id], title: [nil]
@@ -65,7 +65,7 @@ RSpec.describe Work::Import::CsvDryRun do
       end
     end
 
-    context 'valid and invalid data' do
+    context 'with both valid and invalid data' do
       let(:csv_file) do
         CsvFactory::Generic.new(
           member_of_collection_ids: [collection.id, collection.id, collection.id],
@@ -83,7 +83,7 @@ RSpec.describe Work::Import::CsvDryRun do
       end
     end
 
-    context 'Work Type string included ' do
+    context 'when a work type string is included ' do
       let(:csv_file) do
         CsvFactory::Generic.new(
           member_of_collection_ids: [collection.id, collection.id, collection.id],
@@ -101,12 +101,10 @@ RSpec.describe Work::Import::CsvDryRun do
       end
     end
 
-    context 'Work Type string included ' do
-      let(:file_name) { 'hello_world.txt' }
-
+    context 'when a batch id is included' do
       let(:csv_file) do
         CsvFactory::Generic.new(
-          member_of_collection_ids: [collection.id], work_type: ['Generic'], title: ['My Stuff'], file_name: [file_name]
+          member_of_collection_ids: [collection.id], work_type: ['Generic'], title: ['My Stuff'], batch_id: ['batch1']
         )
       end
 
@@ -114,7 +112,7 @@ RSpec.describe Work::Import::CsvDryRun do
         is_expected.to be_a Array
         expect(dry_run_results.count).to eq(1)
         expect(dry_run_results[0]).to be_valid
-        expect(dry_run_results[0].file).to be_a(ActionDispatch::Http::UploadedFile)
+        expect(dry_run_results[0].batch_id).to eq('batch1')
       end
     end
 

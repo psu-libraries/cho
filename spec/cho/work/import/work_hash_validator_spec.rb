@@ -45,7 +45,6 @@ RSpec.describe Work::Import::WorkHashValidator do
           expect(change_set.model).to be_a(Work::Submission)
           expect(change_set.work_type_id).to eq(generic_work_type.id)
           expect(change_set.member_of_collection_ids).to eq([collection.id])
-          expect(change_set.file).to be_a(ActionDispatch::Http::UploadedFile)
         end
 
         context 'with an absolute path configured' do
@@ -64,7 +63,6 @@ RSpec.describe Work::Import::WorkHashValidator do
             expect(change_set.model).to be_a(Work::Submission)
             expect(change_set.work_type_id).to eq(generic_work_type.id)
             expect(change_set.member_of_collection_ids).to eq([collection.id])
-            expect(change_set.file).to be_a(ActionDispatch::Http::UploadedFile)
           end
         end
       end
