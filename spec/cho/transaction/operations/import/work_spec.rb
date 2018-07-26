@@ -7,7 +7,7 @@ RSpec.describe Transaction::Operations::Import::Work do
   let(:change_set) { Work::SubmissionChangeSet.new(Work::Submission.new) }
 
   let(:import_work) do
-    ImportFactory::Work.new_create(
+    ImportFactory::Work.create(
       workID: [
         'workID_preservation.tif',
         'workID_preservation-redacted.tif',
