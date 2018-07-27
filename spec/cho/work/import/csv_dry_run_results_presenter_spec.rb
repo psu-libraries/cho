@@ -57,8 +57,7 @@ RSpec.describe Work::Import::CsvDryRunResultsPresenter do
       change_set
     end
 
-    let(:mock_error)   { instance_double(ActiveModel::Errors, full_messages: ['Error message']) }
-    let(:mock_failure) { instance_double(Import::Bag, errors: mock_error) }
+    let(:mock_failure) { instance_double(Import::Bag, errors: { work: 'Error message' }) }
     let(:bag) { Dry::Monads::Result::Failure.new(mock_failure) }
 
     its(:invalid_rows) { is_expected.to be_empty }

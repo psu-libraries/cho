@@ -46,7 +46,7 @@ RSpec.describe Transaction::Operations::Import::Validate do
         expect(result.failure).to be_a(Import::Bag)
         expect(result.failure).not_to be_valid
         expect(result.failure.errors.messages).to include(
-          works: ['File badID_01_preservation.tif does not match the parent directory']
+          works: ['Import file badID_01_preservation.tif does not match the parent directory']
         )
       end
     end
