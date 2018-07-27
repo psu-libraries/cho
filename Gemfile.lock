@@ -657,6 +657,7 @@ DEPENDENCIES
   rsolr (>= 1.0)
   rspec-its
   rspec-rails
+  rubyzip
   sass-rails (~> 5.0)
   selenium-webdriver
   shoulda-matchers (~> 3.1)
