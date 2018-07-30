@@ -10,7 +10,7 @@ end
 # Main gems
 gem 'blacklight', '7.0.0.rc1'
 gem 'rails', '~> 5.1.3'
-gem 'valkyrie', '~> 1.0'
+gem 'valkyrie', '~> 1.0', github: 'samvera-labs/valkyrie'
 
 # For Blacklight with Sprockets
 gem 'bootstrap', '~> 4.0'
@@ -22,7 +22,9 @@ gem 'bagit'
 gem 'bootsnap', require: false
 gem 'coffee-rails', '~> 4.2'
 gem 'devise_remote'
+gem 'dry-core', '0.4.5'
 gem 'dry-transaction'
+gem 'dry-types', '0.12.2'
 gem 'execjs'
 gem 'faker', github: 'stympy/faker', branch: 'master'
 gem 'figaro'
