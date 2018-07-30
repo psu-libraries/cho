@@ -11,7 +11,8 @@ GIT
 
 GIT
   remote: https://github.com/samvera-labs/valkyrie.git
-  revision: 25cb9ea1effcda6345a49f0223f0340bd6fcfa47
+  revision: 56e7f82472f88e3e3b4ce0cc3a9c0f6e9a8841ab
+  branch: dont_return_empty_array
   specs:
     valkyrie (1.1.2)
       active-fedora
