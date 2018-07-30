@@ -16,6 +16,7 @@ module DataDictionary::FieldsForObject
       Rails.application.load_seed if DataDictionary::Field.all.empty? && Rails.env.test?
 
       DataDictionary::Field.all.each do |field|
+        next if schema.keys.include?(field.label.parameterize.underscore.to_sym)
         attribute field.label.parameterize.underscore.to_sym, Valkyrie::Types::Set
       end
     end
