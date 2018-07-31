@@ -10,7 +10,7 @@ end
 # Main gems
 gem 'blacklight', '7.0.0.rc1'
 gem 'rails', '~> 5.1.3'
-gem 'valkyrie', '~> 1.0'
+gem 'valkyrie', '~> 1.0', github: 'samvera-labs/valkyrie', branch: 'dont_return_empty_array'
 
 # For Blacklight with Sprockets
 gem 'bootstrap', '~> 4.0'

@@ -16,6 +16,10 @@ module DataDictionary::FieldsForObject
       Rails.application.load_seed if DataDictionary::Field.all.empty? && Rails.env.test?
 
       DataDictionary::Field.all.each do |field|
+        # Code reloading errors may cause this block to be run twice in
+        # development - this prevents an error regarding an attribute being
+        # defined twice.
+        next if schema.keys.include?(field.label.parameterize.underscore.to_sym)
         attribute field.label.parameterize.underscore.to_sym, Valkyrie::Types::Set
       end
     end
