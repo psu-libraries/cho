@@ -30,11 +30,11 @@ class FindUsing
     query.each_key do |key|
       value = query[key]
       clause = if value.is_a?(String)
-                 "metadata @> '{\"#{key}\":\"#{value}\"}'"
+                 "metadata @> '{\"#{key}\":[\"#{value}\"]}'"
                elsif value.nil?
                  "metadata->>'#{key}' is null"
                else
-                 "metadata @> '{\"#{key}\":#{value}}'"
+                 "metadata @> '{\"#{key}\":[#{value}]}'"
                end
       clauses.push(clause)
     end
