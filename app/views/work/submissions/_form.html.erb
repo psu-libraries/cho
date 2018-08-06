@@ -14,6 +14,7 @@
   <% end %>
 
   <%= form.hidden_field :work_type_id, value: work_form.work_type_id %>
+  <%= form.hidden_field :optimistic_lock_token, multiple: true, value: work_form.optimistic_lock_token %>
 
   <%= form.hidden_field :file, value: work_form.model.cached_file_data %>
 

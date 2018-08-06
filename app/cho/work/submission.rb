@@ -5,6 +5,7 @@
 # Works are indexed both in Solr and and Postgres using the {IndexingAdapter}.
 module Work
   class Submission < Valkyrie::Resource
+    enable_optimistic_locking
     include Valkyrie::Resource::AccessControls
     include DataDictionary::FieldsForObject
     include CommonQueries
