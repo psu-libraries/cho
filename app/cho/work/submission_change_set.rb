@@ -2,6 +2,9 @@
 
 module Work
   class SubmissionChangeSet < Valkyrie::ChangeSet
+    property :optimistic_lock_token, multiple: true, required: true,
+                                     type: Types::Strict::Array.of(Valkyrie::Types::OptimisticLockToken)
+
     validates :work_type_id, presence: true
     validates :work_type_id, with: :validate_work_type_id!
     property :work_type_id, multiple: false, required: true, type: Valkyrie::Types::ID
