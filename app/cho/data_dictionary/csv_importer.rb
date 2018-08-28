@@ -56,7 +56,7 @@ module DataDictionary
       def store_field(dictionary_field)
         change_set = find_existing_field(dictionary_field)
         change_set.validate(dictionary_field.attributes.slice(attributes))
-        adapter.persister.save(resource: change_set)
+        adapter.persister.save(resource: change_set.resource)
       end
 
       # @param [DataDictionary::Field] dictionary_field

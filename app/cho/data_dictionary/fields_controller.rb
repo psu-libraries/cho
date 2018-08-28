@@ -43,7 +43,7 @@ module DataDictionary
     # DELETE /data_dictionary_fields/1
     # DELETE /data_dictionary_fields/1.json
     def destroy
-      persister.delete(resource: delete_change_set)
+      persister.delete(resource: delete_change_set.resource)
       respond_to do |format|
         format.html { redirect_to data_dictionary_fields_url, notice: 'Metadata field was successfully destroyed.' }
         format.json { head :no_content }
