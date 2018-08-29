@@ -8,7 +8,7 @@ module Transaction
 
         def call(change_set, persister:)
           change_set.sync
-          Success(persister.save(resource: change_set))
+          Success(persister.save(resource: change_set.resource))
         rescue Valkyrie::Persistence::StaleObjectError
           change_set.errors.add(:save, I18n.t('cho.stale_object_error', object_name: change_set.work_type.label))
           Failure(change_set)

@@ -18,7 +18,7 @@ RSpec.describe ChangeSetPersister do
     it 'persists a change set to Postgres' do
       expect {
         change_set_persister.buffer_into_index do |persist|
-          persist.save(resource: change_set)
+          persist.save(resource: change_set.resource)
         end
       }.to change { metadata_adapter.query_service.find_all.count }.by(1)
     end
@@ -26,7 +26,7 @@ RSpec.describe ChangeSetPersister do
     it 'persists a change set to Solr' do
       expect {
         change_set_persister.buffer_into_index do |persist|
-          persist.save(resource: change_set)
+          persist.save(resource: change_set.resource)
         end
       }.to change { metadata_adapter.index_adapter.query_service.find_all.count }.by(1)
     end
