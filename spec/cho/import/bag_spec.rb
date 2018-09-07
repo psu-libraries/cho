@@ -102,7 +102,7 @@ RSpec.describe Import::Bag do
     it do
       expect(bag).not_to be_valid
       expect(bag.errors.messages)
-        .to include(works: ['File badID_01_preservation.tif does not match the parent directory'])
+        .to include(works: ['Import file badID_01_preservation.tif does not match the parent directory'])
     end
   end
 

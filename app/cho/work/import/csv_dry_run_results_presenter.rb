@@ -40,7 +40,7 @@ module Work
 
       def bag_errors
         return [] if bag.success? || update?
-        bag.failure.errors.full_messages
+        bag.failure.errors.values.flatten
       end
     end
   end

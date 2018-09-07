@@ -1,0 +1,12 @@
+en:
+  # custom validation error messages
+  activemodel:
+    errors:
+      models:
+        import/file:
+          attributes:
+            file:
+              filename_must_include_work_id: "%{file} does not match the parent directory"
+    attributes:
+      import/file:
+        file: Import file

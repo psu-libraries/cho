@@ -200,7 +200,7 @@ RSpec.describe Import::Work do
     it do
       expect(work).not_to be_valid
       expect(work.errors.messages).to include(
-        files: ['File workID_unsupported.jp2 does not have a valid file type']
+        files: ['Import file workID_unsupported.jp2 does not have a valid file type']
       )
       expect(work.files.count).to eq(5)
       expect(work.nested_works.count).to eq(0)
@@ -225,8 +225,8 @@ RSpec.describe Import::Work do
       expect(work).not_to be_valid
       expect(work.errors.messages).to include(
         files: [
-          'File wrongID.jp2 does not match the parent directory',
-          'File wrongID.jp2 does not have a valid file type'
+          'Import file wrongID.jp2 does not match the parent directory',
+          'Import file wrongID.jp2 does not have a valid file type'
         ]
       )
       expect(work.files.count).to eq(5)

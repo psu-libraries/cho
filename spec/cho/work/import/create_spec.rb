@@ -148,8 +148,9 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
       attach_file('work_import_csv_file_file', csv_file.path)
       click_button('Preview Import')
       expect(page).to have_content('The bag contains 1 error(s)')
-      expect(page).to have_content(
-        'Works File badId_preservation.tif does not match the parent directory'
+      expect(page).to have_selector(
+        'li',
+        text: /^Import file badId_preservation.tif does not match the parent directory/
       )
     end
   end

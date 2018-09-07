@@ -80,7 +80,7 @@ class Import::File
 
     def filename_must_include_work_id
       return if work_id == file.parent.basename.to_s
-      errors.add(:file, "#{self} does not match the parent directory")
+      errors.add(:file, :filename_must_include_work_id, file: self)
     end
 
     def filename_must_include_type
