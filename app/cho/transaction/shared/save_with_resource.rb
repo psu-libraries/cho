@@ -10,13 +10,6 @@ module Transaction
       step :validate, with: 'shared.validate'
       step :save_file, with: 'file.save'
       step :save, with: 'shared.save'
-
-      def save_file(change_set)
-        result = Transaction::Operations::File::Validate.new.call(change_set)
-        return Success(change_set) if result.failure?
-
-        super(change_set)
-      end
     end
   end
 end

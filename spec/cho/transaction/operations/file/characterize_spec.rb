@@ -19,7 +19,7 @@ RSpec.describe Transaction::Operations::File::Characterize do
       before do
         mock_fits_for_travis
         work_change_set.validate(resource_params)
-        Transaction::File::Create.new.call(work_change_set)
+        Transaction::Operations::File::Save.new.call(work_change_set)
       end
 
       it 'returns Success' do
