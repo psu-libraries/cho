@@ -6,16 +6,7 @@ RSpec.describe Transaction::Operations::File::Characterize do
   let(:operation) { described_class.new }
   let(:collection) { create(:collection) }
   let(:change_set) { Work::FileChangeSet.new(resource) }
-  let(:fits_output) {
-    "<identification>\r\n"\
-    "    <identity format=\"Plain text\" mimetype=\"text/plain\" toolname=\"FITS\" toolversion=\"1.2.0\">\r\n"\
-    "      <tool toolname=\"Droid\" toolversion=\"6.3\" />\r\n"\
-    "      <tool toolname=\"Jhove\" toolversion=\"1.16\" />\r\n"\
-    "      <tool toolname=\"file utility\" toolversion=\"5.31\" />\r\n"\
-    "      <externalIdentifier toolname=\"Droid\" toolversion=\"6.3\" type=\"puid\">x-fmt/111</externalIdentifier>\r\n"\
-    "    </identity>\r\n"\
-    '  </identification>'
-  }
+  let(:fits_output) { File.read(Pathname.new(fixture_path).join('fits_output.xml')) }
 
   describe '#call' do
     context 'with a file' do
@@ -35,7 +26,12 @@ RSpec.describe Transaction::Operations::File::Characterize do
         result = operation.call(change_set)
         expect(result).to be_success
         expect(result.success).to eq(change_set)
-        expect(change_set.fits_output).to include(fits_output)
+        document = Capybara::Node::Simple.new(change_set.fits_output)
+        expect(document).to have_xpath('//identification/identity[@toolname="FITS"]')
+        expect(document).to have_xpath('//identification/identity/tool[@toolname="Droid"]')
+        expect(document).to have_xpath('//identification/identity/tool[@toolname="Jhove"]')
+        expect(document).to have_xpath('//identification/identity/tool[@toolname="file utility"]')
+        expect(document).to have_xpath('//externalidentifier')
       end
     end
     context 'without a file' do
