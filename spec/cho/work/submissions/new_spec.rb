@@ -13,7 +13,7 @@ RSpec.describe Work::Submission, type: :feature do
   context 'when filling in all the required fields' do
     let!(:archival_collection) { create(:archival_collection, title: 'Sample Collection') }
 
-    it 'creates a new work object' do
+    it 'creates a new work object without a file' do
       visit(root_path)
       click_link('Create Work')
       click_link('Generic')
@@ -54,6 +54,26 @@ RSpec.describe Work::Submission, type: :feature do
     it 'reports the error in the form' do
       visit(new_work_path(work_type_id: 'bogus-work-type-id'))
       expect(page).to have_content('Unable to find work type')
+    end
+  end
+
+  context 'when attaching a file' do
+    let!(:archival_collection) { create(:archival_collection, title: 'Sample Collection with Files') }
+
+    it 'creates a new work object with a file' do
+      visit(root_path)
+      click_link('Create Work')
+      click_link('Generic')
+      expect(page).to have_content('New Generic Work')
+      fill_in('work_submission[title]', with: 'New Title')
+      fill_in('work_submission[member_of_collection_ids][]', with: archival_collection.id)
+      attach_file('File Selection', Pathname.new(fixture_path).join('hello_world.txt'))
+      click_button('Create Work')
+      expect(page).to have_content('New Title')
+      expect(page).to have_content('Generic')
+      expect(page).to have_link('Edit')
+      expect(page).to have_selector('h2', text: 'Files')
+      expect(page).to have_content('hello_world.txt')
     end
   end
 end

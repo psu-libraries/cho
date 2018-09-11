@@ -6,7 +6,10 @@ module Transaction
       class Save
         include Dry::Transaction::Operation
 
+        # @note If the change_set does not support files, it returns Success so that any other
+        #   workflow steps may proceed.
         def call(change_set)
+          return Success(change_set) unless change_set.respond_to?(:file) && change_set.file.present?
           saved_work_file_set = metadata_adapter.persister.save(resource: work_file_set(change_set))
           change_set.model.file_set_ids << saved_work_file_set.id
           Success(change_set)

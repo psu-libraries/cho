@@ -10,14 +10,11 @@ module Transaction
       extend Dry::Container::Mixin
 
       namespace 'file' do
+        register 'characterize' do
+          Operations::File::Characterize.new
+        end
         register 'save' do
           Operations::File::Save.new
-        end
-        register 'validate' do
-          Operations::File::Validate.new
-        end
-        register 'delete' do
-          Operations::File::Delete.new
         end
       end
 

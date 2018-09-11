@@ -25,17 +25,27 @@ RSpec.describe Transaction::Operations::File::Save do
       end
     end
 
+    context 'when the change set does not support files' do
+      let(:change_set) { Valkyrie::ChangeSet.new({}) }
+
+      it 'returns Success' do
+        expect(operation.call(change_set)).to be_success
+      end
+    end
+
     context 'with an unsuccessful save' do
+      let(:mock_change_set) { instance_double(Work::SubmissionChangeSet) }
       let(:mock_adapter) { instance_double(IndexingAdapter) }
 
       before do
+        allow(mock_change_set).to receive(:file).and_return('file')
         allow(operation).to receive(:metadata_adapter).and_return(mock_adapter)
         allow(mock_adapter).to receive(:persister).and_raise(StandardError, 'unsupported adapter')
       end
 
       it 'returns Failure' do
         expect {
-          result = operation.call('change_set')
+          result = operation.call(mock_change_set)
           expect(result).to be_failure
           expect(result.failure).to eq('Error persisting file: unsupported adapter')
         }.to change { Work::File.count }.by(0)
