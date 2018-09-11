@@ -5,7 +5,7 @@ require 'valkyrie/specs/shared_specs'
 
 RSpec.describe IndexingAdapter do
   let(:adapter) do
-    described_class.new(metadata_adapter: Memory::SingularMetadataAdapter.new,
+    described_class.new(metadata_adapter: Valkyrie::Persistence::Memory::MetadataAdapter.new,
                         index_adapter: index_solr)
   end
   let(:query_service) { adapter.query_service }
