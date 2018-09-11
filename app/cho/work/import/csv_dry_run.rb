@@ -31,7 +31,7 @@ module Work
       end
 
       def bag
-        @bag ||= Transaction::Import::ImportFromZip.new.call(batch_id)
+        @bag ||= Transaction::Import::ImportFromZip.new.call(zip_name: batch_id)
       end
 
       private
