@@ -7,6 +7,5 @@ class Work::FileSet < Valkyrie::Resource
   include CommonQueries
   include DataDictionary::FieldsForObject
 
-  attribute :id, Valkyrie::Types::ID.optional
   attribute :member_ids, Valkyrie::Types::Set.of(Valkyrie::Types::ID)
 end

@@ -10,7 +10,7 @@ RSpec.describe FindUsing do
     class SampleResource < Valkyrie::Resource
       include Valkyrie::Resource::AccessControls
       include DataDictionary::FieldsForObject
-      attribute :id, Valkyrie::Types::ID.optional
+
       attribute :framjam, Valkyrie::Types::String
       attribute :flimjam, Valkyrie::Types::String
     end
@@ -18,7 +18,7 @@ RSpec.describe FindUsing do
     class SimilarResource < Valkyrie::Resource
       include Valkyrie::Resource::AccessControls
       include DataDictionary::FieldsForObject
-      attribute :id, Valkyrie::Types::ID.optional
+
       attribute :framjam, Valkyrie::Types::String
     end
   end

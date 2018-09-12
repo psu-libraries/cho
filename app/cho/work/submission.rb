@@ -10,7 +10,6 @@ module Work
     include DataDictionary::FieldsForObject
     include CommonQueries
 
-    attribute :id, Valkyrie::Types::ID.optional
     attribute :work_type_id, Valkyrie::Types::ID.optional
 
     attribute :member_of_collection_ids, Valkyrie::Types::Set.of(Valkyrie::Types::ID)

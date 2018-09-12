@@ -8,7 +8,6 @@ RSpec.describe FindModel do
 
   before(:all) do
     class SpecialModel < Valkyrie::Resource
-      attribute :id, Valkyrie::Types::ID.optional
     end
   end
 

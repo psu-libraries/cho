@@ -6,8 +6,6 @@ RSpec.describe Collection::WithMembers do
   before(:all) do
     class ParentResource < Valkyrie::Resource
       include Collection::WithMembers
-
-      attribute :id, Valkyrie::Types::ID.optional
     end
   end
 

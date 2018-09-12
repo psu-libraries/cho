@@ -13,7 +13,6 @@ module DataDictionary
     include WithIndexType
     include CommonQueries
 
-    attribute :id, Valkyrie::Types::ID.optional
     attribute :label, Valkyrie::Types::String
     attribute :default_value, Valkyrie::Types::String
     attribute :display_name, Valkyrie::Types::String
