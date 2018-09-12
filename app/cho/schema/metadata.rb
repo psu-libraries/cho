@@ -7,7 +7,6 @@ module Schema
   class Metadata < Valkyrie::Resource
     include CommonQueries
 
-    attribute :id, Valkyrie::Types::ID.optional
     attribute :label, Valkyrie::Types::String
     attribute :core_fields, Valkyrie::Types::Array
     attribute :fields, Valkyrie::Types::Array

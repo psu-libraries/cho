@@ -6,7 +6,7 @@ RSpec.describe CommonQueries do
   before(:all) do
     class CommonResource < Valkyrie::Resource
       include CommonQueries
-      attribute :id, Valkyrie::Types::ID.optional
+
       attribute :label, Valkyrie::Types::String
       attribute :other, Valkyrie::Types::String
       attribute :bool_val, Valkyrie::Types::Strict::Bool
@@ -14,7 +14,6 @@ RSpec.describe CommonQueries do
 
     class SampleResource < Valkyrie::Resource
       include CommonQueries
-      attribute :id, Valkyrie::Types::ID.optional
     end
   end
 
