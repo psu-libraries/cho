@@ -7,6 +7,7 @@ module ImportFactory
     def self.create(bag)
       output_file = Rails.root.join('tmp', 'ingest-test', "#{bag.path.basename}.zip")
       new(bag.path, output_file).write
+      output_file
     end
 
     attr_reader :input_dir, :output_file
