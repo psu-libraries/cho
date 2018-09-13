@@ -53,12 +53,11 @@ RSpec.describe Import::Work do
       expect(work.errors).to be_empty
       expect(work.files.count).to eq(12)
       expect(work.nested_works.count).to eq(0)
-      expect(work.file_sets.count).to eq(5)
-      expect(work.file_sets[0]).not_to be_representative
-      expect(work.file_sets[1]).not_to be_representative
-      expect(work.file_sets[2]).not_to be_representative
-      expect(work.file_sets[3]).not_to be_representative
-      expect(work.file_sets[4]).to be_representative
+      expect(work.file_sets.map(&:id)).to include('00001_01', '00001_02', '00002_01', '00002_02', nil)
+      expect(work.representative).to be_representative
+      expect(work.representative.files.map(&:original_filename)).to include(
+        'workID_service.pdf', 'workID_text.txt', 'workID_thumb.jpg'
+      )
     end
   end
 
@@ -83,10 +82,11 @@ RSpec.describe Import::Work do
       expect(work.errors).to be_empty
       expect(work.files.count).to eq(8)
       expect(work.nested_works.count).to eq(0)
-      expect(work.file_sets.count).to eq(3)
-      expect(work.file_sets[0]).not_to be_representative
-      expect(work.file_sets[1]).not_to be_representative
-      expect(work.file_sets[2]).to be_representative
+      expect(work.file_sets.map(&:id)).to include('00001', '00002', nil)
+      expect(work.representative).to be_representative
+      expect(work.representative.files.map(&:original_filename)).to include(
+        'workID_service.flac', 'workID_access.mp3', 'workID_text.txt', 'workID_thumb.jpg'
+      )
     end
   end
 
