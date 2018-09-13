@@ -62,11 +62,11 @@ RSpec.describe Import::Bag do
 
     it do
       is_expected.not_to be_valid
-      expect(bag.errors.messages).to include(bag: [
-                                               'workID_service.jp2 cannot be under data',
-                                               'workID_text.txt cannot be under data',
-                                               'workID_thumb.jpg cannot be under data'
-                                             ])
+      expect(bag.errors.messages[:bag]).to include(
+        'workID_service.jp2 cannot be under data',
+        'workID_text.txt cannot be under data',
+        'workID_thumb.jpg cannot be under data'
+      )
     end
   end
 

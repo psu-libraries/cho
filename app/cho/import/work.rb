@@ -21,6 +21,10 @@ class Import::Work
     end
   end
 
+  def representative
+    file_sets.select(&:representative?).first
+  end
+
   def identifier
     path.basename.to_s
   end
