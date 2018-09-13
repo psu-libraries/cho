@@ -2,12 +2,13 @@
 
 class SearchBuilder < Blacklight::SearchBuilder
   include Blacklight::Solr::SearchBuilderBehavior
+  self.default_processor_chain += [:show_only_works_and_collections]
 
-  ##
-  # @example Adding a new step to the processor chain
-  #   self.default_processor_chain += [:add_custom_data_to_query]
-  #
-  #   def add_custom_data_to_query(solr_parameters)
-  #     solr_parameters[:custom] = blacklight_params[:user_value]
-  #   end
+  # Do not include files and file sets in the search results
+  def show_only_works_and_collections(solr_parameters)
+    # add a new solr facet query ('fq') parameter that limits results to those with a 'public_b' field of 1
+    solr_parameters[:fq] ||= []
+    solr_parameters[:fq] << 'internal_resource_ssim:("Collection::Archival" OR "Collection::Library"' \
+                             'OR "Collection::Curated" OR  "Work::Submission")'
+  end
 end
