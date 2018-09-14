@@ -6,7 +6,7 @@ require Rails.root.join('spec', 'support', 'seed_map')
 
 FactoryBot.define do
   factory :file_set, class: Work::FileSet do
-    title 'Original File Name'
+    title { 'Original File Name' }
 
     to_create do |resource|
       Valkyrie.config.metadata_adapter.persister.save(resource: resource)
