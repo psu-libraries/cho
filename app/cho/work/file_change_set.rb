@@ -9,5 +9,6 @@ module Work
     validates :original_filename, presence: true
 
     property :fits_output, multiple: false, required: false
+    property :file_identifier, multiple: false, required: true
   end
 end
