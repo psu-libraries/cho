@@ -107,4 +107,22 @@ RSpec.describe Work::Submission, type: :feature do
       expect(page).to have_content('work1_preservation.tif')
     end
   end
+
+  context 'when adding the work to a library collection' do
+    let!(:library_collection) { create(:library_collection, title: 'Adding to Library Collection') }
+
+    it 'creates a new work object without a file' do
+      visit(root_path)
+      click_link('Create Work')
+      click_link('Generic')
+      expect(page).to have_content('New Generic Work')
+      fill_in('work_submission[title]', with: 'kingsfoil longbottom')
+      fill_in('work_submission[member_of_collection_ids][]', with: library_collection.id)
+      click_button('Create Work')
+      expect(page).to have_content('kingsfoil longbottom')
+      expect(page).to have_content('Generic')
+      expect(page).to have_content('Adding to Library Collection')
+      expect(page).to have_link('Edit')
+    end
+  end
 end
