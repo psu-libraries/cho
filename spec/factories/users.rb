@@ -19,7 +19,7 @@ FactoryBot.define do
     end
 
     factory :admin do
-      group_list 'umg/up.libraries.cho-admin'
+      group_list { 'umg/up.libraries.cho-admin' }
       groups_last_update { Time.now }
     end
   end
