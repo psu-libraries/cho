@@ -55,7 +55,23 @@ module Work
           return if bag.failure?
 
           results.each do |change_set|
-            change_set.import_work = bag.success.works.select { |work| work.identifier == change_set.identifier }.first
+            import_work = bag.success.works.select { |work| work.identifier == change_set.identifier }.first
+            change_set.import_work = import_work
+            change_set.file_set_hashes = build_import_file_sets(import_work).compact if import_work.present?
+          end
+        end
+
+        def build_import_file_sets(import_work)
+          import_work.file_sets.map do |file_set|
+            file_set_hash = file_set_metadata(file_set.id).first
+            next if file_set_hash.nil?
+            FileSetHashValidator.new(file_set_hash).change_set
+          end
+        end
+
+        def file_set_metadata(file_set_id)
+          reader.file_set_hashes.select do |file_set|
+            file_set.fetch('identifier') == file_set_id
           end
         end
 
