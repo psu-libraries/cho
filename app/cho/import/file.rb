@@ -44,13 +44,13 @@ class Import::File
 
   # @return [String] inner most parts of the file
   # @example
-  #   Given a filename workID_00002_02_preservation.tif, the returned id would be 00002_02
+  #   Given a filename workID_00002_02_preservation.tif, the returned id would be workID_00002_02
   #   A filename such as workID_preservation.tif has no file set id.
   def file_set_id
     @file_set_id ||= begin
                        return if parts.count == 2
-                       inner_parts = parts.slice(1..-2)
-                       inner_parts.join(Import::Bag::FILENAME_SEPARATOR)
+                       parts.pop
+                       parts.join(Import::Bag::FILENAME_SEPARATOR)
                      end
   end
 

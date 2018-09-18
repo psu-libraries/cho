@@ -99,7 +99,7 @@ RSpec.describe Import::File do
     context 'with a file in a set' do
       subject { ImportFactory::File.create('workID_0001_preservation.tif') }
 
-      its(:file_set_id) { is_expected.to eq('0001') }
+      its(:file_set_id) { is_expected.to eq('workID_0001') }
     end
   end
 

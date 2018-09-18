@@ -53,7 +53,13 @@ RSpec.describe Import::Work do
       expect(work.errors).to be_empty
       expect(work.files.count).to eq(12)
       expect(work.nested_works.count).to eq(0)
-      expect(work.file_sets.map(&:id)).to include('00001_01', '00001_02', '00002_01', '00002_02', nil)
+      expect(work.file_sets.map(&:id)).to include(
+        'workID_00001_01',
+        'workID_00001_02',
+        'workID_00002_01',
+        'workID_00002_02',
+        nil
+      )
       expect(work.representative).to be_representative
       expect(work.representative.files.map(&:original_filename)).to include(
         'workID_service.pdf', 'workID_text.txt', 'workID_thumb.jpg'
@@ -82,7 +88,7 @@ RSpec.describe Import::Work do
       expect(work.errors).to be_empty
       expect(work.files.count).to eq(8)
       expect(work.nested_works.count).to eq(0)
-      expect(work.file_sets.map(&:id)).to include('00001', '00002', nil)
+      expect(work.file_sets.map(&:id)).to include('workID_00001', 'workID_00002', nil)
       expect(work.representative).to be_representative
       expect(work.representative.files.map(&:original_filename)).to include(
         'workID_service.flac', 'workID_access.mp3', 'workID_text.txt', 'workID_thumb.jpg'
@@ -269,7 +275,9 @@ RSpec.describe Import::Work do
 
     it do
       expect(work).not_to be_valid
-      expect(work.errors.messages).to include(file_sets: ['00001_01 does not have a service or preservation file'])
+      expect(work.errors.messages).to include(
+        file_sets: ['workID_00001_01 does not have a service or preservation file']
+      )
     end
   end
 

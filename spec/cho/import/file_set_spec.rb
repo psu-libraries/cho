@@ -22,7 +22,7 @@ RSpec.describe Import::FileSet do
   describe '#id' do
     let(:files) { [ImportFactory::File.create('work1234_0001_preservation.tif')] }
 
-    its(:id) { is_expected.to eq('0001') }
+    its(:id) { is_expected.to eq('work1234_0001') }
   end
 
   describe '#to_s' do
