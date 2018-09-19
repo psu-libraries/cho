@@ -1,0 +1,8 @@
+  <%= form.label :member_of_collection_ids %>
+  <%= form.text_field :member_of_collection_ids, name: 'work_submission[member_of_collection_ids][]', list: 'member_of_collection_ids' %>
+
+  <datalist id="member_of_collection_ids">
+    <% ControlledVocabulary::CombinedCollectionList.archival_library_list.each do |collection| %>
+      <option value="<%= collection.id %>"><%= collection.title %></option>
+    <% end %>
+  </datalist>
