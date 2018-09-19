@@ -6,22 +6,39 @@ module Metrics
 
     class ResetError < StandardError; end
 
-    def self.reset
-      raise ResetError, "Reset not allowed for #{ENV['service_name']}" unless WHITELIST.include?(ENV['service_name'])
-      Valkyrie.config.metadata_adapter.resource_factory.orm_class.connection.truncate('orm_resources')
-      Blacklight.default_index.connection.delete_by_query('*:*')
-      Blacklight.default_index.connection.commit
-      reset_directories
-      Rails.application.load_seed
-    end
+    class << self
+      def reset
+        raise ResetError, "Reset not allowed for #{ENV['service_name']}" unless WHITELIST.include?(ENV['service_name'])
+        Valkyrie.config.metadata_adapter.resource_factory.orm_class.connection.truncate('orm_resources')
+        Blacklight.default_index.connection.delete_by_query('*:*')
+        Blacklight.default_index.connection.commit
+        reset_directories
+        Rails.application.load_seed
+      end
 
-    def self.reset_directories
-      FileUtils.rm_rf(Rails.root.join('tmp', 'files').to_s)
-      FileUtils.mkdir(Rails.root.join('tmp', 'files').to_s)
-      FileUtils.rm_rf(Rails.root.join('tmp', "ingest-#{Rails.env}").to_s)
-      FileUtils.mkdir(Rails.root.join('tmp', "ingest-#{Rails.env}").to_s)
-      FileUtils.rm_rf(Rails.root.join('tmp', "extract-#{Rails.env}").to_s)
-      FileUtils.mkdir(Rails.root.join('tmp', "extract-#{Rails.env}").to_s)
+      def reset_directories
+        reset_directory(Rails.root.join('tmp', 'files'))
+        reset_directory(Rails.root.join(network_ingest_directory))
+        reset_directory(Rails.root.join(extraction_directory))
+      end
+
+      private
+
+        def reset_directory(path)
+          if path.exist?
+            path.children.map { |child| FileUtils.rm_rf(child) }
+          else
+            FileUtils.mkdir(path.to_s)
+          end
+        end
+
+        def network_ingest_directory
+          Pathname.new(ENV['network_ingest_directory'])
+        end
+
+        def extraction_directory
+          Pathname.new(ENV['extraction_directory'])
+        end
     end
   end
 end
