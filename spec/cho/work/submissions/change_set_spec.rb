@@ -55,6 +55,7 @@ RSpec.describe Work::SubmissionChangeSet do
     its(:member_of_collection_ids) { is_expected.to be_empty }
     its(:file_set_ids) { is_expected.to be_empty }
     its(:batch_id) { is_expected.to be_nil }
+    its(:import_work) { is_expected.to be_nil }
   end
 
   describe '#validate' do

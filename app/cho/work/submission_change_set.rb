@@ -27,10 +27,10 @@ module Work
     # File submitted via the GUI upload
     property :file, multiple: false, required: false
 
+    property :import_work, virtual: true, required: false, multiple: false
+
     include DataDictionary::FieldsForChangeSet
     include WithValidMembers
-
-    attr_accessor :import_work
 
     delegate :url_helpers, to: 'Rails.application.routes'
 
