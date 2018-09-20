@@ -6,7 +6,7 @@ subject,string,optional,no_validation,true,no_vocabulary,,Subject,no_transformat
 location,string,optional,no_validation,true,no_vocabulary,,Location,no_transformation,no_facet,help me,true
 description,text,optional,no_validation,true,no_vocabulary,,Description,no_transformation,no_facet,help me,true
 genre,string,required_to_publish,no_validation,true,no_vocabulary,,Genre,no_transformation,no_facet,help me,true
-collection,string,required_to_publish,no_validation,true,no_vocabulary,,Collection,no_transformation,no_facet,help me,true
+collection,datalist,required_to_publish,no_validation,true,no_vocabulary,,Collection,no_transformation,no_facet,help me,true
 repository,string,required_to_publish,no_validation,true,no_vocabulary,,Repository,no_transformation,no_facet,help me,true
 rights_statement,string,required_to_publish,no_validation,false,no_vocabulary,,Rights Statement,no_transformation,no_facet,help me,true
 identifier,string,required_to_publish,no_validation,true,no_vocabulary,,Identifier,no_transformation,no_facet,help me,true
