@@ -77,7 +77,7 @@ RSpec.describe Work::Submission, type: :feature do
     end
   end
 
-  context 'when attaching a zip file to the work' do
+  context 'when attaching a simple zip file to the work' do
     let!(:archival_collection) { create(:archival_collection, title: 'Collection with zipped work') }
 
     let(:bag) do
@@ -105,6 +105,54 @@ RSpec.describe Work::Submission, type: :feature do
       expect(page).to have_link('Edit')
       expect(page).to have_selector('h2', text: 'Files')
       expect(page).to have_content('work1_preservation.tif')
+    end
+  end
+
+  context 'when attaching a zip file with file sets to the work' do
+    let!(:archival_collection) { create(:archival_collection, title: 'Collection with zipped work') }
+
+    let(:bag) do
+      ImportFactory::Bag.create(
+        batch_id: 'batch1_2018-09-17',
+        data: {
+          work1: [
+            'work1_00001_01_preservation.tif',
+            'work1_00001_01_preservation-redacted.tif',
+            'work1_00001_01_service.jp2',
+            'work1_00001_02_preservation.tif',
+            'work1_00001_02_service.jp2',
+            'work1_00002_01_preservation.tif',
+            'work1_00002_01_service.jp2',
+            'work1_00002_02_preservation.tif',
+            'work1_00002_02_service.jp2',
+            'work1_service.pdf',
+            'work1_text.txt',
+            'work1_thumb.jpg'
+          ]
+        }
+      )
+    end
+
+    let(:zip_file) { ImportFactory::Zip.create(bag) }
+
+    it 'creates a new work object with file sets and files from the zip' do
+      visit(root_path)
+      click_link('Create Work')
+      click_link('Generic')
+      expect(page).to have_content('New Generic Work')
+      fill_in('work_submission[title]', with: 'Work and file sets with attached zip')
+      fill_in('work_submission[member_of_collection_ids][]', with: archival_collection.id)
+      attach_file('File Selection', zip_file)
+      click_button('Create Work')
+      expect(page).to have_content('Work and file sets with attached zip')
+      expect(page).to have_content('Generic')
+      expect(page).to have_link('Edit')
+      expect(page).to have_selector('h2', text: 'Files')
+      expect(page).to have_content('work1_00001_01_preservation.tif')
+      expect(page).to have_content('work1_00001_02_preservation.tif')
+      expect(page).to have_content('work1_00002_01_preservation.tif')
+      expect(page).to have_content('work1_00002_02_preservation.tif')
+      expect(page).to have_content('work1_service.pdf')
     end
   end
 end
