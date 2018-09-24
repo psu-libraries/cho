@@ -5,6 +5,17 @@ require 'rails_helper'
 RSpec.describe 'Preview of CSV Import', type: :feature do
   let(:collection) { create :library_collection, title: 'my collection' }
 
+  let(:bag) do
+    ImportFactory::Bag.create(
+      batch_id: 'batch1_2018-07-12',
+      data: {
+        work1: ['work1_preservation.tif'],
+        work2: ['work2_preservation.tif'],
+        work3: ['work3_preservation.tif']
+      }
+    )
+  end
+
   context 'with a valid csv' do
     let(:csv_file) do
       CsvFactory::Generic.new(
@@ -13,17 +24,6 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
         work_type: ['Generic', 'Generic', 'Generic'],
         title: ['My Work 1', 'My Work 2', 'My Work 3'],
         batch_id: ['batch1_2018-07-12', 'batch1_2018-07-12', 'batch1_2018-07-12']
-      )
-    end
-
-    let(:bag) do
-      ImportFactory::Bag.create(
-        batch_id: 'batch1_2018-07-12',
-        data: {
-          work1: ['work1_preservation.tif'],
-          work2: ['work2_preservation.tif'],
-          work3: ['work3_preservation.tif']
-        }
       )
     end
 
@@ -70,6 +70,103 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
     end
   end
 
+  context 'with a zip file containing file sets' do
+    let(:ids) { [
+      'work1',
+      'work1_00001_01',
+      'work1_00001_02',
+      'work1_00002_01',
+      'work1_00002_02'
+    ]}
+
+    let(:csv_file) do
+      CsvFactory::Generic.new(
+        identifier: ids,
+        member_of_collection_ids: [collection.id, nil, nil, nil, nil],
+        work_type: (([] << 'Generic') * 5),
+        title: ids.map { |id| "My #{id.capitalize}" },
+        batch_id: (([] << 'batch1_2018-09-17') * 5)
+      )
+    end
+
+    let(:bag) do
+      ImportFactory::Bag.create(
+        batch_id: 'batch1_2018-09-17',
+        data: {
+          work1: [
+            'work1_00001_01_preservation.tif',
+            'work1_00001_01_preservation-redacted.tif',
+            'work1_00001_01_service.jp2',
+            'work1_00001_02_preservation.tif',
+            'work1_00001_02_service.jp2',
+            'work1_00002_01_preservation.tif',
+            'work1_00002_01_service.jp2',
+            'work1_00002_02_preservation.tif',
+            'work1_00002_02_service.jp2',
+            'work1_service.pdf',
+            'work1_text.txt',
+            'work1_thumb.jpg'
+          ]
+        }
+      )
+    end
+
+    before do
+      ImportFactory::Zip.create(bag)
+    end
+
+    it 'successfully imports the csv' do
+      visit(csv_create_path)
+      expect(page).to have_selector('h1', text: 'CSV Import')
+      attach_file('work_import_csv_file_file', csv_file.path)
+      click_button('Preview Import')
+      expect(page).to have_selector('h1', text: 'Import Preview')
+      expect(page).to have_selector('h2', text: 'Bag Status')
+      expect(page).to have_selector('h2', text: 'CSV Status')
+      expect(page).to have_content('The bag is valid and contains no errors')
+      expect(page).to have_content('The following new works will be created')
+      expect(page).to have_content('Total Number of Works with Errors 0')
+      within('table') do
+        expect(page).to have_selector('th', text: 'Title')
+        expect(page).to have_selector('th', text: 'Status')
+        expect(page).to have_selector('td', text: 'My Work1')
+      end
+      click_button('Perform Import')
+      expect(page).to have_selector('h1', text: 'Successful Import')
+      within('ul.result-list') do
+        expect(page).to have_selector('li a', text: 'My Work1')
+      end
+
+      # Verify each work has a file set and a file
+      imported_work = Work::Submission.all.first
+      expect(imported_work.title).to eq(['My Work1'])
+      file_sets = imported_work.file_set_ids.map do |id|
+        Work::FileSet.find(Valkyrie::ID.new(id))
+      end
+      expect(file_sets.count).to eq(5)
+      expect(file_sets.map(&:identifier)).to contain_exactly(
+        ['work1_00001_01'], ['work1_00001_02'], ['work1_00002_01'], ['work1_00002_02'], []
+      )
+      filenames = file_sets.map do |file_set|
+        file_set.member_ids.map { |id| Work::File.find(Valkyrie::ID.new(id)).original_filename }
+      end
+      expect(filenames.flatten).to contain_exactly(
+        'work1_00001_01_preservation.tif',
+        'work1_00001_01_preservation-redacted.tif',
+        'work1_00001_01_service.jp2',
+        'work1_00001_02_preservation.tif',
+        'work1_00001_02_service.jp2',
+        'work1_00002_01_preservation.tif',
+        'work1_00002_01_service.jp2',
+        'work1_00002_02_preservation.tif',
+        'work1_00002_02_service.jp2',
+        'work1_service.pdf',
+        'work1_text.txt',
+        'work1_thumb.jpg'
+      )
+    end
+  end
+
   context 'when the csv has invalid columns' do
     let(:csv_file) do
       CsvFactory::Generic.new(
@@ -95,8 +192,8 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
   context 'when the csv has missing values' do
     let(:csv_file) do
       CsvFactory::Generic.new(
-        member_of_collection_ids: [nil, collection.id, collection.id],
-        work_type: ['Generic', 'Generic', 'Generic'],
+        member_of_collection_ids: [collection.id, collection.id, collection.id],
+        work_type: [nil, 'Generic', 'Generic'],
         title: ['My Work 1', nil, 'My Work 3'],
         batch_id: ['batch1_2018-07-12', 'batch1_2018-07-12', 'batch1_2018-07-12']
       )
@@ -110,7 +207,7 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
       expect(page).to have_selector('h1', text: 'Import Preview')
       expect(page).to have_content('Total Number of Works with Errors 2')
       within('table.table') do
-        expect(page).to have_content("Member of collection ids can't be blank")
+        expect(page).to have_content("Work type can't be blank")
         expect(page).to have_content("Title can't be blank")
       end
     end

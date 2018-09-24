@@ -3,7 +3,6 @@
 module Work
   class FileSetChangeSet < Valkyrie::ChangeSet
     validates :member_ids, with: :validate_members!
-    validates :member_ids, presence: true
     property :member_ids,
              multiple: true,
              required: false,

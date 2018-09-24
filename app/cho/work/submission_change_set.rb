@@ -29,6 +29,13 @@ module Work
 
     property :import_work, virtual: true, required: false, multiple: false
 
+    property :file_set_hashes,
+             virtual: true,
+             multiple: true,
+             required: false,
+             default: [],
+             type: Types::Strict::Array
+
     include DataDictionary::FieldsForChangeSet
     include WithValidMembers
 

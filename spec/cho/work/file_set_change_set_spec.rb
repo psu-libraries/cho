@@ -42,12 +42,6 @@ RSpec.describe Work::FileSetChangeSet do
       its(:full_messages) { is_expected.to include('Member ids nothere does not exist') }
     end
 
-    context 'without members' do
-      let(:params) { { member_ids: [] } }
-
-      its(:full_messages) { is_expected.to include("Member ids can't be blank") }
-    end
-
     context 'with all required fields' do
       let(:file) { create :work_file }
       let(:params) { { title: 'filename.txt', member_ids: [file.id] } }

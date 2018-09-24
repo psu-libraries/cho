@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Validates a work hash using the Work::Submission::ChangeSet
+# Validates a work hash using the Work::SubmissionChangeSet
 #
 # @example work_hash
 #    {'member_of_collection_ids'=>'abc-123', 'work_type_id'=>'def-222', 'title'=>'my awesome work', 'description'=> ''}
