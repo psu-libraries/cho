@@ -32,7 +32,10 @@ module Schema
     def field
       if text?
         form.text_area metadata_field.label, options_for_text_area
-      else
+      elsif datalist?
+        # todo put the right form stuff in here what I'm showing with my partial
+        # form.blahblah convert my partial to this syntax
+        else
         form.text_field metadata_field.label, options_for_required_fields
       end
     end

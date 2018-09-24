@@ -1,16 +1,8 @@
 <%= form_for(work_form.model, url: work_form.form_path) do |form| %>
 
   <%= render 'shared/form_fields', resource: work_form, form: form %>
-
   <% if with_collections %>
-    <%= form.label :member_of_collection_ids %>
-    <%= form.text_field :member_of_collection_ids, name: 'work_submission[member_of_collection_ids][]', list: 'member_of_collection_ids' %>
-
-    <datalist id="member_of_collection_ids">
-      <% Collection::Archival.all.each do |collection| %>
-        <option value="<%= collection.id %>"><%= collection.title %></option>
-      <% end %>
-    </datalist>
+    <%= render 'shared/form_datalist', resource: work_form, form: form %>
   <% end %>
 
   <%= form.hidden_field :work_type_id, value: work_form.work_type_id %>
