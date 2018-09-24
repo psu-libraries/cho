@@ -35,7 +35,7 @@ class Import::File
   end
 
   def work_id
-    @work_id ||= parts.first
+    @work_id ||= file.parent.basename.to_s
   end
 
   def suffix
@@ -47,11 +47,7 @@ class Import::File
   #   Given a filename workID_00002_02_preservation.tif, the returned id would be workID_00002_02
   #   A filename such as workID_preservation.tif has no file set id.
   def file_set_id
-    @file_set_id ||= begin
-                       return if parts.count == 2
-                       parts.pop
-                       parts.join(Import::Bag::FILENAME_SEPARATOR)
-                     end
+    @file_set_id ||= build_file_set_id
   end
 
   def representative?
@@ -79,7 +75,7 @@ class Import::File
   private
 
     def filename_must_include_work_id
-      return if work_id == file.parent.basename.to_s
+      return if original_filename.starts_with?(work_id)
       errors.add(:file, :filename_must_include_work_id, file: self)
     end
 
@@ -87,5 +83,11 @@ class Import::File
       return if type
     rescue UnknownFileTypeError => e
       errors.add(:file, e.message)
+    end
+
+    def build_file_set_id
+      id = parts.slice(0, (parts.count - 1)).join(Import::Bag::FILENAME_SEPARATOR)
+      return if id == work_id
+      id
     end
 end
