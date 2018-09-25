@@ -17,12 +17,32 @@ RSpec.describe Import::FileSet do
 
       it { is_expected.not_to be_representative }
     end
+
+    context 'with a representative of a multipart work id' do
+      let(:files) { [ImportFactory::File.create('work12_34_0001_preservation.tif', parent: 'work12_34')] }
+
+      it { is_expected.not_to be_representative }
+    end
+
+    context 'with a non-representative of a multipart work id' do
+      let(:files) { [ImportFactory::File.create('work12_34_preservation.tif', parent: 'work12_34')] }
+
+      it { is_expected.to be_representative }
+    end
   end
 
   describe '#id' do
-    let(:files) { [ImportFactory::File.create('work1234_0001_preservation.tif')] }
+    context 'with a simple file' do
+      let(:files) { [ImportFactory::File.create('work1234_0001_preservation.tif')] }
 
-    its(:id) { is_expected.to eq('work1234_0001') }
+      its(:id) { is_expected.to eq('work1234_0001') }
+    end
+
+    context 'with a multipart work id' do
+      let(:files) { [ImportFactory::File.create('work12_34_0001_preservation.tif', parent: 'work12_34')] }
+
+      its(:id) { is_expected.to eq('work12_34_0001') }
+    end
   end
 
   describe '#to_s' do

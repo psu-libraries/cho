@@ -183,10 +183,10 @@ RSpec.describe Import::Work do
       expect(work.nested_works.count).to eq(2)
       expect(work.nested_works.first.files.count).to eq(3)
       expect(work.nested_works.first.file_sets.count).to eq(1)
-      expect(work.nested_works.first.file_sets.first).not_to be_representative
+      expect(work.nested_works.first.file_sets.first).to be_representative
       expect(work.nested_works.last.files.count).to eq(3)
       expect(work.nested_works.last.file_sets.count).to eq(1)
-      expect(work.nested_works.last.file_sets.first).not_to be_representative
+      expect(work.nested_works.last.file_sets.first).to be_representative
     end
   end
 
