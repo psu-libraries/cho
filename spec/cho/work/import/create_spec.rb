@@ -85,13 +85,13 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
         member_of_collection_ids: [collection.id, nil, nil, nil, nil],
         work_type: (([] << 'Generic') * 5),
         title: ids.map { |id| "My #{id.capitalize}" },
-        batch_id: (([] << 'batch1_2018-09-17') * 5)
+        batch_id: (([] << 'batch12_2018-09-17') * 5)
       )
     end
 
     let(:bag) do
       ImportFactory::Bag.create(
-        batch_id: 'batch1_2018-09-17',
+        batch_id: 'batch12_2018-09-17',
         data: {
           work1: [
             'work1_00001_01_preservation.tif',
