@@ -40,7 +40,7 @@ module Document::Csv
 
     def export_collection
       ::CSV.generate do |csv|
-        csv << ['id', 'member_of_collection_ids'] + fields.map(&:label)
+        csv << ['id'] + fields.map(&:label)
         export_members(csv)
       end
     end
@@ -66,7 +66,7 @@ module Document::Csv
       values = fields.map do |field|
         to_csv_field(solr_document.send(field.method_name))
       end
-      [solr_document.id, to_csv_field(solr_document['member_of_collection_ids_ssim'])].concat(values)
+      [solr_document.id].concat(values)
     end
 
     def fields

@@ -29,7 +29,7 @@ RSpec.describe Validation::Factory, type: :model do
     describe '#validator_names' do
       subject { described_class.validator_names }
 
-      it { is_expected.to contain_exactly('my_validator', 'no_validation') }
+      it { is_expected.to contain_exactly('my_validator', 'no_validation', 'resource_exists') }
     end
   end
 
@@ -60,7 +60,7 @@ RSpec.describe Validation::Factory, type: :model do
     describe '#validator_names' do
       subject { described_class.validator_names }
 
-      it { is_expected.to contain_exactly('my_validator', 'other_validator', 'no_validation') }
+      it { is_expected.to contain_exactly('my_validator', 'other_validator', 'no_validation', 'resource_exists') }
     end
   end
 end

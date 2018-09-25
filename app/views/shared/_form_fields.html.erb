@@ -7,4 +7,12 @@
   <% end %>
 
   <%= input.field %>
+
+  <% if input.metadata_field.controlled_vocabulary == "cho_collections" %>
+    <datalist id="<%= input.metadata_field.label %>">
+      <% ControlledVocabulary::Collections.list.each do |collection| %>
+        <option value="<%= collection.id %>"><%= collection.title %></option>
+      <% end %>
+    </datalist>
+  <% end %>
 <%- end %>

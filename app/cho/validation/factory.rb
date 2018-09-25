@@ -14,7 +14,10 @@ module Validation
       private
 
       def default_items
-        { default_key => Validation::None.new }
+        {
+          default_key => Validation::None.new,
+          resource_exists: :validation # placeholder, see https://github.com/psu-libraries/cho/issues/672
+        }
       end
 
       def item_class

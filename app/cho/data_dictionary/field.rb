@@ -33,19 +33,27 @@ module DataDictionary
     def solr_field
       if field_type == 'date'
         "#{label}_dtsi"
+      elsif field_type == 'valkyrie_id'
+        "#{label}_ssim"
       else
         "#{label}_tesim"
       end
     end
 
     # @return [Valkyrie::Types] property type for the Valkyrie::ChangeSet
+    # @note This does not address multiple, it only assumes valkyrie_id field types are singular
+    #    and everything else is multiple
     def change_set_property_type
-      Valkyrie::Types::Set.optional
+      return Valkyrie::Types::Set.optional unless valkyrie_id?
+      Valkyrie::Types::ID.optional
     end
 
     # @return [Valkyrie::Types] property type for the Valkyrie::Resource
+    # @note This does not address multiple, it only assumes valkyrie_id field types are singular
+    #    and everything else is multiple
     def resource_property_type
-      Valkyrie::Types::Set.meta(ordered: true)
+      return Valkyrie::Types::Set.meta(ordered: true) unless valkyrie_id?
+      Valkyrie::Types::ID.optional
     end
 
     # @note This defined how the field should be addressed when creating dynamic methods for access

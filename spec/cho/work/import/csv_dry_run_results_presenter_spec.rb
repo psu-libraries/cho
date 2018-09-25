@@ -20,7 +20,7 @@ RSpec.describe Work::Import::CsvDryRunResultsPresenter do
     let(:change_set) do
       change_set = Work::SubmissionChangeSet.new(Work::Submission.new)
       change_set.validate(
-        member_of_collection_ids: [collection.id], work_type_id: [work_type_id], title: 'My valid work'
+        member_of_collection_ids: collection.id, work_type_id: [work_type_id], title: 'My valid work'
       )
       change_set
     end
@@ -36,7 +36,7 @@ RSpec.describe Work::Import::CsvDryRunResultsPresenter do
   context 'when there is invalid csv data and valid bag data' do
     let(:change_set) do
       change_set = Work::SubmissionChangeSet.new(Work::Submission.new)
-      change_set.validate(member_of_collection_ids: [collection.id], title: 'My invalid work')
+      change_set.validate(member_of_collection_ids: collection.id, title: 'My invalid work')
       change_set
     end
 
@@ -52,7 +52,7 @@ RSpec.describe Work::Import::CsvDryRunResultsPresenter do
     let(:change_set) do
       change_set = Work::SubmissionChangeSet.new(Work::Submission.new)
       change_set.validate(
-        member_of_collection_ids: [collection.id], work_type_id: [work_type_id], title: 'My valid work'
+        member_of_collection_ids: collection.id, work_type_id: [work_type_id], title: 'My valid work'
       )
       change_set
     end

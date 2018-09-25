@@ -6,7 +6,7 @@ module Schema
 
     attr_reader :form, :metadata_field
 
-    delegate :text?, :required?, to: :metadata_field
+    delegate :text?, :required?, :valkyrie_id?, to: :metadata_field
 
     # @param [ActionView::Helpers::FormBuilder] form
     # @param [Schema::MetadataField] metadata_field
@@ -32,6 +32,8 @@ module Schema
     def field
       if text?
         form.text_area metadata_field.label, options_for_text_area
+      elsif valkyrie_id?
+        form.text_field metadata_field.label, options_for_valkyrie_id
       else
         form.text_field metadata_field.label, options_for_required_fields
       end
@@ -46,6 +48,10 @@ module Schema
 
       def options_for_text_area
         options_for_required_fields.merge!(value: form.object.send(metadata_field.label).first)
+      end
+
+      def options_for_valkyrie_id
+        options_for_required_fields.merge!(list: metadata_field.label)
       end
   end
 end

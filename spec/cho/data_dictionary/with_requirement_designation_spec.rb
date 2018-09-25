@@ -13,66 +13,35 @@ RSpec.describe DataDictionary::WithRequirementDesignation, type: :model do
     ActiveSupport::Dependencies.remove_constant('MyModel')
   end
 
-  subject { model.requirement_designation }
+  subject(:model) { MyModel.new }
 
-  let(:requirement_designation) { 'optional' }
-  let(:model) { MyModel.new(requirement_designation: requirement_designation) }
+  context 'requirement_desination is set to optional' do
+    before { model.optional! }
 
-  it { is_expected.to eq('optional') }
-
-  it 'is optional' do
-    expect(model).to be_optional
-  end
-
-  it 'is not required to publish' do
-    expect(model).not_to be_required_to_publish
-  end
-
-  it 'is not recommended' do
-    expect(model).not_to be_recommended
+    it { is_expected.not_to be_required_to_publish }
+    it { is_expected.not_to be_recommended }
+    it { is_expected.to be_optional }
   end
 
   context 'requirement_desination is set to required' do
-    before do
-      model.required_to_publish!
-    end
+    before { model.required_to_publish! }
 
-    it 'is required to publish' do
-      expect(model).to be_required_to_publish
-    end
-
-    it 'is not recommended' do
-      expect(model).not_to be_recommended
-    end
-
-    it 'is not optional' do
-      expect(model).not_to be_optional
-    end
+    it { is_expected.to be_required_to_publish }
+    it { is_expected.not_to be_recommended }
+    it { is_expected.not_to be_optional }
   end
 
   context 'requirement_desination is set to recommended' do
-    before do
-      model.recommended!
-    end
+    before { model.recommended! }
 
-    it 'is recommended' do
-      expect(model).to be_recommended
-    end
-
-    it 'is not optional' do
-      expect(model).not_to be_optional
-    end
-
-    it 'is not required to publish' do
-      expect(model).not_to be_required_to_publish
-    end
+    it { is_expected.not_to be_required_to_publish }
+    it { is_expected.to be_recommended }
+    it { is_expected.not_to be_optional }
   end
 
   context 'requirement_designation is bogus' do
-    let(:requirement_designation) { 'bogus' }
-
     it 'raises an error' do
-      expect { model }.to raise_error(Dry::Struct::Error)
+      expect { MyModel.new(requirement_designation: 'bogus') }.to raise_error(Dry::Struct::Error)
     end
   end
 end

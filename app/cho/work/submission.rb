@@ -12,8 +12,6 @@ module Work
 
     attribute :work_type_id, Valkyrie::Types::ID.optional
 
-    attribute :member_of_collection_ids, Valkyrie::Types::Set.of(Valkyrie::Types::ID)
-
     # A list of Work::FileSet resources.
     #  The stored valkyrie ids for file sets attached to the submission
     attribute :file_set_ids, Valkyrie::Types::Set.of(Valkyrie::Types::ID)

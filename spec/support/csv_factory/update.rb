@@ -22,12 +22,13 @@ module CsvFactory
     private
 
       def header
-        "id,member_of_collection_ids,#{fields.join(',')}\n"
+        "id,#{fields.join(',')}\n"
       end
 
       def work(hash)
         work = FactoryBot.create(:work)
-        "#{work.id},#{work.member_of_collection_ids.first},#{values(hash).join(',')}\n"
+        hash[:member_of_collection_ids] = work.member_of_collection_ids.to_s
+        "#{work.id},#{values(hash).join(',')}\n"
       end
 
       def fields
