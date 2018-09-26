@@ -1,0 +1,15 @@
+.footer {
+  padding: 1rem;
+
+  a:link,
+  a:visited,
+  a:hover,
+  p,
+  span {
+    color: $primary-white;
+  }
+}
+
+.footer-logo {
+  font-size: 1.5rem;
+}
