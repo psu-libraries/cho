@@ -55,7 +55,7 @@ module Work
           return if bag.failure?
 
           results.each do |change_set|
-            import_work = bag.success.works.select { |work| work.identifier == change_set.identifier }.first
+            import_work = bag.success.works.select { |work| work.identifier == change_set.identifier.first }.first
             change_set.import_work = import_work
             change_set.file_set_hashes = build_import_file_sets(import_work).compact if import_work.present?
           end

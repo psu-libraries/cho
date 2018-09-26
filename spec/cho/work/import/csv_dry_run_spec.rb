@@ -47,7 +47,7 @@ RSpec.describe Work::Import::CsvDryRun do
         is_expected.to be_a Array
         expect(dry_run_results.count).to eq(1)
         expect(dry_run_results.first).to be_valid
-        expect(dry_run_results.first.title).to eq('My Awesome Work')
+        expect(dry_run_results.first.title).to eq(['My Awesome Work'])
       end
     end
 
@@ -195,8 +195,8 @@ RSpec.describe Work::Import::CsvDryRun do
       it 'adds the import work to the change set' do
         expect(dry_run.results.count).to eq(1)
         expect(dry_run.results.first).to be_valid
-        expect(dry_run.results.first.title).to eq('My Awesome Work')
-        expect(dry_run.results.first.identifier).to eq('work1')
+        expect(dry_run.results.first.title).to eq(['My Awesome Work'])
+        expect(dry_run.results.first.identifier).to eq(['work1'])
         expect(dry_run.bag).to be_a(Dry::Monads::Result::Success)
         expect(dry_run.results.first.import_work.identifier).to eq('work1')
       end
@@ -229,8 +229,8 @@ RSpec.describe Work::Import::CsvDryRun do
       it 'does not have an import work' do
         expect(dry_run.results.count).to eq(1)
         expect(dry_run.results.first).to be_valid
-        expect(dry_run.results.first.title).to eq('My Awesome Work')
-        expect(dry_run.results.first.identifier).to eq('work1')
+        expect(dry_run.results.first.title).to eq(['My Awesome Work'])
+        expect(dry_run.results.first.identifier).to eq(['work1'])
         expect(dry_run.bag).to be_a(Dry::Monads::Result::Success)
         expect(dry_run.results.first.import_work).to be_nil
       end
@@ -252,8 +252,8 @@ RSpec.describe Work::Import::CsvDryRun do
       it 'does not have an import work' do
         expect(dry_run.results.count).to eq(1)
         expect(dry_run.results.first).to be_valid
-        expect(dry_run.results.first.title).to eq('My Awesome Work')
-        expect(dry_run.results.first.identifier).to eq('work1')
+        expect(dry_run.results.first.title).to eq(['My Awesome Work'])
+        expect(dry_run.results.first.identifier).to eq(['work1'])
         expect(dry_run.bag).to be_a(Dry::Monads::Result::Failure)
         expect(dry_run.results.first.import_work).to be_nil
       end

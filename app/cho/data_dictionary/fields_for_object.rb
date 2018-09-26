@@ -19,8 +19,9 @@ module DataDictionary::FieldsForObject
         # Code reloading errors may cause this block to be run twice in
         # development - this prevents an error regarding an attribute being
         # defined twice.
+
         next if schema.keys.include?(field.label.parameterize.underscore.to_sym)
-        attribute field.label.parameterize.underscore.to_sym, Valkyrie::Types::Set.meta(ordered: true)
+        attribute field.label.parameterize.underscore.to_sym, field.resource_property_type
       end
     end
   end
