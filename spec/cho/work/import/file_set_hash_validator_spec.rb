@@ -20,8 +20,8 @@ RSpec.describe Work::Import::FileSetHashValidator do
         expect(change_set).to be_a(Work::FileSetChangeSet)
         expect(change_set).to be_valid
         expect(change_set.model).to be_a(Work::FileSet)
-        expect(change_set.title).to eq('My Great File')
-        expect(change_set.description).to eq('Best description ever.')
+        expect(change_set.title).to eq(['My Great File'])
+        expect(change_set.description).to eq(['Best description ever.'])
       end
     end
 

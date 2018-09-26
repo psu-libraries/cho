@@ -11,7 +11,11 @@ module DataDictionary::FieldsForChangeSet
     #   This statement makes sure the rails environment can be loaded even if the database has yet to be created.
     if ActiveRecord::Base.connection.table_exists? 'orm_resources'
       DataDictionary::Field.all.each do |field|
-        property field.label.parameterize.underscore.to_sym, multiple: field.multiple?, required: field.required?
+        property field.label.parameterize.underscore.to_sym,
+                 multiple: field.multiple?,
+                 required: field.required?,
+                 type: field.change_set_property_type
+
         validates field.label.parameterize.underscore.to_sym, presence: field.required?
       end
     end

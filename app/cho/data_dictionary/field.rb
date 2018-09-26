@@ -20,13 +20,23 @@ module DataDictionary
     attribute :help_text, Valkyrie::Types::String
     attribute :core_field, Valkyrie::Types::Strict::Bool
 
+    def self.core_fields
+      @core_fields ||= where(core_field: true).sort_by(&:created_at)
+    end
+
     def multiple?
       return false if multiple.nil?
       multiple
     end
 
-    def self.core_fields
-      @core_fields ||= where(core_field: true).sort_by(&:created_at)
+    # @return [Valkyrie::Types] property type for the Valkyrie::ChangeSet
+    def change_set_property_type
+      Valkyrie::Types::Set.optional
+    end
+
+    # @return [Valkyrie::Types] property type for the Valkyrie::Resource
+    def resource_property_type
+      Valkyrie::Types::Set.meta(ordered: true)
     end
 
     # @note This defined how the field should be addressed when creating dynamic methods for access
