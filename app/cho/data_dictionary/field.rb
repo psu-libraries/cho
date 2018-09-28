@@ -29,6 +29,15 @@ module DataDictionary
       multiple
     end
 
+    # # @return [String] field name used in Solr for indexing
+    def solr_field
+      if field_type == 'date'
+        "#{label}_dtsi"
+      else
+        "#{label}_tesim"
+      end
+    end
+
     # @return [Valkyrie::Types] property type for the Valkyrie::ChangeSet
     def change_set_property_type
       Valkyrie::Types::Set.optional
