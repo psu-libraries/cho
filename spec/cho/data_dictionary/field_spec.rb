@@ -7,8 +7,9 @@ RSpec.describe DataDictionary::Field, type: :model do
   subject { model }
 
   let(:resource_klass) { described_class }
+  let(:field_type) { 'date' }
   let(:model) { build :data_dictionary_field,
-                      label: 'abc123_label', field_type: 'date',
+                      label: 'abc123_label', field_type: field_type,
                       requirement_designation: 'recommended',
                       controlled_vocabulary: 'no_vocabulary',
                       default_value: 'abc123',
@@ -73,6 +74,20 @@ RSpec.describe DataDictionary::Field, type: :model do
 
     context 'when set to nil' do
       it { is_expected.not_to be_multiple }
+    end
+  end
+
+  describe '#solr_field' do
+    subject { model.solr_field }
+
+    context 'with a date field' do
+      it { is_expected.to eq('abc123_label_dtsi') }
+    end
+
+    context 'when the field is not a date' do
+      let(:field_type) { 'text' }
+
+      it { is_expected.to eq('abc123_label_tesim') }
     end
   end
 
