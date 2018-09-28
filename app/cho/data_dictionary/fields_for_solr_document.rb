@@ -11,14 +11,8 @@ module DataDictionary::FieldsForSolrDocument
     #   This statement makes sure the rails environment can be loaded even if the database has yet to be created.
     if ActiveRecord::Base.connection.table_exists? 'orm_resources'
       DataDictionary::Field.all.each do |field|
-        if field.field_type == 'string' || field.field_type == 'text'
-          define_method(field.method_name) do
-            self["#{field.label}_tesim"]
-          end
-        else field.field_type == 'date'
-             define_method(field.method_name) do
-               self["#{field.label}_dtsi"]
-             end
+        define_method(field.method_name) do
+          self[field.solr_field.to_s]
         end
       end
     end
