@@ -20,8 +20,7 @@ RSpec.describe Transaction::Operations::Shared::Validate do
 
       it 'returns errors' do
         expect(operation_result.failure.errors.messages).to eq(work_type_id: ["can't be blank"],
-                                                               member_of_collection_ids: ["can't be blank"],
-                                                               title: ["can't be blank"])
+                                                               member_of_collection_ids: ["can't be blank"])
       end
     end
   end

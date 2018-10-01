@@ -13,10 +13,16 @@ module DataDictionary::FieldsForChangeSet
       DataDictionary::Field.all.each do |field|
         property field.label.parameterize.underscore.to_sym,
                  multiple: field.multiple?,
-                 required: field.required?,
                  type: field.change_set_property_type
 
-        validates field.label.parameterize.underscore.to_sym, presence: field.required?
+        validates field.label.parameterize.underscore.to_sym, with: :requirement_determination
+      end
+    end
+
+    def requirement_determination(field)
+      schema_field = form_fields.select { |form_field| form_field.label == field.to_s }.first
+      if schema_field.try(:required?) && self[field].blank?
+        errors.add(field, "can't be blank")
       end
     end
   end

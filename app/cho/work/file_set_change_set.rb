@@ -10,11 +10,18 @@ module Work
 
     include DataDictionary::FieldsForChangeSet
     include WithValidMembers
+    include WithFormFields
 
     delegate :url_helpers, to: 'Rails.application.routes'
 
     def initialize(*args)
       super(*args)
     end
+
+    private
+
+      def metadata_schema
+        @metadata_schema ||= Schema::Metadata.find_using(label: 'FileSet').first
+      end
   end
 end

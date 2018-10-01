@@ -38,6 +38,7 @@ module Work
 
     include DataDictionary::FieldsForChangeSet
     include WithValidMembers
+    include WithFormFields
 
     delegate :url_helpers, to: 'Rails.application.routes'
 
@@ -50,13 +51,6 @@ module Work
       errors.add(field, "#{work_type_id} does not exist") if work_type.blank?
     end
 
-    def form_fields
-      return @form_fields if @form_fields.present?
-      field_ids = metadata_schema.core_fields + metadata_schema.fields
-      unordered_fields = field_ids.map { |id| Schema::MetadataField.find(id) }
-      @form_fields = unordered_fields.sort_by(&:order_index)
-    end
-
     # @param [ActionView::Helpers::FormBuilder] form
     # @return [Array<Schema::InputField>]
     def input_fields(form)
@@ -64,6 +58,7 @@ module Work
     end
 
     def work_type
+      return if work_type_id.nil?
       @work_type ||= Work::Type.find(work_type_id)
     end
 
@@ -86,7 +81,7 @@ module Work
     private
 
       def metadata_schema
-        @metadata_schema ||= work_type.metadata_schema
+        @metadata_schema ||= work_type.present? ? work_type.metadata_schema : Schema::None.new
       end
   end
 end
