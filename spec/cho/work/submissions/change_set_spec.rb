@@ -37,10 +37,6 @@ RSpec.describe Work::SubmissionChangeSet do
   end
 
   describe '#required?' do
-    it 'has a required title' do
-      expect(change_set).to be_required(:title)
-    end
-
     it 'has a required work type' do
       expect(change_set).to be_required(:work_type_id)
     end
@@ -184,5 +180,11 @@ RSpec.describe Work::SubmissionChangeSet do
                                                                                    'title')
       end
     end
+  end
+
+  context 'with no work type' do
+    let(:resource) { Work::Submission.new(work_type_id: nil) }
+
+    its(:work_type) { is_expected.to be_nil }
   end
 end

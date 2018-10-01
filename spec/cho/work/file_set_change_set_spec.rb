@@ -13,12 +13,6 @@ RSpec.describe Work::FileSetChangeSet do
     its([:append_id]) { is_expected.to eq(Valkyrie::ID.new('test')) }
   end
 
-  describe '#required?' do
-    it 'has a required title' do
-      expect(change_set).to be_required(:title)
-    end
-  end
-
   describe '#fields=' do
     before { change_set.prepopulate! }
     its(:title) { is_expected.to be_empty }
@@ -55,6 +49,14 @@ RSpec.describe Work::FileSetChangeSet do
 
     it 'casts ids to Valkyrie IDs' do
       expect(change_set.member_ids.first).to be_kind_of(Valkyrie::ID)
+    end
+  end
+
+  describe '#form_fields' do
+    let(:metadata_schema) { Schema::Metadata.find_using(label: 'FileSet').first }
+
+    it 'returns a list of fields from the FileSet metadata schema' do
+      expect(change_set.form_fields.map(&:id)).to eq(metadata_schema.core_fields)
     end
   end
 end
