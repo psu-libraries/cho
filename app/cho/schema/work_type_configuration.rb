@@ -43,17 +43,24 @@ module Schema
           data_dictionary_field,
           attributes.merge(work_type: work_type)
         )
-        metadata_field.order_index = if metadata_field.core_field
-                                       attributes.fetch('order_index',
-                                                        core_field_hash[metadata_field.label].order_index).to_i
-                                     else
-                                       (attributes.fetch('order_index', '1').to_i + core_field_count)
-                                     end
-        find_or_save(metadata_field)
+
+        change_set = Schema::MetadataFieldChangeSet.new(metadata_field)
+        change_set.validate(attributes)
+        change_set.order_index = field_order_index(metadata_field: metadata_field, attributes: attributes)
+        change_set.sync
+        find_or_save(change_set.resource)
       end
     end
 
     private
+
+      def field_order_index(metadata_field:, attributes:)
+        if metadata_field.core_field
+          attributes.fetch('order_index', core_field_hash[metadata_field.label].order_index).to_i
+        else
+          (attributes.fetch('order_index', '1').to_i + core_field_count)
+        end
+      end
 
       def change_set_persister
         @change_set_persister ||= ChangeSetPersister.new(

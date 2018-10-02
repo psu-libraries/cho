@@ -27,7 +27,9 @@ module Work
 
       def collection_labels_for_ids
         return unless resource.respond_to?(:member_of_collection_ids)
-        resource.member_of_collection_ids.map { |id| SolrDocument.find(id).send(title_field_method) }.flatten
+        Array.wrap(resource.member_of_collection_ids).map do |id|
+          SolrDocument.find(id).send(title_field_method)
+        end.flatten
       end
 
       def title_field_method

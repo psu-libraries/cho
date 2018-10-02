@@ -13,7 +13,12 @@ RSpec.describe Schema::WorkTypeConfiguration, type: :model do
 
     let(:work_type) { 'Still Image' }
 
-    it { is_expected.to eq('still_image_field' => { 'order_index' => 1, 'display_name' => 'Photograph' }) }
+    it do
+      is_expected.to eq(
+        'member_of_collection_ids' => { 'order_index' => 2, 'requirement_designation' => 'required' },
+        'still_image_field' => { 'display_name' => 'Photograph', 'order_index' => 1 }
+      )
+    end
 
     context 'a non existing work type' do
       let(:work_type) { 'Foo' }
@@ -24,8 +29,13 @@ RSpec.describe Schema::WorkTypeConfiguration, type: :model do
     context 'a work type with overridden core fields' do
       let(:work_type) { 'Audio' }
 
-      it { is_expected.to eq('audio_field' => { 'order_index' => 1 },
-                             'subtitle' => { 'order_index' => 25, 'display_name' => 'Additional Info' }) }
+      it do
+        is_expected.to eq(
+          'audio_field' => { 'order_index' => 1 },
+          'member_of_collection_ids' => { 'order_index' => 2, 'requirement_designation' => 'required' },
+          'subtitle' => { 'display_name' => 'Additional Info', 'order_index' => 25 }
+        )
+      end
     end
   end
 
@@ -35,10 +45,15 @@ RSpec.describe Schema::WorkTypeConfiguration, type: :model do
     let(:work_type) { 'Generic' }
 
     it 'creates a field based on the work type' do
-      expect(schema_fields.count).to eq(1)
+      expect(schema_fields.count).to eq(2)
       expect(schema_fields.first.order_index).to eq(5)
       expect(schema_fields.first.label).to eq('generic_field')
       expect(schema_fields.first.work_type).to eq(work_type)
+      expect(schema_fields.first.requirement_designation).to eq('optional')
+      expect(schema_fields.last.order_index).to eq(6)
+      expect(schema_fields.last.label).to eq('member_of_collection_ids')
+      expect(schema_fields.last.work_type).to eq(work_type)
+      expect(schema_fields.last.requirement_designation).to eq('required')
     end
 
     context 'a non existing work type' do
@@ -51,14 +66,11 @@ RSpec.describe Schema::WorkTypeConfiguration, type: :model do
       let(:work_type) { 'Audio' }
 
       it 'creates a field based on the work type' do
-        expect(schema_fields.count).to eq(2)
-        expect(schema_fields.first.order_index).to eq(25)
-        expect(schema_fields.first.label).to eq('subtitle')
-        expect(schema_fields.first.work_type).to eq(work_type)
-        expect(schema_fields.first.display_name).to eq('Additional Info')
-        expect(schema_fields.last.order_index).to eq(5)
-        expect(schema_fields.last.label).to eq('audio_field')
-        expect(schema_fields.last.work_type).to eq(work_type)
+        expect(schema_fields.count).to eq(3)
+        expect(schema_fields.map(&:order_index)).to contain_exactly(25, 5, 6)
+        expect(schema_fields.map(&:label)).to contain_exactly('subtitle', 'audio_field', 'member_of_collection_ids')
+        expect(schema_fields.map(&:work_type).uniq).to contain_exactly(work_type)
+        expect(schema_fields.map(&:display_name)).to contain_exactly('Additional Info', nil, 'Member of Collection')
       end
     end
   end
@@ -88,7 +100,7 @@ RSpec.describe Schema::WorkTypeConfiguration, type: :model do
     it 'creates a field based on the work type' do
       expect(metadata_schema).to be_a(Schema::Metadata)
       expect(metadata_schema.label).to eq(work_type)
-      expect(metadata_schema.fields.count).to eq(1)
+      expect(metadata_schema.fields.count).to eq(2)
     end
 
     context 'a non existing work type' do
@@ -107,7 +119,7 @@ RSpec.describe Schema::WorkTypeConfiguration, type: :model do
       it 'creates a field based on the work type' do
         expect(metadata_schema).to be_a(Schema::Metadata)
         expect(metadata_schema.label).to eq(work_type)
-        expect(metadata_schema.fields.count).to eq(2)
+        expect(metadata_schema.fields.count).to eq(3)
         field = Schema::MetadataField.find(Valkyrie::ID.new(metadata_schema.fields.first.id))
         expect(field.order_index).to eq(25)
         expect(field.label).to eq('subtitle')

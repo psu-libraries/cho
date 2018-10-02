@@ -19,8 +19,7 @@ RSpec.describe Transaction::Operations::Shared::Validate do
       let(:resource) { Work::Submission.new({}) }
 
       it 'returns errors' do
-        expect(operation_result.failure.errors.messages).to eq(work_type_id: ["can't be blank"],
-                                                               member_of_collection_ids: ["can't be blank"])
+        expect(operation_result.failure.errors.messages).to eq(work_type_id: ["can't be blank"])
       end
     end
   end

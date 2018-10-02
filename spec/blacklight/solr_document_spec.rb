@@ -68,23 +68,24 @@ RSpec.describe SolrDocument, type: :model do
       {
         'internal_resource_tsim' => 'MyResource',
         id: 'abc123',
+        member_of_collection_ids_ssim: ['xyx789'],
         title_tesim: ['my_title'],
         generic_field_tesim: ['value1', 'value2']
       }
     end
 
-    it { is_expected.to eq("abc123,,my_title,,,,,,,value1|value2,,,\n") }
+    it { is_expected.to eq("abc123,my_title,,,,,,,value1|value2,,xyx789,,\n") }
 
     context 'a collection' do
       let(:collection) { create :library_collection }
       let(:work) { create :work, member_of_collection_ids: [collection.id], title: 'Work One' }
-      let(:work1_csv) { "#{work.id},#{collection.id},Work One,,,,,,,,,," }
+      let(:work1_csv) { "#{work.id},Work One,,,,,,,,,#{collection.id},," }
       let(:work2) { create :work, member_of_collection_ids: [collection.id], title: 'Work Two' }
-      let(:work2_csv) { "#{work2.id},#{collection.id},Work Two,,,,,,,,,," }
+      let(:work2_csv) { "#{work2.id},Work Two,,,,,,,,,#{collection.id},," }
 
       let(:csv_header) do
-        'id,member_of_collection_ids,title,subtitle,description,identifier,audio_field,'\
-        'created,document_field,generic_field,map_field,moving_image_field,still_image_field'
+        'id,title,subtitle,description,identifier,audio_field,created,document_field,'\
+        'generic_field,map_field,member_of_collection_ids,moving_image_field,still_image_field'
       end
 
       let(:document) do

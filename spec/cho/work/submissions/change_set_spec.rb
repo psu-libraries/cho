@@ -23,8 +23,8 @@ RSpec.describe Work::SubmissionChangeSet do
       expect(change_set).not_to be_multiple(:work_type_id)
     end
 
-    it 'has multiple parents' do
-      expect(change_set).to be_multiple(:member_of_collection_ids)
+    it 'has a single parent collection' do
+      expect(change_set).not_to be_multiple(:member_of_collection_ids)
     end
 
     it 'has multiple file sets' do
@@ -48,7 +48,7 @@ RSpec.describe Work::SubmissionChangeSet do
     its(:work_type_id) { is_expected.to eq(Valkyrie::ID.new(nil)) }
     its(:work_type) { is_expected.to be_nil }
     its(:file) { is_expected.to be_nil }
-    its(:member_of_collection_ids) { is_expected.to be_empty }
+    its(:member_of_collection_ids) { is_expected.to be_nil }
     its(:file_set_ids) { is_expected.to be_empty }
     its(:batch_id) { is_expected.to be_nil }
     its(:import_work) { is_expected.to be_nil }
@@ -79,30 +79,42 @@ RSpec.describe Work::SubmissionChangeSet do
     end
 
     context 'with non-existent parents' do
-      let(:params) { { work_type_id: work_type_id, title: 'Title', member_of_collection_ids: ['nothere'] } }
+      let(:params) { { work_type_id: work_type_id, title: 'Title', member_of_collection_ids: 'nothere' } }
 
       its(:full_messages) { is_expected.to include('Member of collection ids nothere does not exist') }
     end
 
-    context 'without collection membership' do
-      let(:params) { { work_type_id: work_type_id, title: 'Title', member_of_collection_ids: [] } }
-
-      its(:full_messages) { is_expected.to include("Member of collection ids can't be blank") }
-    end
-
     context 'with existing parents and all required fields' do
       let(:collection) { create :archival_collection }
-      let(:params) { { work_type_id: work_type_id, title: 'Title', member_of_collection_ids: [collection.id] } }
+      let(:params) { { work_type_id: work_type_id, title: 'Title', member_of_collection_ids: collection.id } }
 
       its(:full_messages) { is_expected.to be_empty }
     end
   end
 
   describe '#member_of_collection_ids' do
-    before { change_set.validate(member_of_collection_ids: ['1']) }
+    subject { change_set.member_of_collection_ids }
 
-    it 'casts ids to Valkyrie IDs' do
-      expect(change_set.member_of_collection_ids.first).to be_kind_of(Valkyrie::ID)
+    context 'with an id' do
+      before { change_set.validate(member_of_collection_ids: '1') }
+
+      it { is_expected.to be_kind_of(Valkyrie::ID) }
+    end
+
+    context 'with a null id' do
+      before { change_set.validate(member_of_collection_ids: nil) }
+
+      it { is_expected.to be_nil }
+    end
+
+    context 'with an empty id' do
+      before { change_set.validate(member_of_collection_ids: '') }
+
+      it 'does not cast empty strings to ids' do
+        pending('.optional should not cast ids for empty strings' \
+                'See https://github.com/samvera-labs/valkyrie/issues/605')
+        is_expected.to be_nil
+      end
     end
   end
 
@@ -151,10 +163,12 @@ RSpec.describe Work::SubmissionChangeSet do
 
       let(:work_field) { Schema::MetadataField.find_using(label: 'generic_field').first }
 
-      its(:count) { is_expected.to eq(5) }
+      its(:count) { is_expected.to eq(6) }
 
       it 'is ordered' do
-        expect(fields.map(&:label)).to eq(['title', 'subtitle', 'description', 'identifier', 'generic_field'])
+        expect(fields.map(&:label)).to eq(
+          ['title', 'subtitle', 'description', 'identifier', 'generic_field', 'member_of_collection_ids']
+        )
       end
 
       context 'fields are reordered' do
@@ -164,7 +178,9 @@ RSpec.describe Work::SubmissionChangeSet do
         end
 
         it 'is ordered' do
-          expect(fields.map(&:label)).to eq(['generic_field', 'title', 'subtitle', 'description', 'identifier'])
+          expect(fields.map(&:label)).to eq(
+            ['generic_field', 'title', 'subtitle', 'description', 'identifier', 'member_of_collection_ids']
+          )
         end
       end
     end
@@ -177,6 +193,7 @@ RSpec.describe Work::SubmissionChangeSet do
                                                                                    'description',
                                                                                    'generic_field',
                                                                                    'identifier',
+                                                                                   'member_of_collection_ids',
                                                                                    'title')
       end
     end

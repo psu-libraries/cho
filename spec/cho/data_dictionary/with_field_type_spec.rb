@@ -13,100 +13,61 @@ RSpec.describe DataDictionary::WithFieldType, type: :model do
     ActiveSupport::Dependencies.remove_constant('MyFieldModel')
   end
 
-  subject { model.field_type }
+  subject(:model) { MyFieldModel.new }
 
-  let(:field_type) { 'text' }
-  let(:model) { MyFieldModel.new(field_type: field_type) }
+  context 'field_type is set to text' do
+    before { model.text! }
 
-  it { is_expected.to eq('text') }
-
-  it 'is text' do
-    expect(model).to be_text
-  end
-
-  it 'is not string' do
-    expect(model).not_to be_string
-  end
-
-  it 'is not date' do
-    expect(model).not_to be_date
-  end
-
-  it 'is not numeric' do
-    expect(model).not_to be_numeric
+    it { is_expected.to be_text }
+    it { is_expected.not_to be_string }
+    it { is_expected.not_to be_date }
+    it { is_expected.not_to be_numeric }
+    it { is_expected.not_to be_valkyrie_id }
   end
 
   context 'field_type is set to date' do
-    before do
-      model.date!
-    end
+    before { model.date! }
 
-    it 'is date' do
-      expect(model).to be_date
-    end
-
-    it 'is not text' do
-      expect(model).not_to be_text
-    end
-
-    it 'is not string' do
-      expect(model).not_to be_string
-    end
-
-    it 'is not numeric' do
-      expect(model).not_to be_numeric
-    end
+    it { is_expected.not_to be_text }
+    it { is_expected.not_to be_string }
+    it { is_expected.to be_date }
+    it { is_expected.not_to be_numeric }
+    it { is_expected.not_to be_valkyrie_id }
   end
 
   context 'field_type is set to numeric' do
-    before do
-      model.numeric!
-    end
+    before { model.numeric! }
 
-    it 'is numeric' do
-      expect(model).to be_numeric
-    end
-
-    it 'is not date' do
-      expect(model).not_to be_date
-    end
-
-    it 'is not text' do
-      expect(model).not_to be_text
-    end
-
-    it 'is not string' do
-      expect(model).not_to be_string
-    end
+    it { is_expected.not_to be_text }
+    it { is_expected.not_to be_string }
+    it { is_expected.not_to be_date }
+    it { is_expected.to be_numeric }
+    it { is_expected.not_to be_valkyrie_id }
   end
 
   context 'field_type is set to string' do
-    before do
-      model.string!
-    end
+    before { model.string! }
 
-    it 'is string' do
-      expect(model).to be_string
-    end
+    it { is_expected.not_to be_text }
+    it { is_expected.to be_string }
+    it { is_expected.not_to be_date }
+    it { is_expected.not_to be_numeric }
+    it { is_expected.not_to be_valkyrie_id }
+  end
 
-    it 'is not numeric' do
-      expect(model).not_to be_numeric
-    end
+  context 'field_type is set to a Valkyrie ID' do
+    before { model.valkyrie_id! }
 
-    it 'is not date' do
-      expect(model).not_to be_date
-    end
-
-    it 'is not text' do
-      expect(model).not_to be_text
-    end
+    it { is_expected.not_to be_text }
+    it { is_expected.not_to be_string }
+    it { is_expected.not_to be_date }
+    it { is_expected.not_to be_numeric }
+    it { is_expected.to be_valkyrie_id }
   end
 
   context 'field_type is bogus' do
-    let(:field_type) { 'bogus' }
-
     it 'raises an error' do
-      expect { model }.to raise_error(Dry::Struct::Error)
+      expect { MyFieldModel.new(field_type: 'bogus') }.to raise_error(Dry::Struct::Error)
     end
   end
 end

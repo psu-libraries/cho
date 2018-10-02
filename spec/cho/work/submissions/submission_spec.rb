@@ -47,13 +47,13 @@ RSpec.describe Work::Submission do
   end
 
   describe '#member_of_collection_ids' do
-    it 'is empty when not set' do
-      expect(resource_klass.new.member_of_collection_ids).to be_empty
+    it 'is nil when not set' do
+      expect(resource_klass.new.member_of_collection_ids).to be_nil
     end
 
     it 'can be set as an attribute' do
-      resource = resource_klass.new(member_of_collection_ids: ['1', '2'])
-      expect(resource.attributes[:member_of_collection_ids].map(&:id)).to contain_exactly('1', '2')
+      resource = resource_klass.new(member_of_collection_ids: ['1'])
+      expect(resource.attributes[:member_of_collection_ids]).to eq(Valkyrie::ID.new('1'))
     end
 
     it 'is included in the list of attributes' do

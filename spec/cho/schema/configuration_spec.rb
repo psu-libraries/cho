@@ -11,15 +11,43 @@ RSpec.describe Schema::Configuration, type: :model do
   its(:schema_config) do
     is_expected.to eq(
       [
-        { 'schema' => 'Generic', 'fields' => { 'generic_field' => { 'order_index' => 1 } } },
-        { 'schema' => 'Document', 'fields' => { 'document_field' => { 'order_index' => 1 } } },
-        { 'schema' => 'Still Image',
-          'fields' => { 'still_image_field' => { 'order_index' => 1, 'display_name' => 'Photograph' } } },
-        { 'schema' => 'Map', 'fields' => { 'map_field' => { 'order_index' => 1 } } },
-        { 'schema' => 'Moving Image',
-          'fields' => { 'moving_image_field' => { 'order_index' => 1 } } },
-        { 'schema' => 'Audio', 'fields' => { 'subtitle' => { 'order_index' => 25, 'display_name' => 'Additional Info' },
-                                             'audio_field' => { 'order_index' => 1 } } },
+        {
+          'schema' => 'Generic', 'fields' => {
+            'member_of_collection_ids' => { 'order_index' => 2, 'requirement_designation' => 'required' },
+            'generic_field' => { 'order_index' => 1 }
+          }
+        },
+        {
+          'schema' => 'Document', 'fields' => {
+            'member_of_collection_ids' => { 'order_index' => 2, 'requirement_designation' => 'required' },
+            'document_field' => { 'order_index' => 1 }
+          }
+        },
+        {
+          'schema' => 'Still Image', 'fields' => {
+            'member_of_collection_ids' => { 'order_index' => 2, 'requirement_designation' => 'required' },
+            'still_image_field' => { 'order_index' => 1, 'display_name' => 'Photograph' }
+          }
+        },
+        {
+          'schema' => 'Map', 'fields' => {
+            'member_of_collection_ids' => { 'order_index' => 2, 'requirement_designation' => 'required' },
+            'map_field' => { 'order_index' => 1 }
+          }
+        },
+        {
+          'schema' => 'Moving Image', 'fields' => {
+            'member_of_collection_ids' => { 'order_index' => 2, 'requirement_designation' => 'required' },
+            'moving_image_field' => { 'order_index' => 1 }
+          }
+        },
+        {
+          'schema' => 'Audio', 'fields' => {
+            'member_of_collection_ids' => { 'order_index' => 2, 'requirement_designation' => 'required' },
+            'subtitle' => { 'order_index' => 25, 'display_name' => 'Additional Info' },
+            'audio_field' => { 'order_index' => 1 }
+          }
+        },
         { 'schema' => 'Collection', 'fields' => [], 'work_type' => 'false' },
         { 'schema' => 'FileSet', 'fields' => [], 'work_type' => 'false' }
       ]

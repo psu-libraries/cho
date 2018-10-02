@@ -11,9 +11,9 @@ FactoryBot.define do
 
     member_of_collection_ids do
       if @build_strategy.is_a? FactoryBot::Strategy::Build
-        [build(:collection).id]
+        build(:collection).id
       else
-        [create(:collection).id]
+        create(:collection).id
       end
     end
 
