@@ -147,6 +147,13 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
       expect(file_sets.map(&:identifier)).to contain_exactly(
         ['work1_00001_01'], ['work1_00001_02'], ['work1_00002_01'], ['work1_00002_02'], []
       )
+      expect(file_sets.map(&:title)).to contain_exactly(
+        ['My Work1_00001_01'],
+        ['My Work1_00001_02'],
+        ['work1_service.pdf'],
+        ['My Work1_00002_01'],
+        ['My Work1_00002_02']
+      )
       filenames = file_sets.map do |file_set|
         file_set.member_ids.map { |id| Work::File.find(Valkyrie::ID.new(id)).original_filename }
       end
