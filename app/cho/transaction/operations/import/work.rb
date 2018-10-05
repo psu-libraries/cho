@@ -25,7 +25,7 @@ module Transaction
           # @return [Array<Work::FileSet>]
           def saved_file_sets(import_work, file_set_hashes:)
             import_work.file_sets.map do |file_set|
-              file_set_change_set = file_set_hashes.select { |hash| hash.identifier == file_set.id }.first
+              file_set_change_set = file_set_hashes.select { |hash| hash.identifier == Array.wrap(file_set.id) }.first
               resource = import_file_set(file_set, file_set_change_set: file_set_change_set)
               metadata_adapter.persister.save(resource: resource)
             end
@@ -42,10 +42,9 @@ module Transaction
                 identifier: file_set.id
               )
             else
-              resource = file_set_change_set.resource
-              resource.member_ids = files.map(&:id)
-              resource.identifier << file_set.id
-              resource
+              file_set_change_set.member_ids = files.map(&:id)
+              file_set_change_set.sync
+              file_set_change_set.resource
             end
           end
 
