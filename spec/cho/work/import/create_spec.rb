@@ -19,7 +19,7 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
   context 'with a valid csv' do
     let(:csv_file) do
       CsvFactory::Generic.new(
-        identifier: ['work1', 'work2', 'work3'],
+        alternate_ids: ['work1', 'work2', 'work3'],
         member_of_collection_ids: [collection.id, collection.id, collection.id],
         work_type: ['Generic', 'Generic', 'Generic'],
         title: ['My Work 1', 'My Work 2', 'My Work 3'],
@@ -65,7 +65,7 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
         expect(file_set.member_ids.count).to eq(1)
         file = Work::File.find(Valkyrie::ID.new(file_set.member_ids.first))
         expect(file_set.title).to contain_exactly(file.original_filename)
-        expect(file.original_filename).to eq("#{work.identifier.first}_preservation.tif")
+        expect(file.original_filename).to eq("#{work.alternate_ids.first}_preservation.tif")
       end
     end
   end
@@ -81,7 +81,7 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
 
     let(:csv_file) do
       CsvFactory::Generic.new(
-        identifier: ids,
+        alternate_ids: ids,
         member_of_collection_ids: [collection.id, nil, nil, nil, nil],
         work_type: (([] << 'Generic') * 5),
         title: ids.map { |id| "My #{id.capitalize}" },
@@ -144,8 +144,8 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
         Work::FileSet.find(Valkyrie::ID.new(id))
       end
       expect(file_sets.count).to eq(5)
-      expect(file_sets.map(&:identifier)).to contain_exactly(
-        ['work1_00001_01'], ['work1_00001_02'], ['work1_00002_01'], ['work1_00002_02'], []
+      expect(file_sets.map(&:alternate_ids).flatten.map(&:to_s)).to contain_exactly(
+        'work1_00001_01', 'work1_00001_02', 'work1_00002_01', 'work1_00002_02'
       )
       expect(file_sets.map(&:title)).to contain_exactly(
         ['My Work1_00001_01'],
@@ -223,7 +223,7 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
   context 'with an invalid bag' do
     let(:csv_file) do
       CsvFactory::Generic.new(
-        identifier: ['work1', 'work2', 'work3'],
+        alternate_ids: ['work1', 'work2', 'work3'],
         member_of_collection_ids: [collection.id, collection.id, collection.id],
         work_type: ['Generic', 'Generic', 'Generic'],
         title: ['My Work 1', 'My Work 2', 'My Work 3'],
@@ -262,7 +262,7 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
   context 'with a missing bag' do
     let(:csv_file) do
       CsvFactory::Generic.new(
-        identifier: ['work1'],
+        alternate_ids: ['work1'],
         member_of_collection_ids: [collection.id],
         work_type: ['Generic'],
         title: ['My Work 1'],

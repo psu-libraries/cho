@@ -84,7 +84,7 @@ RSpec.describe SolrDocument, type: :model do
       let(:work2_csv) { "#{work2.id},Work Two,,,,,,,,,#{collection.id},," }
 
       let(:csv_header) do
-        'id,title,subtitle,description,identifier,audio_field,created,document_field,'\
+        'id,title,subtitle,description,alternate_ids,audio_field,created,document_field,'\
         'generic_field,map_field,member_of_collection_ids,moving_image_field,still_image_field'
       end
 

@@ -25,10 +25,18 @@ module Transaction
           # @return [Array<Work::FileSet>]
           def saved_file_sets(import_work, file_set_hashes:)
             import_work.file_sets.map do |file_set|
-              file_set_change_set = file_set_hashes.select { |hash| hash.identifier == Array.wrap(file_set.id) }.first
+              file_set_change_set = change_set_from_hash(file_set: file_set, file_set_hashes: file_set_hashes)
               resource = import_file_set(file_set, file_set_change_set: file_set_change_set)
               metadata_adapter.persister.save(resource: resource)
             end
+          end
+
+          # @return [Work::FileSetChangeSet]
+          # @note matches an import file set obtained from the bag, to one of the hashes obtained in the csv
+          def change_set_from_hash(file_set:, file_set_hashes:)
+            file_set_hashes.select do |hash|
+              hash.alternate_ids.map(&:to_s) == Array.wrap(file_set.id)
+            end.first
           end
 
           # @param [Import::FileSet] file_set
@@ -39,7 +47,7 @@ module Transaction
               ::Work::FileSet.new(
                 member_ids: files.map(&:id),
                 title: file_set.title,
-                identifier: file_set.id
+                alternate_ids: file_set.id
               )
             else
               file_set_change_set.member_ids = files.map(&:id)

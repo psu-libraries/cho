@@ -7,7 +7,7 @@ RSpec.describe Schema::MetadataCoreFields, type: :model do
   let(:title_field) { Schema::MetadataField.where(label: 'title').first }
 
   it 'generates the core fields' do
-    expect(core_fields.map(&:label)).to eq(['title', 'subtitle', 'description', 'identifier'])
+    expect(core_fields.map(&:label)).to eq(['title', 'subtitle', 'description', 'alternate_ids'])
     expect(core_fields.map(&:order_index)).to eq([0, 1, 2, 3])
   end
 

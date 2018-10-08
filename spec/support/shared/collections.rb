@@ -50,4 +50,27 @@ RSpec.shared_examples 'a collection' do
 
     its(:members) { is_expected.to be_empty }
   end
+
+  describe '#alternate_ids' do
+    context 'when an arbitrary value' do
+      let(:resource) { resource_klass.new(alternate_ids: ['abc123']) }
+
+      it 'casts values to Valkyrie IDs' do
+        expect(resource.alternate_ids).to include(kind_of(Valkyrie::ID))
+        expect(resource.alternate_ids.map(&:to_s)).to eq(['abc123'])
+      end
+    end
+
+    context 'with a null value' do
+      subject { resource_klass.new(alternate_ids: []) }
+
+      its(:alternate_ids) { is_expected.to be_empty }
+    end
+
+    context 'by default' do
+      subject { resource_klass.new }
+
+      its(:alternate_ids) { is_expected.to be_empty }
+    end
+  end
 end
