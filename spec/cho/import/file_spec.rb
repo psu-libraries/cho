@@ -118,7 +118,7 @@ RSpec.describe Import::File do
   describe '#path' do
     subject { ImportFactory::File.create('work_ID_0001_preservation.tif', parent: 'work_ID') }
 
-    its(:path) { is_expected.to eq(Rails.root.join('tmp', 'work_ID', 'work_ID_0001_preservation.tif').to_s) }
+    its(:path) { is_expected.to eq(ImportFactory::Bag.root.join('work_ID', 'work_ID_0001_preservation.tif').to_s) }
   end
 
   describe '#service?' do

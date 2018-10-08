@@ -29,6 +29,10 @@ module ImportFactory
       Import::Bag.new(bag.path)
     end
 
+    def self.root
+      Rails.root.join('tmp', 'import-factory')
+    end
+
     def initialize(batch_id:, data:)
       @batch_id = batch_id
       @data = data
@@ -47,7 +51,7 @@ module ImportFactory
     end
 
     def path
-      Rails.root.join('tmp', batch_id)
+      self.class.root.join(batch_id)
     end
 
     private
