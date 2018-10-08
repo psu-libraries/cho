@@ -53,9 +53,7 @@ RSpec.describe Transaction::Operations::Import::Extract do
       it 'returns Failure' do
         result = operation.call(zip_name: 'non-existent zip')
         expect(result).to be_failure
-        expect(result.failure).to eq(
-          "Error extracting the bag: No such file or directory @ rb_sysopen - #{path}"
-        )
+        expect(result.failure).to be_a(Transaction::Rejection)
       end
     end
   end

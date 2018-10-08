@@ -258,4 +258,24 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
       )
     end
   end
+
+  context 'with a missing bag' do
+    let(:csv_file) do
+      CsvFactory::Generic.new(
+        identifier: ['work1'],
+        member_of_collection_ids: [collection.id],
+        work_type: ['Generic'],
+        title: ['My Work 1'],
+        batch_id: ['missingZip_2018-10-08']
+      )
+    end
+
+    it 'displays the missing zip error in the dry run page' do
+      visit(csv_create_path)
+      expect(page).to have_selector('h1', text: 'CSV Import')
+      attach_file('work_import_csv_file_file', csv_file.path)
+      click_button('Preview Import')
+      expect(page).to have_content('Error extracting the bag: No such file or directory')
+    end
+  end
 end
