@@ -15,7 +15,7 @@ module ImportFactory
     def initialize(data)
       directory = data.keys.first
       entries = data[directory]
-      @base_dir = Rails.root.join('tmp', directory.to_s)
+      @base_dir = Bag.root.join(directory.to_s)
       call(entries)
     end
 

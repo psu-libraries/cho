@@ -8,7 +8,7 @@ module ImportFactory
     # @return [Import::File]
     def self.create(file, parent: nil)
       parent ||= file.split(/_/).first
-      base_dir = Rails.root.join('tmp', parent)
+      base_dir = Bag.root.join(parent)
       FileUtils.rm_rf(base_dir)
       FileUtils.mkdir_p(base_dir)
       path = Rails.root.join(base_dir, file)

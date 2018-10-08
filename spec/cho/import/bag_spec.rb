@@ -29,7 +29,11 @@ RSpec.describe Import::Bag do
   end
 
   describe 'an invalid bag' do
-    subject(:bag) { described_class.new(Rails.root.join('tmp')) }
+    subject(:bag) { described_class.new(invalid_path) }
+
+    let(:invalid_path) { ImportFactory::Bag.root.join('invalid') }
+
+    before { FileUtils.mkdir_p(invalid_path) }
 
     it do
       expect(bag).not_to be_valid
