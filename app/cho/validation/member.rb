@@ -9,10 +9,23 @@ module Validation
     end
 
     def exists?
-      Valkyrie.config.metadata_adapter.query_service.find_by(id: id)
-      true
-    rescue Valkyrie::Persistence::ObjectNotFoundError
-      false
+      exists_by_id? || exists_by_alternate_id?
     end
+
+    private
+
+      def exists_by_id?
+        Valkyrie.config.metadata_adapter.query_service.find_by(id: id)
+        true
+      rescue Valkyrie::Persistence::ObjectNotFoundError
+        false
+      end
+
+      def exists_by_alternate_id?
+        Valkyrie.config.metadata_adapter.query_service.find_by_alternate_identifier(alternate_identifier: id)
+        true
+      rescue Valkyrie::Persistence::ObjectNotFoundError
+        false
+      end
   end
 end

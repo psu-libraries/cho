@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Preview of CSV Import', type: :feature do
-  let(:collection) { create :library_collection, title: 'my collection' }
+  let!(:collection) { create :library_collection, title: 'my collection', alternate_ids: ['xyz_1234'] }
 
   let(:bag) do
     ImportFactory::Bag.create(
@@ -20,7 +20,7 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
     let(:csv_file) do
       CsvFactory::Generic.new(
         alternate_ids: ['work1', 'work2', 'work3'],
-        member_of_collection_ids: [collection.id, collection.id, collection.id],
+        member_of_collection_ids: ['xyz_1234', 'xyz_1234', collection.id],
         work_type: ['Generic', 'Generic', 'Generic'],
         title: ['My Work 1', 'My Work 2', 'My Work 3'],
         batch_id: ['batch1_2018-07-12', 'batch1_2018-07-12', 'batch1_2018-07-12']
@@ -31,7 +31,7 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
       ImportFactory::Zip.create(bag)
     end
 
-    it 'successfully imports the csv' do
+    it 'successfully imports the csv using both ids and alternate ids' do
       visit(csv_create_path)
       expect(page).to have_selector('h1', text: 'CSV Import')
       attach_file('work_import_csv_file_file', csv_file.path)

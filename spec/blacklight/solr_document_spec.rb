@@ -4,7 +4,9 @@ require 'rails_helper'
 
 RSpec.describe SolrDocument, type: :model do
   before(:all) do
-    class MyResource; end
+    class MyResource < Valkyrie::Resource
+      attribute :alternate_ids, Valkyrie::Types::Array
+    end
   end
 
   after(:all) do
@@ -131,6 +133,36 @@ RSpec.describe SolrDocument, type: :model do
       let(:document) { { 'internal_resource_tsim' => 'ArchivalCollection' } }
 
       its(:label) { is_expected.to eq('Collection') }
+    end
+  end
+
+  describe '::find' do
+    before do
+      Valkyrie::MetadataAdapter.find(:index_solr).persister.save(resource: sample_resource)
+    end
+
+    context 'with an id' do
+      subject { described_class.find('abc1234') }
+
+      let(:sample_resource) { MyResource.new(id: Valkyrie::ID.new('abc1234')) }
+
+      its(:id) { is_expected.to eq('abc1234') }
+    end
+
+    context 'with an alternate id' do
+      subject { described_class.find('pdq6789') }
+
+      let(:sample_resource) { MyResource.new(id: Valkyrie::ID.new('abc1234'), alternate_ids: ['id-pdq6789']) }
+
+      its(:id) { is_expected.to eq('abc1234') }
+    end
+
+    context 'with a non-existent id' do
+      let(:sample_resource) { MyResource.new }
+
+      it 'raises an error' do
+        expect { described_class.find('nothere') }.to raise_error(Blacklight::Exceptions::RecordNotFound)
+      end
     end
   end
 end

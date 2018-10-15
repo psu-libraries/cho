@@ -22,6 +22,13 @@ class SolrDocument
   # csv extension
   use_extension(Document::Csv)
 
+  # @note Override {::find} to retrieve documents using alternate identifiers
+  def self.find(id)
+    solr_response = repository.search(fq: "id:#{id} OR alternate_ids_ssim:id-#{id}")
+    raise Blacklight::Exceptions::RecordNotFound if solr_response.documents.empty?
+    solr_response.documents.first
+  end
+
   def internal_resource
     internal_resource_name.constantize
   end
