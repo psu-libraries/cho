@@ -17,6 +17,15 @@ RSpec.describe CatalogController, type: :feature do
         expect(page).not_to have_content(Work::File.all.first.id)
       end
     end
+
+    it 'returns the work when searcghing for the title of the file' do
+      visit(root_path)
+      fill_in('q', with: 'hello_world.txt')
+      click_button('Search')
+      within('#documents') do
+        expect(page).to have_link('Sample Generic Work')
+      end
+    end
   end
 
   context 'when searching for collections' do
