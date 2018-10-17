@@ -20,6 +20,7 @@ Rails.application.config.to_prepare do
       resource_indexer: Valkyrie::Persistence::Solr::CompositeIndexer.new(
         Valkyrie::Indexers::AccessControlsIndexer,
         Work::SubmissionIndexer,
+        Work::FileSetIndexer,
         Collection::TypeIndexer
       )
     ),
