@@ -21,7 +21,7 @@ RSpec.describe Transaction::Operations::File::Save do
           expect(result).to be_success
           expect(result.success).to eq(change_set)
           expect(result.success.file_set_ids.count).to eq(1)
-        }.to change { Work::File.count }.by(1).and change { Work::FileSet.count }.by(1)
+        }.to change { Work::File.count }.by(2).and change { Work::FileSet.count }.by(1)
       end
     end
 

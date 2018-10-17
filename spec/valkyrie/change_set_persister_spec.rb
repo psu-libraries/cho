@@ -66,20 +66,23 @@ RSpec.describe ChangeSetPersister do
       let(:resource) { build(:work, title: 'with a file', member_of_collection_ids: [collection.id]) }
       let(:change_set) { Work::SubmissionChangeSet.new(resource) }
       let(:temp_file) { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'hello_world.txt')) }
-      let(:file_sets) { Work::FileSet.all }
-      let(:work_file) { Work::File.all.first }
+      let(:work_file_names) { Work::File.all.map(&:original_filename) }
+      let(:work_file_uses) { Work::File.all.map { |file| file.use.map(&:to_s) }.flatten }
 
-      it 'saves the record, file, and the file set' do
+      it 'saves the record and the file set with its file and extracted text' do
         saved_change_set = nil
         expect {
           saved_change_set = change_set_persister.validate_and_save(
             change_set: change_set,
             resource_params: { label: 'abc123', file: temp_file }
           )
-        }.to change { metadata_adapter.query_service.find_all.count }.by(3)
-        expect(saved_change_set.model.file_set_ids).to eq(file_sets.map(&:id))
-        expect(work_file.original_filename).to eq('hello_world.txt')
-        expect(work_file.use.map(&:to_s)).to eq(['http://pcdm.org/use#PreservationMasterFile'])
+        }.to change { metadata_adapter.query_service.find_all.count }.by(4)
+        expect(saved_change_set.model.file_set_ids).to eq(Work::FileSet.all.map(&:id))
+        expect(work_file_names).to contain_exactly('hello_world.txt', 'hello_world.txt_text.txt')
+        expect(work_file_uses).to contain_exactly(
+          'http://pcdm.org/use#PreservationMasterFile',
+          'http://pcdm.org/use#ExtractedText'
+        )
       end
     end
   end
@@ -112,16 +115,18 @@ RSpec.describe ChangeSetPersister do
   describe '#delete' do
     let!(:change_set) { create(:work, :with_file) }
 
-    it "deletes all the resources Postgres and Solr, the file from disk, and retains the work's collection" do
+    it "deletes all the resources from Postgres and Solr, the files from disk, and retains the work's collection" do
       expect(Work::Submission.all.count).to eq(1)
-      expect(Work::File.all.count).to eq(1)
-      expect(metadata_adapter.index_adapter.query_service.find_all.count).to eq(4)
+      expect(Work::File.all.count).to eq(2)
+      expect(metadata_adapter.index_adapter.query_service.find_all.count).to eq(5)
       expect(File.exists?('tmp/files/hello_world.txt')).to be(true)
+      expect(File.exists?('tmp/files/hello_world.txt_text.txt')).to be(true)
       change_set_persister.delete(change_set: change_set)
       expect(Work::Submission.all.count).to eq(0)
       expect(Work::File.all.count).to eq(0)
       expect(metadata_adapter.index_adapter.query_service.find_all.count).to eq(1)
       expect(File.exists?('tmp/files/hello_world.txt')).to be(false)
+      expect(File.exists?('tmp/files/hello_world.txt_text.txt')).to be(false)
     end
   end
 

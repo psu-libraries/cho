@@ -21,7 +21,16 @@ module Transaction
 
           def work_file_set(change_set)
             file = work_file(change_set)
-            Work::FileSet.new(member_ids: [file.id], title: change_set.file.original_filename)
+            file_set = Work::FileSet.new(member_ids: [file.id], title: change_set.file.original_filename)
+            extracted_text = FileSet::ExtractText.new.call(file_set)
+
+            # @todo If text extraction fails, the file set is returned anyway, but we ought to register
+            #   the failure somehow so extraction can re-run later.
+            if extracted_text.failure?
+              file_set
+            else
+              extracted_text.success
+            end
           end
 
           def work_file(change_set)
