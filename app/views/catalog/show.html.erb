@@ -8,9 +8,9 @@
 <% end %>
 
 <%= render_document_main_content_partial %>
-
-<%= link_to 'Edit', edit_cho_resource_path %>
-
+<% unless @document.internal_resource == Work::FileSet %>
+  <%= link_to 'Edit', edit_cho_resource_path %>
+<% end %>
 <% content_for(:sidebar) do %>
   <%= render_document_sidebar_partial %>
 <% end %>

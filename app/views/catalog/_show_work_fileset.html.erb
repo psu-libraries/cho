@@ -1,0 +1,12 @@
+<%# Do the two column thing here %>
+<%= render partial: 'show', locals: { document: @document } %>
+
+<%# write method to grab the files from the file set %>
+<% unless @document.files.empty? %>
+  <h2>Files</h2>
+  <ul>
+    <%- @document.files.each do |file| %>
+      <li><%= file.original_filename %></li>
+    <%- end %>
+  </ul>
+<% end %>

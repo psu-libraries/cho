@@ -44,6 +44,13 @@ class SolrDocument
     end
   end
 
+  # @return [Array<Work::File>]
+  def files
+    Array.wrap(self['member_ids_ssim']).map do |id|
+      Work::File.find(Valkyrie::ID.new(id.sub(/^id-/, '')))
+    end
+  end
+
   # @todo maybe this needs to be some kind of transformation done in the data dictionary?
   # @return [Array<SolrDocument>]
   def member_of_collections

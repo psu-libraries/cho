@@ -2,6 +2,6 @@
 
 <ul>
   <%- file_sets.each do |file_set| %>
-    <li><%= file_set.title %></li>
+    <li><%= link_to file_set.title.first, solr_document_path(file_set) %></li>
   <%- end %>
 </ul>
