@@ -12,4 +12,16 @@ FactoryBot.define do
       Valkyrie.config.metadata_adapter.persister.save(resource: resource)
     end
   end
+
+  trait :with_member_file do
+    to_create do |resource|
+      temp_file = Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'hello_world.txt'))
+      file = Work::File.new(original_filename: temp_file.original_filename)
+      file_change_set = Work::FileChangeSet.new(file)
+      result = Transaction::Operations::File::Create.new.call(file_change_set, temp_file: temp_file)
+      raise result.failure if result.failure?
+      resource.member_ids = [result.success.id]
+      Valkyrie.config.metadata_adapter.persister.save(resource: resource)
+    end
+  end
 end

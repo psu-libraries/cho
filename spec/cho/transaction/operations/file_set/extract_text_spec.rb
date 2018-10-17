@@ -6,9 +6,7 @@ RSpec.describe Transaction::Operations::FileSet::ExtractText do
   let(:operation) { described_class.new }
 
   describe '#call' do
-    let(:collection) { create(:collection) }
-    let(:resource) { create(:work, :with_file, member_of_collection_ids: [collection.id]) }
-    let(:file_set) { Work::FileSet.find(resource.file_set_ids.first) }
+    let(:file_set) { create(:file_set, :with_member_file) }
 
     context 'with a successful save' do
       it 'returns Success' do
