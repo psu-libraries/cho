@@ -78,7 +78,12 @@ RSpec.describe Collection::ChangeSetBehaviors do
 
   describe '#form_fields' do
     it 'contains all the fields from the collection schema' do
-      expect(change_set.form_fields.map(&:label)).to contain_exactly('subtitle', 'description', 'title', 'identifier')
+      expect(change_set.form_fields.map(&:label)).to contain_exactly(
+        'subtitle',
+        'description',
+        'title',
+        'alternate_ids'
+      )
     end
   end
 
@@ -87,7 +92,7 @@ RSpec.describe Collection::ChangeSetBehaviors do
 
     it 'contains an array of Schema::InputFields' do
       expect(change_set.input_fields(form).map(&:label_text)).to contain_exactly(
-        'subtitle', 'description', 'title', 'identifier'
+        'subtitle', 'description', 'title', 'alternate_ids'
       )
     end
   end

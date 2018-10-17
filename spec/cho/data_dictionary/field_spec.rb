@@ -50,7 +50,7 @@ RSpec.describe DataDictionary::Field, type: :model do
   describe '#core' do
     subject { described_class.core_fields.to_a.map(&:label) }
 
-    it { is_expected.to eq(['title', 'subtitle', 'description', 'identifier']) }
+    it { is_expected.to eq(['title', 'subtitle', 'description', 'alternate_ids']) }
   end
 
   describe '#multiple' do
@@ -84,10 +84,62 @@ RSpec.describe DataDictionary::Field, type: :model do
       it { is_expected.to eq('abc123_label_dtsi') }
     end
 
+    context 'with a valkyrie ID' do
+      let(:field_type) { 'valkyrie_id' }
+
+      it { is_expected.to eq('abc123_label_ssim') }
+    end
+
+    context 'with a valkyrie ID' do
+      let(:field_type) { 'alternate_id' }
+
+      it { is_expected.to eq('abc123_label_ssim') }
+    end
+
     context 'when the field is not a date' do
       let(:field_type) { 'text' }
 
       it { is_expected.to eq('abc123_label_tesim') }
+    end
+  end
+
+  describe '#change_set_property_type' do
+    subject { model.change_set_property_type }
+
+    context 'when the field is not a Valkyrie ID' do
+      it { is_expected.to eq(Valkyrie::Types::Set.optional) }
+    end
+
+    context 'with a Valkyrie ID' do
+      let(:field_type) { 'valkyrie_id' }
+
+      it { is_expected.to eq(Valkyrie::Types::ID.optional) }
+    end
+
+    context 'with a alternate id' do
+      let(:field_type) { 'alternate_id' }
+
+      it { is_expected.to eq(Valkyrie::Types::Set.of(Valkyrie::Types::ID)) }
+    end
+  end
+
+  describe '#resource_property_type' do
+    subject { model.resource_property_type }
+
+    context 'when the field is not a Valkyrie ID' do
+      it { is_expected.to eq(Valkyrie::Types::Set.meta(ordered: true)) }
+    end
+
+    context 'with a Valkyrie ID' do
+      let(:field_type) { 'valkyrie_id' }
+
+      it { is_expected.to eq(Valkyrie::Types::ID.optional) }
+    end
+
+    context 'with a alternate id' do
+      let(:field_type) { 'alternate_id' }
+
+      it { is_expected.to eq(Valkyrie::Types::Set.of(Valkyrie::Types::ID)) }
     end
   end
 

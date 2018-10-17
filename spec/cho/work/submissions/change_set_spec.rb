@@ -167,7 +167,7 @@ RSpec.describe Work::SubmissionChangeSet do
 
       it 'is ordered' do
         expect(fields.map(&:label)).to eq(
-          ['title', 'subtitle', 'description', 'identifier', 'generic_field', 'member_of_collection_ids']
+          ['title', 'subtitle', 'description', 'alternate_ids', 'generic_field', 'member_of_collection_ids']
         )
       end
 
@@ -179,7 +179,7 @@ RSpec.describe Work::SubmissionChangeSet do
 
         it 'is ordered' do
           expect(fields.map(&:label)).to eq(
-            ['generic_field', 'title', 'subtitle', 'description', 'identifier', 'member_of_collection_ids']
+            ['generic_field', 'title', 'subtitle', 'description', 'alternate_ids', 'member_of_collection_ids']
           )
         end
       end
@@ -192,7 +192,7 @@ RSpec.describe Work::SubmissionChangeSet do
         expect(change_set.input_fields(form).map(&:label_text)).to contain_exactly('subtitle',
                                                                                    'description',
                                                                                    'generic_field',
-                                                                                   'identifier',
+                                                                                   'alternate_ids',
                                                                                    'member_of_collection_ids',
                                                                                    'title')
       end

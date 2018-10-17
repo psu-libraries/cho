@@ -3,7 +3,7 @@
 module DataDictionary::WithFieldType
   extend ActiveSupport::Concern
 
-  FieldTypes = Valkyrie::Types::String.enum('string', 'text', 'numeric', 'date', 'valkyrie_id')
+  FieldTypes = Valkyrie::Types::String.enum('string', 'text', 'numeric', 'date', 'valkyrie_id', 'alternate_id')
 
   included do
     attribute :field_type, FieldTypes
@@ -47,5 +47,13 @@ module DataDictionary::WithFieldType
 
   def valkyrie_id?
     field_type == 'valkyrie_id'
+  end
+
+  def alternate_id!
+    self.field_type = 'alternate_id'
+  end
+
+  def alternate_id?
+    field_type == 'alternate_id'
   end
 end

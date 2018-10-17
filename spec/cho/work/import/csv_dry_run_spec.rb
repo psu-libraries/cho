@@ -177,7 +177,7 @@ RSpec.describe Work::Import::CsvDryRun do
           work_type_id: [work_type_id],
           title: ['My Awesome Work'],
           batch_id: ['batch1_2018-07-23'],
-          identifier: ['work1']
+          alternate_ids: ['work1']
         )
       end
 
@@ -196,7 +196,7 @@ RSpec.describe Work::Import::CsvDryRun do
         expect(dry_run.results.count).to eq(1)
         expect(dry_run.results.first).to be_valid
         expect(dry_run.results.first.title).to eq(['My Awesome Work'])
-        expect(dry_run.results.first.identifier).to eq(['work1'])
+        expect(dry_run.results.first.alternate_ids.map(&:to_s)).to contain_exactly('work1')
         expect(dry_run.bag).to be_a(Dry::Monads::Result::Success)
         expect(dry_run.results.first.import_work.identifier).to eq('work1')
       end
@@ -209,7 +209,7 @@ RSpec.describe Work::Import::CsvDryRun do
           work_type_id: [work_type_id],
           title: ['My Awesome Work'],
           batch_id: ['batch-missing-import-work_2018-07-24'],
-          identifier: ['work1']
+          alternate_ids: ['work1']
         )
       end
 
@@ -230,7 +230,7 @@ RSpec.describe Work::Import::CsvDryRun do
         expect(dry_run.results.count).to eq(1)
         expect(dry_run.results.first).to be_valid
         expect(dry_run.results.first.title).to eq(['My Awesome Work'])
-        expect(dry_run.results.first.identifier).to eq(['work1'])
+        expect(dry_run.results.first.alternate_ids.map(&:to_s)).to contain_exactly('work1')
         expect(dry_run.bag).to be_a(Dry::Monads::Result::Success)
         expect(dry_run.results.first.import_work).to be_nil
       end
@@ -243,7 +243,7 @@ RSpec.describe Work::Import::CsvDryRun do
           work_type_id: [work_type_id],
           title: ['My Awesome Work'],
           batch_id: ['bad-batch_2018-07-24'],
-          identifier: ['work1']
+          alternate_ids: ['work1']
         )
       end
 
@@ -253,7 +253,7 @@ RSpec.describe Work::Import::CsvDryRun do
         expect(dry_run.results.count).to eq(1)
         expect(dry_run.results.first).to be_valid
         expect(dry_run.results.first.title).to eq(['My Awesome Work'])
-        expect(dry_run.results.first.identifier).to eq(['work1'])
+        expect(dry_run.results.first.alternate_ids.map(&:to_s)).to contain_exactly('work1')
         expect(dry_run.bag).to be_a(Dry::Monads::Result::Failure)
         expect(dry_run.results.first.import_work).to be_nil
       end

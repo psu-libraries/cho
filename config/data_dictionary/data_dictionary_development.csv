@@ -1,6 +1,7 @@
 Label,Field Type,Requirement Designation,Validation,Multiple,Controlled Vocabulary,Default Value,Display Name,Display Transformation,Index Type,Help Text,Core Field
 title,string,required,no_validation,false,no_vocabulary,,Title,no_transformation,no_facet,help me,true
 member_of_collection_ids,valkyrie_id,optional,resource_exists,false,cho_collections,,Member of Collection,no_transformation,no_facet,help me,false
+alternate_ids,alternate_id,required_to_publish,no_validation,true,no_vocabulary,,Identifier,no_transformation,no_facet,help me,true
 creator,string,optional,no_validation,true,no_vocabulary,,Creator,no_transformation,no_facet,help me,true
 date_created,string,required_to_publish,no_validation,true,no_vocabulary,,Date Created,no_transformation,no_facet,help me,true
 subject,string,optional,no_validation,true,no_vocabulary,,Subject,no_transformation,no_facet,help me,true
@@ -10,7 +11,6 @@ genre,string,required_to_publish,no_validation,true,no_vocabulary,,Genre,no_tran
 collection,string,required_to_publish,no_validation,true,no_vocabulary,,Collection,no_transformation,no_facet,help me,true
 repository,string,required_to_publish,no_validation,true,no_vocabulary,,Repository,no_transformation,no_facet,help me,true
 rights_statement,string,required_to_publish,no_validation,false,no_vocabulary,,Rights Statement,no_transformation,no_facet,help me,true
-identifier,string,required_to_publish,no_validation,true,no_vocabulary,,Identifier,no_transformation,no_facet,help me,true
 resource_type,string,required_to_publish,no_validation,true,no_vocabulary,,Resource Type,no_transformation,no_facet,help me,true
 file_format,string,required_to_publish,no_validation,true,no_vocabulary,,File Format,no_transformation,no_facet,help me,true
 cataloger,string,optional,no_validation,true,no_vocabulary,,Cataloger,no_transformation,no_facet,help me,true

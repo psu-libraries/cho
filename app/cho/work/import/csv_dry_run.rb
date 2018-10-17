@@ -55,10 +55,14 @@ module Work
           return if bag.failure?
 
           results.each do |change_set|
-            import_work = bag.success.works.select { |work| work.identifier == change_set.identifier.first }.first
+            import_work = retrieve_import_work(change_set: change_set)
             change_set.import_work = import_work
             change_set.file_set_hashes = build_import_file_sets(import_work).compact if import_work.present?
           end
+        end
+
+        def retrieve_import_work(change_set:)
+          bag.success.works.select { |work| work.identifier == change_set.alternate_ids.first.to_s }.first
         end
 
         def build_import_file_sets(import_work)
@@ -71,7 +75,7 @@ module Work
 
         def file_set_metadata(file_set_id)
           reader.file_set_hashes.select do |file_set|
-            file_set.fetch('identifier') == file_set_id
+            file_set.fetch('alternate_ids') == file_set_id
           end
         end
 

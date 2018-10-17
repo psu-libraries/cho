@@ -31,9 +31,11 @@ module DataDictionary
 
     # @return [String] field name used in Solr for indexing
     def solr_field
-      if field_type == 'date'
+      if date?
         "#{label}_dtsi"
-      elsif field_type == 'valkyrie_id'
+      elsif valkyrie_id?
+        "#{label}_ssim"
+      elsif alternate_id?
         "#{label}_ssim"
       else
         "#{label}_tesim"
@@ -41,19 +43,29 @@ module DataDictionary
     end
 
     # @return [Valkyrie::Types] property type for the Valkyrie::ChangeSet
-    # @note This does not address multiple, it only assumes valkyrie_id field types are singular
-    #    and everything else is multiple
+    # @note This does not address multiple: valkyrie_id field types are singular, alternate_id types must be
+    #    multiple; everything else is multiple.
     def change_set_property_type
-      return Valkyrie::Types::Set.optional unless valkyrie_id?
-      Valkyrie::Types::ID.optional
+      if valkyrie_id?
+        Valkyrie::Types::ID.optional
+      elsif alternate_id?
+        Valkyrie::Types::Set.of(Valkyrie::Types::ID)
+      else
+        Valkyrie::Types::Set.optional
+      end
     end
 
     # @return [Valkyrie::Types] property type for the Valkyrie::Resource
-    # @note This does not address multiple, it only assumes valkyrie_id field types are singular
-    #    and everything else is multiple
+    # @note This does not address multiple: valkyrie_id field types are singular, alternate_id types must be
+    #    multiple; everything else is multiple.
     def resource_property_type
-      return Valkyrie::Types::Set.meta(ordered: true) unless valkyrie_id?
-      Valkyrie::Types::ID.optional
+      if valkyrie_id?
+        Valkyrie::Types::ID.optional
+      elsif alternate_id?
+        Valkyrie::Types::Set.of(Valkyrie::Types::ID)
+      else
+        Valkyrie::Types::Set.meta(ordered: true)
+      end
     end
 
     # @note This defined how the field should be addressed when creating dynamic methods for access
