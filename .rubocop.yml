@@ -38,3 +38,4 @@ Metrics/LineLength:
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
+    - 'config/initializers/valkyrie.rb'

@@ -18,12 +18,29 @@ RSpec.describe CatalogController, type: :feature do
       end
     end
 
-    it 'returns the work when searcghing for the title of the file' do
+    it 'returns the work when searching for the title of the file' do
       visit(root_path)
       fill_in('q', with: 'hello_world.txt')
       click_button('Search')
       within('#documents') do
         expect(page).to have_link('Sample Generic Work')
+      end
+    end
+  end
+
+  context 'when searching extracted text' do
+    before do
+      create(:work_submission, :with_file,
+        filename: 'example_extracted_text.txt',
+        title: 'Sample Extracted Text Work')
+    end
+
+    it 'returns the work containing the extracted text' do
+      visit(root_path)
+      fill_in('q', with: 'words')
+      click_button('Search')
+      within('#documents') do
+        expect(page).to have_link('Sample Extracted Text Work')
       end
     end
   end

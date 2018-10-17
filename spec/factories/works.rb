@@ -23,8 +23,12 @@ FactoryBot.define do
   end
 
   trait :with_file do
-    to_create do |resource|
-      file = Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'hello_world.txt'))
+    transient do
+      filename { 'hello_world.txt' }
+    end
+
+    to_create do |resource, evaluator|
+      file = Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', evaluator.filename))
       change_set = Work::SubmissionChangeSet.new(resource, file: [file])
       ChangeSetPersister.new(
         metadata_adapter: Valkyrie::MetadataAdapter.find(:indexing_persister),

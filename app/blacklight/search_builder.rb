@@ -25,20 +25,33 @@ class SearchBuilder < Blacklight::SearchBuilder
 
     # the {!lucene} gives us the OR syntax
     def new_query
-      "{!lucene}#{internal_query(dismax_query)} #{internal_query(join_from_work_to_file_set)}"
+      "{!lucene}#{internal_query(query_all_query_fields)} "\
+      "#{internal_query(search_metadata_from_file_sets)} "\
+      "#{internal_query(search_extracted_text_from_files)}"
     end
 
-    # the _query_ allows for another parser (aka dismax)
+    # @note The _query_ allows for another parser, i.e. dismax.
     def internal_query(query_value)
       "_query_:\"#{query_value}\""
     end
 
-    # the {!dismax} causes the query to go against the query fields
-    def dismax_query
+    # @note The {!dismax} causes the query to go against the query fields. This is functionally equivalent
+    #   to q=*:user_query where user_query is the query string submitted by the user, and the fields being
+    #   searched are specified in the qf parameter.
+    def query_all_query_fields
       '{!dismax v=$user_query}'
     end
 
-    def join_from_work_to_file_set
-      "{!join from=join_id_ssi to=file_set_ids_ssim}#{dismax_query}"
+    # @note Extends the search to include the fields from file sets attached to work.
+    def search_metadata_from_file_sets
+      "{!join from=join_id_ssi to=file_set_ids_ssim}#{query_all_query_fields}"
+    end
+
+    # @note Extends to search to include text content extracted from files in the work. This is functionally
+    #   equivalent to:
+    #     q={!join from=join_id_ssi to=file_set_ids_ssim}all_text_timv:user_query
+    #   where user_query is the query string submitted by the user.
+    def search_extracted_text_from_files
+      '{!join from=join_id_ssi to=file_set_ids_ssim}{!dismax qf=all_text_timv v=$user_query}'
     end
 end
