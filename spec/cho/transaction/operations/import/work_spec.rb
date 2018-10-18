@@ -43,6 +43,25 @@ RSpec.describe Transaction::Operations::Import::Work do
       end
     end
 
+    context 'when text extraction fails' do
+      let(:mock_extractor) { instance_double(Transaction::Operations::FileSet::ExtractText) }
+
+      before do
+        change_set.import_work = import_work
+        allow(Transaction::Operations::FileSet::ExtractText).to receive(:new).and_return(mock_extractor)
+        allow(mock_extractor).to receive(:call).and_return(Dry::Monads::Result::Failure.new('could not extract text'))
+      end
+
+      it 'adds the file sets to the work' do
+        expect {
+          result = operation.call(change_set)
+          expect(result).to be_success
+          expect(result.success).to eq(change_set)
+          expect(result.success.file_set_ids.count).to eq(1)
+        }.to change { ::Work::File.count }.by(5).and change { ::Work::FileSet.count }.by(1)
+      end
+    end
+
     context 'with an import work' do
       before { change_set.import_work = import_work }
 

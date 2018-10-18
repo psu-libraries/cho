@@ -15,20 +15,8 @@ module Work
     private
 
       def extracted_text_content
-        return unless extracted_text?
-        ::File.read(Work::File.find(files.select(&:text?).first.id).path)
-      end
-
-      def extracted_text?
-        extracted_text.present?
-      end
-
-      def extracted_text
-        files.select(&:text?)
-      end
-
-      def files
-        @files ||= resource.member_ids.map { |id| Work::File.find(id) }
+        return if resource.text.nil?
+        ::File.read(resource.text.path)
       end
   end
 end

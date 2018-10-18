@@ -30,14 +30,29 @@ RSpec.describe Transaction::Operations::FileSet::ExtractText do
       before do
         file_set # initializing before the mock
         allow(Transaction::Operations::File::Create).to receive(:new).and_return(mock_operation)
-        allow(mock_operation).to receive(:call).and_raise(StandardError, 'unsupported adapter')
+        allow(mock_operation).to receive(:call).and_return(Dry::Monads::Result::Failure.new('unsuccessful save'))
       end
 
       it 'returns Failure' do
         expect {
           result = operation.call(file_set)
           expect(result).to be_failure
-          expect(result.failure.message).to eq('Error extracting text: unsupported adapter')
+          expect(result.failure.message).to eq('Error extracting text: unsuccessful save')
+        }.to change { Work::File.count }.by(0)
+      end
+    end
+
+    context 'when the operation fails' do
+      before do
+        file_set # initializing before the mock
+        allow(operation).to receive(:store_text).and_raise(StandardError, 'operation failed')
+      end
+
+      it 'returns Failure' do
+        expect {
+          result = operation.call(file_set)
+          expect(result).to be_failure
+          expect(result.failure.message).to eq('Error extracting text: operation failed')
         }.to change { Work::File.count }.by(0)
       end
     end

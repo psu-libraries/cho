@@ -13,41 +13,32 @@ module Transaction
         Hydra::Derivatives::FullTextExtract.output_file_service = FileOutputService
 
         def call(file_set)
-          text = extract_text(master_file: master_file(file_set: file_set))
-          text_file_result = store_text(file_set: file_set, text: text)
-          if text_file_result.success?
-            updated_file_set = attach_to_file_set(file: text_file_result.success, file_set: file_set)
-            Success(updated_file_set)
-          else
-            text_file_result
+          if file_set.text_source.extractable? && file_set.text.nil?
+            text_file_result = store_text(text: extract_text(file_set: file_set), file_set: file_set)
+            file_set.member_ids += [text_file_result.id]
           end
+          Success(file_set)
         rescue StandardError => exception
           Failure(Transaction::Rejection.new("Error extracting text: #{exception.message}"))
         end
 
         private
 
-          def master_file(file_set:)
-            Work::File.find(file_set.member_ids.first)
-          end
-
-          def extract_text(master_file:)
+          def extract_text(file_set:)
+            master_file = file_set.text_source
             output_file_name = temp_file_location(master_file.id)
             Hydra::Derivatives::FullTextExtract.create(master_file.path,
                                                        outputs: [{ file: output_file_name }])
             output_file_name
           end
 
-          def store_text(file_set:, text:)
-            file = Work::File.new(original_filename: text_filename(master_file(file_set: file_set)),
+          def store_text(text:, file_set:)
+            file = Work::File.new(original_filename: text_filename(file_set.text_source),
                                   use: [Valkyrie::Vocab::PCDMUse.ExtractedText])
             file_change_set = Work::FileChangeSet.new(file)
-            Transaction::Operations::File::Create.new.call(file_change_set, temp_file: ::File.new(text))
-          end
-
-          def attach_to_file_set(file:, file_set:)
-            file_set.member_ids += [file.id]
-            file_set
+            result = Transaction::Operations::File::Create.new.call(file_change_set, temp_file: ::File.new(text))
+            return result.success if result.success?
+            raise result.failure
           end
 
           def text_filename(original_file)
