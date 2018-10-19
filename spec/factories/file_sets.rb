@@ -9,7 +9,7 @@ FactoryBot.define do
     title { 'Original File Name' }
 
     to_create do |resource|
-      Valkyrie.config.metadata_adapter.persister.save(resource: resource)
+      Valkyrie::MetadataAdapter.find(:indexing_persister).persister.save(resource: resource)
     end
   end
 
@@ -21,7 +21,7 @@ FactoryBot.define do
       result = Transaction::Operations::File::Create.new.call(file_change_set, temp_file: temp_file)
       raise result.failure if result.failure?
       resource.member_ids = [result.success.id]
-      Valkyrie.config.metadata_adapter.persister.save(resource: resource)
+      Valkyrie::MetadataAdapter.find(:indexing_persister).persister.save(resource: resource)
     end
   end
 end
