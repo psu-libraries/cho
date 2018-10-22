@@ -7,9 +7,9 @@ RSpec.describe DataDictionary::Field, type: :model do
   subject { model }
 
   let(:resource_klass) { described_class }
-  let(:field_type) { 'date' }
   let(:model) { build :data_dictionary_field,
-                      label: 'abc123_label', field_type: field_type,
+                      label: 'abc123_label',
+                      field_type: 'text',
                       requirement_designation: 'recommended',
                       controlled_vocabulary: 'no_vocabulary',
                       default_value: 'abc123',
@@ -77,70 +77,36 @@ RSpec.describe DataDictionary::Field, type: :model do
     end
   end
 
-  describe '#solr_field' do
-    subject { model.solr_field }
+  context 'with a text field' do
+    before { model.text! }
 
-    context 'with a date field' do
-      it { is_expected.to eq('abc123_label_dtsi') }
-    end
-
-    context 'with a valkyrie ID' do
-      let(:field_type) { 'valkyrie_id' }
-
-      it { is_expected.to eq('abc123_label_ssim') }
-    end
-
-    context 'with a valkyrie ID' do
-      let(:field_type) { 'alternate_id' }
-
-      it { is_expected.to eq('abc123_label_ssim') }
-    end
-
-    context 'when the field is not a date' do
-      let(:field_type) { 'text' }
-
-      it { is_expected.to eq('abc123_label_tesim') }
-    end
+    its(:solr_field) { is_expected.to eq('abc123_label_tesim') }
+    its(:change_set_property_type) { is_expected.to eq(Valkyrie::Types::Set.optional) }
+    its(:resource_property_type) { is_expected.to eq(Valkyrie::Types::Set.meta(ordered: true)) }
   end
 
-  describe '#change_set_property_type' do
-    subject { model.change_set_property_type }
+  context 'with a date field' do
+    before { model.date! }
 
-    context 'when the field is not a Valkyrie ID' do
-      it { is_expected.to eq(Valkyrie::Types::Set.optional) }
-    end
-
-    context 'with a Valkyrie ID' do
-      let(:field_type) { 'valkyrie_id' }
-
-      it { is_expected.to eq(Valkyrie::Types::ID.optional) }
-    end
-
-    context 'with a alternate id' do
-      let(:field_type) { 'alternate_id' }
-
-      it { is_expected.to eq(Valkyrie::Types::Set.of(Valkyrie::Types::ID)) }
-    end
+    its(:solr_field) { is_expected.to eq('abc123_label_dtsi') }
+    its(:change_set_property_type) { is_expected.to eq(Valkyrie::Types::Set.of(Valkyrie::Types::Date)) }
+    its(:resource_property_type) { is_expected.to eq(Valkyrie::Types::Set.of(Valkyrie::Types::Date)) }
   end
 
-  describe '#resource_property_type' do
-    subject { model.resource_property_type }
+  context 'with an alternate ID field' do
+    before { model.alternate_id! }
 
-    context 'when the field is not a Valkyrie ID' do
-      it { is_expected.to eq(Valkyrie::Types::Set.meta(ordered: true)) }
-    end
+    its(:solr_field) { is_expected.to eq('abc123_label_ssim') }
+    its(:change_set_property_type) { is_expected.to eq(Valkyrie::Types::Set.of(Valkyrie::Types::ID)) }
+    its(:resource_property_type) { is_expected.to eq(Valkyrie::Types::Set.of(Valkyrie::Types::ID)) }
+  end
 
-    context 'with a Valkyrie ID' do
-      let(:field_type) { 'valkyrie_id' }
+  context 'with a Valkyrie ID field' do
+    before { model.valkyrie_id! }
 
-      it { is_expected.to eq(Valkyrie::Types::ID.optional) }
-    end
-
-    context 'with a alternate id' do
-      let(:field_type) { 'alternate_id' }
-
-      it { is_expected.to eq(Valkyrie::Types::Set.of(Valkyrie::Types::ID)) }
-    end
+    its(:solr_field) { is_expected.to eq('abc123_label_ssim') }
+    its(:change_set_property_type) { is_expected.to eq(Valkyrie::Types::ID.optional) }
+    its(:resource_property_type) { is_expected.to eq(Valkyrie::Types::ID.optional) }
   end
 
   context 'when saving with metadata' do
@@ -152,7 +118,7 @@ RSpec.describe DataDictionary::Field, type: :model do
                                 default_value: 'abc123',
                                 display_name: 'My Abc123',
                                 display_transformation: 'no_transformation',
-                                field_type: 'date',
+                                field_type: 'text',
                                 help_text: 'help me',
                                 id: saved_model.id,
                                 index_type: 'no_facet',

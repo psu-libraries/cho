@@ -14,7 +14,7 @@ rights_statement,string,required_to_publish,no_validation,false,no_vocabulary,,R
 resource_type,string,required_to_publish,no_validation,true,no_vocabulary,,Resource Type,no_transformation,no_facet,help me,true
 file_format,string,required_to_publish,no_validation,true,no_vocabulary,,File Format,no_transformation,no_facet,help me,true
 cataloger,string,optional,no_validation,true,no_vocabulary,,Cataloger,no_transformation,no_facet,help me,true
-date_cataloged,date,optional,no_validation,true,no_vocabulary,,Date Cataloged,no_transformation,no_facet,help me,true
+date_cataloged,date,optional,edtf_date,true,no_vocabulary,,Date Cataloged,no_transformation,date,help me,true
 contributor,string,optional,no_validation,true,no_vocabulary,,Contributor,no_transformation,no_facet,help me,false
 time_period,string,optional,no_validation,true,no_vocabulary,,Time Period,no_transformation,no_facet,help me,false
 language,string,optional,no_validation,true,no_vocabulary,,Language,no_transformation,no_facet,help me,false

@@ -31,15 +31,7 @@ module DataDictionary
 
     # @return [String] field name used in Solr for indexing
     def solr_field
-      if date?
-        "#{label}_dtsi"
-      elsif valkyrie_id?
-        "#{label}_ssim"
-      elsif alternate_id?
-        "#{label}_ssim"
-      else
-        "#{label}_tesim"
-      end
+      "#{label}_#{suffix}"
     end
 
     # @return [Valkyrie::Types] property type for the Valkyrie::ChangeSet
@@ -50,6 +42,8 @@ module DataDictionary
         Valkyrie::Types::ID.optional
       elsif alternate_id?
         Valkyrie::Types::Set.of(Valkyrie::Types::ID)
+      elsif date?
+        Valkyrie::Types::Set.of(Valkyrie::Types::Date)
       else
         Valkyrie::Types::Set.optional
       end
@@ -63,6 +57,8 @@ module DataDictionary
         Valkyrie::Types::ID.optional
       elsif alternate_id?
         Valkyrie::Types::Set.of(Valkyrie::Types::ID)
+      elsif date?
+        Valkyrie::Types::Set.of(Valkyrie::Types::Date)
       else
         Valkyrie::Types::Set.meta(ordered: true)
       end
@@ -74,5 +70,18 @@ module DataDictionary
     def method_name
       "#{label}_data_dictionary_field"
     end
+
+    private
+
+      def suffix
+        return 'ssim' if valkyrie_id? || alternate_id?
+        return "dtsi#{multiple_suffix}" if date?
+        'tesim'
+      end
+
+      def multiple_suffix
+        return unless multiple?
+        'm'
+      end
   end
 end

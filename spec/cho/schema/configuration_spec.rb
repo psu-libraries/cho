@@ -14,7 +14,8 @@ RSpec.describe Schema::Configuration, type: :model do
         {
           'schema' => 'Generic', 'fields' => {
             'member_of_collection_ids' => { 'order_index' => 2, 'requirement_designation' => 'required' },
-            'generic_field' => { 'order_index' => 1 }
+            'generic_field' => { 'order_index' => 1 },
+            'created' => { 'order_index' => 3 }
           }
         },
         {

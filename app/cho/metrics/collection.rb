@@ -81,7 +81,7 @@ module Metrics
           repository: [Faker::Company.bs.titleize],
           rights_statement: [Faker::HowIMetYourMother.quote],
           cataloger: [Faker::SiliconValley.character],
-          date_cataloged: [Faker::Time.between(30.days.ago, Date.today, :day).strftime('%A, %d %b %Y %l:%M %p')],
+          date_cataloged: [Faker::Time.between(30.days.ago, Date.today, :day).strftime('%Y-%m-%d')],
           work_type_id: work_type_id,
           member_of_collection_ids: [collection.id]
         }

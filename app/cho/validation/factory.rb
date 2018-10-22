@@ -16,7 +16,8 @@ module Validation
       def default_items
         {
           default_key => Validation::None.new,
-          resource_exists: :validation # placeholder, see https://github.com/psu-libraries/cho/issues/672
+          resource_exists: :validation, # placeholder, see https://github.com/psu-libraries/cho/issues/672
+          edtf_date: :validation # placeholder, see https://github.com/psu-libraries/cho/issues/672
         }
       end
 
