@@ -44,6 +44,10 @@ class SolrDocument
     end
   end
 
+  def file_set_ids
+    Array.wrap(self['file_set_ids_ssim'])
+  end
+
   # @return [Array<Work::File>]
   def files
     Array.wrap(self['member_ids_ssim']).map do |id|
