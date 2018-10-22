@@ -21,8 +21,8 @@ module Transaction
           else
             text_file_result
           end
-        rescue StandardError => e
-          Failure("Error extracting text: #{e.message}")
+        rescue StandardError => exception
+          Failure(Transaction::Rejection.new("Error extracting text: #{exception.message}"))
         end
 
         private

@@ -47,7 +47,7 @@ RSpec.describe Transaction::Operations::File::Save do
         expect {
           result = operation.call(mock_change_set)
           expect(result).to be_failure
-          expect(result.failure).to eq('Error persisting file: unsupported adapter')
+          expect(result.failure.message).to eq('Error persisting file: unsupported adapter')
         }.to change { Work::File.count }.by(0)
       end
     end

@@ -16,7 +16,7 @@ module Transaction
           change_set.import_work = bag.success.works.first
           Success(change_set)
         rescue StandardError => exception
-          Failure("Unable to import zip file from the GUI: #{exception}")
+          Failure(Transaction::Rejection.new("Unable to import zip file from the GUI: #{exception}"))
         end
       end
     end

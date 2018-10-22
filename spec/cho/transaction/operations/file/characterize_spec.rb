@@ -41,7 +41,7 @@ RSpec.describe Transaction::Operations::File::Characterize do
       it 'returns Failure' do
         result = operation.call(change_set)
         expect(result).to be_failure
-        expect(result.failure).to eq('Error characterizing file: Valkyrie::StorageAdapter::FileNotFound')
+        expect(result.failure.message).to eq('Error characterizing file: Valkyrie::StorageAdapter::FileNotFound')
       end
     end
 
