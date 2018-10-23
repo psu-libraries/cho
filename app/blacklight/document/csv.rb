@@ -46,7 +46,10 @@ module Document::Csv
     end
 
     def export_model
-      ::CSV.generate { |csv| csv << export_fields(self) }
+      ::CSV.generate do |csv|
+        csv << export_fields(self)
+        export_member_file_sets(self).each { |file_set| csv << file_set }
+      end
     end
 
     def export_members(csv)
@@ -56,9 +59,16 @@ module Document::Csv
         members = document_facade(page).members
         members.each do |member|
           csv << export_fields(member)
+          export_member_file_sets(member).each { |file_set| csv << file_set }
         end
         page += 1
         more_members = members.count >= rows
+      end
+    end
+
+    def export_member_file_sets(member)
+      member.file_set_ids.map do |id|
+        export_fields(SolrDocument.find(id.sub(/^id-/, '')))
       end
     end
 
