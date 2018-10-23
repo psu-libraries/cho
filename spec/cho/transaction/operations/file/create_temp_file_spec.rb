@@ -21,7 +21,7 @@ RSpec.describe Transaction::Operations::File::CreateTempFile do
 
       it 'returns Failure' do
         expect(result).to be_failure
-        expect(result.failure).to eq('Error persisting file: undefined method `eof?\' for nil:NilClass')
+        expect(result.failure.message).to eq('Error persisting file: undefined method `eof?\' for nil:NilClass')
       end
     end
   end

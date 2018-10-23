@@ -14,7 +14,7 @@ module Transaction
           return Success(bag) if bag.valid?
           Failure(bag)
         rescue StandardError => exception
-          Failure("Error validating the bag: #{exception.message}")
+          Failure(Transaction::Rejection.new("Error validating the bag: #{exception.message}"))
         end
       end
     end

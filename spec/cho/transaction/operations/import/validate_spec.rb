@@ -60,7 +60,7 @@ RSpec.describe Transaction::Operations::Import::Validate do
       it 'returns a Failure' do
         result = operation.call('bag_path')
         expect(result).to be_failure
-        expect(result.failure).to eq('Error validating the bag: bag_path is malformed')
+        expect(result.failure.message).to eq('Error validating the bag: bag_path is malformed')
       end
     end
   end

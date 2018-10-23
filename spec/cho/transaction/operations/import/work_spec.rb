@@ -38,7 +38,7 @@ RSpec.describe Transaction::Operations::Import::Work do
         expect {
           result = operation.call(change_set)
           expect(result).to be_failure
-          expect(result.failure).to eq('Error importing the work: unsupported adapter')
+          expect(result.failure.message).to eq('Error importing the work: unsupported adapter')
         }.to change { Work::File.count }.by(0).and change { ::Work::FileSet.count }.by(0)
       end
     end

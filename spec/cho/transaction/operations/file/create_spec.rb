@@ -31,7 +31,7 @@ RSpec.describe Transaction::Operations::File::Create do
 
       it 'returns Failure' do
         expect(result).to be_failure
-        expect(result.failure).to eq('Error persisting file: undefined method `path\' for nil:NilClass')
+        expect(result.failure.message).to eq('Error persisting file: undefined method `path\' for nil:NilClass')
       end
     end
   end

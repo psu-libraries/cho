@@ -37,7 +37,7 @@ RSpec.describe Transaction::Operations::FileSet::ExtractText do
         expect {
           result = operation.call(file_set)
           expect(result).to be_failure
-          expect(result.failure).to eq('Error extracting text: unsupported adapter')
+          expect(result.failure.message).to eq('Error extracting text: unsupported adapter')
         }.to change { Work::File.count }.by(0)
       end
     end
