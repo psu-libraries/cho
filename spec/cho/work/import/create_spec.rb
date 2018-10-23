@@ -171,6 +171,72 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
         'work1_text.txt',
         'work1_thumb.jpg'
       )
+
+      # Search using extracted text from file set
+      extracted_text = ::File.read(file_sets.select(&:representative?).first.text.path)
+      visit(root_path)
+      fill_in('q', with: extracted_text.split(' ').first)
+      click_button('Search')
+      within('#documents') do
+        expect(page).to have_link('My Work1')
+      end
+    end
+  end
+
+  context 'when the zip file requires text extraction' do
+    let(:csv_file) do
+      CsvFactory::Generic.new(
+        alternate_ids: ['work1', 'work1_00001_01', 'work1_00002_01'],
+        member_of_collection_ids: [collection.id, nil, nil],
+        work_type: ['Generic', nil, nil],
+        title: ['Extracted Text from Bag', 'Page1', 'Page 2'],
+        batch_id: ['batch12_2018-10-19', nil, nil]
+      )
+    end
+
+    let(:bag) do
+      ImportFactory::Bag.create(
+        batch_id: 'batch12_2018-10-19',
+        data: {
+          work1: [
+            'work1_00001_01_preservation.tif',
+            'work1_00001_01_service.jp2',
+            'work1_00002_01_preservation.tif',
+            'work1_00002_01_service.jp2',
+            { name: 'work1_service.pdf', file: 'test.pdf' },
+            'work1_thumb.jpg'
+          ]
+        }
+      )
+    end
+
+    before do
+      ImportFactory::Zip.create(bag)
+    end
+
+    it 'successfully imports the csv and index the extracted text' do
+      visit(csv_create_path)
+      expect(page).to have_selector('h1', text: 'CSV Import')
+      attach_file('work_import_csv_file_file', csv_file.path)
+      click_button('Preview Import')
+      expect(page).to have_selector('h1', text: 'Import Preview')
+      expect(page).to have_selector('h2', text: 'Bag Status')
+      expect(page).to have_selector('h2', text: 'CSV Status')
+      expect(page).to have_content('The bag is valid and contains no errors')
+      expect(page).to have_content('The following new works will be created')
+      expect(page).to have_content('Total Number of Works with Errors 0')
+      click_button('Perform Import')
+      expect(page).to have_selector('h1', text: 'Successful Import')
+      within('ul.result-list') do
+        expect(page).to have_selector('li a', text: 'Extracted Text from Bag')
+      end
+
+      visit(root_path)
+      fill_in('q', with: 'brown fox')
+      click_button('Search')
+      within('#documents') do
+        expect(page).to have_link('Extracted Text from Bag')
+      end
     end
   end
 

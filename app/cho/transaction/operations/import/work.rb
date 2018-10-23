@@ -43,16 +43,26 @@ module Transaction
           # @return [Work::FileSet]
           def import_file_set(file_set, file_set_change_set: nil)
             files = saved_files(file_set.files)
-            if file_set_change_set.nil?
-              ::Work::FileSet.new(
-                member_ids: files.map(&:id),
-                title: file_set.title,
-                alternate_ids: file_set.id
-              )
+            file_set = if file_set_change_set.nil?
+                         ::Work::FileSet.new(
+                           member_ids: files.map(&:id),
+                           title: file_set.title,
+                           alternate_ids: file_set.id
+                         )
+                       else
+                         file_set_change_set.member_ids = files.map(&:id)
+                         file_set_change_set.sync
+                         file_set_change_set.resource
+                       end
+
+            extracted_text = FileSet::ExtractText.new.call(file_set)
+
+            # @todo If text extraction fails, the file set is returned anyway, but we ought to register
+            #   the failure somehow so extraction can re-run later.
+            if extracted_text.failure?
+              file_set
             else
-              file_set_change_set.member_ids = files.map(&:id)
-              file_set_change_set.sync
-              file_set_change_set.resource
+              extracted_text.success
             end
           end
 
@@ -69,7 +79,8 @@ module Transaction
           def import_file(file)
             ::Work::File.new(
               file_identifier: adapter_file(file).id,
-              original_filename: file.original_filename
+              original_filename: file.original_filename,
+              use: file.type
             )
           end
 
