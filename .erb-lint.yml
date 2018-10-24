@@ -41,6 +41,8 @@ linters:
         Enabled: false
   SelfClosingTag:
     enabled: true
+  SelfClosingTagCustom:
+    enabled: true
   SpaceAroundErbTag:
     enabled: true
   SpaceInHtmlTag:
