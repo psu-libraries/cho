@@ -37,24 +37,30 @@ describe Validation::Methods do
     end
 
     context 'with a single invalid EDTF date' do
+      subject { change_set.errors.full_messages }
+
       before { change_set.validate(date: 'asdf') }
 
-      it { is_expected.not_to be_valid }
-      its(:errors) { is_expected.to include(date: ['asdf is not a valid EDTF date']) }
+      it { is_expected.to contain_exactly('Date asdf is not a valid EDTF date') }
     end
 
     context 'with a multiple invalid EDTF dates' do
+      subject { change_set.errors.full_messages }
+
       before { change_set.validate(date: ['asdf', '2']) }
 
-      it { is_expected.not_to be_valid }
-      its(:errors) { is_expected.to include(date: ['asdf is not a valid EDTF date', '2 is not a valid EDTF date']) }
+      it { is_expected.to contain_exactly(
+        'Date asdf is not a valid EDTF date',
+        'Date 2 is not a valid EDTF date'
+      )}
     end
 
     context 'with both valid and invalid dates' do
+      subject { change_set.errors.full_messages }
+
       before { change_set.validate(date: ['1984?-01~', 'btw']) }
 
-      it { is_expected.not_to be_valid }
-      its(:errors) { is_expected.to include(date: ['btw is not a valid EDTF date']) }
+      it { is_expected.to contain_exactly('Date btw is not a valid EDTF date') }
     end
 
     context 'with a nil date' do
