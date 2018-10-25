@@ -4,7 +4,7 @@ member_of_collection_ids,valkyrie_id,optional,resource_exists,false,cho_collecti
 subtitle,string,optional,no_validation,true,no_vocabulary,,,no_transformation,no_facet,help me,true
 description,text,optional,no_validation,true,no_vocabulary,,,no_transformation,no_facet,help me,true
 created,date,optional,edtf_date,true,no_vocabulary,,,no_transformation,date,help me,false
-generic_field,string,optional,no_validation,true,no_vocabulary,,,no_transformation,no_facet,help me,false
+generic_field,string,optional,no_validation,true,no_vocabulary,,,no_transformation,facet,help me,false
 document_field,string,optional,no_validation,true,no_vocabulary,,,no_transformation,no_facet,help me,false
 still_image_field,string,optional,no_validation,true,no_vocabulary,,,no_transformation,no_facet,help me,false
 moving_image_field,string,optional,no_validation,true,no_vocabulary,,,no_transformation,no_facet,help me,false

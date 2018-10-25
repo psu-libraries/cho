@@ -90,6 +90,11 @@ class CatalogController < ApplicationController
     config.add_facet_field 'work_type_ssim', label: I18n.t('cho.field_label.work_type')
     config.add_facet_field 'collection_type_ssim', label: I18n.t('cho.field_label.collection_type')
     config.add_facet_field 'member_of_collection_ssim', label: I18n.t('cho.field_label.member_of_collections')
+
+    DataDictionary::Field.all.sort_by(&:created_at).select(&:facet?).each do |field|
+      config.add_facet_field field.facet_field, label: (field.display_name || field.label.titleize)
+    end
+
     # config.add_facet_field 'pub_date', label: 'Publication Year', single: true
     # config.add_facet_field 'subject_topic_facet', label: 'Topic', limit: 20, index_range: 'A'..'Z'
     # config.add_facet_field 'language_facet', label: 'Language', limit: true

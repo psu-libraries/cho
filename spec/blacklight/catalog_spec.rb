@@ -6,10 +6,33 @@ RSpec.describe CatalogController, type: :feature do
   it_behaves_like 'a search form', '/catalog'
 
   context 'when searching for works' do
-    before { create(:work_submission, :with_file) }
+    before do
+      create(:work_submission, :with_file,
+        collection_title: 'Searching Collection',
+        generic_field: 'Faceted Value')
+    end
 
     it 'returns the work and excludes file sets and files' do
       visit(root_path)
+
+      # Check facets
+      within('div.blacklight-member_of_collection_ssim') do
+        expect(page).to have_selector('h3', text: 'Collections')
+        expect(page).to have_link('Searching Collection')
+      end
+      within('div.blacklight-work_type_ssim') do
+        expect(page).to have_selector('h3', text: 'Work Type')
+        expect(page).to have_link('Generic')
+      end
+      within('div.blacklight-collection_type_ssim') do
+        expect(page).to have_selector('h3', text: 'Collection Type')
+        expect(page).to have_link('Archival Collection')
+      end
+      within('div.blacklight-generic_field_ssim') do
+        expect(page).to have_selector('h3', text: 'Generic Field')
+        expect(page).to have_link('Faceted Value')
+      end
+
       click_button('Search')
       within('#documents') do
         expect(page).to have_link('Sample Generic Work')
