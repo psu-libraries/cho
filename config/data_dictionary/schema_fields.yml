@@ -183,6 +183,8 @@ test:
       member_of_collection_ids:
         requirement_designation: 'required'
         order_index: 2
+      created:
+        order_index: 3
   - schema: 'Document'
     fields:
       document_field:

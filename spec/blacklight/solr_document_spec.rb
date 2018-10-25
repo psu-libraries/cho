@@ -48,7 +48,7 @@ RSpec.describe SolrDocument, type: :model do
 
   describe 'data dictionary field accessors' do
     let(:document) do
-      { 'internal_resource_tsim' => 'MyResource', title_tesim: ['my_title'], created_dtsi: ['2018-04-19T15:46:46Z'] }
+      { 'internal_resource_tsim' => 'MyResource', title_tesim: ['my_title'], created_dtsim: ['2018-04-19T15:46:46Z'] }
     end
 
     its(:title_data_dictionary_field) { is_expected.to eq ['my_title'] }

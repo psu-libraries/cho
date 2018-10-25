@@ -21,7 +21,8 @@ Rails.application.config.to_prepare do
         Valkyrie::Indexers::AccessControlsIndexer,
         Work::SubmissionIndexer,
         Work::FileSetIndexer,
-        Collection::TypeIndexer
+        Collection::TypeIndexer,
+        Indexing::Dates
       )
     ),
     :index_solr

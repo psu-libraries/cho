@@ -3,7 +3,7 @@
 module DataDictionary::WithIndexType
   extend ActiveSupport::Concern
 
-  IndexTypes = Valkyrie::Types::String.enum('facet', 'no_facet')
+  IndexTypes = Valkyrie::Types::String.enum('facet', 'no_facet', 'date')
 
   included do
     attribute :index_type, IndexTypes
@@ -23,5 +23,13 @@ module DataDictionary::WithIndexType
 
   def no_facet?
     index_type == 'no_facet'
+  end
+
+  def date!
+    self.index_type = 'date'
+  end
+
+  def date?
+    index_type == 'date'
   end
 end

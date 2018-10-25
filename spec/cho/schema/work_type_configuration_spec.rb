@@ -45,15 +45,15 @@ RSpec.describe Schema::WorkTypeConfiguration, type: :model do
     let(:work_type) { 'Generic' }
 
     it 'creates a field based on the work type' do
-      expect(schema_fields.count).to eq(2)
-      expect(schema_fields.first.order_index).to eq(5)
-      expect(schema_fields.first.label).to eq('generic_field')
-      expect(schema_fields.first.work_type).to eq(work_type)
-      expect(schema_fields.first.requirement_designation).to eq('optional')
-      expect(schema_fields.last.order_index).to eq(6)
-      expect(schema_fields.last.label).to eq('member_of_collection_ids')
-      expect(schema_fields.last.work_type).to eq(work_type)
-      expect(schema_fields.last.requirement_designation).to eq('required')
+      expect(schema_fields.count).to eq(3)
+      expect(schema_fields[0].order_index).to eq(5)
+      expect(schema_fields[0].label).to eq('generic_field')
+      expect(schema_fields[0].work_type).to eq(work_type)
+      expect(schema_fields[0].requirement_designation).to eq('optional')
+      expect(schema_fields[1].order_index).to eq(6)
+      expect(schema_fields[1].label).to eq('member_of_collection_ids')
+      expect(schema_fields[1].work_type).to eq(work_type)
+      expect(schema_fields[1].requirement_designation).to eq('required')
     end
 
     context 'a non existing work type' do
@@ -100,7 +100,7 @@ RSpec.describe Schema::WorkTypeConfiguration, type: :model do
     it 'creates a field based on the work type' do
       expect(metadata_schema).to be_a(Schema::Metadata)
       expect(metadata_schema.label).to eq(work_type)
-      expect(metadata_schema.fields.count).to eq(2)
+      expect(metadata_schema.fields.count).to eq(3)
     end
 
     context 'a non existing work type' do

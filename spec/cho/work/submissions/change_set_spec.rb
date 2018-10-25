@@ -163,11 +163,19 @@ RSpec.describe Work::SubmissionChangeSet do
 
       let(:work_field) { Schema::MetadataField.find_using(label: 'generic_field').first }
 
-      its(:count) { is_expected.to eq(6) }
+      its(:count) { is_expected.to eq(7) }
 
       it 'is ordered' do
         expect(fields.map(&:label)).to eq(
-          ['title', 'subtitle', 'description', 'alternate_ids', 'generic_field', 'member_of_collection_ids']
+          [
+            'title',
+            'subtitle',
+            'description',
+            'alternate_ids',
+            'generic_field',
+            'member_of_collection_ids',
+            'created'
+          ]
         )
       end
 
@@ -179,7 +187,15 @@ RSpec.describe Work::SubmissionChangeSet do
 
         it 'is ordered' do
           expect(fields.map(&:label)).to eq(
-            ['generic_field', 'title', 'subtitle', 'description', 'alternate_ids', 'member_of_collection_ids']
+            [
+              'generic_field',
+              'title',
+              'subtitle',
+              'description',
+              'alternate_ids',
+              'member_of_collection_ids',
+              'created'
+            ]
           )
         end
       end
@@ -194,6 +210,7 @@ RSpec.describe Work::SubmissionChangeSet do
                                                                                    'generic_field',
                                                                                    'alternate_ids',
                                                                                    'member_of_collection_ids',
+                                                                                   'created',
                                                                                    'title')
       end
     end

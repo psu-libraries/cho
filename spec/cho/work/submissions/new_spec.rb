@@ -10,7 +10,7 @@ RSpec.describe Work::Submission, type: :feature do
     end
   end
 
-  context 'when filling in all the required fields' do
+  context 'when filling in all the fields' do
     let!(:archival_collection) { create(:archival_collection, title: 'Sample Collection') }
 
     it 'creates a new work object without a file' do
@@ -19,11 +19,34 @@ RSpec.describe Work::Submission, type: :feature do
       click_link('Generic')
       expect(page).to have_content('New Generic Work')
       fill_in('work_submission[title]', with: 'New Title')
+      fill_in('work_submission[subtitle]', with: 'New subtitle')
+      fill_in('work_submission[description]', with: 'Description of new generic work.')
+      fill_in('work_submission[alternate_ids]', with: 'asdf_1234')
+      fill_in('work_submission[generic_field]', with: 'Sample generic field value')
+      fill_in('work_submission[created]', with: '2018-10-22')
       fill_in('work_submission[member_of_collection_ids]', with: archival_collection.id)
       click_button('Create Work')
-      expect(page).to have_content('New Title')
-      expect(page).to have_content('Generic')
-      expect(page).to have_content(archival_collection.id)
+      expect(page).to have_selector('h1', text: 'New Title')
+      within('#document') do
+        expect(page).to have_blacklight_label(:title_tesim, 'Object Title')
+        expect(page).to have_blacklight_field(:title_tesim, 'New Title')
+        expect(page).to have_blacklight_label(:subtitle_tesim, 'Subtitle')
+        expect(page).to have_blacklight_field(:subtitle_tesim, 'New subtitle')
+        expect(page).to have_blacklight_label(:description_tesim, 'Description')
+        expect(page).to have_blacklight_field(:description_tesim, 'Description of new generic work')
+        expect(page).to have_blacklight_label(:created_tesim, 'Created')
+        expect(page).to have_blacklight_field(:created_tesim, 'datetime-2018-10-22T00:00:00.000Z')
+        expect(page).to have_blacklight_label(:generic_field_tesim, 'Generic Field')
+        expect(page).to have_blacklight_field(:generic_field_tesim, 'Sample generic field value')
+        expect(page).to have_blacklight_label(:alternate_ids_tesim, 'Identifier')
+        expect(page).to have_blacklight_field(:alternate_ids_tesim, 'id-asdf_1234')
+        expect(page).to have_blacklight_label(:work_type_ssim, 'Work Type')
+        expect(page).to have_blacklight_field(:work_type_ssim, 'Generic')
+        expect(page).to have_blacklight_label(:member_of_collection_ids_ssim, 'Member of Collection')
+        expect(page).to have_blacklight_field(:member_of_collection_ids_ssim, 'Sample Collection')
+        expect(page).to have_blacklight_field(:member_of_collection_ids_ssim, archival_collection.id)
+        expect(page).to have_link('Sample Collection')
+      end
       expect(page).to have_link('Edit')
     end
   end

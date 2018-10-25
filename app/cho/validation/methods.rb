@@ -12,4 +12,12 @@ module Validation::Methods
     member = Validation::Member.new(self[field])
     errors.add(field, "#{member.id} does not exist") unless member.exists?
   end
+
+  def edtf_date(field)
+    return if self[field].blank?
+    Array.wrap(self[field]).each do |value|
+      date = Date.edtf(value)
+      errors.add(field, "#{value} is not a valid EDTF date") unless date
+    end
+  end
 end
