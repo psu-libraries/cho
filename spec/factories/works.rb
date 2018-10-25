@@ -9,11 +9,15 @@ FactoryBot.define do
     title { 'Sample Generic Work' }
     work_type_id { Work::Type.find_using(label: 'Generic').first.id }
 
+    transient do
+      collection_title { 'Sample Archival Collection' }
+    end
+
     member_of_collection_ids do
       if @build_strategy.is_a? FactoryBot::Strategy::Build
-        build(:collection).id
+        build(:collection, title: collection_title).id
       else
-        create(:collection).id
+        create(:collection, title: collection_title).id
       end
     end
 

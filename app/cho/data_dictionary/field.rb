@@ -34,6 +34,11 @@ module DataDictionary
       "#{label}_#{suffix}"
     end
 
+    # @return [String] field name used when this field is used for faceting
+    def facet_field
+      "#{label}_ssim"
+    end
+
     # @return [Valkyrie::Types] property type for the Valkyrie::ChangeSet
     # @note This does not address multiple: valkyrie_id field types are singular, alternate_id types must be
     #    multiple; everything else is multiple.

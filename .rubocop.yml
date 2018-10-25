@@ -39,3 +39,4 @@ Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
     - 'config/initializers/valkyrie.rb'
+    - 'app/blacklight/catalog_controller.rb'
