@@ -119,14 +119,14 @@ RSpec.describe ChangeSetPersister do
       expect(Work::Submission.all.count).to eq(1)
       expect(Work::File.all.count).to eq(2)
       expect(metadata_adapter.index_adapter.query_service.find_all.count).to eq(5)
-      expect(File.exists?('tmp/files/hello_world.txt')).to be(true)
-      expect(File.exists?('tmp/files/hello_world.txt_text.txt')).to be(true)
+      expect(Metrics::Repository.storage_directory.join('hello_world.txt')).to be_exist
+      expect(Metrics::Repository.storage_directory.join('hello_world.txt_text.txt')).to be_exist
       change_set_persister.delete(change_set: change_set)
       expect(Work::Submission.all.count).to eq(0)
       expect(Work::File.all.count).to eq(0)
       expect(metadata_adapter.index_adapter.query_service.find_all.count).to eq(1)
-      expect(File.exists?('tmp/files/hello_world.txt')).to be(false)
-      expect(File.exists?('tmp/files/hello_world.txt_text.txt')).to be(false)
+      expect(Metrics::Repository.storage_directory.join('hello_world.txt')).not_to be_exist
+      expect(Metrics::Repository.storage_directory.join('hello_world.txt_text.txt')).not_to be_exist
     end
   end
 

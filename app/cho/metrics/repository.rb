@@ -17,9 +17,14 @@ module Metrics
       end
 
       def reset_directories
-        reset_directory(Rails.root.join('tmp', 'files'))
+        reset_directory(Rails.root.join(storage_directory))
         reset_directory(Rails.root.join(network_ingest_directory))
         reset_directory(Rails.root.join(extraction_directory))
+      end
+
+      # @return [Pathname] absolute path to the location of stored files
+      def storage_directory
+        Pathname.new(ENV['storage_directory']).expand_path
       end
 
       private

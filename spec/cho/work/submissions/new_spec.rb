@@ -159,7 +159,7 @@ RSpec.describe Work::Submission, type: :feature do
 
     let(:zip_file) { ImportFactory::Zip.create(bag) }
 
-    it 'creates a new work object with file sets and files from the zip' do
+    it 'creates a new work object with file sets, files, and a thumbnail from the zip' do
       visit(root_path)
       click_link('Create Work')
       click_link('Generic')
@@ -170,13 +170,20 @@ RSpec.describe Work::Submission, type: :feature do
       click_button('Create Work')
       expect(page).to have_content('Work and file sets with attached zip')
       expect(page).to have_content('Generic')
+      expect(page).to have_xpath("//img[@src='/files/work1_thumb.jpg']")
+      expect(page).to have_xpath("//img[@alt='Work1 thumb']")
       expect(page).to have_link('Edit')
       expect(page).to have_selector('h2', text: 'Files')
       expect(page).to have_content('work1_00001_01_preservation.tif')
       expect(page).to have_content('work1_00001_02_preservation.tif')
       expect(page).to have_content('work1_00002_01_preservation.tif')
       expect(page).to have_content('work1_00002_02_preservation.tif')
-      expect(page).to have_content('work1_service.pdf')
+
+      # Check thumbnail display on the file set
+      click_link('work1_service.pdf')
+      expect(page).to have_selector('h1', text: 'work1_service.pdf')
+      expect(page).to have_xpath("//img[@src='/files/work1_thumb.jpg']")
+      expect(page).to have_xpath("//img[@alt='Work1 thumb']")
     end
   end
 end

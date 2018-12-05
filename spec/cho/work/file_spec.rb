@@ -37,7 +37,7 @@ RSpec.describe Work::File do
 
     context 'with a file' do
       before { file.file_identifier = binary_content.id }
-      its(:path) { is_expected.to end_with('cho/tmp/files/My File.txt') }
+      its(:path) { is_expected.to eq(Metrics::Repository.storage_directory.join('My File.txt').to_s) }
     end
   end
 end
