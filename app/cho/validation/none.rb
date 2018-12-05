@@ -3,6 +3,7 @@
 module Validation
   class None < Base
     def validate(_field)
+      @errors = []
       true
     end
   end
