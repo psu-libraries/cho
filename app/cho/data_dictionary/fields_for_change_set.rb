@@ -6,9 +6,6 @@ module DataDictionary::FieldsForChangeSet
   extend ActiveSupport::Concern
 
   included do
-    # @note see https://github.com/psu-libraries/cho/issues/672
-    include Validation::Methods
-
     # There are some race conditions where the database does not yet exists, but the class is being loaded.
     #   Like when you run rake db:create
     #   This statement makes sure the rails environment can be loaded even if the database has yet to be created.
@@ -17,9 +14,8 @@ module DataDictionary::FieldsForChangeSet
         property field.label.parameterize.underscore.to_sym,
                  multiple: field.multiple?,
                  type: field.change_set_property_type
-
         validates field.label.parameterize.underscore.to_sym, with: :requirement_determination
-        validates field.label.parameterize.underscore.to_sym, with: field.validation.to_sym
+        validates field.label.parameterize.underscore.to_sym, with: :validate_field
       end
     end
 
@@ -35,6 +31,14 @@ module DataDictionary::FieldsForChangeSet
         self[field].to_s.blank?
       else
         self[field].blank?
+      end
+    end
+
+    def validate_field(field)
+      validation_name = DataDictionary::Field.where(label: field.to_s).first.validation.to_sym
+      validation_instance = Validation::Factory.validators[validation_name]
+      unless validation_instance.validate(self[field])
+        validation_instance.errors.each { |error| errors.add(field, error) }
       end
     end
   end

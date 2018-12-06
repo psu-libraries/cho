@@ -24,6 +24,10 @@ RSpec.describe Validation::Base, type: :model do
 
   it { within_block_is_expected.not_to raise_exception }
 
+  it 'repsonds to error' do
+    expect(testing_class.new).to respond_to(:errors)
+  end
+
   context 'invalid validator' do
     let(:testing_class) { OtherValidator }
 
