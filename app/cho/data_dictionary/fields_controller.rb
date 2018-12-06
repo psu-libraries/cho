@@ -43,32 +43,10 @@ module DataDictionary
     # DELETE /data_dictionary_fields/1
     # DELETE /data_dictionary_fields/1.json
     def destroy
-      persister.delete(resource: delete_change_set.resource)
-      respond_to do |format|
-        format.html { redirect_to data_dictionary_fields_url, notice: 'Metadata field was successfully destroyed.' }
-        format.json { head :no_content }
-      end
+      destroy_item(data_dictionary_fields_url, 'Metadata field was successfully destroyed.')
     end
 
     private
-
-      def respond_error(change_set, error_view)
-        @data_dictionary_field = change_set
-        respond_to do |format|
-          format.html { render error_view }
-          format.json { render json: change_set.errors, status: :unprocessable_entity }
-        end
-      end
-
-      def respond_success(change_set)
-        @data_dictionary_field = change_set
-        respond_to do |format|
-          format.html do
-            redirect_to @data_dictionary_field.resource, notice: 'Metadata field was successfully updated.'
-          end
-          format.json { render :show, status: :ok, location: @data_dictionary_field.resource }
-        end
-      end
 
       def find_resource(id)
         query_service.find_by(id: Valkyrie::ID.new(id))
@@ -94,6 +72,14 @@ module DataDictionary
 
       def resource_class
         DataDictionary::Field
+      end
+
+      def view_data(change_set)
+        @data_dictionary_field = change_set
+      end
+
+      def success_message
+        'Metadata field was successfully updated.'
       end
   end
 end

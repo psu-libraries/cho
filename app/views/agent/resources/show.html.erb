@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Givenname:</strong>
+  <%= @agent.given_name %>
+</p>
+
+<p>
+  <strong>Surname:</strong>
+  <%= @agent.surname %>
+</p>
+
+<%= link_to 'Edit', edit_agent_resource_path(@agent) %> |
+<%= link_to 'Back', agent_resources_path %>

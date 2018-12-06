@@ -29,15 +29,33 @@ module ValkyrieControllerBehaviors
     raise StandardError.new('This needs to be define in the class including this module')
   end
 
-  def respond_success(_change_set)
-    raise StandardError.new('This needs to be define in the class including this module')
-  end
-
-  def respond_error(_change_set, _error_view)
-    raise StandardError.new('This needs to be define in the class including this module')
+  def destroy_item(url, notice)
+    persister.delete(resource: delete_change_set.resource)
+    respond_to do |format|
+      format.html { redirect_to url, notice: notice }
+      format.json { head :no_content }
+    end
   end
 
   private
+
+    def respond_success(change_set)
+      view_data(change_set)
+      respond_to do |format|
+        format.html do
+          redirect_to change_set.resource, notice: success_message
+        end
+        format.json { render :show, status: :ok, location: change_set.resource }
+      end
+    end
+
+    def respond_error(change_set, error_view)
+      view_data(change_set)
+      respond_to do |format|
+        format.html { render error_view }
+        format.json { render json: change_set.errors, status: :unprocessable_entity }
+      end
+    end
 
     def find_resource(id)
       resource_class.find(Valkyrie::ID.new(id))
@@ -48,5 +66,21 @@ module ValkyrieControllerBehaviors
         metadata_adapter: Valkyrie::MetadataAdapter.find(:indexing_persister),
         storage_adapter: Valkyrie.config.storage_adapter
       )
+    end
+
+    def delete_change_set
+      raise StandardError.new('This needs to be define in the class including this module')
+    end
+
+    def persister
+      raise StandardError.new('This needs to be define in the class including this module')
+    end
+
+    def view_data(_change_set)
+      raise StandardError.new('This needs to be define in the class including this module')
+    end
+
+    def success_message
+      raise StandardError.new('This needs to be define in the class including this module')
     end
 end

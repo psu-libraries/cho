@@ -1,0 +1,2 @@
+<%- presenter = Agent::CsvPresenter.new(Agent::Resource.all.to_a) %>
+<%= presenter.to_csv %>
