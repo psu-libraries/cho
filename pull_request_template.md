@@ -1,15 +1,15 @@
 ## Description
 
-Fixes: #[issue number, if applicable]
+    Brief paragraph about what this does and why
 
-Why was this necessary?
+    Link tickets here:
+    
+    To link to a ticket without closing it use:
+    Connected to _ticket_number_
+
+    To close the ticket once the PR is merged use:
+    Fixes _ticket_number_
 
 ## Changes
 
-Are there any major changes in this PR that will change the release process?
-
-## Checklist
-
-- [ ] i18n enabled
-- [ ] adequate test coverage
-- [ ] accessible interface
+* bullet-point list of changes, if needed
