@@ -15,32 +15,30 @@ describe Work::SubmissionIndexer do
     end
 
     context "when the resource's work type is nil" do
-      let(:resource) { instance_double('Resource', work_type: nil) }
+      let(:resource) { instance_double(Work::Submission, work_type_id: nil) }
 
       it { is_expected.to be_empty }
     end
 
     context "when the resource's work type isn't an id or doesn't exist" do
-      let(:resource) { instance_double('Resource', work_type_id: "I don't exist") }
+      let(:resource) { create(:work, work_type_id: "I don't exist") }
 
-      it { is_expected.to eq(work_type_ssim: "I don't exist", member_of_collection_ssim: nil) }
+      it { is_expected.to include(work_type_ssim: nil) }
     end
 
     context "when the resource's work type does exist" do
       let(:work_type) { create :work_type, label: 'Indexed Label' }
-      let(:resource) { instance_double('Resource', work_type_id: work_type.id) }
+      let(:resource)  { create(:work, work_type_id: work_type.id) }
 
-      it { is_expected.to eq(work_type_ssim: 'Indexed Label', member_of_collection_ssim: nil) }
+      it { is_expected.to include(work_type_ssim: 'Indexed Label') }
     end
 
     context "When the resource's collection id is present" do
-      let(:work_type) { create :work_type, label: 'Indexed Label' }
+      let(:work_type)  { create :work_type, label: 'Indexed Label' }
       let(:collection) { create :library_collection, title: 'My Collection' }
-      let(:resource) do
-        instance_double('Resource', work_type_id: work_type.id, member_of_collection_ids: [collection.id])
-      end
+      let(:resource)   { create(:work, work_type_id: work_type.id, member_of_collection_ids: [collection.id]) }
 
-      it { is_expected.to eq(work_type_ssim: 'Indexed Label', member_of_collection_ssim: ['My Collection']) }
+      it { is_expected.to include(work_type_ssim: 'Indexed Label', member_of_collection_ssim: ['My Collection']) }
     end
   end
 end

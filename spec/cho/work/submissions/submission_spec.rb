@@ -111,4 +111,32 @@ RSpec.describe Work::Submission do
       expect(resource_klass.fields).to include(:batch_id)
     end
   end
+
+  describe '#file_sets' do
+    let(:work)     { create(:work, file_set_ids: [file_set.id]) }
+    let(:file_set) { create(:file_set) }
+
+    it { expect(work.file_sets.map(&:id)).to contain_exactly(file_set.id) }
+  end
+
+  describe '#representative_file_set' do
+    context 'without a designated representative' do
+      let(:work)     { create(:work, file_set_ids: [file_set.id]) }
+      let(:file_set) { create(:file_set) }
+
+      it { expect(work.representative_file_set.id).to eq(file_set.id) }
+    end
+
+    context 'with a designated representative' do
+      let(:work)           { create(:work, file_set_ids: [file_set.id, representative.id]) }
+      let(:file_set)       { create(:file_set, alternate_ids: ['alt-id']) }
+      let(:representative) { create(:file_set, alternate_ids: []) }
+
+      it { expect(work.representative_file_set.id).to eq(representative.id) }
+    end
+
+    context 'without any file sets' do
+      its(:representative_file_set) { is_expected.to be_a(Work::Submission::NullRepresentativeFileSet) }
+    end
+  end
 end

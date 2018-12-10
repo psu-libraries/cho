@@ -34,8 +34,23 @@ module Work
       end
     end
 
+    def file_sets
+      @file_sets ||= file_set_ids.map { |id| Work::FileSet.find(id) }
+    end
+
+    def representative_file_set
+      file_sets.select(&:representative?).first || file_sets.first || NullRepresentativeFileSet.new
+    end
+
     def attributes
       super
+    end
+
+    class NullRepresentativeFileSet
+      Thumbnail = Struct.new('File', :path)
+      def thumbnail
+        @thumbnail ||= Thumbnail.new(nil)
+      end
     end
   end
 end
