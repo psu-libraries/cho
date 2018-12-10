@@ -2,7 +2,7 @@
 
 module ControlledVocabulary
   class Agents < Base
-    def self.list
+    def self.list(*)
       Agent::Resource.all
     end
   end

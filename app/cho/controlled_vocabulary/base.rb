@@ -2,7 +2,7 @@
 
 module ControlledVocabulary
   class Base
-    def self.list
+    def self.list(*)
       raise Error.new('ControlledVocabulary.list is abstract. Children must implement.')
     end
   end

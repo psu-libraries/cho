@@ -76,19 +76,19 @@ RSpec.describe SolrDocument, type: :model do
       }
     end
 
-    it { is_expected.to eq("abc123,my_title,,,,,,,value1|value2,,xyx789,,\n") }
+    it { is_expected.to eq("abc123,my_title,,,,,,,,value1|value2,,xyx789,,\n") }
 
     context 'with a collection containing works and file sets' do
       let(:collection) { create :library_collection }
       let(:work) { create :work, :with_file, member_of_collection_ids: [collection.id], title: 'Work One' }
-      let(:work1_csv) { "#{work.id},Work One,,,,,,,,,#{collection.id},," }
-      let(:file_set1_csv) { "#{work.file_set_ids.first},hello_world.txt,,,,,,,,,,," }
+      let(:work1_csv) { "#{work.id},Work One,,,,,,,,,,#{collection.id},," }
+      let(:file_set1_csv) { "#{work.file_set_ids.first},hello_world.txt,,,,,,,,,,,," }
       let(:work2) { create :work, :with_file, member_of_collection_ids: [collection.id], title: 'Work Two' }
-      let(:work2_csv) { "#{work2.id},Work Two,,,,,,,,,#{collection.id},," }
-      let(:file_set2_csv) { "#{work2.file_set_ids.first},hello_world.txt,,,,,,,,,,," }
+      let(:work2_csv) { "#{work2.id},Work Two,,,,,,,,,,#{collection.id},," }
+      let(:file_set2_csv) { "#{work2.file_set_ids.first},hello_world.txt,,,,,,,,,,,," }
 
       let(:csv_header) do
-        'id,title,subtitle,description,alternate_ids,audio_field,created,document_field,'\
+        'id,title,subtitle,description,alternate_ids,audio_field,created,creator,document_field,'\
         'generic_field,map_field,member_of_collection_ids,moving_image_field,still_image_field'
       end
 
@@ -124,8 +124,8 @@ RSpec.describe SolrDocument, type: :model do
       end
 
       let(:file_set) { create(:file_set) }
-      let(:work_csv) { 'abc123,my_title,,,,,,,value1|value2,,xyx789,,' }
-      let(:file_set_csv) { "#{file_set.id},Original File Name,,,,,,,,,,," }
+      let(:work_csv) { 'abc123,my_title,,,,,,,,value1|value2,,xyx789,,' }
+      let(:file_set_csv) { "#{file_set.id},Original File Name,,,,,,,,,,,," }
 
       before { file_set }
 

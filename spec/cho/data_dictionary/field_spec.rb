@@ -109,6 +109,14 @@ RSpec.describe DataDictionary::Field, type: :model do
     its(:resource_property_type) { is_expected.to eq(Valkyrie::Types::ID.optional) }
   end
 
+  context 'with an creator field' do
+    before { model.creator! }
+
+    its(:solr_field) { is_expected.to eq('abc123_label_tesim') }
+    its(:change_set_property_type) { is_expected.to eq(Valkyrie::Types::Set.optional) }
+    its(:resource_property_type) { is_expected.to eq(Valkyrie::Types::Set.meta(ordered: true)) }
+  end
+
   context 'when saving with metadata' do
     subject { saved_model }
 

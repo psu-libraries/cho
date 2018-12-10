@@ -2,7 +2,7 @@ Label,Field Type,Requirement Designation,Validation,Multiple,Controlled Vocabula
 title,string,required,no_validation,false,no_vocabulary,,Title,no_transformation,no_facet,help me,true
 member_of_collection_ids,valkyrie_id,optional,resource_exists,false,cho_collections,,Member of Collection,no_transformation,no_facet,help me,false
 alternate_ids,alternate_id,required_to_publish,no_validation,true,no_vocabulary,,Identifier,no_transformation,no_facet,help me,true
-creator,string,optional,no_validation,true,no_vocabulary,,Creator,no_transformation,no_facet,help me,true
+creator,creator,optional,no_validation,true,no_vocabulary,,Creator,no_transformation,no_facet,help me,true
 date_created,string,required_to_publish,no_validation,true,no_vocabulary,,Date Created,no_transformation,no_facet,help me,true
 subject,string,optional,no_validation,true,no_vocabulary,,Subject,no_transformation,no_facet,help me,true
 location,string,optional,no_validation,true,no_vocabulary,,Location,no_transformation,no_facet,help me,true
