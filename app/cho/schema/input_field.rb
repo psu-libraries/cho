@@ -6,7 +6,7 @@ module Schema
 
     attr_reader :form, :metadata_field
 
-    delegate :text?, :required?, :valkyrie_id?, to: :metadata_field
+    delegate :text?, :required?, :valkyrie_id?, :label, to: :metadata_field
 
     # @param [ActionView::Helpers::FormBuilder] form
     # @param [Schema::MetadataField] metadata_field
@@ -15,43 +15,28 @@ module Schema
       @metadata_field = metadata_field
     end
 
-    def label
-      form.label metadata_field.label, metadata_field.display_name do
-        yield if block_given?
-      end
-    end
-
-    def label_text
-      metadata_field.label
-    end
-
     def display_label
       metadata_field.display_name || metadata_field.label.titleize
     end
 
-    def field
-      if text?
-        form.text_area metadata_field.label, options_for_text_area
-      elsif valkyrie_id?
-        form.text_field metadata_field.label, options_for_valkyrie_id
+    def partial
+      if text? || valkyrie_id?
+        metadata_field.field_type
       else
-        form.text_field metadata_field.label, options_for_required_fields
+        'string'
       end
     end
 
-    private
+    def options
+      { required: required?, 'aria-required': required? }
+    end
 
-      def options_for_required_fields
-        return {} unless required?
-        { required: true, 'aria-required' => true }
-      end
+    def datalist
+      ControlledVocabulary::Factory.lookup(metadata_field.controlled_vocabulary.to_sym).list
+    end
 
-      def options_for_text_area
-        options_for_required_fields.merge!(value: form.object.send(metadata_field.label).first)
-      end
-
-      def options_for_valkyrie_id
-        options_for_required_fields.merge!(list: metadata_field.label)
-      end
+    def value
+      form.object.send(label).first
+    end
   end
 end

@@ -2,7 +2,7 @@
 
 module ControlledVocabulary
   class None < Base
-    def lookup(_value)
+    def self.list
       []
     end
   end
