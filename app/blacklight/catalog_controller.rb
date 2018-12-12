@@ -7,6 +7,8 @@ class CatalogController < ApplicationController
 
   helper LocalHelperBehavior, LayoutHelperBehavior
 
+  Blacklight::IndexPresenter.thumbnail_presenter = ::ThumbnailPresenter
+
   configure_blacklight do |config|
     ## Class for sending and receiving requests from a search index
     # config.repository_class = Blacklight::Solr::Repository
@@ -43,6 +45,8 @@ class CatalogController < ApplicationController
     config.index.title_field = 'title_tesim'
     config.show.title_field = 'title_tesim'
 
+    config.show.document_presenter_class = ShowPresenter
+
     DataDictionary::Field.all.sort_by(&:created_at).each do |map_field|
       catalog_field = "#{map_field.label.parameterize.underscore.to_sym}_tesim"
       catalog_label = map_field.label.titleize
@@ -56,11 +60,11 @@ class CatalogController < ApplicationController
 
     # solr field configuration for search results/index views
     config.index.display_type_field = 'work_type_ssim'
-    # config.index.thumbnail_field = 'thumbnail_path_ss'
+    config.index.thumbnail_field = 'thumbnail_path_ss'
 
     # solr field configuration for document/show views
     config.show.display_type_field = 'internal_resource_ssim'
-    # config.show.thumbnail_field = 'thumbnail_path_ss'
+    config.show.thumbnail_field = 'thumbnail_path_ss'
 
     # solr fields that will be treated as facets by the blacklight application
     #   The ordering of the field names is the order of the display

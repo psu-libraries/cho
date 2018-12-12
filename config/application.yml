@@ -7,11 +7,13 @@ development:
   virtual_host: "http://localhost:3000/"
   network_ingest_directory: 'tmp/ingest-development'
   extraction_directory: 'tmp/extract-development'
+  storage_directory: 'public/files'
 test:
   service_name: "example-test"
   service_instance: "example-test"
   virtual_host: "http://test.com/"
   network_ingest_directory: 'tmp/ingest-test'
   extraction_directory: 'tmp/extract-test'
+  storage_directory: 'public/files'
 
 production:

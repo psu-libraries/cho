@@ -22,3 +22,4 @@
 .rubocop-http*
 config/database.yml
 config/hydra-ldap.yml
+public/files

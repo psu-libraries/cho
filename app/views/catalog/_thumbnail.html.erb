@@ -1,0 +1,5 @@
+<% if presenter(document).thumbnail.exists? && tn = presenter(document).thumbnail.thumbnail_tag({class: 'w-100'}, counter: document_counter_with_offset(document_counter)) %>
+  <div class="document-thumbnail">
+    <%= tn %>
+  </div>
+<% end %>
