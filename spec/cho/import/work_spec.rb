@@ -308,7 +308,7 @@ RSpec.describe Import::Work do
     end
 
     it do
-      pending('TODO: Recursive checking of errors on nested works')
+      pending('See: https://github.com/psu-libraries/cho/issues/757 Validate bags with nested works')
       expect(work).not_to be_valid
       expect(work.errors).to be_empty
       expect(work.files.count).to eq(4)
