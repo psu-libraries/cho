@@ -205,13 +205,13 @@ RSpec.describe Work::SubmissionChangeSet do
       let(:form) { double }
 
       it 'contains an array of Schema::InputFields' do
-        expect(change_set.input_fields(form).map(&:label_text)).to contain_exactly('subtitle',
-                                                                                   'description',
-                                                                                   'generic_field',
-                                                                                   'alternate_ids',
-                                                                                   'member_of_collection_ids',
-                                                                                   'created',
-                                                                                   'title')
+        expect(change_set.input_fields(form).map(&:label)).to contain_exactly('subtitle',
+                                                                              'description',
+                                                                              'generic_field',
+                                                                              'alternate_ids',
+                                                                              'member_of_collection_ids',
+                                                                              'created',
+                                                                              'title')
       end
     end
   end

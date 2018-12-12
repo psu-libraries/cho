@@ -15,7 +15,7 @@ module ControlledVocabulary
 
         def default_items
           {
-            default_key => ControlledVocabulary::None.new,
+            default_key => ControlledVocabulary::None,
             cho_collections: ControlledVocabulary::Collections
           }
         end

@@ -2,8 +2,8 @@
 
 module ControlledVocabulary
   class Base
-    def lookup(_value)
-      raise Error.new('ControlledVocabulary.lookup is abstract. Children must implement.')
+    def self.list
+      raise Error.new('ControlledVocabulary.list is abstract. Children must implement.')
     end
   end
 end

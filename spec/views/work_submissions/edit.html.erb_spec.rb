@@ -67,7 +67,7 @@ RSpec.describe 'work/submissions/edit', type: :view do
     display_label ||= specific_field.titleize
     subtitle_label ||= 'Subtitle'
     assert_select 'form[action=?][method=?]', work_path(@work.model), 'post' do
-      assert_select 'label[for=?]', 'work_submission_title', text: "Object Title\n       required"
+      assert_select 'label[for=?]', 'work_submission_title', text: /Object Title(\s*)required/
       assert_select 'input[name=?]', 'work_submission[title]'
       assert_select 'label[for=?]', 'work_submission_subtitle', text: subtitle_label
       assert_select 'input[name=?]', 'work_submission[subtitle]'
