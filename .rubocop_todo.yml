@@ -23,6 +23,7 @@ RSpec/ExpectActual:
     - 'spec/cho/data_dictionary/routing_spec.rb'
     - 'spec/cho/work/import/routing_spec.rb'
     - 'spec/cho/work/submissions/routing_spec.rb'
+    - 'spec/cho/agent/routing_spec.rb'
 
 # Offense count: 3
 RSpec/LetSetup:
@@ -44,6 +45,7 @@ RSpec/NestedGroups:
     - 'spec/cho/schema/metadata_field_change_set_spec.rb'
     - 'spec/cho/shared/item_factory_spec.rb'
     - 'spec/cho/work/submissions/change_set_spec.rb'
+    - 'spec/cho/agent/controller_spec.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.

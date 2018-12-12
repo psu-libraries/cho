@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :agent_resources, controller: 'agent/resources', path: 'agents'
   mount DeviseRemote::Engine => '/devise_remote'
   devise_for :users
   mount Blacklight::Engine => '/'
