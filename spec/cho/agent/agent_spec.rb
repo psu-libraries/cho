@@ -7,7 +7,7 @@ RSpec.describe Agent::Resource, type: :model do
   subject { model }
 
   let(:resource_klass) { described_class }
-  let(:model) { build :agent_agent,
+  let(:model) { build :agent,
                       given_name: 'sally',
                       surname: 'brown' }
 

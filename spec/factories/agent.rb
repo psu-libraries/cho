@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :agent_agent, class: Agent::Resource do
+  factory :agent, aliases: [:secret_agent], class: Agent::Resource do
     sequence(:id)
     given_name { 'John' }
     surname { 'Doe' }
