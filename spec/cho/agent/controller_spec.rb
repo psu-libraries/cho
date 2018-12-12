@@ -26,7 +26,7 @@ RSpec.describe Agent::ResourcesController, type: :controller do
   let(:valid_session) { {} }
 
   context 'valid object created' do
-    let!(:agent) { create(:agent_agent) }
+    let!(:agent) { create(:agent) }
     let(:reloaded_agent) do
       Valkyrie.config.metadata_adapter.query_service.find_by(id: agent.id)
     end
