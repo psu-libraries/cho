@@ -23,6 +23,7 @@ RSpec.describe DataDictionary::WithFieldType, type: :model do
     it { is_expected.not_to be_date }
     it { is_expected.not_to be_numeric }
     it { is_expected.not_to be_valkyrie_id }
+    it { is_expected.not_to be_creator }
   end
 
   context 'field_type is set to date' do
@@ -33,6 +34,7 @@ RSpec.describe DataDictionary::WithFieldType, type: :model do
     it { is_expected.to be_date }
     it { is_expected.not_to be_numeric }
     it { is_expected.not_to be_valkyrie_id }
+    it { is_expected.not_to be_creator }
   end
 
   context 'field_type is set to numeric' do
@@ -43,6 +45,7 @@ RSpec.describe DataDictionary::WithFieldType, type: :model do
     it { is_expected.not_to be_date }
     it { is_expected.to be_numeric }
     it { is_expected.not_to be_valkyrie_id }
+    it { is_expected.not_to be_creator }
   end
 
   context 'field_type is set to string' do
@@ -53,6 +56,7 @@ RSpec.describe DataDictionary::WithFieldType, type: :model do
     it { is_expected.not_to be_date }
     it { is_expected.not_to be_numeric }
     it { is_expected.not_to be_valkyrie_id }
+    it { is_expected.not_to be_creator }
   end
 
   context 'field_type is set to a Valkyrie ID' do
@@ -63,6 +67,18 @@ RSpec.describe DataDictionary::WithFieldType, type: :model do
     it { is_expected.not_to be_date }
     it { is_expected.not_to be_numeric }
     it { is_expected.to be_valkyrie_id }
+    it { is_expected.not_to be_creator }
+  end
+
+  context 'field_type is set to a Valkyrie ID' do
+    before { model.creator! }
+
+    it { is_expected.not_to be_text }
+    it { is_expected.not_to be_string }
+    it { is_expected.not_to be_date }
+    it { is_expected.not_to be_numeric }
+    it { is_expected.not_to be_valkyrie_id }
+    it { is_expected.to be_creator }
   end
 
   context 'field_type is bogus' do

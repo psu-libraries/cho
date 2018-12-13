@@ -2,7 +2,7 @@
 
 module ControlledVocabulary
   class None < Base
-    def self.list
+    def self.list(*)
       []
     end
   end
