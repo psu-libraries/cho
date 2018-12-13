@@ -33,7 +33,7 @@ RSpec.describe ControlledVocabulary::Creators, type: :model do
       it 'raises an error' do
         expect { described_class.list(component: :bad) }.to raise_error(
           ControlledVocabulary::Creators::UnsupportedComponentError,
-          'bad is not a supported component of ControlledVocabulary::Creators'
+          'bad is not a supported component of ControlledVocabulary::Creators. Only :agents and :roles are allowed.'
         )
       end
     end
