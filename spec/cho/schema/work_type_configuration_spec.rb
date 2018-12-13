@@ -46,11 +46,11 @@ RSpec.describe Schema::WorkTypeConfiguration, type: :model do
 
     it 'creates a field based on the work type' do
       expect(schema_fields.count).to eq(3)
-      expect(schema_fields[0].order_index).to eq(5)
+      expect(schema_fields[0].order_index).to eq(6)
       expect(schema_fields[0].label).to eq('generic_field')
       expect(schema_fields[0].work_type).to eq(work_type)
       expect(schema_fields[0].requirement_designation).to eq('optional')
-      expect(schema_fields[1].order_index).to eq(6)
+      expect(schema_fields[1].order_index).to eq(7)
       expect(schema_fields[1].label).to eq('member_of_collection_ids')
       expect(schema_fields[1].work_type).to eq(work_type)
       expect(schema_fields[1].requirement_designation).to eq('required')
@@ -67,7 +67,7 @@ RSpec.describe Schema::WorkTypeConfiguration, type: :model do
 
       it 'creates a field based on the work type' do
         expect(schema_fields.count).to eq(3)
-        expect(schema_fields.map(&:order_index)).to contain_exactly(25, 5, 6)
+        expect(schema_fields.map(&:order_index)).to contain_exactly(25, 6, 7)
         expect(schema_fields.map(&:label)).to contain_exactly('subtitle', 'audio_field', 'member_of_collection_ids')
         expect(schema_fields.map(&:work_type).uniq).to contain_exactly(work_type)
         expect(schema_fields.map(&:display_name)).to contain_exactly('Additional Info', nil, 'Member of Collection')
