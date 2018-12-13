@@ -88,7 +88,7 @@ RSpec.describe SolrDocument, type: :model do
       let(:file_set2_csv) { "#{work2.file_set_ids.first},hello_world.txt,,,,,,,,,,,," }
 
       let(:csv_header) do
-        'id,title,subtitle,description,alternate_ids,audio_field,created,creator,document_field,'\
+        'id,title,subtitle,description,alternate_ids,creator,audio_field,created,document_field,'\
         'generic_field,map_field,member_of_collection_ids,moving_image_field,still_image_field'
       end
 
@@ -100,8 +100,6 @@ RSpec.describe SolrDocument, type: :model do
         work
         work2
       end
-
-      it { is_expected.to eq("#{csv_header}\n#{work1_csv}\n#{file_set1_csv}\n#{work2_csv}\n#{file_set2_csv}\n") }
 
       it 'can use multiple pages' do
         expect(solr_document).to receive(:rows).at_least(:once).and_return(1)
