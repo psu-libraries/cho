@@ -7,7 +7,7 @@ RSpec.describe CatalogController, type: :feature do
 
   context 'when searching for works' do
     before do
-      create(:work_submission, :with_file,
+      create(:work_submission, :with_file, :with_creator,
         collection_title: 'Searching Collection',
         generic_field: 'Faceted Value')
     end
@@ -31,6 +31,10 @@ RSpec.describe CatalogController, type: :feature do
       within('div.blacklight-generic_field_ssim') do
         expect(page).to have_selector('h3', text: 'Generic Field')
         expect(page).to have_link('Faceted Value')
+      end
+      within('div.blacklight-creator_role_ssim') do
+        expect(page).to have_selector('h3', text: 'Role')
+        expect(page).to have_link('blasting')
       end
 
       click_button('Search')

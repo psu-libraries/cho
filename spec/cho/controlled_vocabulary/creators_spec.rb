@@ -16,17 +16,7 @@ RSpec.describe ControlledVocabulary::Creators, type: :model do
     context 'with roles' do
       subject { described_class.list(component: :roles) }
 
-      let(:relator_list) do
-        [
-          RDF::Vocabulary::Term.new('http://id.loc.gov/vocabulary/relators/bsl'),
-          RDF::Vocabulary::Term.new('http://id.loc.gov/vocabulary/relators/cli')
-        ]
-      end
-
-      # @note We mock this response because calling it takes 10 seconds to build the full list
-      before { allow(RDF::Vocab::MARCRelators).to receive(:to_a).and_return(relator_list) }
-
-      it { is_expected.to eq(relator_list) }
+      it { is_expected.to eq(MockRDF.relators) }
     end
 
     context 'with a bogus component' do

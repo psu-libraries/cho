@@ -12,6 +12,7 @@ RSpec.describe Work::Submission, type: :feature do
 
   context 'when filling in all the fields' do
     let!(:archival_collection) { create(:archival_collection, title: 'Sample Collection') }
+    let!(:agent) { create(:agent, given_name: 'Christopher', surname: 'Kringle') }
 
     it 'creates a new work object without a file' do
       visit(root_path)
@@ -25,6 +26,8 @@ RSpec.describe Work::Submission, type: :feature do
       fill_in('work_submission[generic_field]', with: 'Sample generic field value')
       fill_in('work_submission[created]', with: '2018-10-22')
       fill_in('work_submission[member_of_collection_ids]', with: archival_collection.id)
+      fill_in('work_submission[creator][role]', with: MockRDF.relators.first)
+      fill_in('work_submission[creator][agent]', with: agent.id)
       click_button('Create Work')
       expect(page).to have_selector('h1', text: 'New Title')
       within('#document') do
@@ -46,6 +49,8 @@ RSpec.describe Work::Submission, type: :feature do
         expect(page).to have_blacklight_field(:member_of_collection_ids_ssim, 'Sample Collection')
         expect(page).to have_blacklight_field(:member_of_collection_ids_ssim, archival_collection.id)
         expect(page).to have_link('Sample Collection')
+        expect(page).to have_blacklight_label(:creator_tesim, 'Creator')
+        expect(page).to have_blacklight_field(:creator_tesim, 'Christopher Kringle (climbing)')
       end
       expect(page).to have_link('Edit')
     end

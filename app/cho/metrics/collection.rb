@@ -73,7 +73,7 @@ module Metrics
       def work_params(count)
         {
           title: [I18n.t("#{i18n_key}.work_title", count: count)],
-          creator: [Faker::Name.name],
+          creator: [{ agent: agent.id.to_s, role: role }],
           date_created: [Faker::Date.between(10.years.ago, 1.year.ago).strftime('%A, %b %d, %Y')],
           subject: Faker::Lorem.words(4, true),
           location: [Faker::StarTrek.location],
@@ -101,6 +101,19 @@ module Metrics
 
       def i18n_key
         "cho.#{self.class.to_s.gsub(/::/, '.').downcase}"
+      end
+
+      def agent
+        resource = Agent::Resource.new(given_name: Faker::Name.first_name, surname: Faker::Name.last_name)
+        Valkyrie::MetadataAdapter.find(:indexing_persister).persister.save(resource: resource)
+      end
+
+      def role
+        relators.sample
+      end
+
+      def relators
+        @relators ||= RDF::Vocab::MARCRelators.to_a
       end
   end
 end

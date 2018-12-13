@@ -6,5 +6,9 @@ module Agent
 
     attribute :given_name, Valkyrie::Types::String
     attribute :surname, Valkyrie::Types::String
+
+    def to_s
+      "#{given_name} #{surname}"
+    end
   end
 end

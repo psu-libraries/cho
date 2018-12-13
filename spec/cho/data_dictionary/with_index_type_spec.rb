@@ -21,6 +21,7 @@ RSpec.describe DataDictionary::WithIndexType, type: :model do
     it { is_expected.not_to be_facet }
     it { is_expected.not_to be_no_facet }
     it { is_expected.not_to be_date }
+    it { is_expected.not_to be_linked_field }
   end
 
   context 'when the index type is a facet' do
@@ -29,6 +30,7 @@ RSpec.describe DataDictionary::WithIndexType, type: :model do
     it { is_expected.to be_facet }
     it { is_expected.not_to be_no_facet }
     it { is_expected.not_to be_date }
+    it { is_expected.not_to be_linked_field }
   end
 
   context 'when the index type is no facet' do
@@ -37,6 +39,7 @@ RSpec.describe DataDictionary::WithIndexType, type: :model do
     it { is_expected.not_to be_facet }
     it { is_expected.to be_no_facet }
     it { is_expected.not_to be_date }
+    it { is_expected.not_to be_linked_field }
   end
 
   context 'when the index type is a date' do
@@ -45,6 +48,16 @@ RSpec.describe DataDictionary::WithIndexType, type: :model do
     it { is_expected.not_to be_facet }
     it { is_expected.not_to be_no_facet }
     it { is_expected.to be_date }
+    it { is_expected.not_to be_linked_field }
+  end
+
+  context 'when the index type is a linked_field' do
+    before { model.linked_field! }
+
+    it { is_expected.not_to be_facet }
+    it { is_expected.not_to be_no_facet }
+    it { is_expected.not_to be_date }
+    it { is_expected.to be_linked_field }
   end
 
   context 'index_type is bogus' do

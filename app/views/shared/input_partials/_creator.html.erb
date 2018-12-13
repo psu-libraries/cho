@@ -1,0 +1,28 @@
+<%= form.fields_for :creator do |creator_form| %>
+  <% field_value = field.value || {} %>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 col-lg-3">
+        <%= form.label :role %>
+        <%= creator_form.text_field :role,
+            field.options.merge!(list: "#{field.label}_role", value: field_value.fetch(:role, nil)) %>
+        <datalist id="<%= "#{field.label}_role" %>">
+          <% field.datalist(component: :roles).each do |item| %>
+            <option value="<%= item %>"><%= item.label %></option>
+          <% end %>
+        </datalist>
+      </div>
+
+      <div class="col-md-12 col-lg-3">
+        <%= form.label :agent %>
+        <%= creator_form.text_field :agent,
+            field.options.merge!(list: "#{field.label}_agent", value: field_value.fetch(:agent, nil)) %>
+        <datalist id="<%= "#{field.label}_agent" %>">
+          <% field.datalist(component: :agents).each do |item| %>
+            <option value="<%= item.id %>"><%= item %></option>
+          <% end %>
+        </datalist>
+      </div>
+    </div>
+  </div>
+<% end %>
