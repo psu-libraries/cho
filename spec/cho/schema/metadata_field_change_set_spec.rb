@@ -11,6 +11,7 @@ RSpec.describe Schema::MetadataFieldChangeSet do
 
   describe '#append_id' do
     before { change_set.append_id = Valkyrie::ID.new('test') }
+
     its(:append_id) { is_expected.to eq(Valkyrie::ID.new('test')) }
     its([:append_id]) { is_expected.to eq(Valkyrie::ID.new('test')) }
   end

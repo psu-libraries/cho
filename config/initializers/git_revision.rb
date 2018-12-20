@@ -10,6 +10,7 @@ class Git
 
       def git_revision
         return unless Rails.root.join('REVISION').exist?
+
         Rails.root.join('REVISION').read.chomp
       end
   end

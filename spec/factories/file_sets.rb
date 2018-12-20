@@ -20,6 +20,7 @@ FactoryBot.define do
       file_change_set = Work::FileChangeSet.new(file)
       result = Transaction::Operations::File::Create.new.call(file_change_set, temp_file: temp_file)
       raise result.failure if result.failure?
+
       resource.member_ids = [result.success.id]
       Valkyrie::MetadataAdapter.find(:indexing_persister).persister.save(resource: resource)
     end

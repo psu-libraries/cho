@@ -38,6 +38,7 @@ module Transaction
             file_change_set = Work::FileChangeSet.new(file)
             result = Transaction::Operations::File::Create.new.call(file_change_set, temp_file: ::File.new(text))
             return result.success if result.success?
+
             raise result.failure
           end
 

@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe DataDictionary::WithIndexType, type: :model do
+  subject { model }
+
   before (:all) do
     class MyFieldModel < Valkyrie::Resource
       include DataDictionary::WithIndexType
@@ -12,8 +14,6 @@ RSpec.describe DataDictionary::WithIndexType, type: :model do
   after (:all) do
     ActiveSupport::Dependencies.remove_constant('MyFieldModel')
   end
-
-  subject { model }
 
   let(:model) { MyFieldModel.new }
 

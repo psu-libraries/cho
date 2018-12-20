@@ -11,6 +11,7 @@ module Transaction
         # @param [Work::SubmissionChangeSet] change_set
         def call(change_set)
           return Success(change_set) if change_set.try(:import_work).nil?
+
           @model = change_set.model
           file_sets = saved_file_sets(change_set.import_work, file_set_hashes: change_set.file_set_hashes)
           change_set.file_set_ids = file_sets.map(&:id)

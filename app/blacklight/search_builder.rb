@@ -9,6 +9,7 @@ class SearchBuilder < Blacklight::SearchBuilder
   # version: https://github.com/psu-stewardship/scholarsphere/blob/develop/app/search_builders/search_builder.rb#L12
   def show_works_or_works_that_contain_files(solr_parameters)
     return if blacklight_params[:q].blank?
+
     solr_parameters[:user_query] = blacklight_params[:q]
     solr_parameters[:q] = new_query
     solr_parameters[:defType] = 'lucene'

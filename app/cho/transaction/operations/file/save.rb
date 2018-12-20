@@ -10,6 +10,7 @@ module Transaction
         #   workflow steps may proceed.
         def call(change_set)
           return Success(change_set) unless change_set.respond_to?(:file) && change_set.file.present?
+
           saved_work_file_set = metadata_adapter.persister.save(resource: work_file_set(change_set))
           change_set.model.file_set_ids << saved_work_file_set.id
           Success(change_set)
@@ -38,6 +39,7 @@ module Transaction
             file_change_set = Work::FileChangeSet.new(file)
             response = Create.new.call(file_change_set, temp_file: change_set.file.tempfile)
             raise response.failure if response.failure?
+
             response.success.model
           end
 

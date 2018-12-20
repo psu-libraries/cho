@@ -20,7 +20,8 @@ module DataDictionary::FieldsForObject
         # development - this prevents an error regarding an attribute being
         # defined twice.
 
-        next if schema.keys.include?(field.label.parameterize.underscore.to_sym)
+        next if schema.key?(field.label.parameterize.underscore.to_sym)
+
         attribute field.label.parameterize.underscore.to_sym, field.resource_property_type
       end
     end

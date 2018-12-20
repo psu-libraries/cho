@@ -19,11 +19,11 @@ module Work
       end
 
       def invalid_rows
-        @invalid ||= change_set_list.reject(&:valid?)
+        @invalid_rows ||= change_set_list.reject(&:valid?)
       end
 
       def valid_rows
-        @valid ||= change_set_list.select(&:valid?)
+        @valid_rows ||= change_set_list.select(&:valid?)
       end
 
       def invalid?
@@ -40,6 +40,7 @@ module Work
 
       def bag_errors
         return [] if bag.success? || update?
+
         bag.failure.errors.values.flatten
       end
     end

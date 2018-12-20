@@ -52,6 +52,7 @@ module Work
         # @example {:controller=>"work/import/csv", :action=>"update"}
         def referring_path
           return {} if request.referer.nil?
+
           Rails.application.routes.recognize_path(request.referer)
         end
     end

@@ -9,12 +9,14 @@ RSpec.describe Work::FileSetChangeSet do
 
   describe '#append_id' do
     before { change_set.append_id = Valkyrie::ID.new('test') }
+
     its(:append_id) { is_expected.to eq(Valkyrie::ID.new('test')) }
     its([:append_id]) { is_expected.to eq(Valkyrie::ID.new('test')) }
   end
 
   describe '#fields=' do
     before { change_set.prepopulate! }
+
     its(:title) { is_expected.to be_empty }
     its(:member_ids) { is_expected.to be_empty }
   end

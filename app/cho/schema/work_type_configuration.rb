@@ -36,6 +36,7 @@ module Schema
 
     def initialize_schema_fields
       return [] if fields.nil?
+
       fields.map do |field, attributes|
         attributes ||= {}
         data_dictionary_field = DataDictionary::Field.where(label: field).first

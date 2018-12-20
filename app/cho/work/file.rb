@@ -16,6 +16,7 @@ class Work::File < Valkyrie::Resource
   # @return [String] path to binary file
   def path
     return unless file_identifier
+
     file_identifier.id.gsub('disk://', '')
   end
 

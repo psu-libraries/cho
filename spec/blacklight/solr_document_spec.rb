@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe SolrDocument, type: :model do
+  subject(:solr_document) { SolrDocument.new(document) }
+
   before(:all) do
     class MyResource < Valkyrie::Resource
       attribute :alternate_ids, Valkyrie::Types::Array
@@ -12,8 +14,6 @@ RSpec.describe SolrDocument, type: :model do
   after(:all) do
     ActiveSupport::Dependencies.remove_constant('MyResource')
   end
-
-  subject(:solr_document) { SolrDocument.new(document) }
 
   describe '#internal_resource' do
     let(:document) { { 'internal_resource_tsim' => 'MyResource' } }

@@ -44,6 +44,7 @@ module Schema
           unless field.is_a? Schema::MetadataField
             raise Dry::Types::ConstraintError.new("type?(Work::TemplateField, #{field.class}", field)
           end
+
           field.id
         end
       end

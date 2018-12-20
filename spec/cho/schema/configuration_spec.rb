@@ -118,6 +118,7 @@ RSpec.describe Schema::Configuration, type: :model do
       before do
         other_field
       end
+
       it 'adds a Schema::MetadataField, a Work::Type, and a Schema::Metadata' do
         expect {
           schema_configuration.load_work_types

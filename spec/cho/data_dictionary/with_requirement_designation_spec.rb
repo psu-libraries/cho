@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe DataDictionary::WithRequirementDesignation, type: :model do
+  subject(:model) { MyModel.new }
+
   before do
     class MyModel < Valkyrie::Resource
       include DataDictionary::WithRequirementDesignation
@@ -12,8 +14,6 @@ RSpec.describe DataDictionary::WithRequirementDesignation, type: :model do
   after do
     ActiveSupport::Dependencies.remove_constant('MyModel')
   end
-
-  subject(:model) { MyModel.new }
 
   context 'requirement_desination is set to optional' do
     before { model.optional! }

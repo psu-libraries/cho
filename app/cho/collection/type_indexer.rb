@@ -9,6 +9,7 @@ module Collection
 
     def to_solr
       return {} unless resource.class.to_s.split('::').include?('Collection')
+
       {
         collection_type_ssim: resource.model_name.human.titleize
       }

@@ -41,6 +41,7 @@ module Work
 
     def validate_work_type_id!(field)
       return if work_type_id.blank?
+
       errors.add(field, "#{work_type_id} does not exist") if work_type.blank?
     end
 
@@ -52,6 +53,7 @@ module Work
 
     def work_type
       return if work_type_id.nil?
+
       @work_type ||= Work::Type.find(work_type_id)
     end
 

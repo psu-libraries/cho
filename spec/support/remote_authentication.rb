@@ -23,6 +23,7 @@ module RemoteAuthentication
 
     def request_headers(user = nil)
       return {} unless user
+
       { 'REMOTE_USER' => user.login }
     end
 end
@@ -30,6 +31,7 @@ end
 RSpec.configure do |config|
   config.before(type: :controller) do |example|
     return if example.metadata.key?(:with_public_user)
+
     request.headers['REMOTE_USER'] = create(:admin).login
   end
 

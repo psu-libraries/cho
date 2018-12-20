@@ -12,6 +12,7 @@ RSpec.describe 'Search History Page', type: :feature do
       click_button 'search'
       click_link 'History'
     end
+
     it 'shows searches' do
       expect(page).to have_content 'Your recent searches'
       within '#content' do

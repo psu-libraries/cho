@@ -15,6 +15,7 @@ class FindModel
 
   def find_model(model:, id:)
     raise ArgumentError, 'id must be a Valkyrie::ID' unless id.is_a? Valkyrie::ID
+
     results = orm_class.where(internal_resource: model.to_s).where(id: id).lazy.map do |orm_object|
       resource_factory.to_resource(object: orm_object)
     end

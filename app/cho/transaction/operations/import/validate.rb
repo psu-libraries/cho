@@ -12,6 +12,7 @@ module Transaction
         def call(bag_path)
           bag = ::Import::Bag.new(bag_path)
           return Success(bag) if bag.valid?
+
           Failure(bag)
         rescue StandardError => exception
           Failure(Transaction::Rejection.new("Error validating the bag: #{exception.message}"))

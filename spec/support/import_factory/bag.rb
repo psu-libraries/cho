@@ -86,12 +86,14 @@ module ImportFactory
 
       def to_s
         return entry if entry.is_a?(String)
+
         entry.fetch(:name)
       end
 
       # @note Returns content from the file, if it is specified, or generates some.
       def content
         return generated_content if entry.is_a?(String)
+
         ::File.read(Rails.root.join('spec', 'fixtures', entry.fetch(:file)))
       end
 
@@ -99,6 +101,7 @@ module ImportFactory
       #   and then we generate some ipsum for it.
       def generated_content
         return entry unless entry.ends_with?('_text.txt')
+
         Faker::Lorem.paragraphs.join(' ')
       end
     end

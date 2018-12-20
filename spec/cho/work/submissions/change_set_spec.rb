@@ -10,6 +10,7 @@ RSpec.describe Work::SubmissionChangeSet do
 
   describe '#append_id' do
     before { change_set.append_id = Valkyrie::ID.new('test') }
+
     its(:append_id) { is_expected.to eq(Valkyrie::ID.new('test')) }
     its([:append_id]) { is_expected.to eq(Valkyrie::ID.new('test')) }
   end
@@ -44,6 +45,7 @@ RSpec.describe Work::SubmissionChangeSet do
 
   describe '#fields=' do
     before { change_set.prepopulate! }
+
     its(:title) { is_expected.to be_empty }
     its(:work_type_id) { is_expected.to eq(Valkyrie::ID.new(nil)) }
     its(:work_type) { is_expected.to be_nil }
@@ -93,7 +95,7 @@ RSpec.describe Work::SubmissionChangeSet do
   end
 
   describe '#member_of_collection_ids' do
-    subject { change_set.member_of_collection_ids }
+    subject(:ids) { change_set.member_of_collection_ids }
 
     context 'with an id' do
       before { change_set.validate(member_of_collection_ids: '1') }
@@ -113,7 +115,7 @@ RSpec.describe Work::SubmissionChangeSet do
       it 'does not cast empty strings to ids' do
         pending('.optional should not cast ids for empty strings' \
                 'See https://github.com/samvera-labs/valkyrie/issues/605')
-        is_expected.to be_nil
+        expect(ids).to be_nil
       end
     end
   end

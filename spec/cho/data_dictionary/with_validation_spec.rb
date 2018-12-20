@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe DataDictionary::WithValidation, type: :model do
+  subject { model.validation }
+
   before do
     class MyModel < Valkyrie::Resource
       include DataDictionary::WithValidation
@@ -12,8 +14,6 @@ RSpec.describe DataDictionary::WithValidation, type: :model do
   after do
     ActiveSupport::Dependencies.remove_constant('MyModel')
   end
-
-  subject { model.validation }
 
   let(:validation) { 'no_validation' }
   let(:model) { MyModel.new(validation: validation) }

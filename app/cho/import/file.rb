@@ -76,6 +76,7 @@ class Import::File
 
     def filename_must_include_work_id
       return if original_filename.starts_with?(work_id)
+
       errors.add(:file, :filename_must_include_work_id, file: self)
     end
 
@@ -88,6 +89,7 @@ class Import::File
     def build_file_set_id
       id = parts.slice(0, (parts.count - 1)).join(Import::Bag::FILENAME_SEPARATOR)
       return if id == work_id
+
       id
     end
 end

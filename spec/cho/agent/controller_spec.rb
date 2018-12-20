@@ -138,7 +138,7 @@ RSpec.describe Agent::ResourcesController, type: :controller do
 
       it 'redirects to the created agent' do
         post :create, params: { agent: valid_attributes }, session: valid_session
-        expect(response).to redirect_to(Agent::Resource.all.sort_by(&:created_at).last)
+        expect(response).to redirect_to(Agent::Resource.all.max_by(&:created_at))
       end
     end
 

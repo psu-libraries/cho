@@ -91,6 +91,7 @@ class ChangeSetPersister
 
     def before_delete(change_set:)
       return unless change_set.resource.try(:file_set_ids)
+
       change_set.resource.file_set_ids.each do |file_set_id|
         delete_file_set(resource: Work::FileSet.find(file_set_id))
       end

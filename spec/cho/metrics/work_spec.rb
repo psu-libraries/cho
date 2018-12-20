@@ -18,6 +18,7 @@ RSpec.describe Metrics::Work do
 
     context 'when set' do
       before { metric.file_size = 1 }
+
       its(:file_size) { is_expected.to eq(1) }
     end
   end

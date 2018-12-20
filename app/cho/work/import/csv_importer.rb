@@ -25,6 +25,7 @@ module Work
 
       def run
         return false unless valid_list?
+
         change_set_list.each do |change_set|
           result = change_set_persister.validate_and_save(change_set: change_set, resource_params: {})
           if result.errors.blank?

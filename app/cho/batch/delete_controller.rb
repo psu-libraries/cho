@@ -31,6 +31,7 @@ module Batch
 
       def ids
         return [] unless params.key?(:delete)
+
         params[:delete].to_unsafe_h.fetch(:ids, [])
       end
 

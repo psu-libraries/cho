@@ -6,6 +6,7 @@ class User < ApplicationRecord
 
   def groups
     return group_list.split(';?;') unless groups_last_update.blank? || ((Time.now - groups_last_update) > 24 * 60 * 60)
+
     populate_attributes
     group_list.split(';?;')
   end
@@ -17,7 +18,8 @@ class User < ApplicationRecord
   def populate_attributes
     list = PsuDir::LdapUser.get_groups(login).sort!
     return if list.empty?
+
     Rails.logger.debug "$#{login}$ groups = #{list}"
-    update_attributes(group_list: list.join(';?;'), groups_last_update: Time.now)
+    update(group_list: list.join(';?;'), groups_last_update: Time.now)
   end
 end
