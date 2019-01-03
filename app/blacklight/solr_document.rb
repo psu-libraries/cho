@@ -56,6 +56,18 @@ class SolrDocument
     end
   end
 
+  def work
+    query_service.find_inverse_references_by(resource: self, property: 'file_set_ids').to_a.first
+  end
+
+  def query_service
+    @query_service ||= Valkyrie::MetadataAdapter.find(:index_solr).query_service
+  end
+
+  def work_title
+    work.title.first
+  end
+
   # @todo maybe this needs to be some kind of transformation done in the data dictionary?
   # @return [Array<SolrDocument>]
   def member_of_collections
