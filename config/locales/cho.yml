@@ -106,5 +106,6 @@ en:
         success: "You have successfully deleted the following items: %{list}"
         cancel: "Cancel"
         submit: "Delete Selected Resources"
+        title: "%{title} (%{count} items)"
     stale_object_error: ": the %{object_name} object you tried to save is stale.  Please reload the form to see the latest data."
 

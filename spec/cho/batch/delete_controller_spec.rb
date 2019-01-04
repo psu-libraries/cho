@@ -27,7 +27,7 @@ RSpec.describe Batch::DeleteController, type: :controller do
         delete :destroy, params: { delete: { ids: [work.to_param, collection.to_param] } }
       }.to change { metadata_adapter.query_service.find_all.to_a.count }.by(-2)
       expect(flash[:success]).to eq(
-        "You have successfully deleted the following items: #{[work.title.first, collection.title.first].join(', ')}"
+        I18n.t('cho.batch.delete.success', list: 'Sample Generic Work (0 items), Archival Collection (0 items)')
       )
     end
   end

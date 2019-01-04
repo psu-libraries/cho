@@ -27,10 +27,14 @@ module Work
       Name.new(self)
     end
 
-    # @note Use a custom Name class just to override i18n_key
+    # @note Use a custom Name class to preserve default behaviors while overriding others
     class Name < ActiveModel::Name
       def i18n_key
         'work'
+      end
+
+      def human
+        'Work'
       end
     end
 

@@ -16,7 +16,7 @@ RSpec.describe Batch::SelectController, type: :feature do
       find("input[type='checkbox']").click
       click_button('Delete Selected Resources')
       expect(page).to have_content('The following resources will be deleted')
-      expect(page).to have_selector('li', text: 'Resource to delete')
+      expect(page).to have_selector('h2', text: 'Resource to delete (0 items)')
       click_button('Continue')
       expect(page).to have_content('You have successfully deleted the following items: Resource to delete ')
     end

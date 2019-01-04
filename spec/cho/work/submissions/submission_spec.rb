@@ -70,6 +70,7 @@ RSpec.describe Work::Submission do
       subject { described_class.model_name }
 
       its(:i18n_key) { is_expected.to eq('work') }
+      its(:human) { is_expected.to eq('Work') }
     end
   end
 

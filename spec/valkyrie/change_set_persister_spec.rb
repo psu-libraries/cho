@@ -113,20 +113,38 @@ RSpec.describe ChangeSetPersister do
   end
 
   describe '#delete' do
-    let!(:change_set) { create(:work, :with_file) }
+    context 'with a work containing files' do
+      let!(:change_set) { create(:work, :with_file) }
 
-    it "deletes all the resources from Postgres and Solr, the files from disk, and retains the work's collection" do
-      expect(Work::Submission.all.count).to eq(1)
-      expect(Work::File.all.count).to eq(2)
-      expect(metadata_adapter.index_adapter.query_service.find_all.count).to eq(5)
-      expect(Metrics::Repository.storage_directory.join('hello_world.txt')).to be_exist
-      expect(Metrics::Repository.storage_directory.join('hello_world.txt_text.txt')).to be_exist
-      change_set_persister.delete(change_set: change_set)
-      expect(Work::Submission.all.count).to eq(0)
-      expect(Work::File.all.count).to eq(0)
-      expect(metadata_adapter.index_adapter.query_service.find_all.count).to eq(1)
-      expect(Metrics::Repository.storage_directory.join('hello_world.txt')).not_to be_exist
-      expect(Metrics::Repository.storage_directory.join('hello_world.txt_text.txt')).not_to be_exist
+      it "deletes all the resources from Postgres and Solr, the files from disk, and retains the work's collection" do
+        expect(Work::Submission.all.count).to eq(1)
+        expect(Work::File.all.count).to eq(2)
+        expect(metadata_adapter.index_adapter.query_service.find_all.count).to eq(5)
+        expect(Metrics::Repository.storage_directory.join('hello_world.txt')).to be_exist
+        expect(Metrics::Repository.storage_directory.join('hello_world.txt_text.txt')).to be_exist
+        change_set_persister.delete(change_set: change_set)
+        expect(Work::Submission.all.count).to eq(0)
+        expect(Work::File.all.count).to eq(0)
+        expect(metadata_adapter.index_adapter.query_service.find_all.count).to eq(1)
+        expect(Metrics::Repository.storage_directory.join('hello_world.txt')).not_to be_exist
+        expect(Metrics::Repository.storage_directory.join('hello_world.txt_text.txt')).not_to be_exist
+      end
+    end
+
+    context 'with a collection containing works' do
+      let!(:work) { create(:work) }
+
+      it 'deletes the collection and all of its works' do
+        collection = Collection::Archival.find(work.member_of_collection_ids)
+        change_set = Collection::ArchivalChangeSet.new(collection)
+        expect(Work::Submission.all.count).to eq(1)
+        expect(Collection::Archival.all.count).to eq(1)
+        expect(metadata_adapter.index_adapter.query_service.find_all.count).to eq(2)
+        change_set_persister.delete(change_set: change_set)
+        expect(Work::Submission.all.count).to eq(0)
+        expect(Collection::Archival.all.count).to eq(0)
+        expect(metadata_adapter.index_adapter.query_service.find_all.count).to eq(0)
+      end
     end
   end
 

@@ -15,7 +15,7 @@ RSpec.describe 'Deleting works', type: :feature do
     expect(page).to have_content(resource.title.first)
     click_button('Continue')
     expect(page).to have_content('You have successfully deleted the following items')
-    expect(page).to have_content(resource.title.first)
+    expect(page).to have_content('Work to delete (3 items)')
     expect(Work::Submission.all.count).to eq(0)
     expect(Work::File.all.count).to eq(0)
     expect(Collection::Archival.all.count).to eq(1)
