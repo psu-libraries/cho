@@ -22,14 +22,29 @@ module Metrics
       # @todo Creating {Rake::Test::UploadedFile} deletes the original {Tempfile} so it must be recreated
       #   each time. Perhaps there's a way we can avoid that an reuse the same random data each time.
       def build_temp_file
-        file = Tempfile.new(i18n_key)
-        File.open(file.path, 'wb') do |f|
-          file_size.to_i.times { f.write(SecureRandom.random_bytes(1024 * 1024)) }
-        end
+        tempfile = Tempfile.new(i18n_key)
+        filename = File.basename(Faker::File.file_name)
+        generate_content(tempfile: tempfile, filename: filename)
         ActionDispatch::Http::UploadedFile.new(
-          tempfile: file,
-          filename: File.basename(Faker::File.file_name)
+          tempfile: tempfile,
+          filename: filename
         )
+      end
+
+      def generate_content(tempfile:, filename:)
+        File.open(tempfile.path, 'wb') do |f|
+          if extractable?(filename)
+            f.write(Faker::Hipster.paragraph_by_chars(2048, false))
+          else
+            file_size.to_i.times { f.write(SecureRandom.random_bytes(1024 * 1024)) }
+          end
+        end
+      end
+
+      # @todo duplicated in Work::File
+      def extractable?(filename)
+        mime_type = MIME::Types.type_for(filename)
+        (mime_type.map(&:to_s) & ['application/pdf', 'text/html', 'text/markdown', 'text/plain']).present?
       end
   end
 end

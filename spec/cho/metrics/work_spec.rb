@@ -22,12 +22,29 @@ RSpec.describe Metrics::Work do
     end
   end
 
-  it 'creates a work with a 1 MB file and benchmarks the results' do
-    metric.file_size = 1
-    metric.run
-    header, results = report.string.split("\n")
-    expect(header).to eq(' User,System,Total,Real')
-    expect(results.split(',').count).to eq(4)
-    expect(File.stat(file_uri.path).size).to eq(1048576)
+  context 'with a random non-text file' do
+    before { allow(Faker::File).to receive(:file_name).and_return('random_pic.tif') }
+
+    it 'creates a work with a 1 MB file and benchmarks the results' do
+      metric.file_size = 1
+      metric.run
+      header, results = report.string.split("\n")
+      expect(header).to eq(' User,System,Total,Real')
+      expect(results.split(',').count).to eq(4)
+      expect(File.stat(file_uri.path).size).to eq(1048576)
+    end
+  end
+
+  context 'with a random text file' do
+    before { allow(Faker::File).to receive(:file_name).and_return('random_text.txt') }
+
+    it 'creates a work with a 1 MB file and benchmarks the results' do
+      metric.file_size = 1
+      metric.run
+      header, results = report.string.split("\n")
+      expect(header).to eq(' User,System,Total,Real')
+      expect(results.split(',').count).to eq(4)
+      expect(File.stat(file_uri.path).size).to eq(2048)
+    end
   end
 end
