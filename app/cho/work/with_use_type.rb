@@ -25,7 +25,7 @@ module Work::WithUseType
   end
 
   included do
-    attribute :use, Valkyrie::Types::Set.member(UseTypes).default([Valkyrie::Vocab::PCDMUse.PreservationMasterFile])
+    attribute :use, Valkyrie::Types::Set.of(UseTypes).default([Valkyrie::Vocab::PCDMUse.PreservationMasterFile])
   end
 
   def preservation!
