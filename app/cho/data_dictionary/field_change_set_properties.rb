@@ -25,12 +25,10 @@ module DataDictionary
       validates :index_type, inclusion: { in: DataDictionary::Field::IndexTypes.values }
       validates :core_field, with: :coerce_into_boolean
 
-      # rubocop:disable Style/NumericPredicate
-      # Rubocop wants to use {multiple.zero?} but that breaks things.
-      # Need to find a better way to coerce booleans.
       def coerce_into_boolean(field)
         field_value = self[field]
         return if field_value.is_a?(TrueClass) || field_value.is_a?(FalseClass)
+
         if ['false', '0', 0].include? field_value
           send("#{field}=", false)
         elsif ['true', '1', 1].include? field_value
@@ -39,7 +37,6 @@ module DataDictionary
           errors.add(field, 'is the wrong type')
         end
       end
-      # rubocop:enable Style/NumericPredicate
     end
   end
 end

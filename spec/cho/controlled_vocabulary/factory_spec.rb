@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe ControlledVocabulary::Factory, type: :model do
+  subject(:factory) { described_class.new }
+
   before (:all) do
     class MyVocab < ControlledVocabulary::Base
     end
@@ -14,8 +16,6 @@ RSpec.describe ControlledVocabulary::Factory, type: :model do
     ActiveSupport::Dependencies.remove_constant('MyVocab')
     ActiveSupport::Dependencies.remove_constant('OtherVocab')
   end
-
-  subject(:factory) { described_class.new }
 
   it { within_block_is_expected.not_to raise_exception }
 

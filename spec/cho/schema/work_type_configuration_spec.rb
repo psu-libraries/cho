@@ -9,12 +9,12 @@ RSpec.describe Schema::WorkTypeConfiguration, type: :model do
   end
 
   describe '#fields' do
-    subject { work_type_configuration.fields }
+    subject(:config) { work_type_configuration.fields }
 
     let(:work_type) { 'Still Image' }
 
     it do
-      is_expected.to eq(
+      expect(config).to eq(
         'member_of_collection_ids' => { 'order_index' => 2, 'requirement_designation' => 'required' },
         'still_image_field' => { 'display_name' => 'Photograph', 'order_index' => 1 }
       )
@@ -30,7 +30,7 @@ RSpec.describe Schema::WorkTypeConfiguration, type: :model do
       let(:work_type) { 'Audio' }
 
       it do
-        is_expected.to eq(
+        expect(config).to eq(
           'audio_field' => { 'order_index' => 1 },
           'member_of_collection_ids' => { 'order_index' => 2, 'requirement_designation' => 'required' },
           'subtitle' => { 'display_name' => 'Additional Info', 'order_index' => 25 }

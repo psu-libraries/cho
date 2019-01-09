@@ -20,7 +20,7 @@ module Schema
     end
 
     def core_field_ids(work_type)
-      return @core_field_ids[work_type] if @core_field_ids.keys.include?(work_type)
+      return @core_field_ids[work_type] if @core_field_ids.key?(work_type)
 
       @core_field_ids[work_type] =
         Schema::MetadataCoreFields.generate(Valkyrie.config.metadata_adapter, work_type: work_type).map(&:id)

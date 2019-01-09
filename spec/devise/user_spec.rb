@@ -67,11 +67,13 @@ RSpec.describe User, type: :model do
 
     context 'with a non-admin user' do
       before { allow(user).to receive(:groups).and_return([]) }
+
       it { is_expected.to be_falsey }
     end
 
     context 'with an admin user' do
       before { allow(user).to receive(:groups).and_return(['group1', 'umg/up.libraries.cho-admin']) }
+
       it { is_expected.to be_truthy }
     end
   end

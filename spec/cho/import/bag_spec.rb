@@ -20,7 +20,7 @@ RSpec.describe Import::Bag do
     end
 
     it do
-      is_expected.to be_valid
+      expect(bag).to be_valid
       expect(bag.errors).to be_empty
       expect(bag.date).to eq('2008-06-23')
       expect(bag.batch_id).to eq('batchID')
@@ -65,7 +65,7 @@ RSpec.describe Import::Bag do
     let(:path) { Rails.root.join('spec', 'fixtures', 'bags', 'extraFiles_2008-06-23') }
 
     it do
-      is_expected.not_to be_valid
+      expect(bag).not_to be_valid
       expect(bag.errors.messages[:bag]).to include(
         'workID_service.jp2 cannot be under data',
         'workID_text.txt cannot be under data',
@@ -80,7 +80,7 @@ RSpec.describe Import::Bag do
     let(:path) { Rails.root.join('spec', 'fixtures', 'bags', 'badChecksum_2008-06-23') }
 
     it do
-      is_expected.not_to be_valid
+      expect(bag).not_to be_valid
       expect(bag.errors.messages).to include(bag:
         ["expected #{path}/data/workID/workID_preservation.tif to have Digest::SHA256: " \
          '0000000000000000000000000000000000000000000000000000000000000000, actual is ' \

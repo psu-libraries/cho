@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe Validation::Base, type: :model do
+  subject { testing_class.new.validate('abc') }
+
   before (:all) do
     class MyValidator < Validation::Base
       def validate(_field)
@@ -17,8 +19,6 @@ RSpec.describe Validation::Base, type: :model do
     ActiveSupport::Dependencies.remove_constant('MyValidator')
     ActiveSupport::Dependencies.remove_constant('OtherValidator')
   end
-
-  subject { testing_class.new.validate('abc') }
 
   let(:testing_class) { MyValidator }
 

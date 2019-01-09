@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe Collection::ChangeSetBehaviors do
+  subject(:change_set) { MyCollectionChangeSet.new(MyCollection.new) }
+
   before(:all) do
     class MyCollection < Valkyrie::Resource
       include ::Collection::CommonFields
@@ -18,10 +20,9 @@ RSpec.describe Collection::ChangeSetBehaviors do
     ActiveSupport::Dependencies.remove_constant('MyCollectionChangeSet')
   end
 
-  subject(:change_set) { MyCollectionChangeSet.new(MyCollection.new) }
-
   describe '#append_id' do
     before { change_set.append_id = Valkyrie::ID.new('test') }
+
     its(:append_id) { is_expected.to eq(Valkyrie::ID.new('test')) }
     its([:append_id]) { is_expected.to eq(Valkyrie::ID.new('test')) }
   end
@@ -42,6 +43,7 @@ RSpec.describe Collection::ChangeSetBehaviors do
 
   describe '#fields=' do
     before { change_set.prepopulate! }
+
     its(:workflow) { is_expected.to be_nil }
     its(:visibility) { is_expected.to be_nil }
   end

@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe DataDictionary::WithFieldType, type: :model do
+  subject(:model) { MyFieldModel.new }
+
   before (:all) do
     class MyFieldModel < Valkyrie::Resource
       include DataDictionary::WithFieldType
@@ -12,8 +14,6 @@ RSpec.describe DataDictionary::WithFieldType, type: :model do
   after (:all) do
     ActiveSupport::Dependencies.remove_constant('MyFieldModel')
   end
-
-  subject(:model) { MyFieldModel.new }
 
   context 'field_type is set to text' do
     before { model.text! }

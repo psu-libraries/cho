@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe CommonQueries do
+  subject { CommonResource }
+
   before(:all) do
     class CommonResource < Valkyrie::Resource
       include CommonQueries
@@ -21,8 +23,6 @@ RSpec.describe CommonQueries do
     ActiveSupport::Dependencies.remove_constant('CommonResource')
     ActiveSupport::Dependencies.remove_constant('SampleResource')
   end
-
-  subject { CommonResource }
 
   describe '#where' do
     it 'is aliased to #find_using' do

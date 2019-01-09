@@ -13,6 +13,7 @@ class Import::Bag
   # @param [Pathname] path to the bag
   def initialize(path)
     raise IOError, 'path to bag does not exist or is not readable' unless path.readable?
+
     @path = path
     @bag = BagIt::Bag.new(path)
     @batch_id, @date = bag.bag_dir.basename.to_s.split(FILENAME_SEPARATOR)
@@ -33,6 +34,7 @@ class Import::Bag
 
     def bag_must_be_valid
       return if bag.valid?
+
       bag_errors(bag).each do |message|
         errors.add(:bag, message)
       end

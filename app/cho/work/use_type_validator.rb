@@ -6,6 +6,7 @@ module Work
       values = Array.wrap(value)
       bad_uris = values.reject { |v| Work::WithUseType::USE_TYPE_URIS.include?(v) }
       return if bad_uris.empty? && values.present?
+
       record.errors.add attribute, error_message(bad_uris)
     end
 

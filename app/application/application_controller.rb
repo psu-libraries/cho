@@ -12,6 +12,7 @@ class ApplicationController < ActionController::Base
 
   def allow_admins
     return if current_user.admin?
+
     render file: 'public/403.html', status: 403, layout: false
   end
 end

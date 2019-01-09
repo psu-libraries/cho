@@ -16,6 +16,7 @@ module Transaction
           zip_path ||= network_ingest_directory.join("#{zip_name}.zip")
           destination = extraction_directory.join(zip_name)
           return Success(destination) if destination.exist?
+
           unzip_bag(zip_path)
           Success(destination)
         rescue StandardError => exception
@@ -40,7 +41,7 @@ module Transaction
           end
 
           def extraction_directory
-            @destination_directory ||= Pathname.new(ENV['extraction_directory']).expand_path
+            @extraction_directory ||= Pathname.new(ENV['extraction_directory']).expand_path
           end
       end
     end

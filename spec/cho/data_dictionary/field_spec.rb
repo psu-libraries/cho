@@ -50,11 +50,7 @@ RSpec.describe DataDictionary::Field, type: :model do
   describe '#core' do
     subject { described_class.core_fields.to_a.map(&:label) }
 
-    it { is_expected.to eq(['title',
-                            'subtitle',
-                            'description',
-                            'alternate_ids',
-                            'creator']) }
+    it { is_expected.to eq(['title', 'subtitle', 'description', 'alternate_ids', 'creator']) }
   end
 
   describe '#multiple' do
@@ -68,11 +64,13 @@ RSpec.describe DataDictionary::Field, type: :model do
   describe '#multiple?' do
     context 'when set to true' do
       before { model.multiple = true }
+
       it { is_expected.to be_multiple }
     end
 
     context 'when set to false' do
       before { model.multiple = false }
+
       it { is_expected.not_to be_multiple }
     end
 

@@ -8,7 +8,7 @@ require_relative 'config/application'
 # Load rake tasks for development and testing
 unless Rails.env.production?
   require 'solr_wrapper/rake_task'
-  Dir.glob(File.expand_path('../tasks/*.rake', __FILE__)).each do |f|
+  Dir.glob(File.expand_path('tasks/*.rake', __dir__)).each do |f|
     load(f)
   end
   require 'coveralls/rake/task'

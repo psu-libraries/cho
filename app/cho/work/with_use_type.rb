@@ -15,6 +15,7 @@ module Work::WithUseType
   class UseTypes
     def self.call(value)
       raise Dry::Struct::Error, "#{value} is not a valid use type" unless valid?(value)
+
       value
     end
 

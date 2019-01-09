@@ -34,6 +34,7 @@ RSpec.describe Transaction::Operations::File::Characterize do
         expect(document).to have_xpath('//externalidentifier')
       end
     end
+
     context 'without a file' do
       let(:resource_params) { { label: 'abc123' } }
       let(:resource) { Work::File.new }

@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe ApplicationController, type: :request do
+  subject { response }
+
   before(:all) do
     # Create a fake controller for our tests
     class ExamplesController < ApplicationController
@@ -20,8 +22,6 @@ RSpec.describe ApplicationController, type: :request do
     ActiveSupport::Dependencies.remove_constant('ExamplesController')
     Rails.application.reload_routes!
   end
-
-  subject { response }
 
   describe 'GET' do
     before { get examples_path, headers: headers }

@@ -67,7 +67,7 @@ module DataDictionary
       end
 
       def adapter
-        @query_service ||= Valkyrie.config.metadata_adapter
+        @adapter ||= Valkyrie.config.metadata_adapter
       end
   end
 end

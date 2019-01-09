@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe Collection::CommonFields, type: :model do
+  subject(:collection) { MyCollection.new }
+
   before(:all) do
     class MyCollection < Valkyrie::Resource
       include Collection::CommonFields
@@ -12,8 +14,6 @@ RSpec.describe Collection::CommonFields, type: :model do
   after(:all) do
     ActiveSupport::Dependencies.remove_constant('MyCollection')
   end
-
-  subject(:collection) { MyCollection.new }
 
   it { is_expected.to respond_to(:id) }
   it { is_expected.to respond_to(:workflow) }

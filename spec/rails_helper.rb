@@ -7,7 +7,7 @@ ENV['RAILS_ENV'] ||= 'test'
 if ENV['COVERAGE'] || ENV['TRAVIS']
   require 'simplecov'
   require 'coveralls'
-  SimpleCov.root(File.expand_path('../..', __FILE__))
+  SimpleCov.root(File.expand_path('..', __dir__))
   SimpleCov.formatter = Coveralls::SimpleCov::Formatter
   SimpleCov.start('rails') do
     add_filter '/spec'
@@ -16,7 +16,7 @@ if ENV['COVERAGE'] || ENV['TRAVIS']
   SimpleCov.command_name 'spec'
 end
 
-require File.expand_path('../../config/environment', __FILE__)
+require File.expand_path('../config/environment', __dir__)
 # Prevent database truncation if the environment is production
 abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'rspec/rails'

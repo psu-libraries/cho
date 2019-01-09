@@ -75,6 +75,7 @@ RSpec.describe CatalogController, type: :feature do
       create(:library_collection)
       create(:work_submission, :with_file)
     end
+
     it 'returns the collection and excludes file sets and files' do
       visit(root_path)
       click_button('Search')

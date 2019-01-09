@@ -5,6 +5,7 @@ module Validation
     def validate(field_value)
       @errors = []
       return true if field_value.blank?
+
       member = Validation::Member.new(field_value)
       return true if member.exists?
 

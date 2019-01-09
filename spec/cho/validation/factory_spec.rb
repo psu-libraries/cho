@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe Validation::Factory, type: :model do
+  subject { described_class.validators = validator_list }
+
   before (:all) do
     class MyValidator < Validation::Base
     end
@@ -14,8 +16,6 @@ RSpec.describe Validation::Factory, type: :model do
     ActiveSupport::Dependencies.remove_constant('MyValidator')
     ActiveSupport::Dependencies.remove_constant('OtherValidator')
   end
-
-  subject { described_class.validators = validator_list }
 
   let(:validator_list) { {} }
 
@@ -58,9 +58,9 @@ RSpec.describe Validation::Factory, type: :model do
     end
 
     describe '#validator_names' do
-      subject { described_class.validator_names }
+      subject(:names) { described_class.validator_names }
 
-      it { is_expected.to contain_exactly(
+      it { expect(names).to contain_exactly(
         'creator', 'my_validator', 'other_validator', 'no_validation', 'resource_exists', 'edtf_date'
       ) }
     end

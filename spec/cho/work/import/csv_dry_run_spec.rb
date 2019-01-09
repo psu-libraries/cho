@@ -44,7 +44,7 @@ RSpec.describe Work::Import::CsvDryRun do
       end
 
       it 'returns a list of change sets' do
-        is_expected.to be_a Array
+        expect(dry_run_results).to be_a Array
         expect(dry_run_results.count).to eq(1)
         expect(dry_run_results.first).to be_valid
         expect(dry_run_results.first.title).to eq(['My Awesome Work'])
@@ -59,7 +59,7 @@ RSpec.describe Work::Import::CsvDryRun do
       end
 
       it 'returns a list of change sets' do
-        is_expected.to be_a Array
+        expect(dry_run_results).to be_a Array
         expect(dry_run_results.count).to eq(1)
         expect(dry_run_results.first).not_to be_valid
       end
@@ -75,7 +75,7 @@ RSpec.describe Work::Import::CsvDryRun do
       end
 
       it 'returns a list of change sets' do
-        is_expected.to be_a Array
+        expect(dry_run_results).to be_a Array
         expect(dry_run_results.count).to eq(3)
         expect(dry_run_results[0]).not_to be_valid
         expect(dry_run_results[1]).to be_valid
@@ -93,7 +93,7 @@ RSpec.describe Work::Import::CsvDryRun do
       end
 
       it 'returns a list of change sets' do
-        is_expected.to be_a Array
+        expect(dry_run_results).to be_a Array
         expect(dry_run_results.count).to eq(3)
         expect(dry_run_results[0]).to be_valid
         expect(dry_run_results[1]).to be_valid
@@ -109,7 +109,7 @@ RSpec.describe Work::Import::CsvDryRun do
       end
 
       it 'returns a list of change sets' do
-        is_expected.to be_a Array
+        expect(dry_run_results).to be_a Array
         expect(dry_run_results.count).to eq(1)
         expect(dry_run_results[0]).to be_valid
         expect(dry_run_results[0].batch_id).to eq('batch1')

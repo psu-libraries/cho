@@ -12,7 +12,7 @@ module Work
     #   The header items correspond to a field in the data dictionary: member_of_collection_ids, work_type_id, title.
     #
     class CsvDryRun
-      attr_reader :update, :results, :reader
+      attr_reader :update, :reader
 
       class InvalidCsvError < StandardError; end
 
@@ -22,7 +22,7 @@ module Work
         @update = update
         @reader = CsvReader.new(::File.new(csv_file_name, 'r'))
         validate_structure
-        build_results
+        results
         add_import_works
       end
 
@@ -34,18 +34,19 @@ module Work
         @bag ||= Transaction::Import::ImportFromZip.new.call(zip_name: batch_id)
       end
 
+      def results
+        @results ||= reader.map do |work_hash|
+          WorkHashValidator.new(work_hash).change_set
+        end
+      end
+
       private
 
         def validate_structure
           raise InvalidCsvError, "Unexpected column(s): '#{invalid_fields.join(', ')}'" if invalid_fields.present?
+
           if update?
             raise InvalidCsvError, 'Missing id column for update' unless reader.headers.include?('id')
-          end
-        end
-
-        def build_results
-          @results ||= reader.map do |work_hash|
-            WorkHashValidator.new(work_hash).change_set
           end
         end
 
@@ -69,6 +70,7 @@ module Work
           import_work.file_sets.map do |file_set|
             file_set_hash = file_set_metadata(file_set.id).first
             next if file_set_hash.nil?
+
             FileSetHashValidator.new(file_set_hash).change_set
           end
         end
@@ -99,6 +101,7 @@ module Work
         def batch_id
           ids = results.map { |validator| validator['batch_id'] }.uniq
           raise InvalidCsvError, 'CSV contains multiple or missing batch ids' if ids.count > 1
+
           ids.first
         end
     end

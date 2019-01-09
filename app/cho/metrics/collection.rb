@@ -49,6 +49,7 @@ module Metrics
         change_set.prepopulate!
         resource = change_set_persister.validate_and_save(change_set: change_set, resource_params: resource_params)
         raise StandardError, "Collection failed to save: #{resource.errors.full_messages}" if resource.errors.present?
+
         resource
       end
 
@@ -88,7 +89,7 @@ module Metrics
       end
 
       def work_type_id
-        @work_type ||= ::Work::Type.find_using(label: 'Generic').first.id
+        @work_type_id ||= ::Work::Type.find_using(label: 'Generic').first.id
       end
 
       def change_set_persister

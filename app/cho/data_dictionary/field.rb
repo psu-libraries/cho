@@ -26,6 +26,7 @@ module DataDictionary
 
     def multiple?
       return false if multiple.nil?
+
       multiple
     end
 
@@ -81,11 +82,13 @@ module DataDictionary
       def suffix
         return 'ssim' if valkyrie_id? || alternate_id?
         return "dtsi#{multiple_suffix}" if date?
+
         'tesim'
       end
 
       def multiple_suffix
         return unless multiple?
+
         'm'
       end
   end

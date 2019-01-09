@@ -86,6 +86,7 @@ module Document::Csv
     # cleans up ids and converts arrays to a single string
     def to_csv_field(field_value)
       return field_value if field_value.blank?
+
       remove_id_marker(Array.wrap(field_value)).join(VALUE_SEPARATOR)
     end
 

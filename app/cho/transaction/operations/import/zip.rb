@@ -13,6 +13,7 @@ module Transaction
           )
           return Failure(change_set) if bag.failure?
           return Failure('Cannot import bags with more that one work') if bag.success.works.count > 1
+
           change_set.import_work = bag.success.works.first
           Success(change_set)
         rescue StandardError => exception

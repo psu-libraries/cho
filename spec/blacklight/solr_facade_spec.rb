@@ -13,6 +13,7 @@ RSpec.describe SolrFacade do
     before do
       allow(repository).to receive(:search).and_return(response)
     end
+
     it 'queries the Solr index' do
       expect(repository).to receive(:search).with(query)
       expect(solr_facade.query_response).to eq response
@@ -24,6 +25,7 @@ RSpec.describe SolrFacade do
       allow(response).to receive(:documents).and_return(response_documents)
       allow(repository).to receive(:search).and_return(response)
     end
+
     it 'queries the Solr Index' do
       expect(solr_facade.members).to eq response_documents
     end
