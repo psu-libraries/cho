@@ -50,7 +50,7 @@ class ChangeSetPersister
   end
 
   def delete(change_set:)
-    before_delete(change_set: change_set)
+    delete_children(change_set: change_set)
     persister.delete(resource: change_set.resource)
   rescue StandardError => e
     change_set.errors.add(:delete, e.message)
@@ -89,11 +89,19 @@ class ChangeSetPersister
 
   private
 
-    def before_delete(change_set:)
-      return unless change_set.resource.try(:file_set_ids)
+    def delete_children(change_set:)
+      if change_set.resource.try(:file_set_ids)
+        change_set.resource.file_set_ids.each do |file_set_id|
+          delete_file_set(resource: Work::FileSet.find(file_set_id))
+        end
+      end
 
-      change_set.resource.file_set_ids.each do |file_set_id|
-        delete_file_set(resource: Work::FileSet.find(file_set_id))
+      if change_set.resource.try(:members)
+        change_set.resource.members.each do |member|
+          work_change_set = Work::SubmissionChangeSet.new(member)
+          delete_children(change_set: work_change_set)
+          persister.delete(resource: member)
+        end
       end
     end
 

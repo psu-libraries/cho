@@ -15,15 +15,15 @@ module Batch
 
     # POST /batch/delete
     def confirm
-      @resources = resources
+      presenters
     end
 
     # DELETE /batch/delete
     def destroy
-      resources.each do |resource|
-        change_set_persister.delete(change_set: DeleteSet.new(resource))
+      presenters.each do |presenter|
+        change_set_persister.delete(change_set: DeleteSet.new(presenter.resource))
       end
-      flash[:success] = t('cho.batch.delete.success', list: resources.map(&:title).flatten.join(', '))
+      flash[:success] = t('cho.batch.delete.success', list: presenters.map(&:confirmation_title).flatten.join(', '))
       redirect_to(search_select_path)
     end
 
@@ -35,11 +35,14 @@ module Batch
         params[:delete].to_unsafe_h.fetch(:ids, [])
       end
 
-      # @todo use Valkyrie::Persistence::Postgres.find_many_by_ids after we upgrade to 1.0
-      def resources
-        @resources ||= ids.map do |id|
-          change_set_persister.metadata_adapter.query_service.find_by(id: Valkyrie::ID.new(id))
+      def presenters
+        @presenters ||= resources.map do |resource|
+          DeletePresenter.new(resource)
         end
+      end
+
+      def resources
+        change_set_persister.metadata_adapter.query_service.find_many_by_ids(ids: ids)
       end
   end
 end

@@ -3,14 +3,18 @@
 <p><%= t('cho.batch.delete.message') %></p>
 
 <%= form_for(:delete, url: batch_delete_path, method: :delete) do |form| %>
-  <ul>
-    <% @resources.each do |resource| %>
-      <li>
-        <%= resource.title.first %>
-        <%= form.hidden_field :ids, multiple: true, value: resource.id %>
-      </li>
+
+    <% @presenters.each do |presenter| %>
+      <h2><%= presenter.confirmation_title %></h2>
+      <%= form.hidden_field :ids, multiple: true, value: presenter.id %>
+      <% if presenter.children.present? %>
+        <ul>
+          <% presenter.children.each do |child| %>
+            <li><%= child %></li>
+          <% end %>
+        </ul>
+      <% end %>
     <% end %>
-  </ul>
   <%= form.submit t('cho.batch.delete.continue') %>
   <%= link_to t('cho.batch.delete.cancel'), :back %>
 <% end %>
