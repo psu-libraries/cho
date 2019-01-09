@@ -6,17 +6,22 @@ RSpec.describe Batch::SelectController, type: :feature do
   it_behaves_like 'a search form', '/select'
 
   context 'when deleting items' do
-    before { create(:work, title: 'Resource to delete') }
+    let!(:work) { create(:work, :with_file, title: 'Resource to delete') }
 
     it 'selects items from the repository and removes them' do
       visit(root_path)
       click_link('Select Resources')
-      fill_in('q', with: 'Resource to delete')
+      fill_in('q', with: '')
       click_button('Search')
-      find("input[type='checkbox']").click
+      within('.select-resources') do
+        expect(page).to have_link('Sample Archival Collection')
+        expect(page).to have_link('hello_world.txt')
+        expect(page).to have_link('Resource to delete')
+      end
+      find("input[id='delete_ids_#{work.id}']").click
       click_button('Delete Selected Resources')
       expect(page).to have_content('The following resources will be deleted')
-      expect(page).to have_selector('h2', text: 'Resource to delete (0 items)')
+      expect(page).to have_selector('h2', text: 'Resource to delete (3 items)')
       click_button('Continue')
       expect(page).to have_content('You have successfully deleted the following items: Resource to delete ')
     end
