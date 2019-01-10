@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Work::Import::CsvImporter do
+RSpec.describe Csv::Importer do
   let(:collection) { create :library_collection }
   let(:work_type_id) { Work::Type.find_using(label: 'Generic').first.id }
 

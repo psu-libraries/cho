@@ -1,12 +1,10 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Agents</h1>
+<h1><%= t('cho.agent.index.heading') %></h1>
 
 <table>
   <thead>
     <tr>
-      <th>Givenname</th>
-      <th>Surname</th>
+      <th><%= t('cho.agent.index.given_name') %></th>
+      <th><%= t('cho.agent.index.surname') %></th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -16,9 +14,12 @@
       <tr>
         <td><%= agent.given_name %></td>
         <td><%= agent.surname %></td>
-        <td><%= link_to 'Show', agent %></td>
-        <td><%= link_to 'Edit', edit_agent_resource_path(agent) %></td>
-        <td><%= link_to 'Destroy', agent, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to t('cho.agent.index.show'), agent %></td>
+        <td><%= link_to t('cho.agent.index.edit'), edit_agent_resource_path(agent) %></td>
+        <td>
+          <%= link_to t('cho.agent.index.destroy'), agent,
+              method: :delete, data: { confirm: t('cho.agent.index.confirm') } %>
+        </td>
       </tr>
     <% end %>
   </tbody>
@@ -26,4 +27,5 @@
 
 <br />
 
-<%= link_to 'New Agent', new_agent_resource_path %>
+<%= link_to t('cho.agent.index.download'), agent_resources_path(format: :csv) %>
+<%= link_to t('cho.agent.index.new'), new_agent_resource_path %>

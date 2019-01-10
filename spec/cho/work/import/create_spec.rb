@@ -32,9 +32,9 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
     end
 
     it 'successfully imports the csv using both ids and alternate ids' do
-      visit(csv_create_path)
+      visit(csv_works_create_path)
       expect(page).to have_selector('h1', text: 'CSV Import')
-      attach_file('work_import_csv_file_file', csv_file.path)
+      attach_file('csv_file_file', csv_file.path)
       click_button('Preview Import')
       expect(page).to have_selector('h1', text: 'Import Preview')
       expect(page).to have_selector('h2', text: 'Bag Status')
@@ -116,9 +116,9 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
     end
 
     it 'successfully imports the csv' do
-      visit(csv_create_path)
+      visit(csv_works_create_path)
       expect(page).to have_selector('h1', text: 'CSV Import')
-      attach_file('work_import_csv_file_file', csv_file.path)
+      attach_file('csv_file_file', csv_file.path)
       click_button('Preview Import')
       expect(page).to have_selector('h1', text: 'Import Preview')
       expect(page).to have_selector('h2', text: 'Bag Status')
@@ -215,9 +215,9 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
     end
 
     it 'successfully imports the csv and index the extracted text' do
-      visit(csv_create_path)
+      visit(csv_works_create_path)
       expect(page).to have_selector('h1', text: 'CSV Import')
-      attach_file('work_import_csv_file_file', csv_file.path)
+      attach_file('csv_file_file', csv_file.path)
       click_button('Preview Import')
       expect(page).to have_selector('h1', text: 'Import Preview')
       expect(page).to have_selector('h2', text: 'Bag Status')
@@ -252,9 +252,9 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
     end
 
     it 'does not perform the dry run' do
-      visit(csv_create_path)
+      visit(csv_works_create_path)
       expect(page).to have_selector('h1', text: 'CSV Import')
-      attach_file('work_import_csv_file_file', csv_file.path)
+      attach_file('csv_file_file', csv_file.path)
       click_button('Preview Import')
       within('div.alert') do
         expect(page).to have_content("Unexpected column(s): 'invalid_column'")
@@ -273,9 +273,9 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
     end
 
     it 'displays the errors in the dry run page' do
-      visit(csv_create_path)
+      visit(csv_works_create_path)
       expect(page).to have_selector('h1', text: 'CSV Import')
-      attach_file('work_import_csv_file_file', csv_file.path)
+      attach_file('csv_file_file', csv_file.path)
       click_button('Preview Import')
       expect(page).to have_selector('h1', text: 'Import Preview')
       expect(page).to have_content('Total Number of Works with Errors 2')
@@ -313,9 +313,9 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
     end
 
     it 'displays the bag errors in the dry run page' do
-      visit(csv_create_path)
+      visit(csv_works_create_path)
       expect(page).to have_selector('h1', text: 'CSV Import')
-      attach_file('work_import_csv_file_file', csv_file.path)
+      attach_file('csv_file_file', csv_file.path)
       click_button('Preview Import')
       expect(page).to have_content('The bag contains 1 error(s)')
       expect(page).to have_selector(
@@ -337,9 +337,9 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
     end
 
     it 'displays the missing zip error in the dry run page' do
-      visit(csv_create_path)
+      visit(csv_works_create_path)
       expect(page).to have_selector('h1', text: 'CSV Import')
-      attach_file('work_import_csv_file_file', csv_file.path)
+      attach_file('csv_file_file', csv_file.path)
       click_button('Preview Import')
       expect(page).to have_content('Error extracting the bag: No such file or directory')
     end

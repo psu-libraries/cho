@@ -1,33 +1,33 @@
-<h1><%= t('cho.csv.dry_run.heading') %></h1>
+<h1><%= t('cho.csv.work.dry_run.heading') %></h1>
 
-<h2><%= t('cho.csv.dry_run.bag_status') %></h2>
+<h2><%= t('cho.csv.work.dry_run.bag_status') %></h2>
 
 <% if @presenter.bag_errors.present? %>
-  <p><%= t('cho.csv.dry_run.bag_failure', count: @presenter.bag_errors.count) %></p>
+  <p><%= t('cho.csv.work.dry_run.bag_failure', count: @presenter.bag_errors.count) %></p>
   <ul>
     <% @presenter.bag_errors.each do |message| %>
       <li><%= message %></li>
     <% end %>
   </ul>
 <% else %>
-  <p><%= t('cho.csv.dry_run.bag_success') %></p>
+  <p><%= t('cho.csv.work.dry_run.bag_success') %></p>
 <% end %>
 
-<h2><%= t('cho.csv.dry_run.csv_status') %></h2>
+<h2><%= t('cho.csv.work.dry_run.csv_status') %></h2>
 
 <% if @presenter.update? %>
-  <p><%= t('cho.csv.dry_run.update_description') %></p>
+  <p><%= t('cho.csv.work.dry_run.update_description') %></p>
 <% else %>
-  <p><%= t('cho.csv.dry_run.create_description') %></p>
+  <p><%= t('cho.csv.work.dry_run.create_description') %></p>
 <% end %>
 
-<p><%= t('cho.csv.dry_run.error_count_message', count: @presenter.error_count) %></p>
+<p><%= t('cho.csv.work.dry_run.error_count_message', count: @presenter.error_count) %></p>
 
 <table class="table table-responsive table-striped">
   <thead>
   <tr>
-    <th><%= t('cho.csv.dry_run.preview_table.title') %></th>
-    <th><%= t('cho.csv.dry_run.preview_table.status') %></th>
+    <th><%= t('cho.csv.work.dry_run.preview_table.title') %></th>
+    <th><%= t('cho.csv.work.dry_run.preview_table.status') %></th>
   </tr>
   </thead>
   <tbody>
@@ -38,6 +38,6 @@
 <%= form_tag({ controller: 'csv', action: 'import' }, class: 'form-inline') do %>
   <%= hidden_field_tag(:file_name, @file_name) %>
   <%= hidden_field_tag(:update, @presenter.update?) %>
-  <%= submit_tag(t('cho.csv.dry_run.submit'), disabled: @presenter.invalid?) %>
-  <%= link_to t('cho.csv.dry_run.cancel'), :back, class: 'btn btn-link' %>
+  <%= submit_tag(t('cho.csv.work.dry_run.submit'), disabled: @presenter.invalid?) %>
+  <%= link_to t('cho.csv.work.dry_run.cancel'), :back, class: 'btn btn-link' %>
 <% end %>

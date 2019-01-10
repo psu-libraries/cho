@@ -12,9 +12,7 @@ module Work
     #   The header items correspond to a field in the data dictionary: member_of_collection_ids, work_type_id, title.
     #
     class CsvDryRun
-      attr_reader :update, :reader
-
-      class InvalidCsvError < StandardError; end
+      include Csv::DryRunBehavior
 
       # @param [String] csv_file_name
       # @param [true, false] update
@@ -24,10 +22,6 @@ module Work
         validate_structure
         results
         add_import_works
-      end
-
-      def update?
-        update
       end
 
       def bag
@@ -41,14 +35,6 @@ module Work
       end
 
       private
-
-        def validate_structure
-          raise InvalidCsvError, "Unexpected column(s): '#{invalid_fields.join(', ')}'" if invalid_fields.present?
-
-          if update?
-            raise InvalidCsvError, 'Missing id column for update' unless reader.headers.include?('id')
-          end
-        end
 
         # @todo see https://github.com/psu-libraries/cho/issues/605
         # @note if there's more than one work in the bag with the same identifier, the duplicates will be ignored.
@@ -100,7 +86,7 @@ module Work
 
         def batch_id
           ids = results.map { |validator| validator['batch_id'] }.uniq
-          raise InvalidCsvError, 'CSV contains multiple or missing batch ids' if ids.count > 1
+          raise Csv::ValidationError, 'CSV contains multiple or missing batch ids' if ids.count > 1
 
           ids.first
         end
