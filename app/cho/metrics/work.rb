@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'mime/types'
+
 module Metrics
   class Work < Metrics::Collection
     attr_writer :file_size
