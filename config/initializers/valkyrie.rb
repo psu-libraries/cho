@@ -22,7 +22,8 @@ Rails.application.config.to_prepare do
         Work::SubmissionIndexer,
         Work::FileSetIndexer,
         Collection::TypeIndexer,
-        Indexing::Dates
+        Indexing::Dates,
+        Indexing::LinkedFields
       )
     ),
     :index_solr

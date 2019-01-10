@@ -95,6 +95,9 @@ class CatalogController < ApplicationController
     config.add_facet_field 'collection_type_ssim', label: I18n.t('cho.field_label.collection_type')
     config.add_facet_field 'member_of_collection_ssim', label: I18n.t('cho.field_label.member_of_collections')
 
+    # @todo configuration of linked field indexing
+    config.add_facet_field 'creator_role_ssim', label: I18n.t('cho.field_label.role')
+
     DataDictionary::Field.all.sort_by(&:created_at).select(&:facet?).each do |field|
       config.add_facet_field field.facet_field, label: (field.display_name || field.label.titleize)
     end

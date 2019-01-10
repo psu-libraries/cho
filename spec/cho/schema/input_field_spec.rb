@@ -82,6 +82,12 @@ RSpec.describe Schema::InputField, type: :model do
 
       it { is_expected.to eq('string') }
     end
+
+    context 'creator field type' do
+      let(:type) { 'creator' }
+
+      it { is_expected.to eq('creator') }
+    end
   end
 
   describe '#options' do
@@ -99,44 +105,37 @@ RSpec.describe Schema::InputField, type: :model do
   end
 
   describe '#datalist' do
-    subject { model.datalist }
+    subject { model.datalist.map(&:id) }
 
-    before { metadata_field.field_type = type }
+    let!(:agent) { create :agent }
+    let!(:collection) { create :collection }
 
-    context 'with the default string type' do
-      let(:type) { 'string' }
+    before { metadata_field.controlled_vocabulary = controlled_vocabulary }
 
-      it { is_expected.to be_empty }
-    end
-
-    context 'text field type' do
-      let(:type) { 'text' }
+    context 'with the default vocabulary' do
+      let(:controlled_vocabulary) { 'no_vocabulary' }
 
       it { is_expected.to be_empty }
     end
 
-    context 'numeric field type' do
-      let(:type) { 'numeric' }
+    context 'collections vocabulary' do
+      let(:controlled_vocabulary) { 'cho_collections' }
 
-      it { is_expected.to be_empty }
+      it { is_expected.to contain_exactly(collection.id) }
     end
 
-    context 'date field type' do
-      let(:type) { 'date' }
+    context 'agent vocabulary' do
+      let(:controlled_vocabulary) { 'cho_agents' }
 
-      it { is_expected.to be_empty }
+      it { is_expected.to contain_exactly(agent.id) }
     end
 
-    context 'valkyrie_id field type' do
-      let(:type) { 'valkyrie_id' }
+    context 'creator vocabulary' do
+      subject { model.datalist(component: :agents).map(&:id) }
 
-      it { is_expected.to eq(ControlledVocabulary::Collections.list) }
-    end
+      let(:controlled_vocabulary) { 'creator_vocabulary' }
 
-    context 'alternate_id field type' do
-      let(:type) { 'alternate_id' }
-
-      it { is_expected.to be_empty }
+      it { is_expected.to contain_exactly(agent.id) }
     end
   end
 

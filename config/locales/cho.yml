@@ -19,6 +19,7 @@ en:
       title: "Title"
       required: "required"
       member_of_collections: "Collections"
+      role: "Role"
     header_links:
       create_collection: "Create Collection"
       create_submission: "Create Work"

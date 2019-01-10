@@ -40,3 +40,9 @@ Metrics/BlockLength:
     - 'spec/**/*'
     - 'config/initializers/valkyrie.rb'
     - 'app/blacklight/catalog_controller.rb'
+
+# This is due to a bug in Rubocop. A future version of Niftany, which will include an updated
+# version of Rubocop, should fix this.
+Rails/Presence:
+  Exclude:
+    - 'app/cho/indexing/creator.rb'

@@ -40,4 +40,14 @@ FactoryBot.define do
       ).validate_and_save(change_set: change_set, resource_params: { file: file })
     end
   end
+
+  trait :with_creator do
+    creator do
+      if @build_strategy.is_a? FactoryBot::Strategy::Build
+        { agent: build(:agent).id, role: MockRDF.relators.first.to_uri.to_s }
+      else
+        { agent: create(:agent).id, role: MockRDF.relators.first.to_uri.to_s }
+      end
+    end
+  end
 end

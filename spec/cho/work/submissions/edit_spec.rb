@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Editing works', type: :feature do
-  let(:resource) { create(:work, title: 'Work to edit', work_type_id: work_type.id) }
+  let(:resource) { create(:work, :with_creator, title: 'Work to edit', work_type_id: work_type.id) }
   let(:work_type)  { Work::Type.where(label: 'Document').first }
   let(:adapter) { Valkyrie::MetadataAdapter.find(:indexing_persister) }
   let(:solr_document) { SolrDocument.find(resource.id) }
@@ -11,6 +11,8 @@ RSpec.describe 'Editing works', type: :feature do
   context 'with all the required metadata' do
     it 'updates an existing work with new metadata' do
       visit(edit_work_path(resource))
+      expect(page).to have_field('work_submission_creator_role', with: resource.creator.first[:role])
+      expect(page).to have_field('work_submission_creator_agent', with: resource.creator.first[:agent])
       expect(page).to have_content('Editing Work')
       expect(page).to have_selector('h2', text: 'Work to edit')
       expect(page).to have_link('Show')

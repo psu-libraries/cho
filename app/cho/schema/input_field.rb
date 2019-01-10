@@ -6,7 +6,7 @@ module Schema
 
     attr_reader :form, :metadata_field
 
-    delegate :text?, :required?, :valkyrie_id?, :label, to: :metadata_field
+    delegate :text?, :required?, :valkyrie_id?, :creator?, :label, to: :metadata_field
 
     # @param [ActionView::Helpers::FormBuilder] form
     # @param [Schema::MetadataField] metadata_field
@@ -20,7 +20,7 @@ module Schema
     end
 
     def partial
-      if text? || valkyrie_id?
+      if text? || valkyrie_id? || creator?
         metadata_field.field_type
       else
         'string'
@@ -31,8 +31,8 @@ module Schema
       { required: required?, 'aria-required': required? }
     end
 
-    def datalist
-      ControlledVocabulary::Factory.lookup(metadata_field.controlled_vocabulary.to_sym).list
+    def datalist(component: nil)
+      ControlledVocabulary::Factory.lookup(metadata_field.controlled_vocabulary.to_sym).list(component: component)
     end
 
     def value
