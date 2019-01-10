@@ -29,7 +29,7 @@ module DataDictionary
         change_set = FieldChangeSet.new(Field.new)
         change_set.validate(new_attributes)
       end
-      model.class.new(HashWithIndifferentAccess.new(change_set.fields))
+      model.class.new(change_set.fields.symbolize_keys)
     end
 
     # @note the order of the array is the order of columns in the csv file

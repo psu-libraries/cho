@@ -5,7 +5,7 @@
 # the {Postgres::SingularMetadataAdapter}.
 module Schema
   class MetadataField < DataDictionary::Field
-    attribute :order_index, Valkyrie::Types::Int
+    attribute :order_index, Valkyrie::Types::Integer
     attribute :data_dictionary_field_id, Valkyrie::Types::ID.optional
     attribute :work_type, Valkyrie::Types::String
 
