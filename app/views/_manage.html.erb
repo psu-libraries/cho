@@ -3,9 +3,19 @@
     <%= t('cho.header_links.manage') %> <span class="caret"></span>
   </a>
   <ul class="dropdown-menu">
-    <li><%= link_to t('cho.header_links.csv_create'), csv_create_path, class: 'dropdown-item' %></li>
-    <li><%= link_to t('cho.header_links.csv_update'), csv_update_path, class: 'dropdown-item' %></li>
     <li><%= link_to t('cho.header_links.select'), search_select_path, class: 'dropdown-item' %></li>
     <li><%= link_to t('cho.header_links.data_dictionary'), data_dictionary_fields_path, class: 'dropdown-item' %></li>
+    <li><%= link_to t('cho.header_links.csv_create'), csv_create_path, class: 'dropdown-item' %></li>
+    <li><%= link_to t('cho.header_links.csv_update'), csv_update_path, class: 'dropdown-item' %></li>
+    <div class="dropdown-divider"></div>
+    <li><%= link_to t('cho.header_links.agent.list'), agent_resources_path, class: 'dropdown-item' %></li>
+    <li>
+      <%= link_to t('cho.header_links.agent.csv_create'), csv_agents_create_path,
+          class: 'dropdown-item' %>
+    </li>
+    <li>
+      <%= link_to t('cho.header_links.agent.csv_update'), csv_agents_update_path,
+          class: 'dropdown-item' %>
+    </li>
   </ul>
 </li>

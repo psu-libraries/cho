@@ -1,0 +1,10 @@
+<h1><%= t('cho.csv.import.success.header') %></h1>
+<ul class="result-list">
+  <% @created.each do |result| %>
+    <li>
+      <%= link_to "#{result.given_name} #{result.surname}", solr_document_path(result.id) %>
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to t('cho.csv.import.success.new_import'), :csv_import, class: 'btn btn-link' %>

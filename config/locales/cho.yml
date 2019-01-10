@@ -27,6 +27,10 @@ en:
       select: "Select Resources"
       csv_create: "Import New Works"
       csv_update: "Update Works"
+      agent:
+        list: "List Agents"
+        csv_create: "Import New Agents"
+        csv_update: "Update Existing Agents"
       manage: "Manage"
     work:
       new:
@@ -57,7 +61,39 @@ en:
     curated_collection:
       edit:
         delete_link: "Delete Curated collection"
+    agent:
+      index:
+        heading: "Agents"
+        download: "Download Agents"
+        new: "Create New Agent"
+        show: "Show"
+        edit: "Edit"
+        destroy: "Destroy"
+        confirm: "Are you sure you want to delete this agent?"
+        given_name: "Given Name"
+        surname: "Surname"
     csv:
+      agent:
+        create:
+          heading: 'CSV Agent Import'
+          description: 'Import a csv that creates new agents.'
+          submit: 'Preview Import'
+        update:
+          heading: 'CSV Agent Import'
+          description: 'Import a csv that updates existing agents.'
+          submit: 'Preview Import'
+        dry_run:
+          heading: 'Agent Import Preview'
+          create_description: 'The following new agents will be created'
+          update_description: 'The following agents will be updated'
+          error_count_message: "Total Number of Agents with Errors %{count}"
+          preview_table:
+            given_name: "Given Name"
+            surname: "Surname"
+            status: "Status"
+          submit: "Perform Import"
+          cancel: "Cancel"
+          csv_status: CSV Status
       create:
         heading: 'CSV Import'
         description: 'Import a csv that creates new works.'

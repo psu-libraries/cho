@@ -1,0 +1,8 @@
+<h1><%= t('cho.csv.import.failure.header') %></h1>
+<ol>
+  <% @errors.each do |result| %>
+    <li>
+      <%= result.inspect %>
+    </li>
+  <% end %>
+</ol>
