@@ -10,12 +10,18 @@
 <%# Use Bootstrap columns to position the thumbnail on the left and the content partials on the right %>
 <div class="container mt-4">
   <div class="row">
-    <div class="col-xs-12 col-md-4">
-      <%= render 'thumbnail', document: @document, document_counter: 0 %>
-    </div>
-    <div class="col-xs-12 col-md-8">
-      <%= render_document_main_content_partial %>
-    </div>
+    <% if presenter(@document).thumbnail.exists? %>
+      <div class="col-xs-12 col-md-4">
+        <%= render 'thumbnail', document: @document, document_counter: 0 %>
+      </div>
+      <div class="col-xs-12 col-md-8">
+        <%= render_document_main_content_partial %>
+      </div>
+    <% else %>
+      <div class="col-xs-12">
+        <%= render_document_main_content_partial %>
+      </div>
+    <% end %>
   </div>
 </div>
 

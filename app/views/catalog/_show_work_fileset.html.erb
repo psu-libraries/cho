@@ -1,4 +1,5 @@
 <%# Do the two column thing here %>
+<p>Fileset | Part of: <%= link_to @document.work_title, solr_document_path(@document.work) %></p>
 <%= render partial: 'show', locals: { document: @document } %>
 
 <%# write method to grab the files from the file set %>
