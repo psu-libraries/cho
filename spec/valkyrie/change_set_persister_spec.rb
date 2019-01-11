@@ -146,6 +146,22 @@ RSpec.describe ChangeSetPersister do
         expect(metadata_adapter.index_adapter.query_service.find_all.count).to eq(0)
       end
     end
+
+    context 'with a file set containing files' do
+      let!(:change_set) { Work::FileSetChangeSet.new(create(:file_set, :with_member_file)) }
+
+      it 'deletes the file set and its files' do
+        expect(Work::Submission.all.count).to eq(1)
+        expect(Work::FileSet.all.count).to eq(1)
+        expect(Work::File.all.count).to eq(1)
+        expect(metadata_adapter.index_adapter.query_service.find_all.count).to eq(3)
+        change_set_persister.delete(change_set: change_set)
+        expect(Work::Submission.all.count).to eq(1)
+        expect(Work::FileSet.all.count).to eq(0)
+        expect(Work::File.all.count).to eq(0)
+        expect(metadata_adapter.index_adapter.query_service.find_all.count).to eq(1)
+      end
+    end
   end
 
   describe '#update_or_create' do

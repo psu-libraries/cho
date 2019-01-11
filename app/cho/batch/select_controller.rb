@@ -15,5 +15,9 @@ module Batch
     def self._prefixes
       ['application', 'batch', 'catalog']
     end
+
+    configure_blacklight do |config|
+      config.search_builder_class = Batch::SearchBuilder
+    end
   end
 end

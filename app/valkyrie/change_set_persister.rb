@@ -103,6 +103,10 @@ class ChangeSetPersister
           persister.delete(resource: member)
         end
       end
+
+      if change_set.resource.try(:files)
+        change_set.resource.files.each { |file| delete_file(resource: file) }
+      end
     end
 
     def delete_file_set(resource:)
