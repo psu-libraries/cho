@@ -8,7 +8,7 @@
             field.options.merge!(list: "#{field.label}_role", value: field_value.fetch(:role, nil)) %>
         <datalist id="<%= "#{field.label}_role" %>">
           <% field.datalist(component: :roles).each do |item| %>
-            <option value="<%= item %>"><%= item.label %></option>
+            <option value="<%= item.path %>"><%= item.label %></option>
           <% end %>
         </datalist>
       </div>

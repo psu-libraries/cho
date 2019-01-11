@@ -11,9 +11,9 @@ RSpec.shared_examples 'a creator form' do
     end
 
     assert_select 'datalist[id=?]', 'creator_role'
-    assert_select 'option[value=?]', 'http://id.loc.gov/vocabulary/relators/bsl'
+    assert_select 'option[value=?]', '/vocabulary/relators/bsl'
     assert_select 'option', 'blasting'
-    assert_select 'option[value=?]', 'http://id.loc.gov/vocabulary/relators/cli'
+    assert_select 'option[value=?]', '/vocabulary/relators/cli'
     assert_select 'option', 'climbing'
 
     assert_select 'datalist[id=?]', 'creator_agent'
