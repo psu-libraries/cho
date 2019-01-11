@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Deleting works', type: :feature do
-  let(:resource) { create(:work, :with_file, title: 'Work to delete') }
+  let(:resource) { create(:work, :with_file_and_extracted_text, title: 'Work to delete') }
   let(:adapter) { Valkyrie::MetadataAdapter.find(:indexing_persister) }
 
   it 'removes the work and file from the system but retains its parent collection' do
@@ -13,6 +13,9 @@ RSpec.describe 'Deleting works', type: :feature do
     click_button('Delete Work')
     expect(page).to have_content('The following resources will be deleted')
     expect(page).to have_content(resource.title.first)
+    expect(page).to have_selector('li', text: 'File set: hello_world.txt')
+    expect(page).to have_selector('li', text: 'File: hello_world.txt')
+    expect(page).to have_selector('li', text: 'File: hello_world.txt_text.txt')
     click_button('Continue')
     expect(page).to have_content('You have successfully deleted the following items')
     expect(page).to have_content('Work to delete (3 items)')

@@ -26,7 +26,7 @@ FactoryBot.define do
     end
   end
 
-  trait :with_file do
+  trait :with_file_and_extracted_text do
     transient do
       filename { 'hello_world.txt' }
     end
@@ -38,6 +38,18 @@ FactoryBot.define do
         metadata_adapter: Valkyrie::MetadataAdapter.find(:indexing_persister),
         storage_adapter: Valkyrie.config.storage_adapter
       ).validate_and_save(change_set: change_set, resource_params: { file: file })
+    end
+  end
+
+  trait :with_file do
+    transient do
+      filename { 'hello_world.txt' }
+    end
+
+    to_create do |resource, evaluator|
+      saved_resource = Valkyrie::MetadataAdapter.find(:indexing_persister).persister.save(resource: resource)
+      FactoryBot.create(:file_set, :with_member_file, work: saved_resource, title: evaluator.filename)
+      saved_resource
     end
   end
 

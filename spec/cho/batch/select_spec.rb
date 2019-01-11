@@ -6,7 +6,7 @@ RSpec.describe Batch::SelectController, type: :feature do
   it_behaves_like 'a search form', '/select'
 
   context 'when deleting items' do
-    let!(:work) { create(:work, :with_file, title: 'Resource to delete') }
+    let!(:work) { create(:work, :with_file_and_extracted_text, title: 'Resource to delete') }
 
     it 'selects items from the repository and removes them' do
       visit(root_path)

@@ -33,8 +33,7 @@ RSpec.describe Batch::DeletePresenter, type: :model do
         expect(presenter.children).to contain_exactly(
           'Work: Sample Generic Work',
           'File set: hello_world.txt',
-          'File: hello_world.txt',
-          'File: hello_world.txt_text.txt'
+          'File: hello_world.txt'
         )
       end
     end
@@ -47,21 +46,19 @@ RSpec.describe Batch::DeletePresenter, type: :model do
 
     context 'with a works containing files' do
       it 'lists file sets and files' do
-        presenter = Batch::DeletePresenter.new(work.model)
+        presenter = Batch::DeletePresenter.new(work)
         expect(presenter.children).to contain_exactly(
           'File set: hello_world.txt',
-          'File: hello_world.txt',
-          'File: hello_world.txt_text.txt'
+          'File: hello_world.txt'
         )
       end
     end
 
     context 'with file sets containing files' do
       it 'lists the files' do
-        presenter = Batch::DeletePresenter.new(work.model.file_sets.first)
+        presenter = Batch::DeletePresenter.new(work.file_sets.first)
         expect(presenter.children).to contain_exactly(
-          'File: hello_world.txt',
-          'File: hello_world.txt_text.txt'
+          'File: hello_world.txt'
         )
       end
     end
