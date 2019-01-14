@@ -57,7 +57,7 @@ RSpec.describe CatalogController, type: :feature do
 
   context 'when searching extracted text' do
     before do
-      create(:work_submission, :with_file,
+      create(:work_submission, :with_file_and_extracted_text,
         filename: 'example_extracted_text.txt',
         title: 'Sample Extracted Text Work')
     end
