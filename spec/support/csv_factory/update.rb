@@ -16,7 +16,7 @@ module CsvFactory
     end
 
     def unlink
-      File.unlink(path)
+      FileUtils.rm_f(path)
     end
 
     private
