@@ -25,7 +25,7 @@ gem 'devise_remote'
 gem 'dry-transaction'
 gem 'edtf'
 gem 'execjs'
-gem 'faker', github: 'stympy/faker', branch: 'master'
+gem 'faker'
 gem 'figaro'
 gem 'hydra-derivatives'
 gem 'hydra-file_characterization', '~> 0.3.3'
@@ -50,7 +50,7 @@ group :development, :test do
   gem 'niftany'
   gem 'pry-byebug'
   gem 'pry-rails'
-  gem 'solr_wrapper', github: 'cbeer/solr_wrapper', branch: 'master'
+  gem 'solr_wrapper'
   gem 'sqlite3'
 end
 
