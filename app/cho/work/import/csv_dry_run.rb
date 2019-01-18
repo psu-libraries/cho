@@ -30,7 +30,9 @@ module Work
 
       def results
         @results ||= reader.map do |work_hash|
-          WorkHashValidator.new(work_hash).change_set
+          WorkHashValidator.new(work_hash,
+            resource_class: Work::Submission,
+            change_set_class: Work::SubmissionChangeSet).change_set
         end
       end
 
@@ -57,7 +59,9 @@ module Work
             file_set_hash = file_set_metadata(file_set.id).first
             next if file_set_hash.nil?
 
-            FileSetHashValidator.new(file_set_hash).change_set
+            Csv::HashValidator.new(file_set_hash,
+              resource_class: Work::FileSet,
+              change_set_class: Work::FileSetChangeSet).change_set
           end
         end
 
