@@ -10,7 +10,6 @@ module Transaction
 
         def call(io)
           temp_file = Tempfile.new('cho_temp_file')
-          puts temp_file.path
           updated_temp_file = write_file(temp_file: temp_file, io: io)
           Success(updated_temp_file)
         rescue StandardError => exception
