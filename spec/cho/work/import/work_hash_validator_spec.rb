@@ -3,7 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe Work::Import::WorkHashValidator do
-  let(:reader) { described_class.new(work_hash) }
+  let(:reader) do
+    described_class.new(work_hash,
+      resource_class: Work::Submission,
+      change_set_class: Work::SubmissionChangeSet)
+  end
+
   let(:collection) { create :library_collection }
   let(:generic_work_type) { Work::Type.find_using(label: 'Generic').first }
 

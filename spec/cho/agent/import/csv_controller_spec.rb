@@ -2,18 +2,13 @@
 
 require 'rails_helper'
 
-RSpec.describe Work::Import::CsvController, type: :controller do
-  let(:collection) { create :library_collection, title: 'my collection' }
-
+RSpec.describe Agent::Import::CsvController, type: :controller do
   let(:csv_file) do
     CsvFactory::Generic.new(
-      member_of_collection_ids: [collection.id, collection.id, collection.id],
-      work_type: ['Generic', 'Generic', 'Generic'],
-      title: ['My Work 1', 'My Work 2', 'My Work 3']
+      given_name: ['John', 'Jane'],
+      surname: ['Doe', 'Smith']
     )
   end
-
-  after { csv_file.unlink }
 
   describe 'GET #create' do
     subject(:call) { get :create }
@@ -37,37 +32,39 @@ RSpec.describe Work::Import::CsvController, type: :controller do
     subject(:call) { post :validate, params: { 'csv_file': { file: file } } }
 
     let(:file) { Rack::Test::UploadedFile.new(csv_file.path) }
-    let(:referrer) { 'http://test.host.com/csv/works/create' }
+    let(:referrer) { 'http://test.host.com/csv/agents/create' }
 
     before { request.headers['HTTP_REFERER'] = referrer }
 
-    context 'when creating new works with a valid csv' do
+    context 'when creating new agents with a valid csv' do
       it 'validates the file' do
         expect(call).to render_template('dry_run_results')
         expect(response).to be_success
-        expect(assigns(:presenter)).to be_a(Work::Import::CsvDryRunResultsPresenter)
-        expect(assigns(:presenter).change_set_list.map(&:valid?)).to eq([true, true, true])
+        expect(assigns(:presenter)).to be_a(Agent::Import::CsvDryRunResultsPresenter)
+        expect(assigns(:presenter).change_set_list.map(&:valid?)).to eq([true, true])
       end
     end
 
     context 'when creating new works with errors' do
       let(:csv_file) do
         CsvFactory::Generic.new(
-          member_of_collection_ids: [nil, collection.id, 'bad'],
-          work_type: ['Generic', 'Bad', 'Generic'],
-          title: ['My Work 1', 'My Work 2', nil]
+          given_name: ['John', '', 'Thomas'],
+          surname: ['', 'Smith', 'Anderson']
         )
       end
+
+      before { create(:agent, given_name: 'Thomas', surname: 'Anderson') }
 
       it 'validates the file and reports the errors' do
         expect(call).to render_template('dry_run_results')
         expect(response).to be_success
-        expect(assigns(:presenter)).to be_a(Work::Import::CsvDryRunResultsPresenter)
-        expect(assigns(:presenter).change_set_list.map(&:valid?)).to eq([false, false])
+        expect(assigns(:presenter)).to be_a(Agent::Import::CsvDryRunResultsPresenter)
+        expect(assigns(:presenter).change_set_list.map(&:valid?)).to eq([false, false, false])
         expect(assigns(:presenter).change_set_list.map(&:errors).map(&:messages)).to eq(
           [
-            { work_type_id: ["can't be blank"] },
-            { member_of_collection_ids: ['bad does not exist'], title: ["can't be blank"] }
+            { base: [], surname: ["can't be blank"] },
+            { base: [], given_name: ["can't be blank"] },
+            { base: ['Thomas Anderson already exists'] }
           ]
         )
         expect(File).to be_exist(assigns(:file_name))
@@ -77,24 +74,23 @@ RSpec.describe Work::Import::CsvController, type: :controller do
     context 'when creating new works with a csv that has invalid columns' do
       let(:csv_file) do
         CsvFactory::Generic.new(
-          member_of_collection_ids: [collection.id, collection.id],
-          work_type: ['Generic', 'Generic'],
-          title: ['My Work 1', 'My Work 2'],
-          invalid_column: ['bad value 1', nil]
+          given_name: ['John', 'Jane'],
+          surname: ['Doe', 'Smith'],
+          invalid_column: ['bad1', 'bad2']
         )
       end
 
       it 'redirects to the create page' do
-        expect(call).to redirect_to(csv_works_create_path)
+        expect(call).to redirect_to(csv_agents_create_path)
         expect(flash[:error]).to eq("Unexpected column(s): 'invalid_column'")
       end
     end
 
     context 'when updating works with a csv with missing required columns' do
-      let(:referrer) { 'http://test.host.com/csv/works/update' }
+      let(:referrer) { 'http://test.host.com/csv/agents/update' }
 
       it 'redirects to the update page' do
-        expect(call).to redirect_to(csv_works_update_path)
+        expect(call).to redirect_to(csv_agents_update_path)
         expect(flash[:error]).to eq('Missing id column for update')
       end
     end
@@ -110,8 +106,8 @@ RSpec.describe Work::Import::CsvController, type: :controller do
         expect(call).to render_template('import_success')
         expect(response).to be_success
         expect(assigns(:created)).to be_a(Array)
-        expect(assigns(:created).map(&:valid?)).to eq([true, true, true])
-        expect(assigns(:created).map(&:title)).to eq([['My Work 1'], ['My Work 2'], ['My Work 3']])
+        expect(assigns(:created).map(&:valid?)).to eq([true, true])
+        expect(assigns(:created).map(&:surname)).to contain_exactly('Doe', 'Smith')
       end
     end
 
@@ -119,10 +115,10 @@ RSpec.describe Work::Import::CsvController, type: :controller do
       let(:update) { 'true' }
 
       let(:csv_file) do
-        CsvFactory::Update.new(
-          { title: 'My Updated Work 1' },
-          { title: 'My Updated Work 2' },
-          title: 'My Updated Work 3'
+        CsvFactory::AgentUpdate.new(
+          { given_name: 'Huey', surname: 'Duck' },
+          { given_name: 'Duey', surname: 'Duck' },
+          given_name: 'Louis', surname: 'Duck'
         )
       end
 
@@ -131,8 +127,8 @@ RSpec.describe Work::Import::CsvController, type: :controller do
         expect(response).to be_success
         expect(assigns(:created)).to be_a(Array)
         expect(assigns(:created).map(&:valid?)).to eq([true, true, true])
-        expect(assigns(:created).map(&:title))
-          .to eq([['My Updated Work 1'], ['My Updated Work 2'], ['My Updated Work 3']])
+        expect(assigns(:created).map(&:given_name))
+          .to contain_exactly('Huey', 'Duey', 'Louis')
       end
     end
 

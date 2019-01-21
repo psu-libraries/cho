@@ -1,5 +1,5 @@
 <tr>
-  <td><%= (dry_run_result.title || ['Title is Missing']).first %></td>
+  <td><%= "#{dry_run_result.given_name} #{dry_run_result.surname}" %></td>
   <td>
     <% if dry_run_result.errors.present? %>
       <%= render 'csv/dry_run_error_list', errors: dry_run_result.errors.full_messages %>

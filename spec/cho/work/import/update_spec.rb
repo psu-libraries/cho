@@ -13,10 +13,10 @@ RSpec.describe 'Preview of CSV Update', type: :feature do
     end
 
     it 'successfully updates the works' do
-      visit(csv_update_path)
+      visit(csv_works_update_path)
       expect(page).to have_selector('h1', text: 'CSV Import')
       expect(page).to have_content('Import a csv that updates existing works')
-      attach_file('work_import_csv_file_file', csv_file.path)
+      attach_file('csv_file_file', csv_file.path)
       click_button('Preview Import')
       expect(page).to have_selector('h1', text: 'Import Preview')
       expect(page).to have_content('The following works will be updated')
@@ -47,9 +47,9 @@ RSpec.describe 'Preview of CSV Update', type: :feature do
     end
 
     it 'does not perform the dry run' do
-      visit(csv_update_path)
+      visit(csv_works_update_path)
       expect(page).to have_selector('h1', text: 'CSV Import')
-      attach_file('work_import_csv_file_file', csv_file.path)
+      attach_file('csv_file_file', csv_file.path)
       click_button('Preview Import')
       within('div.alert') do
         expect(page).to have_content('Missing id column for update')
@@ -67,9 +67,9 @@ RSpec.describe 'Preview of CSV Update', type: :feature do
     end
 
     it 'displays the errors in the dry run page' do
-      visit(csv_update_path)
+      visit(csv_works_update_path)
       expect(page).to have_selector('h1', text: 'CSV Import')
-      attach_file('work_import_csv_file_file', csv_file.path)
+      attach_file('csv_file_file', csv_file.path)
       click_button('Preview Import')
       expect(page).to have_selector('h1', text: 'Import Preview')
       expect(page).to have_content('Total Number of Works with Errors 1')

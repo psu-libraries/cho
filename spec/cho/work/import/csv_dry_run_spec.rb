@@ -128,7 +128,7 @@ RSpec.describe Work::Import::CsvDryRun do
 
       it 'raises an error' do
         expect { dry_run_results }.to raise_error(
-          Work::Import::CsvDryRun::InvalidCsvError, "Unexpected column(s): 'invalid_column'"
+          Csv::ValidationError, "Unexpected column(s): 'invalid_column'"
         )
       end
     end
@@ -145,7 +145,7 @@ RSpec.describe Work::Import::CsvDryRun do
 
       it 'raises an error' do
         expect { dry_run_results }.to raise_error(
-          Work::Import::CsvDryRun::InvalidCsvError, 'CSV contains multiple or missing batch ids'
+          Csv::ValidationError, 'CSV contains multiple or missing batch ids'
         )
       end
     end
@@ -161,7 +161,7 @@ RSpec.describe Work::Import::CsvDryRun do
 
       it 'raises an error' do
         expect { dry_run_results }.to raise_error(
-          Work::Import::CsvDryRun::InvalidCsvError, 'Missing id column for update'
+          Csv::ValidationError, 'Missing id column for update'
         )
       end
     end
