@@ -67,5 +67,14 @@ RSpec.describe Validation::EDTFDate, type: :model do
 
       it { is_expected.to be_truthy }
     end
+
+    context 'with a valid Ruby date' do
+      let(:dates) { 'January 21, 2019' }
+
+      it 'is valid' do
+        expect(validation_instance.validate(dates)).to be_truthy
+        expect(validation_instance.errors).to be_empty
+      end
+    end
   end
 end
