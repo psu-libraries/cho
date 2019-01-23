@@ -14,7 +14,7 @@ module Transaction
       private
 
         def process_file(change_set)
-          return Success(change_set) if change_set.try(:file).nil?
+          return Success(change_set) if change_set.try(:file).blank?
 
           mime_type = Mime::Type.lookup(change_set.file.content_type)
           if mime_type.symbol == :zip
