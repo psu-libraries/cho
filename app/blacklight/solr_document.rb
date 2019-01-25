@@ -4,6 +4,7 @@ class SolrDocument
   include Blacklight::Solr::Document
   include Blacklight::Gallery::OpenseadragonSolrDocument
   include DataDictionary::FieldsForSolrDocument
+  include Collection::WithMembers
 
   # self.unique_key = 'id'
 
