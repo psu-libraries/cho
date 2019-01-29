@@ -8,6 +8,7 @@ RSpec.describe 'data_dictionary/fields/edit', type: :view do
 
   let(:field_attributes) do
     {
+      id: Valkyrie::ID.new('1234'),
       field_type: DataDictionary::Field::FieldTypes['numeric'],
       requirement_designation: DataDictionary::Field::RequirementDesignations['required_to_publish'],
       validation: 'no_validation',

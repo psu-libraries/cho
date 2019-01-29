@@ -10,7 +10,7 @@ end
 # Main gems
 gem 'blacklight', '~> 7.0'
 gem 'rails', '~> 5.1.6'
-gem 'valkyrie', '~> 1.0'
+gem 'valkyrie', github: 'samvera/valkyrie', branch: '2-0-rc'
 
 # For Blacklight with Sprockets
 gem 'bootstrap', '~> 4.3'
@@ -36,6 +36,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'jquery-rails'
 gem 'json'
 gem 'mini_racer'
+gem 'newrelic_rpm'
 gem 'pg'
 gem 'psu_dir'
 gem 'puma', '~> 3.7'
@@ -89,8 +90,4 @@ group :test do
   gem 'selenium-webdriver'
   gem 'shoulda-matchers', '~> 3.1'
   gem 'webdrivers'
-end
-
-group :production do
-  gem 'newrelic_rpm'
 end

@@ -16,7 +16,7 @@ class FileFactory
     fileset = Valkyrie::MetadataAdapter.find(:indexing_persister).persister.save(resource: resource)
     work = attributes.work
     work ||= FactoryBot.build(:work_submission)
-    work.member_ids << fileset.id
+    work.member_ids += [fileset.id]
     Valkyrie::MetadataAdapter.find(:indexing_persister).persister.save(resource: work)
     fileset
   end

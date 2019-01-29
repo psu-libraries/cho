@@ -7,12 +7,15 @@ RSpec.describe Schema::Metadata, type: :model do
   subject { model }
 
   let(:resource_klass) { described_class }
-  let(:model) { build :schema_metadata,
-                      label: 'abc123_label',
-                      core_fields: core_fields,
-                      fields: fields }
-  let(:core_fields) { [build(:schema_metadata_field, label: 'core1')] }
-  let(:fields) { [build(:schema_metadata_field, label: 'field1')] }
+  let(:model) do
+    described_class.new(
+      label: 'abc123_label',
+      core_field_ids: core_fields.map(&:id),
+      field_ids: fields.map(&:id)
+    )
+  end
+  let(:core_fields) { [create(:schema_metadata_field, label: 'core1')] }
+  let(:fields) { [create(:schema_metadata_field, label: 'field1')] }
 
   it_behaves_like 'a Valkyrie::Resource'
 
@@ -31,8 +34,8 @@ RSpec.describe Schema::Metadata, type: :model do
                                 updated_at: saved_model.updated_at } }
 
     it 'has the correct attributes' do
-      expect(saved_model.attributes[:core_fields].map(&:id)).to eq(core_fields.map(&:id).map(&:id))
-      expect(saved_model.attributes[:fields].map(&:id)).to eq(fields.map(&:id).map(&:id))
+      expect(saved_model.attributes[:core_field_ids].map(&:id)).to eq(core_fields.map(&:id).map(&:id))
+      expect(saved_model.attributes[:field_ids].map(&:id)).to eq(fields.map(&:id).map(&:id))
       expect(saved_model.attributes).to include(expected_metadata)
     end
   end
@@ -78,14 +81,14 @@ RSpec.describe Schema::Metadata, type: :model do
   end
 
   describe '#field' do
-    subject { model.field('core1') }
+    subject { model.field('core1').id.to_s }
 
-    it { is_expected.to eq(core_fields[0]) }
+    it { is_expected.to eq(core_fields[0].id.to_s) }
 
     context 'not a core field' do
-      subject { model.field('field1') }
+      subject { model.field('field1').id.to_s }
 
-      it { is_expected.to eq(fields[0]) }
+      it { is_expected.to eq(fields[0].id.to_s) }
     end
   end
 end

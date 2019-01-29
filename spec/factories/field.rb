@@ -2,7 +2,6 @@
 
 FactoryBot.define do
   factory :data_dictionary_field, class: DataDictionary::Field do
-    sequence(:id)
     label { 'abc123_label' }
     field_type { 'date' }
     requirement_designation { 'recommended' }

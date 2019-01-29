@@ -4,6 +4,8 @@ module Collection
   module WithMembers
     # @return [Array<Valkyrie::Resource>]
     def members
+      return [] if id.nil?
+
       query_service
         .find_inverse_references_by(resource: self, property: 'home_collection_id')
         .to_a

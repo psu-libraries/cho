@@ -2,7 +2,6 @@
 
 FactoryBot.define do
   factory :schema_metadata_field, class: Schema::MetadataField do
-    sequence(:id)
     label { 'abc123_label' }
     field_type { 'date' }
     requirement_designation { 'recommended' }

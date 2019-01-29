@@ -125,27 +125,36 @@ RSpec.describe DataDictionary::Field, type: :model do
   end
 
   context 'when saving with metadata' do
-    subject { saved_model }
-
-    let(:saved_model) { Valkyrie.config.metadata_adapter.persister.save(resource: model) }
-    let(:expected_metadata) { { controlled_vocabulary: 'no_vocabulary',
-                                created_at: saved_model.created_at,
-                                default_value: 'abc123',
-                                display_name: 'My Abc123',
-                                display_transformation: 'no_transformation',
-                                field_type: 'text',
-                                help_text: 'help me',
-                                id: saved_model.id,
-                                index_type: 'no_facet',
-                                internal_resource: 'DataDictionary::Field',
-                                label: 'abc123_label',
-                                multiple: false,
-                                new_record: false,
-                                requirement_designation: 'recommended',
-                                updated_at: saved_model.updated_at,
-                                validation: 'no_validation',
-                                core_field: false } }
-
-    its(:attributes) { is_expected.to eq(expected_metadata) }
+    it 'updates the field with new metadata' do
+      another_model = build :data_dictionary_field,
+                            label: 'abc123_label',
+                            field_type: 'text',
+                            requirement_designation: 'recommended',
+                            controlled_vocabulary: 'no_vocabulary',
+                            default_value: 'abc123',
+                            display_name: 'My Abc123',
+                            display_transformation: 'no_transformation',
+                            multiple: false, validation: 'no_validation'
+      saved_model = Valkyrie.config.metadata_adapter.persister.save(resource: another_model)
+      expect(saved_model.attributes).to eq(
+        controlled_vocabulary: 'no_vocabulary',
+        created_at: saved_model.created_at,
+        default_value: 'abc123',
+        display_name: 'My Abc123',
+        display_transformation: 'no_transformation',
+        field_type: 'text',
+        help_text: 'help me',
+        id: saved_model.id,
+        index_type: 'no_facet',
+        internal_resource: 'DataDictionary::Field',
+        label: 'abc123_label',
+        multiple: false,
+        new_record: false,
+        requirement_designation: 'recommended',
+        updated_at: saved_model.updated_at,
+        validation: 'no_validation',
+        core_field: false
+      )
+    end
   end
 end
