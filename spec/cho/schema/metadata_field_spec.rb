@@ -69,7 +69,6 @@ RSpec.describe Schema::MetadataField, type: :model do
     let(:schema_field_config) {}
     let(:expected_metadata) { { controlled_vocabulary: 'no_vocabulary',
                                 core_field: true,
-                                default_value: nil,
                                 display_name: 'Object Title',
                                 display_transformation: 'no_transformation',
                                 field_type: 'string',
@@ -79,10 +78,11 @@ RSpec.describe Schema::MetadataField, type: :model do
                                 label: 'title',
                                 multiple: false,
                                 requirement_designation: 'required',
-                                order_index: nil,
                                 validation: 'character_encoding' } }
 
     its(:attributes) { is_expected.to include(expected_metadata) }
+    its(:default_value) { is_expected.to be_nil }
+    its(:order_index) { is_expected.to be_nil }
 
     it 'sets the data dictionary field id' do
       expect(schema_field.data_dictionary_field_id.to_s).to eq(data_dictionary_field.id.to_s)

@@ -8,28 +8,23 @@ module Schema
     include CommonQueries
 
     attribute :label, Valkyrie::Types::String
-    attribute :core_fields, Valkyrie::Types::Array
-    attribute :fields, Valkyrie::Types::Array
+    attribute :core_field_ids, Valkyrie::Types::Set.of(Valkyrie::Types::ID)
+    attribute :field_ids, Valkyrie::Types::Set.of(Valkyrie::Types::ID)
 
-    alias core_field_ids core_fields
-    alias field_ids fields
-
-    def core_fields=(new_fields)
-      @core_fields = gather_field_ids(new_fields)
-      @loaded_core_fields = new_fields
+    def core_fields
+      load_fields(core_field_ids).map(&:id)
     end
 
-    def fields=(new_fields)
-      @fields = gather_field_ids(new_fields)
-      @loaded_fields = new_fields
+    def fields
+      load_fields(field_ids).map(&:id)
     end
 
     def loaded_core_fields
-      @loaded_core_fields ||= load_fields(@core_fields)
+      @loaded_core_fields ||= load_fields(core_field_ids)
     end
 
     def loaded_fields
-      @loaded_fields ||= load_fields(@fields)
+      @loaded_fields ||= load_fields(field_ids)
     end
 
     def field(label)
