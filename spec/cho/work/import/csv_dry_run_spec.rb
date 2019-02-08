@@ -9,7 +9,7 @@ RSpec.describe Work::Import::CsvDryRun do
 
   describe '#update?' do
     before do
-      allow(File).to receive(:new).with('path', 'r')
+      allow(File).to receive(:new).with('path', 'r', encoding: 'bom|utf-8')
       allow(Work::Import::CsvReader).to receive(:new).with(any_args).and_return(mock_reader)
     end
 
@@ -34,7 +34,7 @@ RSpec.describe Work::Import::CsvDryRun do
   describe '#results' do
     subject(:dry_run_results) { described_class.new(csv_file.path, update: update).results }
 
-    after { csv_file.unlink }
+    after { csv_file.unlink if csv_file.respond_to?(:unlink) }
 
     context 'with valid data' do
       let(:csv_file) do
@@ -62,6 +62,19 @@ RSpec.describe Work::Import::CsvDryRun do
         expect(dry_run_results).to be_a Array
         expect(dry_run_results.count).to eq(1)
         expect(dry_run_results.first).not_to be_valid
+      end
+    end
+
+    context 'with a file exported from excel' do
+      let(:csv_file) do
+        File.new(Rails.root.join('spec', 'fixtures', 'cho_csv.csv'))
+      end
+
+      it 'returns a list of change sets' do
+        expect(dry_run_results).to be_a Array
+        expect(dry_run_results.count).to eq(1)
+        expect(dry_run_results.first).not_to be_valid
+        expect(dry_run_results.first.errors.messages).to eq(member_of_collection_ids: ['id-blah-blah does not exist'])
       end
     end
 
