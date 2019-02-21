@@ -27,7 +27,7 @@ RSpec.describe Import::FileSet do
     context 'with a non-representative of a multipart work id' do
       let(:files) { [ImportFactory::File.create('work12_34_preservation.tif', parent: 'work12_34')] }
 
-      it { is_expected.to be_representative }
+      it { is_expected.not_to be_representative }
     end
   end
 
@@ -60,14 +60,14 @@ RSpec.describe Import::FileSet do
       its(:title) { is_expected.to eq('work1234_0001_preservation.tif') }
     end
 
-    context 'with a service file' do
-      let(:files) { [ImportFactory::File.create('work1234_0001_service.jpg')] }
+    context 'with an access file' do
+      let(:files) { [ImportFactory::File.create('work1234_0001_access.jpg')] }
 
-      its(:title) { is_expected.to eq('work1234_0001_service.jpg') }
+      its(:title) { is_expected.to eq('work1234_0001_access.jpg') }
     end
 
     context 'with neither access nor preservation files' do
-      let(:files) { [ImportFactory::File.create('work1234_0001_access.jpg')] }
+      let(:files) { [ImportFactory::File.create('work1234_0001_service.jpg')] }
 
       its(:title) { is_expected.to be_nil }
     end

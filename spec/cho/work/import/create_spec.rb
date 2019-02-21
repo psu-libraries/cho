@@ -103,7 +103,7 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
             'work1_00002_01_service.jp2',
             'work1_00002_02_preservation.tif',
             'work1_00002_02_service.jp2',
-            'work1_service.pdf',
+            'work1_access.pdf',
             'work1_text.txt',
             'work1_thumb.jpg'
           ]
@@ -150,7 +150,7 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
       expect(file_sets.map(&:title)).to contain_exactly(
         ['My Work1_00001_01'],
         ['My Work1_00001_02'],
-        ['work1_service.pdf'],
+        ['work1_access.pdf'],
         ['My Work1_00002_01'],
         ['My Work1_00002_02']
       )
@@ -167,7 +167,7 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
         'work1_00002_01_service.jp2',
         'work1_00002_02_preservation.tif',
         'work1_00002_02_service.jp2',
-        'work1_service.pdf',
+        'work1_access.pdf',
         'work1_text.txt',
         'work1_thumb.jpg'
       )
@@ -203,7 +203,7 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
             'work1_00001_01_service.jp2',
             'work1_00002_01_preservation.tif',
             'work1_00002_01_service.jp2',
-            { name: 'work1_service.pdf', file: 'test.pdf' },
+            { name: 'work1_access.pdf', file: 'test.pdf' },
             'work1_thumb.jpg'
           ]
         }

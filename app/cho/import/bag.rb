@@ -5,10 +5,10 @@ class Import::Bag
 
   FILENAME_SEPARATOR = '_'
 
-  attr_reader :bag, :date, :batch_id, :work_paths, :works, :path
+  attr_reader :bag, :batch_id, :work_paths, :works, :path
 
   validates_presence_of :batch_id
-  validate :bag_directory_must_be_dated, :bag_must_be_valid, :works_must_be_valid
+  validate :bag_must_be_valid, :works_must_be_valid
 
   # @param [Pathname] path to the bag
   def initialize(path)
@@ -16,21 +16,21 @@ class Import::Bag
 
     @path = path
     @bag = BagIt::Bag.new(path)
-    @batch_id, @date = bag.bag_dir.basename.to_s.split(FILENAME_SEPARATOR)
+    @batch_id = bag.bag_dir.basename.to_s
     @work_paths = Pathname.new(@bag.data_dir).children
   end
 
-  private
+  # @return [String]
+  # If the last segment of the batch id is a date in the appropriate format, return the date.
+  # Otherwise, we'll assume anything else is not a date and return nil.
+  def date
+    date_segment = batch_id.split(FILENAME_SEPARATOR).last
+    Date.strptime(date_segment, '%Y-%m-%d')
+    date_segment
+  rescue ArgumentError
+  end
 
-    def bag_directory_must_be_dated
-      if date.nil?
-        errors.add(:date, 'cannot be blank')
-      else
-        Date.strptime(date, '%Y-%m-%d')
-      end
-    rescue ArgumentError
-      errors.add(:date, "#{date} is not in YYYY-MM-DD format")
-    end
+  private
 
     def bag_must_be_valid
       return if bag.valid?

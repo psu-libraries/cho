@@ -8,14 +8,14 @@ class Import::FileSet
   end
 
   def representative?
-    files.select(&:representative?).count == files.count
+    files.select(&:representative?).count == files.count && preservation.nil?
   end
 
   def title
     if preservation
       preservation.original_filename
-    elsif service
-      service.original_filename
+    elsif access
+      access.original_filename
     end
   end
 
@@ -24,13 +24,15 @@ class Import::FileSet
   end
   alias_method :to_s, :id
 
-  private
+  def preservation
+    @preservation ||= files.select(&:preservation?).first
+  end
 
-    def preservation
-      @preservation ||= files.select(&:preservation?).first
-    end
+  def access
+    @access ||= files.select(&:access?).first
+  end
 
-    def service
-      @service ||= files.select(&:service?).first
-    end
+  def service
+    @service ||= files.select(&:service?).first
+  end
 end
