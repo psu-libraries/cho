@@ -66,7 +66,7 @@ GEM
       sshkit (>= 1.6.1, != 1.7.0)
     arel (8.0.0)
     ast (2.4.0)
-    autoprefixer-rails (9.4.2)
+    autoprefixer-rails (9.4.9)
       execjs
     backports (3.11.4)
     bagit (0.4.2)
@@ -97,10 +97,10 @@ GEM
       rails (~> 5.0)
     bootsnap (1.3.2)
       msgpack (~> 1.0)
-    bootstrap (4.1.3)
-      autoprefixer-rails (>= 6.0.3)
-      popper_js (>= 1.12.9, < 2)
-      sass (>= 3.5.2)
+    bootstrap (4.3.1)
+      autoprefixer-rails (>= 9.1.0)
+      popper_js (>= 1.14.3, < 2)
+      sassc-rails (>= 2.0.0)
     builder (3.2.3)
     byebug (10.0.2)
     capistrano (3.11.0)
@@ -529,6 +529,15 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
+    sassc (2.0.1)
+      ffi (~> 1.9)
+      rake
+    sassc-rails (2.1.0)
+      railties (>= 4.0.0)
+      sassc (>= 2.0)
+      sprockets (> 3.0)
+      sprockets-rails
+      tilt
     scss_lint (0.57.1)
       rake (>= 0.9, < 13)
       sass (~> 3.5, >= 3.5.5)
@@ -654,7 +663,7 @@ DEPENDENCIES
   binding_of_caller
   blacklight (= 7.0.0.rc1)
   bootsnap
-  bootstrap (~> 4.0)
+  bootstrap (~> 4.3)
   byebug
   capistrano (~> 3.7)
   capistrano-bundler (~> 1.2)
