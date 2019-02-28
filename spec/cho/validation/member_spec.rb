@@ -12,15 +12,7 @@ RSpec.describe Validation::Member, type: :model do
       its(:exists?) { is_expected.to be(true) }
     end
 
-    context 'with an alternate id' do
-      subject { described_class.new(collection.alternate_ids.first.to_s) }
-
-      let(:collection) { create(:archival_collection, alternate_ids: ['xyz_1234']) }
-
-      its(:exists?) { is_expected.to be(true) }
-    end
-
-    context 'with neither a non-existent id' do
+    context 'with a non-existent id' do
       subject { described_class.new('non-existent-id') }
 
       its(:exists?) { is_expected.to be(false) }
