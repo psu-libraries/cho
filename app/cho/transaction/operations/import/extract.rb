@@ -15,7 +15,7 @@ module Transaction
           zip_name ||= zip_path.basename('.zip')
           zip_path ||= network_ingest_directory.join("#{zip_name}.zip")
           destination = extraction_directory.join(zip_name)
-          return Success(destination) if destination.exist?
+          FileUtils.rm_rf(destination)
 
           unzip_bag(zip_path)
           Success(destination)
