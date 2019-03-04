@@ -133,6 +133,32 @@ RSpec.describe Import::File do
 
       it { is_expected.not_to be_service }
     end
+
+    context 'with an unsupported file type' do
+      subject { ImportFactory::File.create('work_ID_0001_foo.tif', parent: 'work_ID') }
+
+      it { is_expected.not_to be_service }
+    end
+  end
+
+  describe '#access?' do
+    context 'with an access file' do
+      subject { ImportFactory::File.create('work_ID_0001_access.jp2', parent: 'work_ID') }
+
+      it { is_expected.to be_access }
+    end
+
+    context 'with a non-access file' do
+      subject { ImportFactory::File.create('work_ID_0001_preservation.tif', parent: 'work_ID') }
+
+      it { is_expected.not_to be_access }
+    end
+
+    context 'with an unsupported file type' do
+      subject { ImportFactory::File.create('work_ID_0001_foo.tif', parent: 'work_ID') }
+
+      it { is_expected.not_to be_access }
+    end
   end
 
   describe '#preservation?' do
@@ -144,6 +170,12 @@ RSpec.describe Import::File do
 
     context 'with a non-preservation file' do
       subject { ImportFactory::File.create('work_ID_0001_access.jpg', parent: 'work_ID') }
+
+      it { is_expected.not_to be_preservation }
+    end
+
+    context 'with an unsupported file type' do
+      subject { ImportFactory::File.create('work_ID_0001_foo.tif', parent: 'work_ID') }
 
       it { is_expected.not_to be_preservation }
     end

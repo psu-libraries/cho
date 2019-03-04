@@ -41,18 +41,22 @@ class Import::Work
 
     def must_have_valid_file_sets
       file_sets.each do |file_set|
-        if file_set.files.select(&:service?).empty? && file_set.files.select(&:preservation?).empty?
-          errors.add(:file_sets, file_set_error(file_set))
+        if file_set.representative?
+          validate_representative_file_set(file_set)
+        else
+          validate_file_set(file_set)
         end
       end
     end
 
-    def file_set_error(file_set)
-      if file_set.representative?
-        'representative does not have a service file'
-      else
-        "#{file_set} does not have a service or preservation file"
-      end
+    def validate_representative_file_set(file_set)
+      return if file_set.access.present?
+      errors.add(:file_sets, 'representative does not have an access file')
+    end
+
+    def validate_file_set(file_set)
+      return if file_set.preservation.present? || file_set.service.present?
+      errors.add(:file_sets, "#{file_set} does not have a service or preservation file")
     end
 
     def sorted_works

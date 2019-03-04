@@ -105,7 +105,7 @@ RSpec.describe Work::FileSet do
     its(:access) { is_expected.to eq(file) }
     its(:service) { is_expected.to be_nil }
     its(:thumbnail) { is_expected.to be_nil }
-    its(:text_source) { is_expected.to be_nil }
+    its(:text_source) { is_expected.to eq(file) }
   end
 
   context 'with a service file' do

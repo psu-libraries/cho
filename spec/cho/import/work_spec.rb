@@ -22,7 +22,7 @@ RSpec.describe Import::Work do
       expect(work.files.count).to eq(5)
       expect(work.nested_works.count).to eq(0)
       expect(work.file_sets.count).to eq(1)
-      expect(work.file_sets.first).to be_representative
+      expect(work.file_sets.first).not_to be_representative
       expect(work.path).to eq(ImportFactory::Bag.root.join('workID'))
       expect(work.identifier).to eq('workID')
     end
@@ -41,7 +41,7 @@ RSpec.describe Import::Work do
           'workID_00002_01_service.jp2',
           'workID_00002_02_preservation.tif',
           'workID_00002_02_service.jp2',
-          'workID_service.pdf',
+          'workID_access.pdf',
           'workID_text.txt',
           'workID_thumb.jpg'
         ]
@@ -62,7 +62,7 @@ RSpec.describe Import::Work do
       )
       expect(work.representative).to be_representative
       expect(work.representative.files.map(&:original_filename)).to include(
-        'workID_service.pdf', 'workID_text.txt', 'workID_thumb.jpg'
+        'workID_access.pdf', 'workID_text.txt', 'workID_thumb.jpg'
       )
     end
   end
@@ -121,7 +121,7 @@ RSpec.describe Import::Work do
               'workID_00002_02_thumb.jpg'
             ]
           },
-          'workID_service.pdf',
+          'workID_access.pdf',
           'workID_text.txt',
           'workID_thumb.jpg'
         ]
@@ -183,10 +183,10 @@ RSpec.describe Import::Work do
       expect(work.nested_works.count).to eq(2)
       expect(work.nested_works.first.files.count).to eq(3)
       expect(work.nested_works.first.file_sets.count).to eq(1)
-      expect(work.nested_works.first.file_sets.first).to be_representative
+      expect(work.nested_works.first.file_sets.first).not_to be_representative
       expect(work.nested_works.last.files.count).to eq(3)
       expect(work.nested_works.last.file_sets.count).to eq(1)
-      expect(work.nested_works.last.file_sets.first).to be_representative
+      expect(work.nested_works.last.file_sets.first).not_to be_representative
     end
   end
 
@@ -254,7 +254,7 @@ RSpec.describe Import::Work do
 
     it do
       expect(work).not_to be_valid
-      expect(work.errors.messages).to include(file_sets: ['representative does not have a service file'])
+      expect(work.errors.messages).to include(file_sets: ['representative does not have an access file'])
     end
   end
 
@@ -266,7 +266,7 @@ RSpec.describe Import::Work do
           'workID_00001_01_access.jp2',
           'workID_00001_02_preservation.tif',
           'workID_00001_02_service.jp2',
-          'workID_service.pdf',
+          'workID_access.pdf',
           'workID_text.txt',
           'workID_thumb.jpg'
         ]

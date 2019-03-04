@@ -46,9 +46,9 @@ class Work::FileSet < Valkyrie::Resource
   end
 
   # @return [Work::File] file from which we extract the text
-  # Prefer the redacted preservation file; otherwise, chose either the preservation or service file.
+  # Prefer the redacted preservation file; otherwise, chose either the preservation, access, or service file.
   def text_source
-    (preservation_redacted || preservation) || service
+    (preservation_redacted || preservation) || access || service
   end
 
   def representative?

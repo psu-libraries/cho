@@ -154,7 +154,7 @@ RSpec.describe Work::Submission, type: :feature do
             'work1_00002_01_service.jp2',
             'work1_00002_02_preservation.tif',
             'work1_00002_02_service.jp2',
-            'work1_service.pdf',
+            'work1_access.pdf',
             'work1_text.txt',
             'work1_thumb.jpg'
           ]
@@ -185,8 +185,8 @@ RSpec.describe Work::Submission, type: :feature do
       expect(page).to have_content('work1_00002_02_preservation.tif')
 
       # Check thumbnail display on the file set
-      click_link('work1_service.pdf')
-      expect(page).to have_selector('h1', text: 'work1_service.pdf')
+      click_link('work1_access.pdf')
+      expect(page).to have_selector('h1', text: 'work1_access.pdf')
       expect(page).to have_xpath("//img[@src='/files/work1_thumb.jpg']")
       expect(page).to have_xpath("//img[@alt='Work1 thumb']")
     end

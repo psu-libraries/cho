@@ -60,6 +60,12 @@ class Import::File
     false
   end
 
+  def access?
+    type == Vocab::FileUse.AccessFile
+  rescue UnknownFileTypeError
+    false
+  end
+
   def preservation?
     type == Valkyrie::Vocab::PCDMUse.PreservationMasterFile
   rescue UnknownFileTypeError

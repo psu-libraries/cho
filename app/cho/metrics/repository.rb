@@ -19,7 +19,7 @@ module Metrics
 
       def reset_directories
         reset_directory(Rails.root.join(storage_directory))
-        reset_directory(Rails.root.join(network_ingest_directory))
+        reset_directory(Rails.root.join(network_ingest_directory)) if Rails.env.test?
         reset_directory(Rails.root.join(extraction_directory))
       end
 
