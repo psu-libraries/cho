@@ -15,7 +15,7 @@ module Work
         end
 
         def clean_hash
-          resource_hash['member_of_collection_ids'] = Array.wrap(resource_hash['member_of_collection_ids'])
+          resource_hash['member_of_collection_ids'] = collection_ids
           unless updating? || work_type.blank?
             resource_hash['work_type_id'] = work_type.id
           end
@@ -26,6 +26,18 @@ module Work
                            label = resource_hash.fetch('work_type', nil)
                            Work::Type.find_using(label: label).first
                          end
+        end
+
+        def collection_ids
+          Array.wrap(resource_hash['member_of_collection_ids']).map do |id|
+            psu_id_to_collection_id(id)
+          end
+        end
+
+        def psu_id_to_collection_id(id)
+          Valkyrie.config.metadata_adapter.query_service.find_by_alternate_identifier(alternate_identifier: id).id
+        rescue Valkyrie::Persistence::ObjectNotFoundError
+          id
         end
     end
   end

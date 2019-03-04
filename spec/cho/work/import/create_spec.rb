@@ -56,6 +56,12 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
         expect(page).to have_selector('li a', text: 'My Work 2')
         expect(page).to have_selector('li a', text: 'My Work 3')
       end
+      visit(polymorphic_path([:solr_document], id: collection.id))
+      within('div#members') do
+        expect(page).to have_link('My Work 1')
+        expect(page).to have_link('My Work 2')
+        expect(page).to have_link('My Work 3')
+      end
 
       # Verify each work has a file set and a file
       Work::Submission.all.each do |work|
@@ -265,7 +271,7 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
   context 'when the csv has missing values' do
     let(:csv_file) do
       CsvFactory::Generic.new(
-        member_of_collection_ids: [collection.id, collection.id, collection.id],
+        member_of_collection_ids: [collection.id, collection.id, 'missing_alt_id'],
         work_type: [nil, 'Generic', 'Generic'],
         title: ['My Work 1', nil, 'My Work 3'],
         batch_id: ['batch1_2018-07-12', 'batch1_2018-07-12', 'batch1_2018-07-12']
@@ -278,10 +284,11 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
       attach_file('csv_file_file', csv_file.path)
       click_button('Preview Import')
       expect(page).to have_selector('h1', text: 'Import Preview')
-      expect(page).to have_content('Total Number of Works with Errors 2')
+      expect(page).to have_content('Total Number of Works with Errors 3')
       within('table.table') do
         expect(page).to have_content("Work type can't be blank")
         expect(page).to have_content("Title can't be blank")
+        expect(page).to have_content('Member of collection ids missing_alt_id does not exist')
       end
     end
   end
