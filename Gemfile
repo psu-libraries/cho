@@ -13,7 +13,7 @@ gem 'rails', '~> 5.1.3'
 gem 'valkyrie', '~> 1.0'
 
 # For Blacklight with Sprockets
-gem 'bootstrap', '~> 4.0'
+gem 'bootstrap', '~> 4.3'
 gem 'popper_js'
 gem 'twitter-typeahead-rails', '0.11.1.pre.corejavascript'
 
