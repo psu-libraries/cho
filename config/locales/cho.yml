@@ -147,4 +147,8 @@ en:
         submit: "Delete Selected Resources"
         title: "%{title} (%{count} items)"
     stale_object_error: ": the %{object_name} object you tried to save is stale.  Please reload the form to see the latest data."
-
+    validation:
+      creator:
+        hash_keys: "must contain an agent and a role"
+        role: "role '%{role}' does not exist"
+        agent: "agent '%{agent}' does not exist"
