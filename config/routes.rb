@@ -28,6 +28,8 @@ Rails.application.routes.draw do
 
   resources :work_submissions, as: 'works', path: '/works', except: [:show, :index, :destroy],
                                controller: 'work/submissions'
+  resources :work_file_sets, as: 'file_sets', path: '/file_sets', only: [:edit, :update],
+                             controller: 'work/file_sets'
   resources :archival_collections, except: [:show, :index, :destroy], controller: 'collection/archival_collections'
   resources :library_collections, except: [:show, :index, :destroy], controller: 'collection/library_collections'
   resources :curated_collections, except: [:show, :index, :destroy], controller: 'collection/curated_collections'

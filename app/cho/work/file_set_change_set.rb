@@ -8,6 +8,9 @@ module Work
              required: false,
              type: Types::Strict::Array.of(Valkyrie::Types::ID)
 
+    property :optimistic_lock_token, multiple: true, required: true,
+                                     type: Types::Strict::Array.of(Valkyrie::Types::OptimisticLockToken)
+
     include DataDictionary::FieldsForChangeSet
     include WithValidMembers
     include WithFormFields
@@ -16,6 +19,12 @@ module Work
 
     def initialize(*args)
       super(*args)
+    end
+
+    # @param [ActionView::Helpers::FormBuilder] form
+    # @return [Array<Schema::InputField>]
+    def input_fields(form)
+      form_fields.map { |field| Schema::InputField.new(form: form, metadata_field: field) }
     end
 
     private

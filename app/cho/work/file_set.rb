@@ -4,6 +4,7 @@
 # to a single original binary source.
 # File sets are indexed both in Solr and and Postgres using the {IndexingAdapter}.
 class Work::FileSet < Valkyrie::Resource
+  enable_optimistic_locking
   include CommonQueries
   include DataDictionary::FieldsForObject
 
@@ -53,5 +54,20 @@ class Work::FileSet < Valkyrie::Resource
 
   def representative?
     alternate_ids.empty?
+  end
+
+  def self.model_name
+    Name.new(self)
+  end
+
+  # @note Use a custom Name class to preserve default behaviors while overriding others
+  class Name < ActiveModel::Name
+    def i18n_key
+      'file_set'
+    end
+
+    def human
+      'File set'
+    end
   end
 end

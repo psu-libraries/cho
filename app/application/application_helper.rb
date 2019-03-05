@@ -5,6 +5,8 @@ module ApplicationHelper
   def edit_cho_resource_path
     if @document.internal_resource == Work::Submission
       edit_work_path
+    elsif @document.internal_resource == Work::FileSet
+      edit_file_set_path
     else
       send("edit_#{@document.internal_resource.model_name.param_key}_path", @document.id)
     end
