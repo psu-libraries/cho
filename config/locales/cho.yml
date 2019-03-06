@@ -1,5 +1,13 @@
 en:
   cho:
+    catalog:
+      edit: "Edit"
+    file_set:
+      edit:
+        delete_link: "Delete File Set"
+        heading: "Editing File Set"
+        submit: "Update File Set"
+      error: "%{count} prohibited this file set from being saved:"
     form:
       metadata: "Basic Metadata"
       workflow: "Workflow"

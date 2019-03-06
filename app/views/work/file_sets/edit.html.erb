@@ -1,0 +1,6 @@
+<h1><%= t('cho.file_set.edit.heading') %></h1>
+<h2><%= @file_set.title.first %></h2>
+
+<%= render partial: 'form', locals: { file_set_form: @file_set } %>
+<%= render 'shared/form_delete', resource: @file_set %>
+<%= link_to t('cho.work.edit.show_link'), file_set_path(@file_set.model) %>

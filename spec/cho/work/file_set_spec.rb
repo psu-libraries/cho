@@ -153,4 +153,13 @@ RSpec.describe Work::FileSet do
 
     its(:text_source) { is_expected.to eq(redacted_preservation) }
   end
+
+  describe '::model_name' do
+    context 'with a custom i18n key' do
+      subject { described_class.model_name }
+
+      its(:i18n_key) { is_expected.to eq('file_set') }
+      its(:human) { is_expected.to eq('File set') }
+    end
+  end
 end

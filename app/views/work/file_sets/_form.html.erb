@@ -1,0 +1,12 @@
+<%= form_for(file_set_form.model, url: file_set_path) do |form| %>
+
+  <%= render 'shared/form_fields', resource: file_set_form, form: form %>
+
+  <%= form.hidden_field :optimistic_lock_token, multiple: true, value: file_set_form.optimistic_lock_token %>
+
+  <%= render 'errors', file_set: file_set_form if file_set_form.errors.any? %>
+
+  <div class="actions pt-4">
+    <%= form.submit t('cho.file_set.edit.submit') %>
+  </div>
+<% end %>

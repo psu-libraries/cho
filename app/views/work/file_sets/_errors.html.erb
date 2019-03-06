@@ -1,0 +1,9 @@
+<div class="error-explanation">
+  <h2><%= t('cho.file_set.error', count: pluralize(file_set.errors.count, 'error')) %></h2>
+
+  <ul>
+    <% file_set.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+</div>
