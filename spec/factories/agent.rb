@@ -10,4 +10,9 @@ FactoryBot.define do
       Valkyrie::MetadataAdapter.find(:indexing_persister).persister.save(resource: resource)
     end
   end
+
+  trait :generate_name do
+    given_name { Faker::Name.first_name }
+    surname { Faker::Name.last_name }
+  end
 end
