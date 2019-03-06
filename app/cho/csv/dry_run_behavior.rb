@@ -7,6 +7,10 @@ module Csv::DryRunBehavior
     update
   end
 
+  def bag
+    Dry::Monads::Result::Failure.new('This dry run class does not implement bags')
+  end
+
   private
 
     def validate_structure

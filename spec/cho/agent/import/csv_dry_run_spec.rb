@@ -28,6 +28,25 @@ RSpec.describe Agent::Import::CsvDryRun do
     end
   end
 
+  describe '#bag?' do
+    before do
+      allow(File).to receive(:new).with('path', 'r')
+      allow(Csv::Reader).to receive(:new).with(any_args).and_return(mock_reader)
+    end
+
+    context 'by default' do
+      subject(:dry_run) { described_class.new('path') }
+
+      let(:mock_reader) { instance_double(Csv::Reader, headers: [], map: []) }
+
+      it 'returns a Failure for a bag' do
+        expect(dry_run.bag).to eq(
+          Dry::Monads::Result::Failure.new('This dry run class does not implement bags')
+        )
+      end
+    end
+  end
+
   describe '#results' do
     subject(:dry_run_results) { described_class.new(csv_file.path, update: update).results }
 

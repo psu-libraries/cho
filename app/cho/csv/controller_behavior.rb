@@ -33,19 +33,24 @@ module Csv::ControllerBehavior
 
   # POST /csv/import
   def import
-    file_name = params[:file_name]
-    dry_run =  csv_dry_run.new(file_name, update: update?)
-    importer = Csv::Importer.new(dry_run.results)
-    if importer.run
-      @created = importer.created
+    if import_csv.success?
+      @created = import_csv.success
       render :import_success
     else
-      @errors = importer.errors
+      @errors = import_csv.failure
       render :import_failure
     end
   end
 
   private
+
+    def import_csv
+      @import_csv ||= Transaction::Operations::Import::Csv.new.call(
+        csv_dry_run: csv_dry_run,
+        file: params[:file_name],
+        update: update?
+      )
+    end
 
     def update?
       if params.key?(:update)
