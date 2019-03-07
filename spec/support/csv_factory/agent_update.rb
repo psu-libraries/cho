@@ -8,7 +8,7 @@ module CsvFactory
 
       def work(hash)
         agent = FactoryBot.create(:agent)
-        "#{agent.id},#{values(hash).join(',')}\n"
+        values(hash).unshift(agent.id).to_csv
       end
 
       def fields

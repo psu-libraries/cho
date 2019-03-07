@@ -25,8 +25,8 @@ module CsvFactory
     #
     def initialize(data)
       Tempfile.open do |csv_file|
-        csv_file.write(line(data.keys.join(',')))
-        data.values.transpose.each { |array| csv_file.write(line(array.join(','))) }
+        csv_file.write(data.keys.to_csv)
+        data.values.transpose.each { |array| csv_file.write(array.to_csv) }
         @path = csv_file.path
       end
     end
