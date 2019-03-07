@@ -40,13 +40,13 @@ class SolrDocument
 
   # @return [Array<Work::FileSet>]
   def file_sets
-    Array.wrap(self['file_set_ids_ssim']).map do |id|
+    Array.wrap(self['member_ids_ssim']).map do |id|
       Work::FileSet.find(Valkyrie::ID.new(id.sub(/^id-/, '')))
     end
   end
 
-  def file_set_ids
-    Array.wrap(self['file_set_ids_ssim'])
+  def member_ids
+    Array.wrap(self['member_ids_ssim'])
   end
 
   # @return [Array<Work::File>]
@@ -57,7 +57,7 @@ class SolrDocument
   end
 
   def work
-    query_service.find_inverse_references_by(resource: self, property: 'file_set_ids').to_a.first
+    query_service.find_inverse_references_by(resource: self, property: 'member_ids').to_a.first
   end
 
   def query_service

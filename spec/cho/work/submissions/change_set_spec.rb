@@ -29,7 +29,7 @@ RSpec.describe Work::SubmissionChangeSet do
     end
 
     it 'has multiple file sets' do
-      expect(change_set).to be_multiple(:file_set_ids)
+      expect(change_set).to be_multiple(:member_ids)
     end
 
     it 'has a single batch id' do
@@ -51,7 +51,7 @@ RSpec.describe Work::SubmissionChangeSet do
     its(:work_type) { is_expected.to be_nil }
     its(:file) { is_expected.to be_nil }
     its(:member_of_collection_ids) { is_expected.to be_nil }
-    its(:file_set_ids) { is_expected.to be_empty }
+    its(:member_ids) { is_expected.to be_empty }
     its(:batch_id) { is_expected.to be_nil }
     its(:import_work) { is_expected.to be_nil }
     its(:file_set_hashes) { is_expected.to be_empty }
@@ -120,11 +120,11 @@ RSpec.describe Work::SubmissionChangeSet do
     end
   end
 
-  describe '#file_set_ids' do
-    before { change_set.validate(file_set_ids: ['1']) }
+  describe '#member_ids' do
+    before { change_set.validate(member_ids: ['1']) }
 
     it 'casts ids to Valkyrie IDs' do
-      expect(change_set.file_set_ids.first).to be_kind_of(Valkyrie::ID)
+      expect(change_set.member_ids.first).to be_kind_of(Valkyrie::ID)
     end
   end
 

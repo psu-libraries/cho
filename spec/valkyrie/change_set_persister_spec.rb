@@ -77,7 +77,7 @@ RSpec.describe ChangeSetPersister do
             resource_params: { label: 'abc123', file: temp_file }
           )
         }.to change { metadata_adapter.query_service.find_all.count }.by(4)
-        expect(saved_change_set.model.file_set_ids).to eq(Work::FileSet.all.map(&:id))
+        expect(saved_change_set.model.member_ids).to eq(Work::FileSet.all.map(&:id))
         expect(work_file_names).to contain_exactly('hello_world.txt', 'hello_world.txt_text.txt')
         expect(work_file_uses).to contain_exactly(
           'http://pcdm.org/use#PreservationMasterFile',
@@ -118,11 +118,13 @@ RSpec.describe ChangeSetPersister do
         work = create(:work, :with_file)
         change_set = Work::SubmissionChangeSet.new(work)
         expect(Work::Submission.all.count).to eq(1)
+        expect(Work::FileSet.all.count).to eq(1)
         expect(Work::File.all.count).to eq(1)
         expect(metadata_adapter.index_adapter.query_service.find_all.count).to eq(4)
         expect(Metrics::Repository.storage_directory.join('hello_world.txt')).to be_exist
         change_set_persister.delete(change_set: change_set)
         expect(Work::Submission.all.count).to eq(0)
+        expect(Work::FileSet.all.count).to eq(0)
         expect(Work::File.all.count).to eq(0)
         expect(metadata_adapter.index_adapter.query_service.find_all.count).to eq(1)
         expect(Metrics::Repository.storage_directory.join('hello_world.txt')).not_to be_exist
@@ -155,6 +157,7 @@ RSpec.describe ChangeSetPersister do
         expect(metadata_adapter.index_adapter.query_service.find_all.count).to eq(3)
         change_set_persister.delete(change_set: change_set)
         expect(Work::Submission.all.count).to eq(1)
+        expect(Work::Submission.all.first.member_ids).to be_empty
         expect(Work::FileSet.all.count).to eq(0)
         expect(Work::File.all.count).to eq(0)
         expect(metadata_adapter.index_adapter.query_service.find_all.count).to eq(1)
@@ -269,13 +272,9 @@ RSpec.describe ChangeSetPersister do
     end
 
     describe '#delete' do
-      before do
-        allow(mock_persister).to receive(:delete).and_raise(StandardError, 'delete was not successful')
-      end
-
       it 'reports the error in the change set' do
         output = change_set_persister.delete(change_set: change_set)
-        expect(output.errors.messages).to eq(delete: ['delete was not successful'])
+        expect(output.errors.messages).to eq(delete: ['resource is not saved'])
       end
     end
   end

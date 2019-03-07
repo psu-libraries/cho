@@ -50,7 +50,8 @@ class ChangeSetPersister
   end
 
   def delete(change_set:)
-    delete_children(change_set: change_set)
+    delete_members(change_set.resource)
+    update_membership(change_set.resource)
     persister.delete(resource: change_set.resource)
   rescue StandardError => e
     change_set.errors.add(:delete, e.message)
@@ -89,35 +90,20 @@ class ChangeSetPersister
 
   private
 
-    def delete_children(change_set:)
-      if change_set.resource.try(:file_set_ids)
-        change_set.resource.file_set_ids.each do |file_set_id|
-          delete_file_set(resource: Work::FileSet.find(file_set_id))
-        end
-      end
-
-      if change_set.resource.try(:members)
-        change_set.resource.members.each do |member|
-          work_change_set = Work::SubmissionChangeSet.new(member)
-          delete_children(change_set: work_change_set)
-          persister.delete(resource: member)
-        end
-      end
-
-      if change_set.resource.try(:files)
-        change_set.resource.files.each { |file| delete_file(resource: file) }
+    def delete_members(resource)
+      return unless resource.try(:member_ids)
+      resource.member_ids.each do |member_id|
+        member = Valkyrie.config.metadata_adapter.query_service.find_by(id: member_id)
+        delete_members(member)
+        FileUtils.rm(member.path) if member.is_a?(Work::File)
+        persister.delete(resource: member)
       end
     end
 
-    def delete_file_set(resource:)
-      resource.member_ids.each do |file_id|
-        delete_file(resource: Work::File.find(file_id))
-        persister.delete(resource: resource)
+    def update_membership(resource)
+      query_service.find_inverse_references_by(resource: resource, property: 'member_ids').each do |parent|
+        parent.member_ids.delete(resource.id)
+        persister.save(resource: parent)
       end
-    end
-
-    def delete_file(resource:)
-      FileUtils.rm(resource.path)
-      persister.delete(resource: resource)
     end
 end

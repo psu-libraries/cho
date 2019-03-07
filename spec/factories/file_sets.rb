@@ -15,7 +15,7 @@ FactoryBot.define do
       fileset = Valkyrie::MetadataAdapter.find(:indexing_persister).persister.save(resource: resource)
       work = attributes.work
       work ||= FactoryBot.build(:work_submission)
-      work.file_set_ids << fileset.id
+      work.member_ids << fileset.id
       Valkyrie::MetadataAdapter.find(:indexing_persister).persister.save(resource: work)
       fileset
     end
@@ -33,7 +33,7 @@ FactoryBot.define do
       fileset = Valkyrie::MetadataAdapter.find(:indexing_persister).persister.save(resource: resource)
       work = attributes.work
       work ||= FactoryBot.build(:work_submission)
-      work.file_set_ids << fileset.id
+      work.member_ids << fileset.id
       Valkyrie::MetadataAdapter.find(:indexing_persister).persister.save(resource: work)
       fileset
     end

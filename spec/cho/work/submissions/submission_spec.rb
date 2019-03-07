@@ -74,23 +74,23 @@ RSpec.describe Work::Submission do
     end
   end
 
-  describe '#file_set_ids' do
+  describe '#member_ids' do
     it 'is empty when not set' do
-      expect(resource_klass.new.file_set_ids).to be_empty
+      expect(resource_klass.new.member_ids).to be_empty
     end
 
     it 'can be set as an attribute' do
-      resource = resource_klass.new(file_set_ids: ['1', '2'])
-      expect(resource.attributes[:file_set_ids].map(&:id)).to contain_exactly('1', '2')
-      expect(resource.attributes[:file_set_ids].first.class).to eq(Valkyrie::ID)
+      resource = resource_klass.new(member_ids: ['1', '2'])
+      expect(resource.attributes[:member_ids].map(&:id)).to contain_exactly('1', '2')
+      expect(resource.attributes[:member_ids].first.class).to eq(Valkyrie::ID)
     end
 
     it 'is included in the list of attributes' do
-      expect(resource_klass.new.has_attribute?(:file_set_ids)).to eq true
+      expect(resource_klass.new.has_attribute?(:member_ids)).to eq true
     end
 
     it 'is included in the list of fields' do
-      expect(resource_klass.fields).to include(:file_set_ids)
+      expect(resource_klass.fields).to include(:member_ids)
     end
   end
 
@@ -114,7 +114,7 @@ RSpec.describe Work::Submission do
   end
 
   describe '#file_sets' do
-    let(:work)     { create(:work, file_set_ids: [file_set.id]) }
+    let(:work)     { create(:work, member_ids: [file_set.id]) }
     let(:file_set) { create(:file_set) }
 
     it { expect(work.file_sets.map(&:id)).to contain_exactly(file_set.id) }
@@ -122,14 +122,14 @@ RSpec.describe Work::Submission do
 
   describe '#representative_file_set' do
     context 'without a designated representative' do
-      let(:work)     { create(:work, file_set_ids: [file_set.id]) }
+      let(:work)     { create(:work, member_ids: [file_set.id]) }
       let(:file_set) { create(:file_set) }
 
       it { expect(work.representative_file_set.id).to eq(file_set.id) }
     end
 
     context 'with a designated representative' do
-      let(:work)           { create(:work, file_set_ids: [file_set.id, representative.id]) }
+      let(:work)           { create(:work, member_ids: [file_set.id, representative.id]) }
       let(:file_set)       { create(:file_set, alternate_ids: ['alt-id']) }
       let(:representative) { create(:file_set, alternate_ids: []) }
 

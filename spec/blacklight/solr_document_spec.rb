@@ -25,7 +25,7 @@ RSpec.describe SolrDocument, type: :model do
     subject { solr_document.file_sets.first }
 
     let(:file_set) { create :file_set }
-    let(:document) { { 'internal_resource_tsim' => 'MyResource', file_set_ids_ssim: [file_set.id.to_s] } }
+    let(:document) { { 'internal_resource_tsim' => 'MyResource', member_ids_ssim: [file_set.id.to_s] } }
 
     its(:to_h) { is_expected.to include(title: ['Original File Name'],
                                         internal_resource: 'Work::FileSet',
@@ -82,10 +82,10 @@ RSpec.describe SolrDocument, type: :model do
       let(:collection) { create :library_collection }
       let(:work) { create :work, :with_file, member_of_collection_ids: [collection.id], title: 'Work One' }
       let(:work1_csv) { "#{work.id},Work One,,,,,,,,,,#{collection.id},," }
-      let(:file_set1_csv) { "#{work.file_set_ids.first},hello_world.txt,,,,,,,,,,,," }
+      let(:file_set1_csv) { "#{work.member_ids.first},hello_world.txt,,,,,,,,,,,," }
       let(:work2) { create :work, :with_file, member_of_collection_ids: [collection.id], title: 'Work Two' }
       let(:work2_csv) { "#{work2.id},Work Two,,,,,,,,,,#{collection.id},," }
-      let(:file_set2_csv) { "#{work2.file_set_ids.first},hello_world.txt,,,,,,,,,,,," }
+      let(:file_set2_csv) { "#{work2.member_ids.first},hello_world.txt,,,,,,,,,,,," }
 
       let(:csv_header) do
         'id,title,subtitle,description,alternate_ids,creator,audio_field,created,document_field,'\
@@ -115,7 +115,7 @@ RSpec.describe SolrDocument, type: :model do
           'internal_resource_tsim' => 'MyResource',
           id: 'abc123',
           member_of_collection_ids_ssim: ['xyx789'],
-          file_set_ids_ssim: ["id-#{file_set.id}"],
+          member_ids_ssim: ["id-#{file_set.id}"],
           title_tesim: ['my_title'],
           generic_field_tesim: ['value1', 'value2']
         }
