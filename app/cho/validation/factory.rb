@@ -18,7 +18,7 @@ module Validation
             default_key => Validation::None.new,
             resource_exists: Validation::ResourceExists.new,
             edtf_date: Validation::EDTFDate.new,
-            creator: Validation::None.new
+            creator: Validation::Creator.new
           }
         end
 

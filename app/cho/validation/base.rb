@@ -5,7 +5,6 @@ module Validation
     attr_accessor :errors
 
     def validate(_field)
-      @errors
       raise Error, 'Validation.validate is abstract. Children must implement.'
     end
   end
