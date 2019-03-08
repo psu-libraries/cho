@@ -76,7 +76,7 @@ RSpec.describe SolrDocument, type: :model do
       }
     end
 
-    it { is_expected.to eq("abc123,my_title,,,,,,,,value1|value2,,xyx789,,\n") }
+    it { is_expected.to eq("abc123,my_title,,,,,,,,value1||value2,,xyx789,,\n") }
 
     context 'with a collection containing works and file sets' do
       let(:collection) { create :library_collection }
@@ -122,7 +122,7 @@ RSpec.describe SolrDocument, type: :model do
       end
 
       let(:file_set) { create(:file_set) }
-      let(:work_csv) { 'abc123,my_title,,,,,,,,value1|value2,,xyx789,,' }
+      let(:work_csv) { 'abc123,my_title,,,,,,,,value1||value2,,xyx789,,' }
       let(:file_set_csv) { "#{file_set.id},Original File Name,,,,,,,,,,,," }
 
       before { file_set }

@@ -4,6 +4,9 @@ require 'rails_helper'
 
 RSpec.describe 'Preview of CSV Import', type: :feature do
   let!(:collection) { create :library_collection, title: 'my collection', alternate_ids: ['xyz_1234'] }
+  let!(:agent1) { create :agent, :generate_name }
+  let!(:agent2) { create :agent, :generate_name }
+  let!(:agent3) { create :agent, :generate_name }
 
   let(:bag) do
     ImportFactory::Bag.create(
@@ -24,7 +27,12 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
         work_type: ['Generic', 'Generic', 'Generic'],
         title: ['My Work 1', 'My Work 2', 'My Work 3'],
         subtitle: [MetadataFactory.fancy_title, MetadataFactory.fancy_title, MetadataFactory.fancy_title],
-        batch_id: ['batch1_2018-07-12', 'batch1_2018-07-12', 'batch1_2018-07-12']
+        batch_id: ['batch1_2018-07-12', 'batch1_2018-07-12', 'batch1_2018-07-12'],
+        creator: [
+          "#{agent1.display_name}#{CsvParsing::SUBVALUE_SEPARATOR}bsl",
+          "#{agent2.display_name}#{CsvParsing::SUBVALUE_SEPARATOR}cli",
+          "#{agent3.display_name}#{CsvParsing::SUBVALUE_SEPARATOR}bsl"
+        ]
       )
     end
 
@@ -275,7 +283,12 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
         member_of_collection_ids: [collection.id, collection.id, 'missing_alt_id'],
         work_type: [nil, 'Generic', 'Generic'],
         title: ['My Work 1', nil, 'My Work 3'],
-        batch_id: ['batch1_2018-07-12', 'batch1_2018-07-12', 'batch1_2018-07-12']
+        batch_id: ['batch1_2018-07-12', 'batch1_2018-07-12', 'batch1_2018-07-12'],
+        creator: [
+          "#{agent1.display_name}#{CsvParsing::SUBVALUE_SEPARATOR}asdf",
+          'Person, Missing|bsl',
+          'Guy, Bad||Guy, Badder'
+        ]
       )
     end
 
@@ -290,6 +303,10 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
         expect(page).to have_content("Work type can't be blank")
         expect(page).to have_content("Title can't be blank")
         expect(page).to have_content('Member of collection ids missing_alt_id does not exist')
+        expect(page).to have_content("Creator role 'http://id.loc.gov/vocabulary/relators/asdf' does not exist")
+        expect(page).to have_content("Creator agent 'Person, Missing' does not exist")
+        expect(page).to have_content("Creator agent 'Guy, Bad' does not exist")
+        expect(page).to have_content("Creator agent 'Guy, Badder' does not exist")
       end
     end
   end
