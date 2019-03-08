@@ -23,6 +23,7 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
         member_of_collection_ids: ['xyz_1234', 'xyz_1234', collection.id],
         work_type: ['Generic', 'Generic', 'Generic'],
         title: ['My Work 1', 'My Work 2', 'My Work 3'],
+        subtitle: [MetadataFactory.fancy_title, MetadataFactory.fancy_title, MetadataFactory.fancy_title],
         batch_id: ['batch1_2018-07-12', 'batch1_2018-07-12', 'batch1_2018-07-12']
       )
     end

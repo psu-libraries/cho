@@ -22,13 +22,13 @@ module CsvFactory
     private
 
       def header
-        "id,#{fields.join(',')}\n"
+        fields.unshift('id').to_csv
       end
 
       def work(hash)
         work = FactoryBot.create(:work)
         hash[:member_of_collection_ids] = work.member_of_collection_ids.to_s
-        "#{work.id},#{values(hash).join(',')}\n"
+        values(hash).unshift(work.id).to_csv
       end
 
       def fields
