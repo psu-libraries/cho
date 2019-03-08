@@ -41,14 +41,14 @@ module CatalogSearchBehavior
 
     # @note Extends the search to include the fields from file sets attached to work.
     def search_metadata_from_file_sets
-      "{!join from=join_id_ssi to=file_set_ids_ssim}#{query_all_query_fields}"
+      "{!join from=join_id_ssi to=member_ids_ssim}#{query_all_query_fields}"
     end
 
     # @note Extends to search to include text content extracted from files in the work. This is functionally
     #   equivalent to:
-    #     q={!join from=join_id_ssi to=file_set_ids_ssim}all_text_timv:user_query
+    #     q={!join from=join_id_ssi to=member_ids_ssim}all_text_timv:user_query
     #   where user_query is the query string submitted by the user.
     def search_extracted_text_from_files
-      '{!join from=join_id_ssi to=file_set_ids_ssim}{!dismax qf=all_text_timv v=$user_query}'
+      '{!join from=join_id_ssi to=member_ids_ssim}{!dismax qf=all_text_timv v=$user_query}'
     end
 end

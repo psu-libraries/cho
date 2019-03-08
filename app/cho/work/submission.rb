@@ -14,7 +14,7 @@ module Work
 
     # A list of Work::FileSet resources.
     #  The stored valkyrie ids for file sets attached to the submission
-    attribute :file_set_ids, Valkyrie::Types::Set.of(Valkyrie::Types::ID)
+    attribute :member_ids, Valkyrie::Types::Set.of(Valkyrie::Types::ID)
 
     attribute :batch_id, Valkyrie::Types::String.optional
 
@@ -39,7 +39,7 @@ module Work
     end
 
     def file_sets
-      @file_sets ||= file_set_ids.map { |id| Work::FileSet.find(id) }
+      @file_sets ||= member_ids.map { |id| Work::FileSet.find(id) }
     end
 
     def representative_file_set

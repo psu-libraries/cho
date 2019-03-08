@@ -67,7 +67,7 @@ module Document::Csv
     end
 
     def export_member_file_sets(member)
-      member.file_set_ids.map do |id|
+      member.member_ids.map do |id|
         export_fields(SolrDocument.find(id.sub(/^id-/, '')))
       end
     end

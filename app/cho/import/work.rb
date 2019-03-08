@@ -15,8 +15,8 @@ class Import::Work
   end
 
   def file_sets
-    file_set_ids = files.map(&:file_set_id).uniq
-    file_set_ids.map do |id|
+    member_ids = files.map(&:file_set_id).uniq
+    member_ids.map do |id|
       Import::FileSet.new(files.select { |file| file.file_set_id == id })
     end
   end

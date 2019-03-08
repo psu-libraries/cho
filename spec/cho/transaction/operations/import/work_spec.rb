@@ -57,7 +57,7 @@ RSpec.describe Transaction::Operations::Import::Work do
           result = operation.call(change_set)
           expect(result).to be_success
           expect(result.success).to eq(change_set)
-          expect(result.success.file_set_ids.count).to eq(1)
+          expect(result.success.member_ids.count).to eq(1)
         }.to change { ::Work::File.count }.by(5).and change { ::Work::FileSet.count }.by(1)
       end
     end
@@ -70,7 +70,7 @@ RSpec.describe Transaction::Operations::Import::Work do
           result = operation.call(change_set)
           expect(result).to be_success
           expect(result.success).to eq(change_set)
-          expect(result.success.file_set_ids.count).to eq(1)
+          expect(result.success.member_ids.count).to eq(1)
         }.to change { ::Work::File.count }.by(5).and change { ::Work::FileSet.count }.by(1)
       end
     end

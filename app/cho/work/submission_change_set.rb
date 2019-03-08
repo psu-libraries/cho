@@ -9,8 +9,8 @@ module Work
     validates :work_type_id, with: :validate_work_type_id!
     property :work_type_id, multiple: false, required: true, type: Valkyrie::Types::ID
 
-    validates :file_set_ids, with: :validate_members!
-    property :file_set_ids,
+    validates :member_ids, with: :validate_members!
+    property :member_ids,
              multiple: true,
              required: false,
              type: Types::Strict::Array.of(Valkyrie::Types::ID)

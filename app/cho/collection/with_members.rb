@@ -7,6 +7,11 @@ module Collection
       query_service.find_inverse_references_by(resource: self, property: 'member_of_collection_ids').to_a
     end
 
+    # @return [Array<Valkyrie::ID]
+    def member_ids
+      members.map(&:id)
+    end
+
     private
 
       def query_service

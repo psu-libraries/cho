@@ -67,8 +67,8 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
       # Verify each work has a file set and a file
       Work::Submission.all.each do |work|
         expect(work.batch_id).to eq('batch1_2018-07-12')
-        expect(work.file_set_ids.count).to eq(1)
-        file_set = Work::FileSet.find(Valkyrie::ID.new(work.file_set_ids.first))
+        expect(work.member_ids.count).to eq(1)
+        file_set = Work::FileSet.find(Valkyrie::ID.new(work.member_ids.first))
         expect(file_set.member_ids.count).to eq(1)
         file = Work::File.find(Valkyrie::ID.new(file_set.member_ids.first))
         expect(file_set.title).to contain_exactly(file.original_filename)
@@ -147,7 +147,7 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
       # Verify each work has a file set and a file
       imported_work = Work::Submission.all.first
       expect(imported_work.title).to eq(['My Work1'])
-      file_sets = imported_work.file_set_ids.map do |id|
+      file_sets = imported_work.member_ids.map do |id|
         Work::FileSet.find(Valkyrie::ID.new(id))
       end
       expect(file_sets.count).to eq(5)
