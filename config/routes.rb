@@ -45,6 +45,8 @@ Rails.application.routes.draw do
   post '/csv/agents/validate', to: 'agent/import/csv#validate'
   post '/csv/agents/import', to: 'agent/import/csv#import'
 
+  get '/downloads/:id', to: 'repository/downloads#download', as: 'download'
+
   resource :select, only: [:index], as: 'select', path: 'select', controller: 'batch/select' do
     concerns :searchable
   end
