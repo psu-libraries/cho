@@ -18,7 +18,7 @@ module Agent
     private
 
       def csv_header
-        headers = export_attributes.map(&:titleize)
+        headers = export_attributes
         ::CSV.generate_line(headers)
       end
 

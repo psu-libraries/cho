@@ -58,7 +58,7 @@ module Agent
       alias_method :delete_change_set, :update_change_set
 
       def resource_params
-        params[:agent].to_unsafe_h
+        params[:agent_resource].to_unsafe_h
       end
 
       def change_set_class
