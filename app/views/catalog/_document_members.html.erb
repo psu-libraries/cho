@@ -8,10 +8,9 @@
     </thead>
     <tbody>
       <% documents.each do |document| %>
-        <% member_presenter = show_presenter(document) %>
         <tr>
           <td><%= link_to_document document, document_show_link_field(document) %></td>
-          <td><%= member_presenter.field_value('created_at_dtsi') %></td>
+          <td><%= document['created_at_dtsi'] %></td>
         </tr>
       <% end %>
     </tbody>
