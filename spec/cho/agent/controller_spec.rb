@@ -56,7 +56,7 @@ RSpec.describe Agent::ResourcesController, type: :controller do
         get :index, params: {}, session: valid_session, format: :csv
         expect(response.content_type).to eq('text/csv')
         expect(response.body).to include(
-          "Id,Surname,Given Name\n"
+          "id,surname,given_name\n"
         )
         expect(response.body).to include(
           "#{agent.id},#{agent.surname},#{agent.given_name}\n"
@@ -89,7 +89,7 @@ RSpec.describe Agent::ResourcesController, type: :controller do
         end
 
         it 'updates the requested agent' do
-          put :update, params: { id: agent.to_param, agent: new_attributes },
+          put :update, params: { id: agent.to_param, agent_resource: new_attributes },
                        session: valid_session
           expect(response).to redirect_to(reloaded_agent)
           expect(reloaded_agent.surname).to eq('Smith')
@@ -99,7 +99,7 @@ RSpec.describe Agent::ResourcesController, type: :controller do
 
       context 'with invalid params' do
         it "returns a success response (i.e. to display the 'edit' template)" do
-          put :update, params: { id: agent.to_param, agent: invalid_attributes },
+          put :update, params: { id: agent.to_param, agent_resource: invalid_attributes },
                        session: valid_session
           expect(response).to be_success
         end
@@ -132,19 +132,19 @@ RSpec.describe Agent::ResourcesController, type: :controller do
     context 'with valid params' do
       it 'creates a new MetadataField' do
         expect {
-          post :create, params: { agent: valid_attributes }, session: valid_session
+          post :create, params: { agent_resource: valid_attributes }, session: valid_session
         }.to change(Agent::Resource, :count).by(1)
       end
 
       it 'redirects to the created agent' do
-        post :create, params: { agent: valid_attributes }, session: valid_session
+        post :create, params: { agent_resource: valid_attributes }, session: valid_session
         expect(response).to redirect_to(Agent::Resource.all.max_by(&:created_at))
       end
     end
 
     context 'with invalid params' do
       it "returns a success response (i.e. to display the 'new' template)" do
-        post :create, params: { agent: invalid_attributes }, session: valid_session
+        post :create, params: { agent_resource: invalid_attributes }, session: valid_session
         expect(response).to be_success
         expect(assigns[:agent].errors.first)
           .to eq([:given_name, 'can\'t be blank'])
@@ -164,7 +164,7 @@ RSpec.describe Agent::ResourcesController, type: :controller do
       end
 
       it "returns a success response (i.e. to display the 'new' template)" do
-        post :create, params: { agent: valid_attributes }, session: valid_session
+        post :create, params: { agent_resource: valid_attributes }, session: valid_session
         expect(response).to be_success
         expect(assigns[:agent].errors.first).to eq([:save, 'an error saving'])
       end

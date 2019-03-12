@@ -9,7 +9,7 @@ module Agent
       # @param [true, false] update
       def initialize(csv_file_name, update: false)
         @update = update
-        @reader = Csv::Reader.new(::File.new(csv_file_name, 'r'))
+        @reader = Csv::Reader.new(::File.new(csv_file_name, 'r', encoding: 'bom|utf-8'))
         validate_structure
         results
       end

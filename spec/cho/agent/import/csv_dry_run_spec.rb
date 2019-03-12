@@ -7,7 +7,7 @@ RSpec.describe Agent::Import::CsvDryRun do
 
   describe '#update?' do
     before do
-      allow(File).to receive(:new).with('path', 'r')
+      allow(File).to receive(:new).with('path', 'r', encoding: 'bom|utf-8')
       allow(Csv::Reader).to receive(:new).with(any_args).and_return(mock_reader)
     end
 
@@ -30,7 +30,7 @@ RSpec.describe Agent::Import::CsvDryRun do
 
   describe '#bag?' do
     before do
-      allow(File).to receive(:new).with('path', 'r')
+      allow(File).to receive(:new).with('path', 'r', encoding: 'bom|utf-8')
       allow(Csv::Reader).to receive(:new).with(any_args).and_return(mock_reader)
     end
 
