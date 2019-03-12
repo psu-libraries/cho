@@ -191,4 +191,57 @@ RSpec.describe Work::Submission, type: :feature do
       expect(page).to have_xpath("//img[@alt='Work1 thumb']")
     end
   end
+
+  context 'when attaching a zip file with an alternate thumbnail' do
+    let!(:archival_collection) { create(:archival_collection, title: 'Collection with alternate thumbnail') }
+
+    let(:bag) do
+      ImportFactory::Bag.create(
+        batch_id: 'batch1_2019-03-12',
+        data: {
+          work1: [
+            'work1_00001_preservation.tif',
+            'work1_00001_service.jp2',
+            'work1_00001_text.txt',
+            'work1_00001_thumb.png',
+            'work1_access.pdf'
+          ]
+        }
+      )
+    end
+
+    let(:zip_file) { ImportFactory::Zip.create(bag) }
+
+    it 'creates a new work object with file sets, files, and a thumbnail from the zip' do
+      visit(root_path)
+      click_link('Create Work')
+      click_link('Generic')
+      expect(page).to have_content('New Generic Work')
+      fill_in('work_submission[title]', with: 'Work and file sets with an alternate thumbnail')
+      fill_in('work_submission[member_of_collection_ids]', with: archival_collection.id)
+      attach_file('File Selection', zip_file)
+      click_button('Create Work')
+      expect(page).to have_content('Work and file sets with an alternate thumbnail')
+      expect(page).to have_content('Generic')
+      expect(page).to have_xpath("//img[@src='/files/work1_00001_thumb.png']")
+      expect(page).to have_xpath("//img[@alt='Work1 00001 thumb']")
+      expect(page).to have_link('Edit')
+      expect(page).to have_selector('h2', text: 'Files')
+      expect(page).to have_link('work1_00001_preservation.tif')
+      expect(page).to have_link('work1_access.pdf')
+
+      # Check thumbnail display on the preservation file set
+      click_link('work1_00001_preservation.tif')
+      expect(page).to have_selector('h1', text: 'work1_00001_preservation.tif')
+      expect(page).to have_xpath("//img[@src='/files/work1_00001_thumb.png']")
+      expect(page).to have_xpath("//img[@alt='Work1 00001 thumb']")
+
+      # Thumbnail does not appear on the representative file set
+      click_link('Work and file sets with an alternate thumbnail')
+      click_link('work1_access.pdf')
+      expect(page).to have_selector('h1', text: 'work1_access.pdf')
+      expect(page).not_to have_xpath("//img[@src='/files/work1_00001_thumb.png']")
+      expect(page).not_to have_xpath("//img[@alt='Work1 00001 thumb']")
+    end
+  end
 end
