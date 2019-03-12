@@ -25,6 +25,7 @@ module Work
         def work_type
           @work_type ||= begin
                            label = resource_hash.fetch('work_type', nil)
+                           label = label.downcase.titleize if label.present?
                            Work::Type.find_using(label: label).first
                          end
         end
