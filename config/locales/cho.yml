@@ -120,12 +120,15 @@ en:
           preview_table:
             title: "Title"
             status: "Status"
+            identifier: "Identifier"
           submit: "Perform Import"
           cancel: "Cancel"
           bag_status: Bag Status
           bag_failure: "The bag contains %{count} error(s)"
           bag_success: "The bag is valid and contains no errors"
           csv_status: CSV Status
+          missing_title: "[No Title]"
+          work_success: "Success"
       import:
         failure:
           header: "Failed Import"

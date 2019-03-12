@@ -1,10 +1,11 @@
 <tr>
-  <td><%= (dry_run_result.title || ['Title is Missing']).first %></td>
+  <td><%= (dry_run_result.title || [t('cho.csv.work.dry_run.missing_title')]).first %></td>
+  <td><%= dry_run_result.alternate_ids.first %></td>
   <td>
     <% if dry_run_result.errors.present? %>
       <%= render 'csv/dry_run_error_list', errors: dry_run_result.errors.full_messages %>
     <% else %>
-      Success
+      <%= t('cho.csv.work.dry_run.work_success') %>
     <% end %>
   </td>
 </tr>
