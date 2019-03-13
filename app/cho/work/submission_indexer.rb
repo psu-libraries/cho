@@ -41,10 +41,16 @@ module Work
       end
 
       def thumbnail_path
-        thumbnail = resource.representative_file_set.thumbnail
+        thumbnail = resource.representative_file_set.thumbnail || select_thumbnail
         return if thumbnail.nil?
 
         thumbnail.path.to_s
+      end
+
+      def select_thumbnail
+        possible_thumbnails = resource.file_sets.select(&:thumbnail)
+        return if possible_thumbnails.empty?
+        possible_thumbnails.first.thumbnail
       end
   end
 end
