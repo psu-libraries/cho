@@ -11,6 +11,7 @@ RSpec.describe Work::Import::WorkHashValidator do
 
   let(:collection) { create :library_collection }
   let(:generic_work_type) { Work::Type.find_using(label: 'Generic').first }
+  let(:still_image_work_type) { Work::Type.find_using(label: 'Still Image').first }
 
   describe '#change_set' do
     subject(:change_set) { reader.change_set }
@@ -31,6 +32,63 @@ RSpec.describe Work::Import::WorkHashValidator do
         expect(change_set.model).to be_a(Work::Submission)
         expect(change_set.work_type_id).to eq(generic_work_type.id)
         expect(change_set.member_of_collection_ids).to eq(collection.id)
+      end
+
+      context 'with a work type properly cased' do
+        let(:work_hash) do
+          {
+            'member_of_collection_ids' => [collection.id],
+            'work_type' => 'Still Image',
+            'title' => 'my awesome work',
+            'description' => ''
+          }
+        end
+
+        it 'is valid and has a work type set' do
+          expect(change_set).to be_a(Work::SubmissionChangeSet)
+          expect(change_set).to be_valid
+          expect(change_set.model).to be_a(Work::Submission)
+          expect(change_set.work_type_id).to eq(still_image_work_type.id)
+          expect(change_set.member_of_collection_ids).to eq(collection.id)
+        end
+      end
+
+      context 'with a work type improperly upper cased' do
+        let(:work_hash) do
+          {
+            'member_of_collection_ids' => [collection.id],
+            'work_type' => 'GENERIC',
+            'title' => 'my awesome work',
+            'description' => ''
+          }
+        end
+
+        it 'is valid and has a work type set' do
+          expect(change_set).to be_a(Work::SubmissionChangeSet)
+          expect(change_set).to be_valid
+          expect(change_set.model).to be_a(Work::Submission)
+          expect(change_set.work_type_id).to eq(generic_work_type.id)
+          expect(change_set.member_of_collection_ids).to eq(collection.id)
+        end
+      end
+
+      context 'with a work type improperly lower cased' do
+        let(:work_hash) do
+          {
+            'member_of_collection_ids' => [collection.id],
+            'work_type' => 'geNeric',
+            'title' => 'my awesome work',
+            'description' => ''
+          }
+        end
+
+        it 'is valid and has a work type set' do
+          expect(change_set).to be_a(Work::SubmissionChangeSet)
+          expect(change_set).to be_valid
+          expect(change_set.model).to be_a(Work::Submission)
+          expect(change_set.work_type_id).to eq(generic_work_type.id)
+          expect(change_set.member_of_collection_ids).to eq(collection.id)
+        end
       end
     end
 

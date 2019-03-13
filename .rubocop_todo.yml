@@ -53,6 +53,7 @@ RSpec/NestedGroups:
     - 'spec/cho/schema/metadata_field_change_set_spec.rb'
     - 'spec/cho/shared/item_factory_spec.rb'
     - 'spec/cho/work/submissions/change_set_spec.rb'
+    - 'spec/cho/work/import/work_hash_validator_spec.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.
