@@ -10,7 +10,7 @@ RSpec.describe Collection::Curated, type: :feature do
       fill_in('curated_collection[subtitle]', with: 'new subtitle')
       fill_in('curated_collection[description]', with: 'Description of new collection')
       choose('Mediated')
-      choose('Authenticated')
+      choose('PSU Access')
       click_button('Create Curated collection')
       expect(page).to have_content('New Title')
       expect(page).to have_content('new subtitle')

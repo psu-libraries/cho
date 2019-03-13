@@ -16,9 +16,9 @@ RSpec.describe Work::Submission, type: :feature do
 
     it 'creates a new work object without a file' do
       visit(root_path)
-      click_link('Create Work')
+      click_link('Create Resource')
       click_link('Generic')
-      expect(page).to have_content('New Generic Work')
+      expect(page).to have_content('New Generic Resource')
       fill_in('work_submission[title]', with: 'New Title')
       fill_in('work_submission[subtitle]', with: 'New subtitle')
       fill_in('work_submission[description]', with: 'Description of new generic work.')
@@ -28,7 +28,7 @@ RSpec.describe Work::Submission, type: :feature do
       fill_in('work_submission[member_of_collection_ids]', with: archival_collection.id)
       fill_in('work_submission[creator][role]', with: MockRDF.relators.first)
       fill_in('work_submission[creator][agent]', with: agent.id)
-      click_button('Create Work')
+      click_button('Create Resource')
       expect(page).to have_selector('h1', text: 'New Title')
       within('#document') do
         expect(page).to have_blacklight_label(:title_tesim, 'Object Title')
@@ -43,7 +43,7 @@ RSpec.describe Work::Submission, type: :feature do
         expect(page).to have_blacklight_field(:generic_field_tesim, 'Sample generic field value')
         expect(page).to have_blacklight_label(:alternate_ids_tesim, 'Identifier')
         expect(page).to have_blacklight_field(:alternate_ids_tesim, 'id-asdf_1234')
-        expect(page).to have_blacklight_label(:work_type_ssim, 'Work Type')
+        expect(page).to have_blacklight_label(:work_type_ssim, 'Resource Type')
         expect(page).to have_blacklight_field(:work_type_ssim, 'Generic')
         expect(page).to have_blacklight_label(:member_of_collection_ids_ssim, 'Member of Collection')
         expect(page).to have_blacklight_field(:member_of_collection_ids_ssim, 'Sample Collection')
@@ -61,18 +61,18 @@ RSpec.describe Work::Submission, type: :feature do
 
     it 'reports the errors' do
       visit(root_path)
-      click_link('Create Work')
+      click_link('Create Resource')
       click_link('Document')
-      expect(page).to have_content('New Document Work')
-      click_button('Create Work')
+      expect(page).to have_content('New Document Resource')
+      click_button('Create Resource')
       within('.error-explanation') do
-        expect(page).to have_selector('h2', text: '2 errors prohibited this work from being saved:')
+        expect(page).to have_selector('h2', text: '2 errors prohibited this resource from being saved:')
         expect(page).to have_content("Title can't be blank")
         expect(page).to have_content("Member of collection ids can't be blank")
       end
       fill_in('work_submission[title]', with: 'Required Title')
       fill_in('work_submission[member_of_collection_ids]', with: archival_collection.id)
-      click_button('Create Work')
+      click_button('Create Resource')
       expect(page).to have_content('Required Title')
       expect(page).to have_content('Document')
       expect(page).to have_link('Edit')
@@ -82,7 +82,7 @@ RSpec.describe Work::Submission, type: :feature do
   context 'with a non-existent work type' do
     it 'reports the error in the form' do
       visit(new_work_path(work_type_id: 'bogus-work-type-id'))
-      expect(page).to have_content('Unable to find work type')
+      expect(page).to have_content('Unable to find resource type')
     end
   end
 
@@ -91,17 +91,17 @@ RSpec.describe Work::Submission, type: :feature do
 
     it 'creates a new work object with a file' do
       visit(root_path)
-      click_link('Create Work')
+      click_link('Create Resource')
       click_link('Generic')
-      expect(page).to have_content('New Generic Work')
+      expect(page).to have_content('New Generic Resource')
       fill_in('work_submission[title]', with: 'New Title')
       fill_in('work_submission[member_of_collection_ids]', with: archival_collection.id)
       attach_file('File Selection', Pathname.new(fixture_path).join('hello_world.txt'))
-      click_button('Create Work')
+      click_button('Create Resource')
       expect(page).to have_content('New Title')
       expect(page).to have_content('Generic')
       expect(page).to have_link('Edit')
-      expect(page).to have_selector('h2', text: 'Files')
+      expect(page).to have_selector('h2', text: 'Parts')
       expect(page).to have_content('hello_world.txt')
     end
   end
@@ -122,17 +122,17 @@ RSpec.describe Work::Submission, type: :feature do
 
     it 'creates a new work object with files from zip' do
       visit(root_path)
-      click_link('Create Work')
+      click_link('Create Resource')
       click_link('Generic')
-      expect(page).to have_content('New Generic Work')
+      expect(page).to have_content('New Generic Resource')
       fill_in('work_submission[title]', with: 'Work with attached zip')
       fill_in('work_submission[member_of_collection_ids]', with: archival_collection.id)
       attach_file('File Selection', zip_file)
-      click_button('Create Work')
+      click_button('Create Resource')
       expect(page).to have_content('Work with attached zip')
       expect(page).to have_content('Generic')
       expect(page).to have_link('Edit')
-      expect(page).to have_selector('h2', text: 'Files')
+      expect(page).to have_selector('h2', text: 'Parts')
       expect(page).to have_content('work1_preservation.tif')
     end
   end
@@ -166,19 +166,19 @@ RSpec.describe Work::Submission, type: :feature do
 
     it 'creates a new work object with file sets, files, and a thumbnail from the zip' do
       visit(root_path)
-      click_link('Create Work')
+      click_link('Create Resource')
       click_link('Generic')
-      expect(page).to have_content('New Generic Work')
+      expect(page).to have_content('New Generic Resource')
       fill_in('work_submission[title]', with: 'Work and file sets with attached zip')
       fill_in('work_submission[member_of_collection_ids]', with: archival_collection.id)
       attach_file('File Selection', zip_file)
-      click_button('Create Work')
+      click_button('Create Resource')
       expect(page).to have_content('Work and file sets with attached zip')
       expect(page).to have_content('Generic')
       expect(page).to have_xpath("//img[@src='/files/work1_thumb.jpg']")
       expect(page).to have_xpath("//img[@alt='Work1 thumb']")
       expect(page).to have_link('Edit')
-      expect(page).to have_selector('h2', text: 'Files')
+      expect(page).to have_selector('h2', text: 'Parts')
       expect(page).to have_content('work1_00001_01_preservation.tif')
       expect(page).to have_content('work1_00001_02_preservation.tif')
       expect(page).to have_content('work1_00002_01_preservation.tif')
@@ -214,19 +214,19 @@ RSpec.describe Work::Submission, type: :feature do
 
     it 'creates a new work object with file sets, files, and a thumbnail from the zip' do
       visit(root_path)
-      click_link('Create Work')
+      click_link('Create Resource')
       click_link('Generic')
-      expect(page).to have_content('New Generic Work')
+      expect(page).to have_content('New Generic Resource')
       fill_in('work_submission[title]', with: 'Work and file sets with an alternate thumbnail')
       fill_in('work_submission[member_of_collection_ids]', with: archival_collection.id)
       attach_file('File Selection', zip_file)
-      click_button('Create Work')
+      click_button('Create Resource')
       expect(page).to have_content('Work and file sets with an alternate thumbnail')
       expect(page).to have_content('Generic')
       expect(page).to have_xpath("//img[@src='/files/work1_00001_thumb.png']")
       expect(page).to have_xpath("//img[@alt='Work1 00001 thumb']")
       expect(page).to have_link('Edit')
-      expect(page).to have_selector('h2', text: 'Files')
+      expect(page).to have_selector('h2', text: 'Parts')
       expect(page).to have_link('work1_00001_preservation.tif')
       expect(page).to have_link('work1_access.pdf')
 

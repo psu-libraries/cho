@@ -36,7 +36,7 @@ RSpec.shared_examples 'a search form' do |path|
         click_link('Generic')
       end
       within('.constraints-container') do
-        expect(page).to have_link('Remove constraint Work Type: Generic')
+        expect(page).to have_link('Remove constraint Resource Type: Generic')
       end
       expect(page).to have_content('Some exceptional content')
     end

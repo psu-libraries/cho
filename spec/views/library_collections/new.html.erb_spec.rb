@@ -21,7 +21,7 @@ RSpec.describe 'collection/library_collections/new', type: :view do
       assert_select 'legend', 'Basic Metadata'
       assert_select 'label', /Title\s.* required/
       assert_select 'legend', 'Workflow'
-      assert_select 'legend', 'Visibility'
+      assert_select 'legend', 'Access Level'
     end
   end
 end

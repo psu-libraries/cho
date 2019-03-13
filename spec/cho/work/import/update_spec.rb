@@ -15,12 +15,12 @@ RSpec.describe 'Preview of CSV Update', type: :feature do
     it 'successfully updates the works' do
       visit(csv_works_update_path)
       expect(page).to have_selector('h1', text: 'CSV Import')
-      expect(page).to have_content('Import a csv that updates existing works')
+      expect(page).to have_content('Import a CSV that updates existing resources')
       attach_file('csv_file_file', csv_file.path)
       click_button('Preview Import')
       expect(page).to have_selector('h1', text: 'Import Preview')
-      expect(page).to have_content('The following works will be updated')
-      expect(page).to have_content('Total Number of Works with Errors 0')
+      expect(page).to have_content('The following resources will be updated')
+      expect(page).to have_content('Total Number of Resources with Errors 0')
       within('table') do
         expect(page).to have_selector('th', text: 'Title')
         expect(page).to have_selector('th', text: 'Status')
@@ -72,7 +72,7 @@ RSpec.describe 'Preview of CSV Update', type: :feature do
       attach_file('csv_file_file', csv_file.path)
       click_button('Preview Import')
       expect(page).to have_selector('h1', text: 'Import Preview')
-      expect(page).to have_content('Total Number of Works with Errors 1')
+      expect(page).to have_content('Total Number of Resources with Errors 1')
       within('table.table') do
         expect(page).to have_content("Title can't be blank")
       end
@@ -171,8 +171,8 @@ RSpec.describe 'Preview of CSV Update', type: :feature do
       attach_file('csv_file_file', csv_update_file)
       click_button('Preview Import')
       expect(page).to have_selector('h1', text: 'Import Preview')
-      expect(page).to have_content('The following works will be updated')
-      expect(page).to have_content('Total Number of Works with Errors 0')
+      expect(page).to have_content('The following resources will be updated')
+      expect(page).to have_content('Total Number of Resources with Errors 0')
       within('table') do
         expect(page).to have_selector('th', text: 'Title')
         expect(page).to have_selector('th', text: 'Identifier')
@@ -200,8 +200,8 @@ RSpec.describe 'Preview of CSV Update', type: :feature do
       attach_file('csv_file_file', csv_update_file_with_errors)
       click_button('Preview Import')
       expect(page).to have_selector('h1', text: 'Import Preview')
-      expect(page).to have_content('The following works will be updated')
-      expect(page).to have_content('Total Number of Works with Errors 3')
+      expect(page).to have_content('The following resources will be updated')
+      expect(page).to have_content('Total Number of Resources with Errors 3')
       within('table') do
         expect(page).to have_selector('td', text: "Title can't be blank")
         expect(page).to have_selector('td', text: 'Created Date not a date is not a valid EDTF date')

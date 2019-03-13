@@ -21,9 +21,9 @@ RSpec.describe Batch::SelectController, type: :feature do
       find("input[id='delete_ids_#{work.id}']").click
       click_button('Delete Selected Resources')
       expect(page).to have_content('The following resources will be deleted')
-      expect(page).to have_selector('h2', text: 'Resource to delete (3 items)')
+      expect(page).to have_selector('h2', text: 'Resource to delete (3)')
       click_button('Continue')
-      expect(page).to have_content('You have successfully deleted the following items: Resource to delete ')
+      expect(page).to have_content('You have successfully deleted the following: Resource to delete (3)')
     end
   end
 end

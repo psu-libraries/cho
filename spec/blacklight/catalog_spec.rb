@@ -21,7 +21,7 @@ RSpec.describe CatalogController, type: :feature do
         expect(page).to have_link('Searching Collection')
       end
       within('div.blacklight-work_type_ssim') do
-        expect(page).to have_selector('h3', text: 'Work Type')
+        expect(page).to have_selector('h3', text: 'Resource Type')
         expect(page).to have_link('Generic')
       end
       within('div.blacklight-collection_type_ssim') do

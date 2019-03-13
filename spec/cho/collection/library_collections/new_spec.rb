@@ -10,7 +10,7 @@ RSpec.describe Collection::Library, type: :feature do
       fill_in('library_collection[subtitle]', with: 'new subtitle')
       fill_in('library_collection[description]', with: 'Description of new collection')
       choose('Mediated')
-      choose('Authenticated')
+      choose('PSU Access')
       click_button('Create Library collection')
       expect(page).to have_content('New Title')
       expect(page).to have_content('new subtitle')

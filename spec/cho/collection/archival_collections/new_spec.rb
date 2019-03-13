@@ -10,7 +10,7 @@ RSpec.describe Collection::Archival, type: :feature do
       fill_in('archival_collection[subtitle]', with: 'new subtitle')
       fill_in('archival_collection[description]', with: 'Description of new collection')
       choose('Mediated')
-      choose('Authenticated')
+      choose('PSU Access')
       click_button('Create Archival collection')
       expect(page).to have_content('New Title')
       expect(page).to have_content('new subtitle')
