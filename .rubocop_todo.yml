@@ -9,7 +9,13 @@
 # Offense count: 5
 # Configuration parameters: CountComments, ExcludedMethods.
 Metrics/BlockLength:
-  Max: 44
+  Max: 63
+
+# Offense count: 1
+# Configuration parameters: AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.
+# URISchemes: http, https
+Metrics/LineLength:
+  Max: 139
 
 # Offense count: 63
 RSpec/ExpectActual:
