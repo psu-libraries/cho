@@ -38,4 +38,75 @@ FactoryBot.define do
       fileset
     end
   end
+
+  trait :with_preservation_file do
+    to_create do |resource, attributes|
+      result = FileFactory.new.hello_world
+
+      resource.member_ids = [result.success.id]
+      fileset = Valkyrie::MetadataAdapter.find(:indexing_persister).persister.save(resource: resource)
+      work = attributes.work
+      work ||= FactoryBot.build(:work_submission)
+      work.member_ids << fileset.id
+      Valkyrie::MetadataAdapter.find(:indexing_persister).persister.save(resource: work)
+      fileset
+    end
+  end
+
+  trait :with_missing_file do
+    to_create do |resource, attributes|
+      result = FileFactory.new.hello_world
+      FileUtils.rm_f(result.success.resource.path)
+
+      resource.member_ids = [result.success.id]
+      fileset = Valkyrie::MetadataAdapter.find(:indexing_persister).persister.save(resource: resource)
+      work = attributes.work
+      work ||= FactoryBot.build(:work_submission)
+      work.member_ids << fileset.id
+      Valkyrie::MetadataAdapter.find(:indexing_persister).persister.save(resource: work)
+      fileset
+    end
+  end
+
+  trait :with_redacted_preservation_file do
+    to_create do |resource, attributes|
+      result = FileFactory.new(use: Vocab::FileUse.RedactedPreservationMasterFile).hello_world
+
+      resource.member_ids = [result.success.id]
+      fileset = Valkyrie::MetadataAdapter.find(:indexing_persister).persister.save(resource: resource)
+      work = attributes.work
+      work ||= FactoryBot.build(:work_submission)
+      work.member_ids << fileset.id
+      Valkyrie::MetadataAdapter.find(:indexing_persister).persister.save(resource: work)
+      fileset
+    end
+  end
+
+  trait :with_service_file do
+    to_create do |resource, attributes|
+      result = FileFactory.new(use: Valkyrie::Vocab::PCDMUse.ServiceFile).hello_world
+
+      resource.member_ids = [result.success.id]
+      fileset = Valkyrie::MetadataAdapter.find(:indexing_persister).persister.save(resource: resource)
+      work = attributes.work
+      work ||= FactoryBot.build(:work_submission)
+      work.member_ids << fileset.id
+      Valkyrie::MetadataAdapter.find(:indexing_persister).persister.save(resource: work)
+      fileset
+    end
+  end
+
+  trait :with_access_file do
+    to_create do |resource, attributes|
+      result = FileFactory.new(use: Vocab::FileUse.AccessFile).hello_world
+
+      resource.member_ids = [result.success.id]
+      fileset = Valkyrie::MetadataAdapter.find(:indexing_persister).persister.save(resource: resource)
+      work = attributes.work
+      work ||= FactoryBot.build(:work_submission)
+      work.member_ids << fileset.id
+      Valkyrie::MetadataAdapter.find(:indexing_persister).persister.save(resource: work)
+      fileset
+    end
+  end
 end

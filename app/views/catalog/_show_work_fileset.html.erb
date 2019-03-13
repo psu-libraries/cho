@@ -7,7 +7,12 @@
   <h2>Files</h2>
   <ul>
     <%- @document.files.each do |file| %>
-      <li><%= file.original_filename %></li>
+      <li>
+        <%= file.original_filename %>
+        <%= link_to 'Download',
+                    download_path(@document.id, use_type: file.use.first.fragment),
+                    data: { turbolinks: false } %>
+      </li>
     <%- end %>
   </ul>
 <% end %>

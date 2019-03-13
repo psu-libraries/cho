@@ -2,6 +2,9 @@
 
 <ul>
   <%- file_sets.each do |file_set| %>
-    <li><%= link_to file_set.title.first, solr_document_path(file_set) %></li>
+    <li>
+      <%= link_to file_set.title.first, solr_document_path(file_set) %>
+      <%= link_to 'Download', download_path(file_set), data: { turbolinks: false } %>
+    </li>
   <%- end %>
 </ul>
