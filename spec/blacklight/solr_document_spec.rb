@@ -66,6 +66,11 @@ RSpec.describe SolrDocument, type: :model do
   describe 'export_as_csv' do
     subject { solr_document.export_as_csv }
 
+    let(:csv_header) do
+      'id,work_type,title,subtitle,description,alternate_ids,creator,audio_field,created,document_field,'\
+        'generic_field,map_field,member_of_collection_ids,moving_image_field,still_image_field'
+    end
+
     let(:document) do
       {
         'internal_resource_tsim' => 'MyResource',
@@ -76,7 +81,7 @@ RSpec.describe SolrDocument, type: :model do
       }
     end
 
-    it { is_expected.to eq("abc123,,my_title,,,,,,,,value1||value2,,xyx789,,\n") }
+    it { is_expected.to eq("#{csv_header}\nabc123,,my_title,,,,,,,,value1||value2,,xyx789,,\n") }
 
     context 'with a collection containing works and file sets' do
       let(:collection) { create :library_collection }
@@ -86,11 +91,6 @@ RSpec.describe SolrDocument, type: :model do
       let(:work2) { create :work, :with_file, member_of_collection_ids: [collection.id], title: 'Work Two' }
       let(:work2_csv) { "#{work2.id},Generic,Work Two,,,,,,,,,,#{collection.id},," }
       let(:file_set2_csv) { "#{work2.member_ids.first},,hello_world.txt,,,,,,,,,,,," }
-
-      let(:csv_header) do
-        'id,work_type,title,subtitle,description,alternate_ids,creator,audio_field,created,document_field,'\
-        'generic_field,map_field,member_of_collection_ids,moving_image_field,still_image_field'
-      end
 
       let(:document) do
         { 'internal_resource_tsim' => 'MyCollection', id: collection.id, title_tesim: ['my_collection'] }
@@ -127,7 +127,7 @@ RSpec.describe SolrDocument, type: :model do
 
       before { file_set }
 
-      it { is_expected.to eq("#{work_csv}\n#{file_set_csv}\n") }
+      it { is_expected.to eq("#{csv_header}\n#{work_csv}\n#{file_set_csv}\n") }
     end
   end
 
