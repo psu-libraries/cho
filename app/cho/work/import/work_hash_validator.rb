@@ -17,7 +17,7 @@ module Work
         def clean_hash
           resource_hash['member_of_collection_ids'] = collection_ids
           resource_hash['creator'] = agents_with_roles
-          unless updating? || work_type.blank?
+          if work_type.present?
             resource_hash['work_type_id'] = work_type.id
           end
         end
