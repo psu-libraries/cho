@@ -54,6 +54,7 @@ en:
         delete_link: "Delete Work"
         delete_confirmation: "Are you sure?"
       error: "%{count} prohibited this work from being saved:"
+      missing: "Missing"
       show:
         files_heading: "Files"
     collection:
