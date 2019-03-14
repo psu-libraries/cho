@@ -47,6 +47,7 @@ module Document::Csv
 
     def export_model
       ::CSV.generate do |csv|
+        csv << ['id', 'work_type'] + fields.map(&:label)
         csv << export_fields(self)
         export_member_file_sets(self).each { |file_set| csv << file_set }
       end
