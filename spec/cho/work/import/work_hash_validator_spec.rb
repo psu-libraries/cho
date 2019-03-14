@@ -121,6 +121,24 @@ RSpec.describe Work::Import::WorkHashValidator do
         expect(change_set.member_of_collection_ids).to eq(collection.id)
         expect(change_set.id).to eq(work.id)
       end
+
+      context 'with a changed work_type' do
+        let(:work_hash) do
+          {
+            'id' => work.id,
+            'member_of_collection_ids' => [collection.id],
+            'title' => 'my awesome updated work',
+            'description' => 'updated description',
+            'work_type' => 'Audio'
+          }
+        end
+
+        it 'is not valid and has an id' do
+          expect(change_set).to be_a(Work::SubmissionChangeSet)
+          expect(change_set).not_to be_valid
+          expect(change_set.errors.full_messages).to eq(['Work type can not be changed'])
+        end
+      end
     end
 
     context 'with a non-existent work' do
