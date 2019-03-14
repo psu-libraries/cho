@@ -78,4 +78,135 @@ RSpec.describe 'Preview of CSV Update', type: :feature do
       end
     end
   end
+
+  context 'with works containing file sets' do
+    let!(:agent) { create :agent, :generate_name }
+
+    let(:collection) { create(:archival_collection) }
+
+    let(:csv_import_file) do
+      CsvFactory::Generic.new(
+        alternate_ids: ['work1', 'work1_01', 'work1_02', 'work1_03', 'work1_04'],
+        member_of_collection_ids: [collection.id, nil, nil, nil, nil],
+        work_type: ['Generic', nil, nil, nil, nil],
+        title: ['Work One', 'Page 1', 'Page 2', 'Page 3', 'Page 4'],
+        batch_id: (([] << 'batch22_2013-03-13') * 5)
+      )
+    end
+
+    let(:titles) { ['Work One', 'Page One', 'Page Two', 'Page Three', 'Page Four', 'work1_access.pdf'] }
+    let(:missing_titles) { ['Work One', 'Page One', nil, 'Page Three', 'Page Four', 'work1_access.pdf'] }
+    let(:dates) { ['2019', '2019', '2019', '2019', '2019', nil] }
+    let(:bad_dates) { ['2019', '2019', '2019', 'not a date', '2019', nil] }
+
+    # Create a new csv with updated values for testing
+    let(:csv_update_file) do
+      matrix = CSV.parse(SolrDocument.find('work1').export_as_csv)
+
+      matrix.each_with_index do |row, i|
+        next if i == 0
+        row[2] = titles[i - 1]
+        row[3] = MetadataFactory.fancy_title
+        row[4] = Faker::Lorem.paragraph
+        row[6] = "#{agent.display_name}#{CsvParsing::SUBVALUE_SEPARATOR}cli"
+        row[8] = dates[i - 1]
+      end
+
+      Tempfile.open do |csv_file|
+        matrix.each { |line| csv_file.write(line.to_csv) }
+        csv_file.path
+      end
+    end
+
+    # Create a new csv with incorrect updated values
+    let(:csv_update_file_with_errors) do
+      matrix = CSV.parse(SolrDocument.find('work1').export_as_csv)
+
+      matrix.each_with_index do |row, i|
+        next if i == 0
+        row[2] = missing_titles[i - 1]
+        row[6] = [nil, nil, nil, nil, 'Dude, Bad Agent', nil][i - 1]
+        row[8] = bad_dates[i - 1]
+      end
+
+      Tempfile.open do |csv_file|
+        matrix.each { |line| csv_file.write(line.to_csv) }
+        csv_file.path
+      end
+    end
+
+    let(:bag) do
+      ImportFactory::Bag.create(
+        batch_id: 'batch22_2013-03-13',
+        data: {
+          work1: [
+            'work1_01_preservation.tif',
+            'work1_01_service.jp2',
+            'work1_02_preservation.tif',
+            'work1_02_service.jp2',
+            'work1_03_preservation.tif',
+            'work1_03_service.jp2',
+            'work1_04_preservation.tif',
+            'work1_04_service.jp2',
+            'work1_access.pdf',
+            'work1_text.txt',
+            'work1_thumb.jpg'
+          ]
+        }
+      )
+    end
+
+    before do
+      ImportFactory::Zip.create(bag)
+      result = Transaction::Operations::Import::Csv.new.call(
+        csv_dry_run: Work::Import::CsvDryRun,
+        file: csv_import_file.path,
+        update: false
+      )
+      raise StandardError, 'Failed to create test work' if result.failure?
+    end
+
+    it 'updates the metadata of the file sets' do
+      visit(csv_works_update_path)
+      attach_file('csv_file_file', csv_update_file)
+      click_button('Preview Import')
+      expect(page).to have_selector('h1', text: 'Import Preview')
+      expect(page).to have_content('The following works will be updated')
+      expect(page).to have_content('Total Number of Works with Errors 0')
+      within('table') do
+        expect(page).to have_selector('th', text: 'Title')
+        expect(page).to have_selector('th', text: 'Identifier')
+        expect(page).to have_selector('th', text: 'Status')
+        expect(page).to have_selector('td', text: 'Work One')
+        expect(page).to have_selector('td', text: 'Page One')
+        expect(page).to have_selector('td', text: 'Page Two')
+        expect(page).to have_selector('td', text: 'Page Three')
+        expect(page).to have_selector('td', text: 'Page Four')
+      end
+      click_button('Perform Import')
+      expect(page).to have_selector('h1', text: 'Successful Import')
+
+      # Verify metadata updates
+      work = SolrDocument.find('work1')
+      expect(work.file_sets.map(&:title).flatten).to match_array(titles.drop(1))
+      expect(work.file_sets.map(&:created).flatten.uniq.compact).to contain_exactly('2019')
+      expect(work.file_sets.map(&:creator).flatten.uniq.first).to eq(
+        role: 'http://id.loc.gov/vocabulary/relators/cli', agent: agent.id.to_s
+      )
+    end
+
+    it "displays errors in the file sets' metadata" do
+      visit(csv_works_update_path)
+      attach_file('csv_file_file', csv_update_file_with_errors)
+      click_button('Preview Import')
+      expect(page).to have_selector('h1', text: 'Import Preview')
+      expect(page).to have_content('The following works will be updated')
+      expect(page).to have_content('Total Number of Works with Errors 3')
+      within('table') do
+        expect(page).to have_selector('td', text: "Title can't be blank")
+        expect(page).to have_selector('td', text: 'Created Date not a date is not a valid EDTF date')
+        expect(page).to have_selector('td', text: "Creator agent 'Dude, Bad Agent' does not exist")
+      end
+    end
+  end
 end

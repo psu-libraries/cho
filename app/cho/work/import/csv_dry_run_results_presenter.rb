@@ -15,7 +15,7 @@ module Work
       end
 
       def change_set_list
-        dry_run.results
+        dry_run.results + dry_run.results.map(&:file_set_hashes).flatten
       end
 
       def invalid_rows

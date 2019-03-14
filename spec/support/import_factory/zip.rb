@@ -6,6 +6,7 @@ module ImportFactory
     # @param [ImportFactory::Bag]
     def self.create(bag)
       output_file = Rails.root.join('tmp', 'ingest-test', "#{bag.path.basename}.zip")
+      FileUtils.rm_f(output_file)
       new(bag.path, output_file).write
       output_file
     end

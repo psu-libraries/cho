@@ -53,10 +53,15 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
       expect(page).to have_content('Total Number of Works with Errors 0')
       within('table') do
         expect(page).to have_selector('th', text: 'Title')
+        expect(page).to have_selector('th', text: 'Identifier')
         expect(page).to have_selector('th', text: 'Status')
-        expect(page).to have_selector('tr', text: 'My Work 1 Success')
-        expect(page).to have_selector('tr', text: 'My Work 2 Success')
-        expect(page).to have_selector('tr', text: 'My Work 3 Success')
+        expect(page).to have_selector('td', text: 'My Work 1')
+        expect(page).to have_selector('td', text: 'work1')
+        expect(page).to have_selector('td', text: 'My Work 2')
+        expect(page).to have_selector('td', text: 'work2')
+        expect(page).to have_selector('td', text: 'My Work 3')
+        expect(page).to have_selector('td', text: 'work3')
+        expect(page).to have_selector('td', text: 'Success')
       end
       click_button('Perform Import')
       expect(page).to have_selector('h1', text: 'Successful Import')
@@ -145,6 +150,10 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
         expect(page).to have_selector('th', text: 'Title')
         expect(page).to have_selector('th', text: 'Status')
         expect(page).to have_selector('td', text: 'My Work1')
+        expect(page).to have_selector('td', text: 'My Work1_00001_01')
+        expect(page).to have_selector('td', text: 'My Work1_00001_02')
+        expect(page).to have_selector('td', text: 'My Work1_00002_01')
+        expect(page).to have_selector('td', text: 'My Work1_00002_02')
       end
       click_button('Perform Import')
       expect(page).to have_selector('h1', text: 'Successful Import')
@@ -278,18 +287,71 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
   end
 
   context 'when the csv has missing values' do
+    let(:ids) { [
+      'work1',
+      'work2',
+      'work3',
+      'work1_00001_01',
+      'work1_00001_02',
+      'work1_00002_01',
+      'work1_00002_02'
+    ]}
+
     let(:csv_file) do
       CsvFactory::Generic.new(
-        member_of_collection_ids: [collection.id, collection.id, 'missing_alt_id'],
-        work_type: [nil, 'Generic', 'Generic'],
-        title: ['My Work 1', nil, 'My Work 3'],
-        batch_id: ['batch1_2018-07-12', 'batch1_2018-07-12', 'batch1_2018-07-12'],
+        alternate_ids: ids,
+        member_of_collection_ids: [collection.id, collection.id, 'missing_alt_id', nil, nil, nil, nil],
+        work_type: [nil, 'Generic', 'Generic', nil, nil, nil, nil],
+        title: ['My Work 1', nil, 'My Work 3', nil, nil, nil, nil],
+        batch_id: (([] << 'batch1_2019-03-13') * 7),
         creator: [
           "#{agent1.display_name}#{CsvParsing::SUBVALUE_SEPARATOR}asdf",
           'Person, Missing|bsl',
-          'Guy, Bad||Guy, Badder'
+          'Guy, Bad||Guy, Badder',
+          'Creator, Missing Fileset',
+          "#{agent1.display_name}#{CsvParsing::SUBVALUE_SEPARATOR}bad fileset role",
+          nil,
+          nil
         ]
       )
+    end
+
+    let(:bag) do
+      ImportFactory::Bag.create(
+        batch_id: 'batch1_2019-03-13',
+        data: {
+          work1: [
+            'work1_00001_01_preservation.tif',
+            'work1_00001_01_preservation-redacted.tif',
+            'work1_00001_01_service.jp2',
+            'work1_00001_02_preservation.tif',
+            'work1_00001_02_service.jp2',
+            'work1_00002_01_preservation.tif',
+            'work1_00002_01_service.jp2',
+            'work1_00002_02_preservation.tif',
+            'work1_00002_02_service.jp2',
+            'work1_access.pdf',
+            'work1_text.txt',
+            'work1_thumb.jpg'
+          ],
+          work2: [
+            'work2_preservation.tif',
+            'work2_service.pdf',
+            'work2_text.txt',
+            'work2_thumb.jpg'
+          ],
+          work3: [
+            'work3_preservation.tif',
+            'work3_service.pdf',
+            'work3_text.txt',
+            'work3_thumb.jpg'
+          ]
+        }
+      )
+    end
+
+    before do
+      ImportFactory::Zip.create(bag)
     end
 
     it 'displays the errors in the dry run page' do
@@ -298,8 +360,18 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
       attach_file('csv_file_file', csv_file.path)
       click_button('Preview Import')
       expect(page).to have_selector('h1', text: 'Import Preview')
-      expect(page).to have_content('Total Number of Works with Errors 3')
+      expect(page).to have_content('Total Number of Works with Errors 7')
       within('table.table') do
+        expect(page).to have_selector('th', text: 'Title')
+        expect(page).to have_selector('th', text: 'Identifier')
+        expect(page).to have_selector('th', text: 'Status')
+        expect(page).to have_selector('td', text: 'work1')
+        expect(page).to have_selector('td', text: 'work2')
+        expect(page).to have_selector('td', text: 'work3')
+        expect(page).to have_selector('td', text: 'work1_00001_01')
+        expect(page).to have_selector('td', text: 'work1_00001_02')
+        expect(page).to have_selector('td', text: 'work1_00002_01')
+        expect(page).to have_selector('td', text: 'work1_00002_02')
         expect(page).to have_content("Work type can't be blank")
         expect(page).to have_content("Title can't be blank")
         expect(page).to have_content('Member of collection ids missing_alt_id does not exist')
@@ -307,6 +379,10 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
         expect(page).to have_content("Creator agent 'Person, Missing' does not exist")
         expect(page).to have_content("Creator agent 'Guy, Bad' does not exist")
         expect(page).to have_content("Creator agent 'Guy, Badder' does not exist")
+        expect(page).to have_content("Creator agent 'Creator, Missing Fileset' does not exist")
+        expect(page).to have_content(
+          "Creator role 'http://id.loc.gov/vocabulary/relators/bad fileset role' does not exist"
+        )
       end
     end
   end
