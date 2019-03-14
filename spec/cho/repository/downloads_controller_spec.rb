@@ -10,7 +10,7 @@ RSpec.describe Repository::DownloadsController, type: :controller do
       specify do
         get :download, params: { id: file_set.id }
         expect(response).to be_success
-        expect(response.body).to eq('Hello World!')
+        expect(response.body).to eq('Hello World! (preservation)')
       end
     end
 
@@ -20,7 +20,7 @@ RSpec.describe Repository::DownloadsController, type: :controller do
       specify do
         get :download, params: { id: file_set.id }
         expect(response).to be_success
-        expect(response.body).to eq('Hello World!')
+        expect(response.body).to eq('Hello World! (redacted preservation)')
       end
     end
 
@@ -30,7 +30,7 @@ RSpec.describe Repository::DownloadsController, type: :controller do
       specify do
         get :download, params: { id: file_set.id }
         expect(response).to be_success
-        expect(response.body).to eq('Hello World!')
+        expect(response.body).to eq('Hello World! (service)')
       end
     end
 
@@ -40,7 +40,7 @@ RSpec.describe Repository::DownloadsController, type: :controller do
       specify do
         get :download, params: { id: file_set.id, use_type: 'PreservationMasterFile' }
         expect(response).to be_success
-        expect(response.body).to eq('Hello World!')
+        expect(response.body).to eq('Hello World! (redacted preservation)')
       end
     end
 
@@ -50,7 +50,7 @@ RSpec.describe Repository::DownloadsController, type: :controller do
       specify do
         get :download, params: { id: file_set.id, use_type: 'PreservationMasterFile' }
         expect(response).to be_success
-        expect(response.body).to eq('Hello World!')
+        expect(response.body).to eq('Hello World! (preservation)')
       end
     end
 
@@ -60,7 +60,7 @@ RSpec.describe Repository::DownloadsController, type: :controller do
       specify do
         get :download, params: { id: file_set.id, use_type: 'AccessFile' }
         expect(response).to be_success
-        expect(response.body).to eq('Hello World!')
+        expect(response.body).to eq('Hello World! (access)')
       end
     end
 
@@ -70,7 +70,7 @@ RSpec.describe Repository::DownloadsController, type: :controller do
       specify do
         get :download, params: { id: file_set.id, use_type: 'ServiceFile' }
         expect(response).to be_success
-        expect(response.body).to eq('Hello World!')
+        expect(response.body).to eq('Hello World! (service)')
       end
     end
 
@@ -80,7 +80,7 @@ RSpec.describe Repository::DownloadsController, type: :controller do
       specify do
         get :download, params: { id: file_set.id, use_type: :bogus }
         expect(response).to be_success
-        expect(response.body).to eq('Hello World!')
+        expect(response.body).to eq('Hello World! (service)')
       end
     end
 

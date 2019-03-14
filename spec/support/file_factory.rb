@@ -1,18 +1,40 @@
 # frozen_string_literal: true
 
 class FileFactory
-  attr_reader :use
+  attr_reader :use, :text, :original_filename
 
-  def initialize(use: nil)
+  def initialize(use: nil, text: nil, original_filename: nil)
     @use = use || Valkyrie::Vocab::PCDMUse.PreservationMasterFile
+    @text = text || 'Hello World!'
+    @original_filename = original_filename || 'hello_world.txt'
   end
 
-  def hello_world
-    temp_file = Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'hello_world.txt'))
-    file = Work::File.new(original_filename: temp_file.original_filename, use: use)
-    file_change_set = Work::FileChangeSet.new(file)
-    result = Transaction::Operations::File::Create.new.call(file_change_set, temp_file: temp_file)
-    raise result.failure if result.failure?
-    result
+  def build_file_set(attributes:, resource:)
+    raise text_file.failure if text_file.failure?
+    resource.member_ids = [text_file.success.id]
+    fileset = Valkyrie::MetadataAdapter.find(:indexing_persister).persister.save(resource: resource)
+    work = attributes.work
+    work ||= FactoryBot.build(:work_submission)
+    work.member_ids << fileset.id
+    Valkyrie::MetadataAdapter.find(:indexing_persister).persister.save(resource: work)
+    fileset
   end
+
+  private
+
+    def text_file
+      @text_file ||= begin
+                       temp_file = temp_text_file(text)
+                       file = Work::File.new(original_filename: original_filename, use: use)
+                       file_change_set = Work::FileChangeSet.new(file)
+                       Transaction::Operations::File::Create.new.call(file_change_set, temp_file: temp_file)
+                     end
+    end
+
+    def temp_text_file(text)
+      file = Tempfile.new
+      file.write(text)
+      file.close
+      file
+    end
 end
