@@ -71,6 +71,7 @@ RSpec.describe Csv::HashValidator, type: :model do
 
     it 'is not valid and has errors' do
       expect(change_set).not_to be_valid
+      expect(change_set.title).to eq(['Missing'])
       expect(change_set.errors.full_messages).to eq(['Id does not exist'])
     end
   end

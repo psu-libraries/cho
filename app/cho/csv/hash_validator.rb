@@ -47,6 +47,10 @@ module Csv
           current_errors
         end
 
+        def title
+          [I18n.t('cho.work.missing')]
+        end
+
         def valid?
           false
         end
