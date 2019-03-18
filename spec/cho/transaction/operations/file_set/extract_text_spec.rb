@@ -17,8 +17,8 @@ RSpec.describe Transaction::Operations::FileSet::ExtractText do
           expect(result.success).to eq(file_set)
           expect(result.success.member_ids.count).to eq(2)
           files = result.success.member_ids.map { |id| Work::File.find(id) }
-          expect(files.map(&:use)).to eq([[Valkyrie::Vocab::PCDMUse.PreservationMasterFile],
-                                          [Valkyrie::Vocab::PCDMUse.ExtractedText]])
+          expect(files.map(&:use)).to eq([[Vocab::FileUse.PreservationMasterFile],
+                                          [Vocab::FileUse.ExtractedText]])
           expect(File.read(files[1].path)).to eq("\n\n\n\n\n\n\n\n\n\nHello World!")
         }.to change { Work::File.count }.by(1)
       end

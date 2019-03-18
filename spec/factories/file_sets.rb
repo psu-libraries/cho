@@ -31,7 +31,7 @@ FactoryBot.define do
   trait :with_preservation_file do
     to_create do |resource, attributes|
       file_factory = FileFactory.new(
-        use: Valkyrie::Vocab::PCDMUse.PreservationMasterFile,
+        use: Vocab::FileUse.PreservationMasterFile,
         text: 'Hello World! (preservation)'
       )
       file_factory.build_file_set(resource: resource, attributes: attributes)
@@ -60,7 +60,7 @@ FactoryBot.define do
   trait :with_service_file do
     to_create do |resource, attributes|
       file_factory = FileFactory.new(
-        use: Valkyrie::Vocab::PCDMUse.ServiceFile,
+        use: Vocab::FileUse.ServiceFile,
         text: 'Hello World! (service)'
       )
       file_factory.build_file_set(resource: resource, attributes: attributes)
@@ -72,6 +72,26 @@ FactoryBot.define do
       file_factory = FileFactory.new(
         use: Vocab::FileUse.AccessFile,
         text: 'Hello World! (access)'
+      )
+      file_factory.build_file_set(resource: resource, attributes: attributes)
+    end
+  end
+
+  trait :with_extracted_text_file do
+    to_create do |resource, attributes|
+      file_factory = FileFactory.new(
+        use: Vocab::FileUse.ExtractedText,
+        text: 'Hello World! (extracted text)'
+      )
+      file_factory.build_file_set(resource: resource, attributes: attributes)
+    end
+  end
+
+  trait :with_thumbnail_file do
+    to_create do |resource, attributes|
+      file_factory = FileFactory.new(
+        use: Vocab::FileUse.ThumbnailImage,
+        text: 'Hello World! (thumbnail)'
       )
       file_factory.build_file_set(resource: resource, attributes: attributes)
     end

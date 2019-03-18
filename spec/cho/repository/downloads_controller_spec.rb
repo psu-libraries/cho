@@ -34,6 +34,16 @@ RSpec.describe Repository::DownloadsController, type: :controller do
       end
     end
 
+    context 'when not requesting a specific use type with an access file present' do
+      let(:file_set) { create(:file_set, :with_access_file) }
+
+      specify do
+        get :download, params: { id: file_set.id }
+        expect(response).to be_success
+        expect(response.body).to eq('Hello World! (access)')
+      end
+    end
+
     context 'when requesting the preservation file when a redacted one is present' do
       let(:file_set) { create(:file_set, :with_redacted_preservation_file) }
 
@@ -71,6 +81,26 @@ RSpec.describe Repository::DownloadsController, type: :controller do
         get :download, params: { id: file_set.id, use_type: 'ServiceFile' }
         expect(response).to be_success
         expect(response.body).to eq('Hello World! (service)')
+      end
+    end
+
+    context 'when requesting the extracted text file' do
+      let(:file_set) { create(:file_set, :with_extracted_text_file) }
+
+      specify do
+        get :download, params: { id: file_set.id, use_type: 'ExtractedText' }
+        expect(response).to be_success
+        expect(response.body).to eq('Hello World! (extracted text)')
+      end
+    end
+
+    context 'when requesting the thumbnail file' do
+      let(:file_set) { create(:file_set, :with_thumbnail_file) }
+
+      specify do
+        get :download, params: { id: file_set.id, use_type: 'ThumbnailImage' }
+        expect(response).to be_success
+        expect(response.body).to eq('Hello World! (thumbnail)')
       end
     end
 

@@ -17,7 +17,7 @@ RSpec.describe Work::File do
     file.file_identifier = binary_content.id
     saved_resource = Valkyrie.config.metadata_adapter.persister.save(resource: file)
     expect(saved_resource.file_identifier).to eq(binary_content.id)
-    expect(saved_resource.use).to contain_exactly(Valkyrie::Vocab::PCDMUse.PreservationMasterFile)
+    expect(saved_resource.use).to contain_exactly(Vocab::FileUse.PreservationMasterFile)
   end
 
   describe '#use' do

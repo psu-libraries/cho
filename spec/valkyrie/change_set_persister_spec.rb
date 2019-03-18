@@ -80,8 +80,8 @@ RSpec.describe ChangeSetPersister do
         expect(saved_change_set.model.member_ids).to eq(Work::FileSet.all.map(&:id))
         expect(work_file_names).to contain_exactly('hello_world.txt', 'hello_world.txt_text.txt')
         expect(work_file_uses).to contain_exactly(
-          'http://pcdm.org/use#PreservationMasterFile',
-          'http://pcdm.org/use#ExtractedText'
+          Vocab::FileUse.PreservationMasterFile.to_s,
+          Vocab::FileUse.ExtractedText.to_s
         )
       end
     end

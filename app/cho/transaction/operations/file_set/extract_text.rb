@@ -34,7 +34,7 @@ module Transaction
 
           def store_text(text:, file_set:)
             file = Work::File.new(original_filename: text_filename(file_set.text_source),
-                                  use: [Valkyrie::Vocab::PCDMUse.ExtractedText])
+                                  use: [Vocab::FileUse.ExtractedText])
             file_change_set = Work::FileChangeSet.new(file)
             result = Transaction::Operations::File::Create.new.call(file_change_set, temp_file: ::File.new(text))
             return result.success if result.success?

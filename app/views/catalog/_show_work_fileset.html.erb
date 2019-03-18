@@ -8,8 +8,7 @@
   <ul>
     <%- @document.files.each do |file| %>
       <li>
-        <%= file.original_filename %>
-        <%= link_to 'Download',
+        <%= link_to file.original_filename,
                     download_path(@document.id, use_type: file.use.first.fragment),
                     data: { turbolinks: false } %>
       </li>

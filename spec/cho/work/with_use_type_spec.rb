@@ -24,7 +24,7 @@ RSpec.describe Work::WithUseType, type: :model do
       expect(model).to be_preservation
       expect(model).not_to be_preservation_redacted
       expect(model).not_to be_service
-      expect(model).not_to be_thumbnail
+      expect(model).not_to be_thumb
     end
   end
 
@@ -37,7 +37,7 @@ RSpec.describe Work::WithUseType, type: :model do
       expect(model).not_to be_preservation
       expect(model).to be_preservation_redacted
       expect(model).not_to be_service
-      expect(model).not_to be_thumbnail
+      expect(model).not_to be_thumb
     end
   end
 
@@ -50,7 +50,7 @@ RSpec.describe Work::WithUseType, type: :model do
       expect(model).not_to be_preservation
       expect(model).not_to be_preservation_redacted
       expect(model).not_to be_service
-      expect(model).not_to be_thumbnail
+      expect(model).not_to be_thumb
     end
   end
 
@@ -63,7 +63,7 @@ RSpec.describe Work::WithUseType, type: :model do
       expect(model).not_to be_preservation
       expect(model).not_to be_preservation_redacted
       expect(model).not_to be_service
-      expect(model).not_to be_thumbnail
+      expect(model).not_to be_thumb
     end
   end
 
@@ -76,12 +76,12 @@ RSpec.describe Work::WithUseType, type: :model do
       expect(model).not_to be_preservation
       expect(model).not_to be_preservation_redacted
       expect(model).to be_service
-      expect(model).not_to be_thumbnail
+      expect(model).not_to be_thumb
     end
   end
 
   context 'with a thumbnail type' do
-    before { model.thumbnail! }
+    before { model.thumb! }
 
     it do
       expect(model).not_to be_text
@@ -89,7 +89,7 @@ RSpec.describe Work::WithUseType, type: :model do
       expect(model).not_to be_preservation
       expect(model).not_to be_preservation_redacted
       expect(model).not_to be_service
-      expect(model).to be_thumbnail
+      expect(model).to be_thumb
     end
   end
 

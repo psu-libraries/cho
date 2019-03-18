@@ -19,7 +19,7 @@ RSpec.describe Work::FileChangeSet do
   describe '#use' do
     it { is_expected.to be_multiple(:use) }
     it { is_expected.to be_required(:use) }
-    its(:use) { is_expected.to contain_exactly(Valkyrie::Vocab::PCDMUse.PreservationMasterFile) }
+    its(:use) { is_expected.to contain_exactly(Vocab::FileUse.PreservationMasterFile) }
   end
 
   describe '#original_filename' do

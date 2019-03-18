@@ -44,7 +44,7 @@ RSpec.describe Work::FileSet do
     subject { file_set }
 
     let(:file_set) { create(:file_set) }
-    let(:file) { create(:work_file, use: [Valkyrie::Vocab::PCDMUse.ExtractedText]) }
+    let(:file) { create(:work_file, use: [Vocab::FileUse.ExtractedText]) }
 
     before { allow(file_set).to receive(:files).and_return([file]) }
 
@@ -61,7 +61,7 @@ RSpec.describe Work::FileSet do
     subject { file_set }
 
     let(:file_set) { create(:file_set) }
-    let(:file) { create(:work_file, use: [Valkyrie::Vocab::PCDMUse.PreservationMasterFile]) }
+    let(:file) { create(:work_file, use: [Vocab::FileUse.PreservationMasterFile]) }
 
     before { allow(file_set).to receive(:files).and_return([file]) }
 
@@ -83,7 +83,7 @@ RSpec.describe Work::FileSet do
     before { allow(file_set).to receive(:files).and_return([file]) }
 
     its(:text) { is_expected.to be_nil }
-    its(:preservation) { is_expected.to be_nil }
+    its(:preservation) { is_expected.to eq(file) }
     its(:preservation_redacted) { is_expected.to eq(file) }
     its(:access) { is_expected.to be_nil }
     its(:service) { is_expected.to be_nil }
@@ -112,7 +112,7 @@ RSpec.describe Work::FileSet do
     subject { file_set }
 
     let(:file_set) { create(:file_set) }
-    let(:file) { create(:work_file, use: [Valkyrie::Vocab::PCDMUse.ServiceFile]) }
+    let(:file) { create(:work_file, use: [Vocab::FileUse.ServiceFile]) }
 
     before { allow(file_set).to receive(:files).and_return([file]) }
 
@@ -129,7 +129,7 @@ RSpec.describe Work::FileSet do
     subject { file_set }
 
     let(:file_set) { create(:file_set) }
-    let(:file) { create(:work_file, use: [Valkyrie::Vocab::PCDMUse.ThumbnailImage]) }
+    let(:file) { create(:work_file, use: [Vocab::FileUse.ThumbnailImage]) }
 
     before { allow(file_set).to receive(:files).and_return([file]) }
 
@@ -146,7 +146,7 @@ RSpec.describe Work::FileSet do
     subject { file_set }
 
     let(:file_set) { create(:file_set) }
-    let(:preservation) { create(:work_file, use: [Valkyrie::Vocab::PCDMUse.PreservationMasterFile]) }
+    let(:preservation) { create(:work_file, use: [Vocab::FileUse.PreservationMasterFile]) }
     let(:redacted_preservation) { create(:work_file, use: [Vocab::FileUse.RedactedPreservationMasterFile]) }
 
     before { allow(file_set).to receive(:files).and_return([preservation, redacted_preservation]) }

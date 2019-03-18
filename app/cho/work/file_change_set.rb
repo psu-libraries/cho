@@ -2,7 +2,7 @@
 
 module Work
   class FileChangeSet < Valkyrie::ChangeSet
-    property :use, multiple: true, required: true, default: [Valkyrie::Vocab::PCDMUse.PreservationMasterFile]
+    property :use, multiple: true, required: true, default: [Vocab::FileUse.PreservationMasterFile]
     validates :use, 'work/use_type': true
 
     property :original_filename, multiple: false, required: true
