@@ -9,7 +9,7 @@ RSpec.shared_examples 'a collection with works' do
 
   it 'displays a paginated listing of its works' do
     visit(polymorphic_path([:solr_document], id: collection.id))
-    expect(page).to have_content('Items in this Collection')
+    expect(page).to have_content('Resources in this Collection')
     within('div#members') do
       expect(page).to have_link('Work 1')
       expect(page).not_to have_link('Work 20')

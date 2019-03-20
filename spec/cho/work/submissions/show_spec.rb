@@ -18,13 +18,13 @@ RSpec.describe Work::Submission, type: :feature do
       within('div#document') do
         expect(page).to have_blacklight_label('title_tesim').with('Object Title')
         expect(page).to have_blacklight_field('title_tesim').with('No files')
-        expect(page).to have_blacklight_label('work_type_ssim').with('Work Type')
+        expect(page).to have_blacklight_label('work_type_ssim').with('Resource Type')
         expect(page).to have_blacklight_field('work_type_ssim').with('Document')
         expect(page).to have_blacklight_label('member_of_collection_ids_ssim').with('Member of Collection')
         expect(page).to have_blacklight_field('member_of_collection_ids_ssim').with('Library Collection')
         expect(page).to have_link('Library Collection')
       end
-      expect(page).not_to have_selector('h2', text: 'Files')
+      expect(page).not_to have_selector('h2', text: 'Parts')
     end
   end
 
@@ -36,10 +36,10 @@ RSpec.describe Work::Submission, type: :feature do
       within('div#document') do
         expect(page).to have_blacklight_label('title_tesim').with('Title')
         expect(page).to have_blacklight_field('title_tesim').with('An editable file')
-        expect(page).to have_blacklight_label('work_type_ssim').with('Work Type')
+        expect(page).to have_blacklight_label('work_type_ssim').with('Resource Type')
         expect(page).to have_blacklight_field('work_type_ssim').with('Document')
       end
-      expect(page).to have_selector('h2', text: 'Files')
+      expect(page).to have_selector('h2', text: 'Parts')
       expect(page).to have_content('hello_world.txt')
       click_link('Edit')
       expect(page).to have_field('work_submission[title]', with: 'An editable file')

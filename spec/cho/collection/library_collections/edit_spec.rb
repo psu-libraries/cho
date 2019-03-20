@@ -33,11 +33,11 @@ RSpec.describe Collection::Library, type: :feature do
   context 'when deleting the collection' do
     it 'removes it from the system' do
       visit(edit_library_collection_path(resource))
-      click_button('Delete Library collection')
+      click_button('Delete Library Collection')
       expect(page).to have_content('The following resources will be deleted')
       expect(page).to have_content(resource.title.first)
       click_button('Continue')
-      expect(page).to have_content('You have successfully deleted the following items')
+      expect(page).to have_content('You have successfully deleted the following')
       expect(page).to have_content(resource.title.first)
       expect(Collection::Library.all.count).to eq(0)
       expect(adapter.index_adapter.query_service.find_all.count).to eq(0)

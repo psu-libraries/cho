@@ -49,8 +49,8 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
       expect(page).to have_selector('h2', text: 'Bag Status')
       expect(page).to have_selector('h2', text: 'CSV Status')
       expect(page).to have_content('The bag is valid and contains no errors')
-      expect(page).to have_content('The following new works will be created')
-      expect(page).to have_content('Total Number of Works with Errors 0')
+      expect(page).to have_content('The following new resources will be created')
+      expect(page).to have_content('Total Number of Resources with Errors 0')
       within('table') do
         expect(page).to have_selector('th', text: 'Title')
         expect(page).to have_selector('th', text: 'Identifier')
@@ -144,8 +144,8 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
       expect(page).to have_selector('h2', text: 'Bag Status')
       expect(page).to have_selector('h2', text: 'CSV Status')
       expect(page).to have_content('The bag is valid and contains no errors')
-      expect(page).to have_content('The following new works will be created')
-      expect(page).to have_content('Total Number of Works with Errors 0')
+      expect(page).to have_content('The following new resources will be created')
+      expect(page).to have_content('Total Number of Resources with Errors 0')
       within('table') do
         expect(page).to have_selector('th', text: 'Title')
         expect(page).to have_selector('th', text: 'Status')
@@ -247,8 +247,8 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
       expect(page).to have_selector('h2', text: 'Bag Status')
       expect(page).to have_selector('h2', text: 'CSV Status')
       expect(page).to have_content('The bag is valid and contains no errors')
-      expect(page).to have_content('The following new works will be created')
-      expect(page).to have_content('Total Number of Works with Errors 0')
+      expect(page).to have_content('The following new resources will be created')
+      expect(page).to have_content('Total Number of Resources with Errors 0')
       click_button('Perform Import')
       expect(page).to have_selector('h1', text: 'Successful Import')
       within('ul.result-list') do
@@ -360,7 +360,7 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
       attach_file('csv_file_file', csv_file.path)
       click_button('Preview Import')
       expect(page).to have_selector('h1', text: 'Import Preview')
-      expect(page).to have_content('Total Number of Works with Errors 7')
+      expect(page).to have_content('Total Number of Resources with Errors 7')
       within('table.table') do
         expect(page).to have_selector('th', text: 'Title')
         expect(page).to have_selector('th', text: 'Identifier')

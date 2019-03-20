@@ -11,31 +11,31 @@ en:
     form:
       metadata: "Basic Metadata"
       workflow: "Workflow"
-      visibility: "Visibility"
+      visibility: "Access Level"
       file_selection: "File Selection"
     field_label:
       # For fields that are not in the data dictionary
       collection_type: "Collection Type"
-      work_type: "Work Type"
+      work_type: "Resource Type"
       workflow: "Workflow"
-      default: "Publish immediately"
+      default: "Publish Immediately"
       mediated: "Mediated"
-      visibility: "Visibility"
-      public: "Public"
-      authenticated: "Authenticated"
-      private: "Private"
+      visibility: "Access Level"
+      public: "Public Access"
+      authenticated: "PSU Access"
+      private: "Restricted Access"
       title: "Title"
       required: "required"
       member_of_collections: "Collections"
       role: "Role"
     header_links:
       create_collection: "Create Collection"
-      create_submission: "Create Work"
+      create_submission: "Create Resource"
       data_dictionary: "Data Dictionary"
       select: "Select Resources"
       work:
-        csv_create: "Import New Works"
-        csv_update: "Update Works"
+        csv_create: "Import New Resources"
+        csv_update: "Update Resources"
       agent:
         list: "List Agents"
         csv_create: "Import New Agents"
@@ -43,34 +43,34 @@ en:
       manage: "Manage"
     work:
       new:
-        heading: "New %{type} Work"
-        submit: "Create Work"
-        no_type: "Unable to find work type"
+        heading: "New %{type} Resource"
+        submit: "Create Resource"
+        no_type: "Unable to find resource type"
         back_link: "Back"
       edit:
-        heading: "Editing Work"
-        submit: "Update Work"
+        heading: "Editing Resource"
+        submit: "Update Resource"
         show_link: "Show"
-        delete_link: "Delete Work"
+        delete_link: "Delete Resource"
         delete_confirmation: "Are you sure?"
-      error: "%{count} prohibited this work from being saved:"
+      error: "%{count} prohibited this resource from being saved:"
       missing: "Missing"
       show:
-        files_heading: "Files"
+        files_heading: "Parts"
     collection:
       members:
         title: "Title"
         date_created: "Date Created"
-        heading: "Items in this Collection"
+        heading: "Resources in this Collection"
     archival_collection:
       edit:
-        delete_link: "Delete Archival collection"
+        delete_link: "Delete Archival Collection"
     library_collection:
       edit:
-        delete_link: "Delete Library collection"
+        delete_link: "Delete Library Collection"
     curated_collection:
       edit:
-        delete_link: "Delete Curated collection"
+        delete_link: "Delete Curated Collection"
     agent:
       index:
         heading: "Agents"
@@ -78,7 +78,7 @@ en:
         new: "Create New Agent"
         show: "Show"
         edit: "Edit"
-        destroy: "Destroy"
+        destroy: "Delete"
         confirm: "Are you sure you want to delete this agent?"
         given_name: "Given Name"
         surname: "Surname"
@@ -86,11 +86,11 @@ en:
       agent:
         create:
           heading: 'CSV Agent Import'
-          description: 'Import a csv that creates new agents.'
+          description: 'Import a CSV that creates new agents.'
           submit: 'Preview Import'
         update:
           heading: 'CSV Agent Import'
-          description: 'Import a csv that updates existing agents.'
+          description: 'Import a CSV that updates existing agents.'
           submit: 'Preview Import'
         dry_run:
           heading: 'Agent Import Preview'
@@ -107,17 +107,17 @@ en:
       work:
         create:
           heading: 'CSV Import'
-          description: 'Import a csv that creates new works.'
+          description: 'Import a CSV that creates new resources.'
           submit: 'Preview Import'
         update:
           heading: 'CSV Import'
-          description: 'Import a csv that updates existing works.'
+          description: 'Import a CSV that updates existing resources.'
           submit: 'Preview Import'
         dry_run:
           heading: 'Import Preview'
-          create_description: 'The following new works will be created'
-          update_description: 'The following works will be updated'
-          error_count_message: "Total Number of Works with Errors %{count}"
+          create_description: 'The following new resources will be created'
+          update_description: 'The following resources will be updated'
+          error_count_message: "Total Number of Resources with Errors %{count}"
           preview_table:
             title: "Title"
             status: "Status"
@@ -135,29 +135,29 @@ en:
           header: "Failed Import"
         success:
           header: "Successful Import"
-          new_import: "Perform Additional Import"
+          new_import: "Perform Another Import"
     metrics:
       benchmark_heading: "User,System,Total,Real"
       collection:
-        title: "Test Collection with Many Works"
-        description: "An example collection used for benchmarking with many works not containing files."
-        work_title: "Sample Work %{count}"
+        title: "Test Collection with Many Resources Without Files"
+        description: "An example collection used for benchmarking with many resources not containing files."
+        work_title: "Sample Resource %{count}"
       work:
-        title: "Test Collection with Works Containing Files"
-        description: "An example collection used for benchmarking with many works that each contain a 50 MB file."
-        work_title: "Sample Work with File %{count}"
+        title: "Test Collection with Many Resources With Files"
+        description: "An example collection used for benchmarking with many resources that each contain a 50 MB file."
+        work_title: "Sample Resource with File %{count}"
     batch:
       select:
         heading: "Select Resources"
-        message: "Search for items to delete from the repository"
+        message: "Search for resources to delete."
       delete:
         heading: "Delete Confirmation"
-        message: "The following resources will be deleted"
+        message: "The following resources will be deleted:"
         continue: "Continue"
-        success: "You have successfully deleted the following items: %{list}"
+        success: "You have successfully deleted the following: %{list}"
         cancel: "Cancel"
         submit: "Delete Selected Resources"
-        title: "%{title} (%{count} items)"
+        title: "%{title} (%{count})"
     stale_object_error: ": the %{object_name} object you tried to save is stale.  Please reload the form to see the latest data."
     validation:
       creator:

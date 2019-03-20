@@ -14,7 +14,7 @@ RSpec.describe Batch::DeletePresenter, type: :model do
 
     let(:work) { build(:work) }
 
-    its(:confirmation_title) { is_expected.to eq('Sample Generic Work (0 items)') }
+    its(:confirmation_title) { is_expected.to eq('Sample Generic Work (0)') }
   end
 
   describe '#children' do

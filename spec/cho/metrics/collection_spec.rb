@@ -31,7 +31,7 @@ RSpec.describe Metrics::Collection do
     header, results = report.string.split("\n")
     expect(header).to eq(' User,System,Total,Real')
     expect(results.split(',').count).to eq(4)
-    expect(collection.members.first.title).to contain_exactly('Sample Work 1')
+    expect(collection.members.first.title).to contain_exactly('Sample Resource 1')
     expect($stdout).to be(STDOUT)
   end
 end

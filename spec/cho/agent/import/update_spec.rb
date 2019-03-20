@@ -15,7 +15,7 @@ RSpec.describe 'Preview of CSV Agent Update', type: :feature do
     it 'successfully updates the works' do
       visit(csv_agents_update_path)
       expect(page).to have_selector('h1', text: 'CSV Agent Import')
-      expect(page).to have_content('Import a csv that updates existing agents')
+      expect(page).to have_content('Import a CSV that updates existing agents')
       attach_file('csv_file_file', csv_file.path)
       click_button('Preview Import')
       expect(page).to have_selector('h1', text: 'Import Preview')

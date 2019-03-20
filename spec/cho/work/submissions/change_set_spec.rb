@@ -129,13 +129,13 @@ RSpec.describe Work::SubmissionChangeSet do
   end
 
   describe '#submit_text' do
-    its(:submit_text) { is_expected.to eq('Create Work') }
+    its(:submit_text) { is_expected.to eq('Create Resource') }
 
     context 'save work' do
       let(:unsaved_work) { Work::Submission.new }
       let(:resource) { Valkyrie.config.metadata_adapter.persister.save(resource: unsaved_work) }
 
-      its(:submit_text) { is_expected.to eq('Update Work') }
+      its(:submit_text) { is_expected.to eq('Update Resource') }
     end
   end
 
