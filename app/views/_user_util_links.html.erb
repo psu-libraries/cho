@@ -3,9 +3,11 @@
     <%= render_nav_actions do |config, action| %>
       <li><%= action %></li>
     <% end %>
-    <%= render '/manage' %>
-    <%= render '/collection/nav' %>
-    <%= render '/work/submissions/nav' %>
+    <% if can? current_user, :manage %>
+      <%= render '/manage' %>
+      <%= render '/collection/nav' %>
+      <%= render '/work/submissions/nav' %>
+    <% end %>
     <li>
       <% if current_user %>
 

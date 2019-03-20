@@ -10,5 +10,7 @@
   <%= @agent.surname %>
 </p>
 
-<%= link_to 'Edit', edit_agent_resource_path(@agent) %> |
+<% if can? :manage, @agent %>
+  <%= link_to 'Edit', edit_agent_resource_path(@agent) %> |
+<% end %>
 <%= link_to 'Back', agent_resources_path %>

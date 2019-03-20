@@ -103,6 +103,7 @@ GEM
       sassc-rails (>= 2.0.0)
     builder (3.2.3)
     byebug (10.0.2)
+    cancancan (2.3.0)
     capistrano (3.11.0)
       airbrussh (>= 1.0.0)
       i18n
@@ -665,6 +666,7 @@ DEPENDENCIES
   bootsnap
   bootstrap (~> 4.3)
   byebug
+  cancancan
   capistrano (~> 3.7)
   capistrano-bundler (~> 1.2)
   capistrano-rails (~> 1.2)

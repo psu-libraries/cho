@@ -8,11 +8,12 @@ class ApplicationController < ActionController::Base
   layout 'blacklight'
 
   protect_from_forgery with: :exception
-  before_action :authenticate_user!, :allow_admins
+  before_action :authenticate_user!
+  authorize_resource class: false
 
-  def allow_admins
-    return if current_user.admin?
-
-    render file: 'public/403.html', status: 403, layout: false
+  rescue_from CanCan::AccessDenied do |_exception|
+    render file: Rails.root.join('public', '403.html'),
+           status: 403,
+           layout: false
   end
 end

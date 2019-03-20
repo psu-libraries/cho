@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Repository::DownloadsController, type: :controller do
-  describe 'GET #download' do
+  describe 'GET #download', :with_psu_user do
     context 'when not requesting a specific use type with a preservation file present' do
       let(:file_set) { create(:file_set, :with_preservation_file) }
 

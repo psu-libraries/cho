@@ -15,10 +15,12 @@
         <td><%= agent.given_name %></td>
         <td><%= agent.surname %></td>
         <td><%= link_to t('cho.agent.index.show'), agent %></td>
-        <td><%= link_to t('cho.agent.index.edit'), edit_agent_resource_path(agent) %></td>
+        <td><%= link_to(t('cho.agent.index.edit'), edit_agent_resource_path(agent)) if can? :edit, agent %></td>
         <td>
-          <%= link_to t('cho.agent.index.destroy'), agent,
-              method: :delete, data: { confirm: t('cho.agent.index.confirm') } %>
+          <%= if can? :delete, agent
+                link_to(t('cho.agent.index.destroy'), agent,
+                        method: :delete, data: { confirm: t('cho.agent.index.confirm') })
+              end %>
         </td>
       </tr>
     <% end %>
@@ -28,4 +30,4 @@
 <br />
 
 <%= link_to t('cho.agent.index.download'), agent_resources_path(format: :csv) %>
-<%= link_to t('cho.agent.index.new'), new_agent_resource_path %>
+<%= link_to(t('cho.agent.index.new'), new_agent_resource_path) if can? :create, Agent %>
