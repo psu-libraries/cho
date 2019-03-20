@@ -105,10 +105,17 @@ RSpec.describe 'Preview of CSV Update', type: :feature do
 
       matrix.each_with_index do |row, i|
         next if i == 0
+
         row[2] = titles[i - 1]
         row[3] = MetadataFactory.fancy_title
         row[4] = Faker::Lorem.paragraph
-        row[6] = "#{agent.display_name}#{CsvParsing::SUBVALUE_SEPARATOR}cli"
+
+        row[6] = if i == 1
+                   agent.display_name.to_s
+                 else
+                   "#{agent.display_name}#{CsvParsing::SUBVALUE_SEPARATOR}cli"
+                 end
+
         row[8] = dates[i - 1]
       end
 

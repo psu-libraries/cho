@@ -31,7 +31,7 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
         creator: [
           "#{agent1.display_name}#{CsvParsing::SUBVALUE_SEPARATOR}bsl",
           "#{agent2.display_name}#{CsvParsing::SUBVALUE_SEPARATOR}cli",
-          "#{agent3.display_name}#{CsvParsing::SUBVALUE_SEPARATOR}bsl"
+          agent3.display_name.to_s
         ]
       )
     end

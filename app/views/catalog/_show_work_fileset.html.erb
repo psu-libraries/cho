@@ -10,7 +10,8 @@
       <li>
         <%= link_to file.original_filename,
                     download_path(@document.id, use_type: file.use.first.fragment),
-                    data: { turbolinks: false } %>
+                    data: { turbolinks: false },
+                    aria: { label: t('cho.file_set.download.aria_label', name: file.original_filename) } %>
       </li>
     <%- end %>
   </ul>
