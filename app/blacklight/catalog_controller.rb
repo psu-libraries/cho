@@ -48,13 +48,15 @@ class CatalogController < ApplicationController
     config.show.document_presenter_class = ShowPresenter
 
     DataDictionary::Field.all.sort_by(&:created_at).each do |map_field|
-      catalog_field = "#{map_field.label.parameterize.underscore.to_sym}_tesim"
+      catalog_field = map_field.solr_search_field
       catalog_label = map_field.label.titleize
       config.add_index_field catalog_field, label: catalog_label
       config.add_show_field catalog_field, label: catalog_label
       config.add_search_field(map_field.label) do |field|
         # solr_parameters hash are sent to Solr as ordinary url query params.
-        field.solr_parameters = { 'spellcheck.dictionary': field.label }
+        field.solr_parameters = { 'spellcheck.dictionary': field.label,
+                                  qf: catalog_field,
+                                  pf: catalog_field }
       end
     end
 
@@ -162,7 +164,15 @@ class CatalogController < ApplicationController
     # solr request handler? The one set in config[:default_solr_parameters][:qt],
     # since we aren't specifying it otherwise.
 
-    config.add_search_field 'all_fields', label: 'All Fields'
+    config.add_search_field('all_fields', label: 'All Fields') do |field|
+      all_names = config.search_fields.each.map do |_key, value|
+        value[:solr_parameters][:qf]
+      end.join(' ')
+      field.solr_parameters = {
+        qf: "#{all_names} id",
+        pf: 'title_tesim'
+      }
+    end
 
     # Now we see how to over-ride Solr request handler defaults, in this
     # case for a BL "search field", which is really a dismax aggregate

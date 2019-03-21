@@ -9,7 +9,8 @@ RSpec.describe CatalogController, type: :feature do
     before do
       create(:work_submission, :with_file, :with_creator,
         collection_title: 'Searching Collection',
-        generic_field: 'Faceted Value')
+        generic_field: 'Faceted Value',
+        alternate_ids: ['abc_123_999'])
     end
 
     it 'returns the work and excludes file sets and files' do
@@ -48,6 +49,39 @@ RSpec.describe CatalogController, type: :feature do
     it 'returns the work when searching for the title of the file' do
       visit(root_path)
       fill_in('q', with: 'hello_world.txt')
+      click_button('Search')
+      within('#documents') do
+        expect(page).to have_link('Sample Generic Work')
+      end
+    end
+
+    it 'returns the work when searching for the part of the title of the file' do
+      visit(root_path)
+      fill_in('q', with: 'hello')
+      click_button('Search')
+      within('#documents') do
+        expect(page).to have_link('Sample Generic Work')
+      end
+    end
+
+    it 'returns the work when searching for the alternate id' do
+      visit(root_path)
+      fill_in('q', with: 'abc')
+      within('#search_field') do
+        select('Alternate Id')
+      end
+      click_button('Search')
+      within('#documents') do
+        expect(page).to have_link('Sample Generic Work')
+      end
+    end
+
+    it 'returns the work when searching for the alternate id in all fields' do
+      visit(root_path)
+      fill_in('q', with: 'abc')
+      within('#search_field') do
+        select('All Fields')
+      end
       click_button('Search')
       within('#documents') do
         expect(page).to have_link('Sample Generic Work')
