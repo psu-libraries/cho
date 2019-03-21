@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Editing works', type: :feature do
-  let(:resource) { create(:work, :with_creator, title: 'Work to edit', work_type_id: work_type.id) }
+  let(:resource) { create(:work, :with_creator, :with_metadata, title: 'Work to edit', work_type_id: work_type.id) }
   let(:work_type)  { Work::Type.where(label: 'Document').first }
   let(:adapter) { Valkyrie::MetadataAdapter.find(:indexing_persister) }
   let(:solr_document) { SolrDocument.find(resource.id) }

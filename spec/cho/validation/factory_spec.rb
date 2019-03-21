@@ -29,7 +29,16 @@ RSpec.describe Validation::Factory, type: :model do
     describe '#validator_names' do
       subject { described_class.validator_names }
 
-      it { is_expected.to contain_exactly('creator', 'my_validator', 'no_validation', 'resource_exists', 'edtf_date') }
+      it do
+        is_expected.to contain_exactly(
+          'creator',
+          'my_validator',
+          'no_validation',
+          'resource_exists',
+          'unique',
+          'edtf_date'
+        )
+      end
     end
   end
 
@@ -60,9 +69,17 @@ RSpec.describe Validation::Factory, type: :model do
     describe '#validator_names' do
       subject(:names) { described_class.validator_names }
 
-      it { expect(names).to contain_exactly(
-        'creator', 'my_validator', 'other_validator', 'no_validation', 'resource_exists', 'edtf_date'
-      ) }
+      it do
+        expect(names).to contain_exactly(
+          'creator',
+          'my_validator',
+          'other_validator',
+          'no_validation',
+          'resource_exists',
+          'edtf_date',
+          'unique'
+        )
+      end
     end
   end
 end

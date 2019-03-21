@@ -21,10 +21,14 @@ RSpec.describe Collection::Curated, type: :feature do
   end
 
   context 'without providing the required metadata' do
+    before { create(:collection, alternate_ids: 'existing-id') }
+
     it 'reports the errors' do
       visit(new_curated_collection_path)
+      fill_in('curated_collection[alternate_ids]', with: 'existing-id')
       click_button('Create Curated collection')
       expect(page).to have_content("Title can't be blank")
+      expect(page).to have_content('Alternate ids existing-id already exists')
     end
   end
 end

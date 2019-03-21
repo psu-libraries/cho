@@ -15,10 +15,11 @@ module Validation
 
         def default_items
           {
-            default_key => Validation::None.new,
-            resource_exists: Validation::ResourceExists.new,
-            edtf_date: Validation::EDTFDate.new,
-            creator: Validation::Creator.new
+            default_key => Validation::None,
+            resource_exists: Validation::ResourceExists,
+            edtf_date: Validation::EDTFDate,
+            creator: Validation::Creator,
+            unique: Validation::Unique
           }
         end
 

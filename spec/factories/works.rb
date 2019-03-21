@@ -62,4 +62,8 @@ FactoryBot.define do
       end
     end
   end
+
+  trait :with_metadata do
+    alternate_ids { ['alt-work-id'] }
+  end
 end
