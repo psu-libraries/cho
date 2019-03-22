@@ -7,13 +7,13 @@ RSpec.describe Import::File do
     context 'with a preservation file' do
       subject { ImportFactory::File.create('work_ID_preservation.tif', parent: 'work_ID') }
 
-      its(:type) { is_expected.to be(Valkyrie::Vocab::PCDMUse.PreservationMasterFile) }
+      its(:type) { is_expected.to be(Vocab::FileUse.PreservationMasterFile) }
     end
 
     context 'with an extracted text file' do
       subject { ImportFactory::File.create('work_ID_text.txt', parent: 'work_ID') }
 
-      its(:type) { is_expected.to be(Valkyrie::Vocab::PCDMUse.ExtractedText) }
+      its(:type) { is_expected.to be(Vocab::FileUse.ExtractedText) }
     end
 
     context 'with a redacted preservation file' do
@@ -31,13 +31,13 @@ RSpec.describe Import::File do
     context 'with a service file' do
       subject { ImportFactory::File.create('work_ID_service.jp2', parent: 'work_ID') }
 
-      its(:type) { is_expected.to be(Valkyrie::Vocab::PCDMUse.ServiceFile) }
+      its(:type) { is_expected.to be(Vocab::FileUse.ServiceFile) }
     end
 
     context 'with a thumbnail image file' do
       subject { ImportFactory::File.create('work_ID_thumb.jpg', parent: 'work_ID') }
 
-      its(:type) { is_expected.to be(Valkyrie::Vocab::PCDMUse.ThumbnailImage) }
+      its(:type) { is_expected.to be(Vocab::FileUse.ThumbnailImage) }
     end
 
     context 'with a front image file' do

@@ -4,7 +4,7 @@ class FileFactory
   attr_reader :use, :text, :original_filename
 
   def initialize(use: nil, text: nil, original_filename: nil)
-    @use = use || Valkyrie::Vocab::PCDMUse.PreservationMasterFile
+    @use = use || Vocab::FileUse.PreservationMasterFile
     @text = text || 'Hello World!'
     @original_filename = original_filename || 'hello_world.txt'
   end

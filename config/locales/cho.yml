@@ -8,6 +8,9 @@ en:
         heading: "Editing File Set"
         submit: "Update File Set"
       error: "%{count} prohibited this file set from being saved:"
+      download:
+        aria_label: "Download %{name}"
+
     form:
       metadata: "Basic Metadata"
       workflow: "Workflow"

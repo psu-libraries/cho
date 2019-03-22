@@ -8,17 +8,6 @@ class Import::File
 
   class UnknownFileTypeError < StandardError; end
 
-  TYPES = {
-    'preservation' => Valkyrie::Vocab::PCDMUse.PreservationMasterFile,
-    'preservation-redacted' => Vocab::FileUse.RedactedPreservationMasterFile,
-    'service' => Valkyrie::Vocab::PCDMUse.ServiceFile,
-    'text' => Valkyrie::Vocab::PCDMUse.ExtractedText,
-    'access' => Vocab::FileUse.AccessFile,
-    'thumb' => Valkyrie::Vocab::PCDMUse.ThumbnailImage,
-    'front' => Vocab::FileUse.FrontImage,
-    'back' => Vocab::FileUse.BackImage
-  }.freeze
-
   # @param [Pathname] file
   def initialize(file)
     @file = file
@@ -55,7 +44,7 @@ class Import::File
   end
 
   def service?
-    type == Valkyrie::Vocab::PCDMUse.ServiceFile
+    type == Vocab::FileUse.ServiceFile
   rescue UnknownFileTypeError
     false
   end
@@ -67,15 +56,14 @@ class Import::File
   end
 
   def preservation?
-    type == Valkyrie::Vocab::PCDMUse.PreservationMasterFile
+    type == Vocab::FileUse.PreservationMasterFile
   rescue UnknownFileTypeError
     false
   end
 
   def type
-    TYPES.fetch(suffix) do
+    Repository::FileUse.uri_from_suffix(suffix) ||
       raise(UnknownFileTypeError, "#{self} does not have a valid file type")
-    end
   end
 
   private

@@ -4,7 +4,7 @@ module Work
   class UseTypeValidator < ActiveModel::EachValidator
     def validate_each(record, attribute, value)
       values = Array.wrap(value)
-      bad_uris = values.reject { |v| Work::WithUseType::USE_TYPE_URIS.include?(v) }
+      bad_uris = values.reject { |v| Repository::FileUse.uris.include?(v) }
       return if bad_uris.empty? && values.present?
 
       record.errors.add attribute, error_message(bad_uris)

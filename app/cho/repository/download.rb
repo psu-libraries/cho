@@ -25,24 +25,13 @@ module Repository
     private
 
       def select_file
-        case use
-        when 'PreservationMasterFile'
-          preservation_file
-        when 'ServiceFile'
-          file_set.service
-        when 'AccessFile'
-          file_set.access
-        else
-          default_file
-        end
-      end
-
-      def preservation_file
-        file_set.preservation_redacted || file_set.preservation
+        get_method = FileUse.new(use).get_method
+        return default_file unless get_method
+        file_set.send(get_method)
       end
 
       def default_file
-        file_set.service || preservation_file
+        file_set.service || file_set.access || file_set.preservation
       end
 
       def file_set
