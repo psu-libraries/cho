@@ -64,30 +64,6 @@ class ChangeSetPersister
     end
   end
 
-  def buffer_into_index
-    metadata_adapter.persister.buffer_into_index do |buffered_adapter|
-      yield(buffered_adapter.persister)
-    end
-  end
-
-  def validate_and_save_with_buffer(change_set:, resource_params:)
-    result = nil
-    buffer_into_index do |buffered_changeset_persister|
-      result = Transaction::Shared::SaveWithChangeSet.new
-        .with_step_args(validate: [additional_attributes: resource_params],
-                        save: [persister: buffered_changeset_persister])
-        .call(change_set)
-    end
-    if result.success?
-      change_set.class.new(result.success)
-    else
-      result.failure
-    end
-  rescue StandardError => error
-    change_set.errors.add(:save, error.message)
-    change_set
-  end
-
   private
 
     def delete_members(resource)

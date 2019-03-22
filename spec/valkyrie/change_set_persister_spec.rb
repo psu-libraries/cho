@@ -11,27 +11,6 @@ RSpec.describe ChangeSetPersister do
 
   it_behaves_like 'a Valkyrie::ChangeSetPersister'
 
-  describe '#buffer_into_index' do
-    let(:resource)   { build(:work, title: 'Buffer into index') }
-    let(:change_set) { Work::SubmissionChangeSet.new(resource) }
-
-    it 'persists a change set to Postgres' do
-      expect {
-        change_set_persister.buffer_into_index do |persist|
-          persist.save(resource: change_set.resource)
-        end
-      }.to change { metadata_adapter.query_service.find_all.count }.by(1)
-    end
-
-    it 'persists a change set to Solr' do
-      expect {
-        change_set_persister.buffer_into_index do |persist|
-          persist.save(resource: change_set.resource)
-        end
-      }.to change { metadata_adapter.index_adapter.query_service.find_all.count }.by(1)
-    end
-  end
-
   describe '#validate_and_save' do
     let(:change_set) { DataDictionary::FieldChangeSet.new(DataDictionary::Field.new) }
 
@@ -84,31 +63,6 @@ RSpec.describe ChangeSetPersister do
           Vocab::FileUse.ExtractedText.to_s
         )
       end
-    end
-  end
-
-  describe '#validate_and_save_with_buffer' do
-    let(:persister) { metadata_adapter.persister }
-    let(:change_set) { DataDictionary::FieldChangeSet.new(DataDictionary::Field.new) }
-
-    before do
-      allow(metadata_adapter).to receive(:persister).and_return(persister)
-    end
-
-    it 'persists a change set to Postgres' do
-      expect(persister).to receive(:buffer_into_index).and_call_original
-      expect {
-        saved_change_set = change_set_persister.validate_and_save_with_buffer(
-          change_set: change_set,
-          resource_params: { label: 'abc123' }
-        )
-        expect(saved_change_set.label).to eq('abc123')
-      }.to change { metadata_adapter.query_service.find_all.count }.by(1)
-    end
-
-    it 'reports the error in the parameters' do
-      output = change_set_persister.validate_and_save_with_buffer(change_set: change_set, resource_params: {})
-      expect(output.errors.messages).to eq(label: ['can\'t be blank'])
     end
   end
 
@@ -254,20 +208,6 @@ RSpec.describe ChangeSetPersister do
       it 'reports the error in the parameters' do
         output = change_set_persister.validate_and_save(change_set: change_set, resource_params: {})
         expect(output.errors.messages).to eq(label: ['can\'t be blank'])
-      end
-    end
-
-    describe '#validate_and_save_with_buffer' do
-      before do
-        allow(mock_persister).to receive(:buffer_into_index).and_raise(StandardError, 'save was not successful')
-      end
-
-      it 'reports the error in the save' do
-        output = change_set_persister.validate_and_save_with_buffer(
-          change_set: change_set,
-          resource_params: { label: 'abc123' }
-        )
-        expect(output.errors.messages).to eq(save: ['save was not successful'])
       end
     end
 
