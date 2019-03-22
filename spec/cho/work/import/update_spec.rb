@@ -105,10 +105,17 @@ RSpec.describe 'Preview of CSV Update', type: :feature do
 
       matrix.each_with_index do |row, i|
         next if i == 0
+
         row[2] = titles[i - 1]
         row[3] = MetadataFactory.fancy_title
         row[4] = Faker::Lorem.paragraph
-        row[6] = "#{agent.display_name}#{CsvParsing::SUBVALUE_SEPARATOR}cli"
+
+        row[6] = if i == 1
+                   agent.display_name.to_s
+                 else
+                   "#{agent.display_name}#{CsvParsing::SUBVALUE_SEPARATOR}cli"
+                 end
+
         row[8] = dates[i - 1]
       end
 
@@ -188,6 +195,8 @@ RSpec.describe 'Preview of CSV Update', type: :feature do
 
       # Verify metadata updates
       work = SolrDocument.find('work1')
+      expect(work['creator_tesim']).to contain_exactly(agent.display_name)
+      expect(work['creator_role_ssim']).to be_nil
       expect(work.file_sets.map(&:title).flatten).to match_array(titles.drop(1))
       expect(work.file_sets.map(&:created).flatten.uniq.compact).to contain_exactly('2019')
       expect(work.file_sets.map(&:creator).flatten.uniq.first).to eq(

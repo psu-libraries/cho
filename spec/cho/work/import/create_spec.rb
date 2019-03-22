@@ -31,7 +31,7 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
         creator: [
           "#{agent1.display_name}#{CsvParsing::SUBVALUE_SEPARATOR}bsl",
           "#{agent2.display_name}#{CsvParsing::SUBVALUE_SEPARATOR}cli",
-          "#{agent3.display_name}#{CsvParsing::SUBVALUE_SEPARATOR}bsl"
+          agent3.display_name.to_s
         ]
       )
     end
@@ -70,12 +70,26 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
         expect(page).to have_selector('li a', text: 'My Work 2')
         expect(page).to have_selector('li a', text: 'My Work 3')
       end
+
+      # Inspect the collection and its members
       visit(polymorphic_path([:solr_document], id: collection.id))
       within('div#members') do
-        expect(page).to have_link('My Work 1')
-        expect(page).to have_link('My Work 2')
-        expect(page).to have_link('My Work 3')
+        click_link('My Work 1')
       end
+      expect(page).to have_content('My Work 1')
+      expect(page).to have_content("#{agent1.display_name}, blasting")
+      click_link('my collection')
+      within('div#members') do
+        click_link('My Work 2')
+      end
+      expect(page).to have_content('My Work 2')
+      expect(page).to have_content("#{agent2.display_name}, climbing")
+      click_link('my collection')
+      within('div#members') do
+        click_link('My Work 3')
+      end
+      expect(page).to have_content('My Work 3')
+      expect(page).to have_content(agent3.display_name.to_s)
 
       # Verify each work has a file set and a file
       Work::Submission.all.each do |work|

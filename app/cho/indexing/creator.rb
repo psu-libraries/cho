@@ -24,7 +24,7 @@ module Indexing
       attr_reader :role_id, :agent_id
 
       def initialize(arg)
-        @role_id = arg.fetch(:role)
+        @role_id = arg.fetch(:role, nil)
         @agent_id = arg.fetch(:agent)
       end
 
@@ -53,7 +53,7 @@ module Indexing
 
       def display_name
         return if blank?
-        "#{agent.surname}, #{agent.given_name}, #{role}"
+        [agent.display_name, role].compact.join(', ')
       end
     end
   end
