@@ -18,4 +18,8 @@ RSpec.describe Agent, type: :feature do
   context 'when the current user is a PSU user but not an admin', :with_psu_user do
     specify { expect(page).not_to have_link t('edit') }
   end
+
+  context 'when the current user is a member of the public', :with_public_user do
+    specify { expect(page).not_to have_link t('edit') }
+  end
 end

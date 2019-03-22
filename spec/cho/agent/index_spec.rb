@@ -27,4 +27,12 @@ RSpec.describe Agent, type: :feature do
       expect(page).not_to have_link t('new')
     end
   end
+
+  context 'when the current user is a member of the public', :with_public_user do
+    it 'does not show CRUD links on the index page' do
+      expect(page).not_to have_link t('edit')
+      expect(page).not_to have_link t('destroy')
+      expect(page).not_to have_link t('new')
+    end
+  end
 end

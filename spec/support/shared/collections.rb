@@ -90,4 +90,12 @@ RSpec.shared_examples 'a collection editable only by admins' do
       expect(page).not_to have_link I18n.t('cho.catalog.edit')
     end
   end
+
+  context 'when the current user is a member of the public', :with_public_user do
+    it 'disables the edit link' do
+      visit(polymorphic_path([:solr_document], id: collection.id))
+
+      expect(page).not_to have_link I18n.t('cho.catalog.edit')
+    end
+  end
 end

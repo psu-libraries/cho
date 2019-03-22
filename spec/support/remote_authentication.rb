@@ -30,7 +30,7 @@ end
 
 RSpec.configure do |config|
   config.before(type: :controller) do |example|
-    return if example.metadata.key?(:with_public_user)
+    next if example.metadata.key?(:with_public_user)
 
     request.headers['REMOTE_USER'] = if example.metadata.key?(:with_psu_user)
                                        create(:psu_user).login
