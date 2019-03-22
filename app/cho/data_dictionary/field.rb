@@ -35,6 +35,10 @@ module DataDictionary
       "#{label}_#{suffix}"
     end
 
+    def solr_search_field
+      "#{label}_tesim"
+    end
+
     # @return [String] field name used when this field is used for faceting
     def facet_field
       "#{label}_ssim"

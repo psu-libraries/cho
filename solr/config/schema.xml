@@ -151,7 +151,7 @@
 		</fieldtype>
 		<fieldType name="text_en" class="solr.TextField" positionIncrementGap="100">
 			<analyzer>
-				<tokenizer class="solr.ICUTokenizerFactory"/>
+				<tokenizer class="solr.PatternTokenizerFactory" pattern="[\W_]"/>
 				<filter class="solr.ICUFoldingFilterFactory"/>
 				<filter class="solr.EnglishPossessiveFilterFactory"/>
 				<filter class="solr.EnglishMinimalStemFilterFactory"/>

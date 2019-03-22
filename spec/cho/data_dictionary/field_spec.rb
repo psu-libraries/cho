@@ -83,6 +83,7 @@ RSpec.describe DataDictionary::Field, type: :model do
     before { model.text! }
 
     its(:solr_field) { is_expected.to eq('abc123_label_tesim') }
+    its(:solr_search_field) { is_expected.to eq('abc123_label_tesim') }
     its(:change_set_property_type) { is_expected.to eq(Valkyrie::Types::Set.optional) }
     its(:resource_property_type) { is_expected.to eq(Valkyrie::Types::Set.meta(ordered: true)) }
   end
@@ -91,6 +92,7 @@ RSpec.describe DataDictionary::Field, type: :model do
     before { model.date! }
 
     its(:solr_field) { is_expected.to eq('abc123_label_dtsi') }
+    its(:solr_search_field) { is_expected.to eq('abc123_label_tesim') }
     its(:change_set_property_type) { is_expected.to eq(Valkyrie::Types::Set.of(Valkyrie::Types::Date)) }
     its(:resource_property_type) { is_expected.to eq(Valkyrie::Types::Set.of(Valkyrie::Types::Date)) }
   end
@@ -99,6 +101,7 @@ RSpec.describe DataDictionary::Field, type: :model do
     before { model.alternate_id! }
 
     its(:solr_field) { is_expected.to eq('abc123_label_ssim') }
+    its(:solr_search_field) { is_expected.to eq('abc123_label_tesim') }
     its(:change_set_property_type) { is_expected.to eq(Valkyrie::Types::Set.of(Valkyrie::Types::ID)) }
     its(:resource_property_type) { is_expected.to eq(Valkyrie::Types::Set.of(Valkyrie::Types::ID)) }
   end
@@ -107,6 +110,7 @@ RSpec.describe DataDictionary::Field, type: :model do
     before { model.valkyrie_id! }
 
     its(:solr_field) { is_expected.to eq('abc123_label_ssim') }
+    its(:solr_search_field) { is_expected.to eq('abc123_label_tesim') }
     its(:change_set_property_type) { is_expected.to eq(Valkyrie::Types::ID.optional) }
     its(:resource_property_type) { is_expected.to eq(Valkyrie::Types::ID.optional) }
   end
@@ -115,6 +119,7 @@ RSpec.describe DataDictionary::Field, type: :model do
     before { model.creator! }
 
     its(:solr_field) { is_expected.to eq('abc123_label_tesim') }
+    its(:solr_search_field) { is_expected.to eq('abc123_label_tesim') }
     its(:change_set_property_type) { is_expected.to eq(Valkyrie::Types::Set.optional) }
     its(:resource_property_type) { is_expected.to eq(Valkyrie::Types::Set.meta(ordered: true)) }
   end
