@@ -20,4 +20,6 @@ RSpec.describe Collection::Archival, type: :feature do
   end
 
   it_behaves_like 'a collection with works'
+
+  it_behaves_like 'a collection editable only by admins'
 end

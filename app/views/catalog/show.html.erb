@@ -25,7 +25,7 @@
   </div>
 </div>
 
-<%= link_to t('cho.catalog.edit'), edit_cho_resource_path %>
+<%= link_to(t('cho.catalog.edit'), edit_cho_resource_path) if can? :edit, @document %>
 
 <% content_for(:sidebar) do %>
   <%= render_document_sidebar_partial %>

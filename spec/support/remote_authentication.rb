@@ -32,11 +32,21 @@ RSpec.configure do |config|
   config.before(type: :controller) do |example|
     return if example.metadata.key?(:with_public_user)
 
-    request.headers['REMOTE_USER'] = create(:admin).login
+    request.headers['REMOTE_USER'] = if example.metadata.key?(:with_psu_user)
+                                       create(:psu_user).login
+                                     else
+                                       create(:admin).login
+                                     end
   end
 
   config.before(type: :feature) do |example|
-    sign_in(create(:admin)) unless example.metadata.key?(:with_public_user)
+    next if example.metadata.key?(:with_public_user)
+
+    if example.metadata.key?(:with_psu_user)
+      sign_in(create(:psu_user))
+    else
+      sign_in(create(:admin))
+    end
   end
 
   config.include Devise::Test::ControllerHelpers, type: :controller

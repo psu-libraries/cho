@@ -11,6 +11,10 @@ RSpec.describe ApplicationController, type: :request do
       def index
         render body: 'Hooray!'
       end
+
+      def edit
+        render body: 'Hooray!'
+      end
     end
 
     Rails.application.routes.draw do
@@ -23,7 +27,7 @@ RSpec.describe ApplicationController, type: :request do
     Rails.application.reload_routes!
   end
 
-  describe 'GET' do
+  describe 'GET index' do
     before { get examples_path, headers: headers }
 
     context 'with a public user' do
@@ -34,15 +38,47 @@ RSpec.describe ApplicationController, type: :request do
     end
 
     context 'with an authenticated non-admin user' do
-      let(:headers) { { 'REMOTE_USER' => 'user' } }
+      let(:user) { create(:psu_user) }
+      let(:headers) { { 'REMOTE_USER' => user.login } }
 
-      it { is_expected.to have_http_status(:forbidden) }
-      its(:body) { is_expected.to include('Access to CHO is restricted to certain users') }
+      it { is_expected.to have_http_status(:success) }
+      its(:body) { is_expected.to eq('Hooray!') }
     end
 
     context 'with an authenticated admin user' do
       let(:admin) { create(:admin) }
       let(:headers) { { 'REMOTE_USER' => admin.login } }
+
+      it { is_expected.to have_http_status(:success) }
+      its(:body) { is_expected.to eq('Hooray!') }
+    end
+  end
+
+  describe 'GET edit' do
+    before { get edit_example_path(1), headers: headers }
+
+    context 'with a public user' do
+      let(:headers) { {} }
+
+      before { request }
+
+      it { is_expected.to have_http_status(:unauthorized) }
+      its(:body) { is_expected.to eq('<h1>Unauthorized</h1><p>Please <a href="/devise_remote/login">login</a></p>') }
+    end
+
+    context 'with an authenticated non-admin user' do
+      let(:user) { create(:psu_user) }
+      let(:headers) { { 'REMOTE_USER' => user.login } }
+
+      it { is_expected.to have_http_status(:forbidden) }
+      its(:body) { is_expected.to match(/You are not allowed to access this page/) }
+    end
+
+    context 'with an authenticated admin user' do
+      let(:admin) { create(:admin) }
+      let(:headers) { { 'REMOTE_USER' => admin.login } }
+
+      before { request }
 
       it { is_expected.to have_http_status(:success) }
       its(:body) { is_expected.to eq('Hooray!') }

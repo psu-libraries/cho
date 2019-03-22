@@ -22,5 +22,11 @@ FactoryBot.define do
       group_list { 'umg/up.libraries.cho-admin' }
       groups_last_update { Time.now }
     end
+
+    factory :psu_user do
+      # This is a fake group to contrast with an actual admin group
+      group_list { 'umg/up.libraries.staff' }
+      groups_last_update { Time.now }
+    end
   end
 end
