@@ -8,7 +8,6 @@ class ApplicationController < ActionController::Base
   layout 'blacklight'
 
   protect_from_forgery with: :exception
-  before_action :authenticate_user!
   authorize_resource class: false
 
   rescue_from CanCan::AccessDenied do |_exception|

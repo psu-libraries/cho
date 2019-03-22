@@ -18,8 +18,10 @@ RSpec.describe Ability do
     it { is_expected.to be_able_to(:read, :all) }
     it { is_expected.to be_able_to(:manage, :bookmark) }
     it { is_expected.to be_able_to(:manage, :catalog) }
+    it { is_expected.to be_able_to(:manage, :devise_remote) }
     it { is_expected.to be_able_to(:manage, :download) }
     it { is_expected.to be_able_to(:manage, :search_history) }
+    it { is_expected.to be_able_to(:manage, :session) }
     it { is_expected.not_to be_able_to(:manage, :all) }
   end
 
@@ -29,8 +31,10 @@ RSpec.describe Ability do
     it { is_expected.to be_able_to(:read, :all) }
     it { is_expected.to be_able_to(:manage, :bookmark) }
     it { is_expected.to be_able_to(:manage, :catalog) }
+    it { is_expected.to be_able_to(:manage, :devise_remote) }
     it { is_expected.to be_able_to(:manage, :download) }
     it { is_expected.to be_able_to(:manage, :search_history) }
+    it { is_expected.to be_able_to(:manage, :session) }
     it { is_expected.not_to be_able_to(:manage, :all) }
   end
 end

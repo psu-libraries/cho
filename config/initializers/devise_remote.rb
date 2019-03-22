@@ -5,7 +5,6 @@ Warden::Strategies.add(:http_header_authenticatable, Devise::Strategies::HttpHea
 Devise.setup do |config|
   config.warden do |manager|
     manager.default_strategies(scope: :user).unshift :http_header_authenticatable
-    manager.failure_app = UnauthorizedController
   end
 end
 

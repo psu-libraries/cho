@@ -43,4 +43,23 @@ RSpec.describe 'Home Page', type: :feature do
       expect(page).not_to have_content('New Document Resource')
     end
   end
+
+  context 'as a public user', :with_public_user do
+    it 'does not link to management or resource creation, has login link' do
+      visit('/')
+      expect(page).to have_content('Cultural Heritage Objects')
+      expect(page).to have_link('Skip to main content')
+      expect(page).to have_selector('main')
+      expect(page).to have_link('Login')
+
+      expect(page).not_to have_link('Data Dictionary')
+      expect(page).not_to have_link('Create Collection')
+      expect(page).not_to have_content('New Archival Collection')
+      expect(page).not_to have_content('New Library Collection')
+      expect(page).not_to have_content('New Curated Collection')
+      expect(page).not_to have_link('Create Resource')
+      expect(page).not_to have_content('New Generic Resource')
+      expect(page).not_to have_content('New Document Resource')
+    end
+  end
 end

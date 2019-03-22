@@ -33,8 +33,8 @@ RSpec.describe ApplicationController, type: :request do
     context 'with a public user' do
       let(:headers) { {} }
 
-      it { is_expected.to have_http_status(:unauthorized) }
-      its(:body) { is_expected.to eq('<h1>Unauthorized</h1><p>Please <a href="/devise_remote/login">login</a></p>') }
+      it { is_expected.to have_http_status(:success) }
+      its(:body) { is_expected.to eq('Hooray!') }
     end
 
     context 'with an authenticated non-admin user' do
@@ -60,10 +60,8 @@ RSpec.describe ApplicationController, type: :request do
     context 'with a public user' do
       let(:headers) { {} }
 
-      before { request }
-
-      it { is_expected.to have_http_status(:unauthorized) }
-      its(:body) { is_expected.to eq('<h1>Unauthorized</h1><p>Please <a href="/devise_remote/login">login</a></p>') }
+      it { is_expected.to have_http_status(:forbidden) }
+      its(:body) { is_expected.to match(/You are not allowed to access this page/) }
     end
 
     context 'with an authenticated non-admin user' do
@@ -77,8 +75,6 @@ RSpec.describe ApplicationController, type: :request do
     context 'with an authenticated admin user' do
       let(:admin) { create(:admin) }
       let(:headers) { { 'REMOTE_USER' => admin.login } }
-
-      before { request }
 
       it { is_expected.to have_http_status(:success) }
       its(:body) { is_expected.to eq('Hooray!') }
