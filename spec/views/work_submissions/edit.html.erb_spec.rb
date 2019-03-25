@@ -75,7 +75,7 @@ RSpec.describe 'work/submissions/edit', type: :view do
       assert_select 'textarea[name=?]', 'work_submission[description]'
       assert_select 'label[for=?]', "work_submission_#{specific_field}", text: display_label
       assert_select 'input[name=?]', "work_submission[#{specific_field}]"
-      assert_select 'label', 'File Selection'
+      assert_select 'label[for=?]', 'work_submission_file', false
     end
   end
 end
