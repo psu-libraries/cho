@@ -46,3 +46,4 @@ Metrics/BlockLength:
 Rails/Presence:
   Exclude:
     - 'app/cho/indexing/creator.rb'
+    - 'app/blacklight/metadata_field_presenter.rb'

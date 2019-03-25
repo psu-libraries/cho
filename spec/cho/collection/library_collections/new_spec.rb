@@ -31,4 +31,34 @@ RSpec.describe Collection::Library, type: :feature do
       expect(page).to have_content('Alternate ids existing-id already exists')
     end
   end
+
+  context 'when filling in all the collection metadata' do
+    let!(:agent) { create(:agent, :generate_name) }
+    let(:title) { Faker::Company.name }
+    let(:subtitle) { Faker::Hipster.sentence }
+    let(:description) { Faker::Hipster.sentence }
+    let(:identifier) { Faker::Number.leading_zero_number(10) }
+    let(:acknowledgments) { Faker::Lorem.paragraph }
+
+    it 'creates a new library collection' do
+      visit(new_library_collection_path)
+      fill_in('library_collection[title]', with: title)
+      fill_in('library_collection[subtitle]', with: subtitle)
+      fill_in('library_collection[description]', with: description)
+      fill_in('library_collection[alternate_ids]', with: identifier)
+      fill_in('library_collection[acknowledgments]', with: acknowledgments)
+      select(agent, from: 'library_collection[creator][agent]')
+      select('blasting', from: 'library_collection[creator][role]')
+      choose('Mediated')
+      choose('PSU Access')
+      click_button('Create Library collection')
+      expect(page).to have_content(title)
+      expect(page).to have_content(subtitle)
+      expect(page).to have_content(description)
+      expect(page).to have_content(identifier)
+      expect(page).to have_content("#{agent.display_name}, blasting")
+      expect(page).to have_selector('h2', text: 'Acknowledgments')
+      expect(page).to have_content(acknowledgments)
+    end
+  end
 end

@@ -7,6 +7,7 @@ date_created,string,required_to_publish,no_validation,true,no_vocabulary,,Date C
 subject,string,optional,no_validation,true,no_vocabulary,,Subject,no_transformation,no_facet,help me,true
 location,string,optional,no_validation,true,no_vocabulary,,Location,no_transformation,no_facet,help me,true
 description,text,optional,no_validation,true,no_vocabulary,,Description,no_transformation,no_facet,help me,true
+acknowledgments,text,optional,no_validation,true,no_vocabulary,,,paragraph_heading,no_facet,help me,false
 genre,string,required_to_publish,no_validation,true,no_vocabulary,,Genre,no_transformation,no_facet,help me,true
 collection,string,required_to_publish,no_validation,true,no_vocabulary,,Collection,no_transformation,no_facet,help me,true
 repository,string,required_to_publish,no_validation,true,no_vocabulary,,Repository,no_transformation,no_facet,help me,true
