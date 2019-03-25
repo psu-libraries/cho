@@ -36,7 +36,7 @@ module DataDictionary::FieldsForChangeSet
 
     def validate_field(field)
       validation_name = DataDictionary::Field.where(label: field.to_s).first.validation.to_sym
-      validation_instance = Validation::Factory.validators[validation_name]
+      validation_instance = Validation::Factory.validators[validation_name].new(change_set: self, field: field)
       unless validation_instance.validate(self[field])
         validation_instance.errors.each { |error| errors.add(field, error) }
       end

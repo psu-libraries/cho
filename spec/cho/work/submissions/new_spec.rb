@@ -56,7 +56,7 @@ RSpec.describe Work::Submission, type: :feature do
     end
   end
 
-  context 'without providing a title' do
+  context 'missing or incorrect metadata' do
     let!(:archival_collection) { create(:archival_collection, title: 'Sample Collection') }
 
     it 'reports the errors' do
