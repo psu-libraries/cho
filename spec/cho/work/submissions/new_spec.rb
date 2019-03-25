@@ -183,12 +183,6 @@ RSpec.describe Work::Submission, type: :feature do
       expect(page).to have_content('work1_00001_02_preservation.tif')
       expect(page).to have_content('work1_00002_01_preservation.tif')
       expect(page).to have_content('work1_00002_02_preservation.tif')
-
-      # Check thumbnail display on the file set
-      click_link('work1_access.pdf')
-      expect(page).to have_selector('h1', text: 'work1_access.pdf')
-      expect(page).to have_xpath("//img[@src='/files/work1_thumb.jpg']")
-      expect(page).to have_xpath("//img[@alt='Work1 thumb']")
     end
   end
 
@@ -228,20 +222,12 @@ RSpec.describe Work::Submission, type: :feature do
       expect(page).to have_link('Edit')
       expect(page).to have_selector('h2', text: 'Parts')
       expect(page).to have_link('work1_00001_preservation.tif')
-      expect(page).to have_link('work1_access.pdf')
 
       # Check thumbnail display on the preservation file set
       click_link('work1_00001_preservation.tif')
       expect(page).to have_selector('h1', text: 'work1_00001_preservation.tif')
       expect(page).to have_xpath("//img[@src='/files/work1_00001_thumb.png']")
       expect(page).to have_xpath("//img[@alt='Work1 00001 thumb']")
-
-      # Thumbnail does not appear on the representative file set
-      click_link('Work and file sets with an alternate thumbnail')
-      click_link('work1_access.pdf')
-      expect(page).to have_selector('h1', text: 'work1_access.pdf')
-      expect(page).not_to have_xpath("//img[@src='/files/work1_00001_thumb.png']")
-      expect(page).not_to have_xpath("//img[@alt='Work1 00001 thumb']")
     end
   end
 end

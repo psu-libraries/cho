@@ -5,10 +5,14 @@
 require Rails.root.join('spec', 'support', 'seed_map')
 
 FactoryBot.define do
-  factory :file_set, class: Work::FileSet do
+  factory :file_set, aliases: [:representative_file_set], class: Work::FileSet do
     title { 'Original File Name' }
     transient do
       work { nil }
+    end
+
+    factory :preservation_file_set do
+      alternate_ids { [rand(1..1_000)] }
     end
 
     to_create do |resource, attributes|

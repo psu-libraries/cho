@@ -197,7 +197,9 @@ RSpec.describe 'Preview of CSV Update', type: :feature do
       work = SolrDocument.find('work1')
       expect(work['creator_tesim']).to contain_exactly(agent.display_name)
       expect(work['creator_role_ssim']).to be_nil
-      expect(work.file_sets.map(&:title).flatten).to match_array(titles.drop(1))
+      expect(work.file_sets.map(&:title).flatten).to contain_exactly(
+        'Page Four', 'Page One', 'Page Three', 'Page Two'
+      )
       expect(work.file_sets.map(&:created).flatten.uniq.compact).to contain_exactly('2019')
       expect(work.file_sets.map(&:creator).flatten.uniq.first).to eq(
         role: 'http://id.loc.gov/vocabulary/relators/cli', agent: agent.id.to_s

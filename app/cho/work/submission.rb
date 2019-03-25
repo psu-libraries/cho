@@ -42,6 +42,11 @@ module Work
       @file_sets ||= member_ids.map { |id| Work::FileSet.find(id) }
     end
 
+    def preservation_file_sets
+      return file_sets if file_sets.count == 1
+      file_sets.reject(&:representative?)
+    end
+
     def representative_file_set
       file_sets.select(&:representative?).first || file_sets.first || NullRepresentativeFileSet.new
     end
