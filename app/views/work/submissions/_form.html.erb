@@ -5,10 +5,11 @@
   <%= form.hidden_field :work_type_id, value: work_form.work_type_id %>
   <%= form.hidden_field :optimistic_lock_token, multiple: true, value: work_form.optimistic_lock_token %>
 
-  <%= form.hidden_field :file, value: work_form.model.cached_file_data %>
-
-  <%= form.label :file, t('cho.form.file_selection') %>
-  <%= form.file_field :file %>
+  <% if form.object.new_record %>
+    <%= form.hidden_field :file, value: work_form.model.cached_file_data %>
+    <%= form.label :file, t('cho.form.file_selection') %>
+    <%= form.file_field :file %>
+  <% end %>
 
   <%= render 'errors', work: work_form if work_form.errors.any? %>
 

@@ -17,6 +17,7 @@ RSpec.describe 'Editing works', type: :feature do
       expect(page).to have_selector('h2', text: 'Work to edit')
       expect(page).to have_link('Show')
       expect(page).to have_field('Description', type: 'textarea', with: nil)
+      expect(page).not_to have_field('work_submission[file]')
       fill_in('work_submission[title]', with: 'Updated Work Title')
       fill_in('work_submission[description]', with: 'Updated description')
       click_button('Update Resource')
