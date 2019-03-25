@@ -46,15 +46,28 @@ RSpec.describe DataDictionary::CsvImporter do
   context 'incorrect fields' do
     let(:csv_field1) do
       'abc123_label,date,recommended,unknown_validation,false,no_vocabulary,abc123,'\
-      "My Abc123,no_transformation\n"
+      "My Abc123,no_transformation,,false\n"
     end
 
-    let(:file) { StringIO.new(csv_field1) }
+    let(:file) { StringIO.new(header + csv_field1) }
 
     it 'uses the default' do
       expect {
         importer.import
       }.to change(DataDictionary::Field, :count).by(0).and(raise_error(Dry::Struct::Error))
+    end
+
+    context 'invalid transformation' do
+      let(:csv_field1) do
+        'abc123_label,date,recommended,no_validation,false,no_vocabulary,abc123,'\
+      "My Abc123,unknown_transformation,no_facet,,false\n"
+      end
+
+      it 'uses the default' do
+        expect {
+          importer.import
+        }.to change(DataDictionary::Field, :count).by(0).and(raise_error(Dry::Struct::Error))
+      end
     end
   end
 
