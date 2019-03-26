@@ -30,9 +30,9 @@ module Work
       end
 
       def collection_labels_for_ids
-        return unless resource.respond_to?(:member_of_collection_ids)
+        return unless resource.respond_to?(:home_collection_id)
 
-        Array.wrap(resource.member_of_collection_ids).map do |id|
+        Array.wrap(resource.home_collection_id).map do |id|
           SolrDocument.find(id).send(title_field_method)
         end.flatten
       end

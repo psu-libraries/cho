@@ -25,7 +25,7 @@ RSpec.describe Work::SubmissionChangeSet do
     end
 
     it 'has a single parent collection' do
-      expect(change_set).not_to be_multiple(:member_of_collection_ids)
+      expect(change_set).not_to be_multiple(:home_collection_id)
     end
 
     it 'has multiple file sets' do
@@ -50,7 +50,7 @@ RSpec.describe Work::SubmissionChangeSet do
     its(:work_type_id) { is_expected.to eq(Valkyrie::ID.new(nil)) }
     its(:work_type) { is_expected.to be_nil }
     its(:file) { is_expected.to be_nil }
-    its(:member_of_collection_ids) { is_expected.to be_nil }
+    its(:home_collection_id) { is_expected.to be_nil }
     its(:member_ids) { is_expected.to be_empty }
     its(:batch_id) { is_expected.to be_nil }
     its(:import_work) { is_expected.to be_nil }
@@ -81,36 +81,36 @@ RSpec.describe Work::SubmissionChangeSet do
     end
 
     context 'with non-existent parents' do
-      let(:params) { { work_type_id: work_type_id, title: 'Title', member_of_collection_ids: 'nothere' } }
+      let(:params) { { work_type_id: work_type_id, title: 'Title', home_collection_id: 'nothere' } }
 
-      its(:full_messages) { is_expected.to include('Member of collection ids nothere does not exist') }
+      its(:full_messages) { is_expected.to include('Home collection nothere does not exist') }
     end
 
     context 'with existing parents and all required fields' do
       let(:collection) { create :archival_collection }
-      let(:params) { { work_type_id: work_type_id, title: 'Title', member_of_collection_ids: collection.id } }
+      let(:params) { { work_type_id: work_type_id, title: 'Title', home_collection_id: collection.id } }
 
       its(:full_messages) { is_expected.to be_empty }
     end
   end
 
-  describe '#member_of_collection_ids' do
-    subject(:ids) { change_set.member_of_collection_ids }
+  describe '#home_collection_id' do
+    subject(:ids) { change_set.home_collection_id }
 
     context 'with an id' do
-      before { change_set.validate(member_of_collection_ids: '1') }
+      before { change_set.validate(home_collection_id: '1') }
 
       it { is_expected.to be_kind_of(Valkyrie::ID) }
     end
 
     context 'with a null id' do
-      before { change_set.validate(member_of_collection_ids: nil) }
+      before { change_set.validate(home_collection_id: nil) }
 
       it { is_expected.to be_nil }
     end
 
     context 'with an empty id' do
-      before { change_set.validate(member_of_collection_ids: '') }
+      before { change_set.validate(home_collection_id: '') }
 
       it 'does not cast empty strings to ids' do
         pending('.optional should not cast ids for empty strings' \
@@ -174,7 +174,7 @@ RSpec.describe Work::SubmissionChangeSet do
             'alternate_ids',
             'creator',
             'generic_field',
-            'member_of_collection_ids',
+            'home_collection_id',
             'created'
           ]
         )
@@ -195,7 +195,7 @@ RSpec.describe Work::SubmissionChangeSet do
               'description',
               'alternate_ids',
               'creator',
-              'member_of_collection_ids',
+              'home_collection_id',
               'created'
             ]
           )
@@ -211,7 +211,7 @@ RSpec.describe Work::SubmissionChangeSet do
                                                                               'description',
                                                                               'generic_field',
                                                                               'alternate_ids',
-                                                                              'member_of_collection_ids',
+                                                                              'home_collection_id',
                                                                               'created',
                                                                               'title',
                                                                               'creator')

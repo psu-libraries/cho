@@ -9,7 +9,7 @@ RSpec.describe Work::Submission, type: :feature do
     let(:collection) { create(:library_collection) }
     let(:work) do create(:work,
       title: 'No files',
-      member_of_collection_ids: [collection.id],
+      home_collection_id: [collection.id],
       work_type_id: work_type.id)
     end
 
@@ -20,8 +20,8 @@ RSpec.describe Work::Submission, type: :feature do
         expect(page).to have_blacklight_field('title_tesim').with('No files')
         expect(page).to have_blacklight_label('work_type_ssim').with('Resource Type')
         expect(page).to have_blacklight_field('work_type_ssim').with('Document')
-        expect(page).to have_blacklight_label('member_of_collection_ids_tesim').with('Collections')
-        expect(page).to have_blacklight_field('member_of_collection_ids_tesim').with('Library Collection')
+        expect(page).to have_blacklight_label('home_collection_id_tesim').with('Collection')
+        expect(page).to have_blacklight_field('home_collection_id_tesim').with('Library Collection')
         expect(page).to have_link('Library Collection')
       end
       expect(page).not_to have_selector('h2', text: 'Parts')

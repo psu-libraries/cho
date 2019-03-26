@@ -84,7 +84,7 @@ module Metrics
           cataloger: [Faker::SiliconValley.character],
           date_cataloged: [Faker::Time.between(30.days.ago, Date.today, :day).strftime('%Y-%m-%d')],
           work_type_id: work_type_id,
-          member_of_collection_ids: [collection.id]
+          home_collection_id: [collection.id]
         }
       end
 

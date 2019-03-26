@@ -15,7 +15,7 @@ RSpec.describe Schema::WorkTypeConfiguration, type: :model do
 
     it do
       expect(config).to eq(
-        'member_of_collection_ids' => { 'order_index' => 2, 'requirement_designation' => 'required' },
+        'home_collection_id' => { 'order_index' => 2, 'requirement_designation' => 'required' },
         'still_image_field' => { 'display_name' => 'Photograph', 'order_index' => 1 }
       )
     end
@@ -32,7 +32,7 @@ RSpec.describe Schema::WorkTypeConfiguration, type: :model do
       it do
         expect(config).to eq(
           'audio_field' => { 'order_index' => 1 },
-          'member_of_collection_ids' => { 'order_index' => 2, 'requirement_designation' => 'required' },
+          'home_collection_id' => { 'order_index' => 2, 'requirement_designation' => 'required' },
           'subtitle' => { 'display_name' => 'Additional Info', 'order_index' => 25 }
         )
       end
@@ -51,7 +51,7 @@ RSpec.describe Schema::WorkTypeConfiguration, type: :model do
       expect(schema_fields[0].work_type).to eq(work_type)
       expect(schema_fields[0].requirement_designation).to eq('optional')
       expect(schema_fields[1].order_index).to eq(7)
-      expect(schema_fields[1].label).to eq('member_of_collection_ids')
+      expect(schema_fields[1].label).to eq('home_collection_id')
       expect(schema_fields[1].work_type).to eq(work_type)
       expect(schema_fields[1].requirement_designation).to eq('required')
     end
@@ -68,9 +68,9 @@ RSpec.describe Schema::WorkTypeConfiguration, type: :model do
       it 'creates a field based on the work type' do
         expect(schema_fields.count).to eq(3)
         expect(schema_fields.map(&:order_index)).to contain_exactly(25, 6, 7)
-        expect(schema_fields.map(&:label)).to contain_exactly('subtitle', 'audio_field', 'member_of_collection_ids')
+        expect(schema_fields.map(&:label)).to contain_exactly('subtitle', 'audio_field', 'home_collection_id')
         expect(schema_fields.map(&:work_type).uniq).to contain_exactly(work_type)
-        expect(schema_fields.map(&:display_name)).to contain_exactly('Additional Info', nil, 'Collections')
+        expect(schema_fields.map(&:display_name)).to contain_exactly('Additional Info', nil, 'Collection')
       end
     end
   end

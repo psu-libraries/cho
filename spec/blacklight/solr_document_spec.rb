@@ -38,7 +38,7 @@ RSpec.describe SolrDocument, type: :model do
     let(:collection) { create(:archival_collection) }
 
     let(:document) do
-      { 'internal_resource_tsim' => 'MyResource', member_of_collection_ids_ssim: [collection.id.to_s] }
+      { 'internal_resource_tsim' => 'MyResource', home_collection_id_ssim: [collection.id.to_s] }
     end
 
     its(:to_h) { is_expected.to include('title_tesim' => ['Archival Collection'],
@@ -68,28 +68,28 @@ RSpec.describe SolrDocument, type: :model do
 
     let(:csv_header) do
       'id,work_type,title,subtitle,description,alternate_ids,creator,audio_field,created,document_field,'\
-        'generic_field,map_field,member_of_collection_ids,moving_image_field,still_image_field'
+        'generic_field,home_collection_id,map_field,moving_image_field,still_image_field'
     end
 
     let(:document) do
       {
         'internal_resource_tsim' => 'MyResource',
         id: 'abc123',
-        member_of_collection_ids_ssim: ['xyx789'],
+        home_collection_id_ssim: ['xyx789'],
         title_tesim: ['my_title'],
         generic_field_tesim: ['value1', 'value2']
       }
     end
 
-    it { is_expected.to eq("#{csv_header}\nabc123,,my_title,,,,,,,,value1||value2,,xyx789,,\n") }
+    it { is_expected.to eq("#{csv_header}\nabc123,,my_title,,,,,,,,value1||value2,xyx789,,,\n") }
 
     context 'with a collection containing works and file sets' do
       let(:collection) { create :library_collection }
-      let(:work) { create :work, :with_file, member_of_collection_ids: [collection.id], title: 'Work One' }
-      let(:work1_csv) { "#{work.id},Generic,Work One,,,,,,,,,,#{collection.id},," }
+      let(:work) { create :work, :with_file, home_collection_id: [collection.id], title: 'Work One' }
+      let(:work1_csv) { "#{work.id},Generic,Work One,,,,,,,,,#{collection.id},,," }
       let(:file_set1_csv) { "#{work.member_ids.first},,hello_world.txt,,,,,,,,,,,," }
-      let(:work2) { create :work, :with_file, member_of_collection_ids: [collection.id], title: 'Work Two' }
-      let(:work2_csv) { "#{work2.id},Generic,Work Two,,,,,,,,,,#{collection.id},," }
+      let(:work2) { create :work, :with_file, home_collection_id: [collection.id], title: 'Work Two' }
+      let(:work2_csv) { "#{work2.id},Generic,Work Two,,,,,,,,,#{collection.id},,," }
       let(:file_set2_csv) { "#{work2.member_ids.first},,hello_world.txt,,,,,,,,,,,," }
 
       let(:document) do
@@ -114,7 +114,7 @@ RSpec.describe SolrDocument, type: :model do
         {
           'internal_resource_tsim' => 'MyResource',
           id: 'abc123',
-          member_of_collection_ids_ssim: ['xyx789'],
+          home_collection_id_ssim: ['xyx789'],
           member_ids_ssim: ["id-#{file_set.id}"],
           title_tesim: ['my_title'],
           generic_field_tesim: ['value1', 'value2']
@@ -122,7 +122,7 @@ RSpec.describe SolrDocument, type: :model do
       end
 
       let(:file_set) { create(:file_set) }
-      let(:work_csv) { 'abc123,,my_title,,,,,,,,value1||value2,,xyx789,,' }
+      let(:work_csv) { 'abc123,,my_title,,,,,,,,value1||value2,xyx789,,,' }
       let(:file_set_csv) { "#{file_set.id},,Original File Name,,,,,,,,,,,," }
 
       before { file_set }

@@ -13,7 +13,7 @@ RSpec.describe Transaction::Operations::Shared::Save do
 
       let(:adapter) { Valkyrie::MetadataAdapter.find(:indexing_persister) }
 
-      let(:resource) { build :work_submission, member_of_collection_ids: [collection.id], title: 'My Title' }
+      let(:resource) { build :work_submission, home_collection_id: [collection.id], title: 'My Title' }
 
       its(:class) { is_expected.to eq(Work::Submission) }
       its(:id) { is_expected.not_to be_empty }
@@ -25,7 +25,7 @@ RSpec.describe Transaction::Operations::Shared::Save do
 
       let(:adapter) { IndexingAdapter.new(metadata_adapter: nil, index_adapter: nil) }
       let(:persister) { IndexingAdapter::Persister.new(metadata_adapter: nil) }
-      let(:resource) { build :work_submission, member_of_collection_ids: [collection.id], title: 'My Title' }
+      let(:resource) { build :work_submission, home_collection_id: [collection.id], title: 'My Title' }
 
       before do
         allow(adapter).to receive(:persister).and_return(persister)

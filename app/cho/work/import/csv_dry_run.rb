@@ -9,7 +9,7 @@ module Work
     #   change_set_list = CSVDryRun.run('csv_data.csv')
     #
     #   The first line of the csv file is expected to be the header.
-    #   The header items correspond to a field in the data dictionary: member_of_collection_ids, work_type_id, title.
+    #   The header items correspond to a field in the data dictionary: home_collection_id, work_type_id, title.
     #
     class CsvDryRun
       include Csv::DryRunBehavior
@@ -80,7 +80,7 @@ module Work
         # @note fields that are valid csv column names but are not found in the data dictionary
         def specialized_fields
           [
-            'member_of_collection_ids',
+            'home_collection_id',
             'work_type',
             'work_type_id',
             'batch_id',

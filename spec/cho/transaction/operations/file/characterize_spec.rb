@@ -11,7 +11,7 @@ RSpec.describe Transaction::Operations::File::Characterize do
   describe '#call' do
     context 'with a file' do
       let(:resource) { Work::File.all.first }
-      let(:work_resource) { build(:work, title: 'with a file', member_of_collection_ids: [collection.id]) }
+      let(:work_resource) { build(:work, title: 'with a file', home_collection_id: [collection.id]) }
       let(:work_change_set) { Work::SubmissionChangeSet.new(work_resource) }
       let(:temp_file) { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'hello_world.txt')) }
       let(:resource_params) { { label: 'abc123', file: temp_file } }

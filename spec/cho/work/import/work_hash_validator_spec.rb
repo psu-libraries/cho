@@ -19,7 +19,7 @@ RSpec.describe Work::Import::WorkHashValidator do
     context 'with a new work' do
       let(:work_hash) do
         {
-          'member_of_collection_ids' => [collection.id],
+          'home_collection_id' => [collection.id],
           'work_type_id' => generic_work_type.id,
           'title' => 'my awesome work',
           'description' => ''
@@ -31,13 +31,13 @@ RSpec.describe Work::Import::WorkHashValidator do
         expect(change_set).to be_valid
         expect(change_set.model).to be_a(Work::Submission)
         expect(change_set.work_type_id).to eq(generic_work_type.id)
-        expect(change_set.member_of_collection_ids).to eq(collection.id)
+        expect(change_set.home_collection_id).to eq(collection.id)
       end
 
       context 'with a work type properly cased' do
         let(:work_hash) do
           {
-            'member_of_collection_ids' => [collection.id],
+            'home_collection_id' => [collection.id],
             'work_type' => 'Still Image',
             'title' => 'my awesome work',
             'description' => ''
@@ -49,14 +49,14 @@ RSpec.describe Work::Import::WorkHashValidator do
           expect(change_set).to be_valid
           expect(change_set.model).to be_a(Work::Submission)
           expect(change_set.work_type_id).to eq(still_image_work_type.id)
-          expect(change_set.member_of_collection_ids).to eq(collection.id)
+          expect(change_set.home_collection_id).to eq(collection.id)
         end
       end
 
       context 'with a work type improperly upper cased' do
         let(:work_hash) do
           {
-            'member_of_collection_ids' => [collection.id],
+            'home_collection_id' => [collection.id],
             'work_type' => 'GENERIC',
             'title' => 'my awesome work',
             'description' => ''
@@ -68,14 +68,14 @@ RSpec.describe Work::Import::WorkHashValidator do
           expect(change_set).to be_valid
           expect(change_set.model).to be_a(Work::Submission)
           expect(change_set.work_type_id).to eq(generic_work_type.id)
-          expect(change_set.member_of_collection_ids).to eq(collection.id)
+          expect(change_set.home_collection_id).to eq(collection.id)
         end
       end
 
       context 'with a work type improperly lower cased' do
         let(:work_hash) do
           {
-            'member_of_collection_ids' => [collection.id],
+            'home_collection_id' => [collection.id],
             'work_type' => 'geNeric',
             'title' => 'my awesome work',
             'description' => ''
@@ -87,13 +87,13 @@ RSpec.describe Work::Import::WorkHashValidator do
           expect(change_set).to be_valid
           expect(change_set.model).to be_a(Work::Submission)
           expect(change_set.work_type_id).to eq(generic_work_type.id)
-          expect(change_set.member_of_collection_ids).to eq(collection.id)
+          expect(change_set.home_collection_id).to eq(collection.id)
         end
       end
     end
 
     context 'invalid new work' do
-      let(:work_hash) { { 'member_of_collection_ids' => [collection.id], 'work_type_id' => generic_work_type.id } }
+      let(:work_hash) { { 'home_collection_id' => [collection.id], 'work_type_id' => generic_work_type.id } }
 
       it 'is not valid and has errors' do
         expect(change_set).not_to be_valid
@@ -107,7 +107,7 @@ RSpec.describe Work::Import::WorkHashValidator do
       let(:work_hash) do
         {
           'id' => work.id,
-          'member_of_collection_ids' => [collection.id],
+          'home_collection_id' => [collection.id],
           'title' => 'my awesome updated work',
           'description' => 'updated description'
         }
@@ -118,7 +118,7 @@ RSpec.describe Work::Import::WorkHashValidator do
         expect(change_set).to be_valid
         expect(change_set.model).to be_a(Work::Submission)
         expect(change_set.work_type_id).to eq(generic_work_type.id)
-        expect(change_set.member_of_collection_ids).to eq(collection.id)
+        expect(change_set.home_collection_id).to eq(collection.id)
         expect(change_set.id).to eq(work.id)
       end
 
@@ -126,7 +126,7 @@ RSpec.describe Work::Import::WorkHashValidator do
         let(:work_hash) do
           {
             'id' => work.id,
-            'member_of_collection_ids' => [collection.id],
+            'home_collection_id' => [collection.id],
             'title' => 'my awesome updated work',
             'description' => 'updated description',
             'work_type' => 'Audio'
@@ -145,7 +145,7 @@ RSpec.describe Work::Import::WorkHashValidator do
       let(:work_hash) do
         {
           'id' => 'foo',
-          'member_of_collection_ids' => [collection.id],
+          'home_collection_id' => [collection.id],
           'title' => 'my awesome updated work',
           'description' => 'updated description'
         }

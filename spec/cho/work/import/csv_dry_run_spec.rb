@@ -39,7 +39,7 @@ RSpec.describe Work::Import::CsvDryRun do
     context 'with valid data' do
       let(:csv_file) do
         CsvFactory::Generic.new(
-          member_of_collection_ids: [collection.id], work_type_id: [work_type_id], title: ['My Awesome Work']
+          home_collection_id: [collection.id], work_type_id: [work_type_id], title: ['My Awesome Work']
         )
       end
 
@@ -54,7 +54,7 @@ RSpec.describe Work::Import::CsvDryRun do
     context 'with invalid data' do
       let(:csv_file) do
         CsvFactory::Generic.new(
-          member_of_collection_ids: [collection.id], work_type_id: [work_type_id], title: [nil]
+          home_collection_id: [collection.id], work_type_id: [work_type_id], title: [nil]
         )
       end
 
@@ -74,14 +74,14 @@ RSpec.describe Work::Import::CsvDryRun do
         expect(dry_run_results).to be_a Array
         expect(dry_run_results.count).to eq(1)
         expect(dry_run_results.first).not_to be_valid
-        expect(dry_run_results.first.errors.messages).to eq(member_of_collection_ids: ['id-blah-blah does not exist'])
+        expect(dry_run_results.first.errors.messages).to eq(home_collection_id: ['id-blah-blah does not exist'])
       end
     end
 
     context 'with both valid and invalid data' do
       let(:csv_file) do
         CsvFactory::Generic.new(
-          member_of_collection_ids: [collection.id, collection.id, collection.id],
+          home_collection_id: [collection.id, collection.id, collection.id],
           work_type_id: [work_type_id, work_type_id, nil],
           title: [nil, 'My Awesome Work', 'My Awesome Work']
         )
@@ -99,7 +99,7 @@ RSpec.describe Work::Import::CsvDryRun do
     context 'when a work type string is included ' do
       let(:csv_file) do
         CsvFactory::Generic.new(
-          member_of_collection_ids: [collection.id, collection.id, collection.id],
+          home_collection_id: [collection.id, collection.id, collection.id],
           work_type: ['Generic', 'Generic', 'Generic'],
           title: ['My Stuff', 'My Awesome Work', 'My Awesome Work']
         )
@@ -117,7 +117,7 @@ RSpec.describe Work::Import::CsvDryRun do
     context 'when a batch id is included' do
       let(:csv_file) do
         CsvFactory::Generic.new(
-          member_of_collection_ids: [collection.id], work_type: ['Generic'], title: ['My Stuff'], batch_id: ['batch1']
+          home_collection_id: [collection.id], work_type: ['Generic'], title: ['My Stuff'], batch_id: ['batch1']
         )
       end
 
@@ -132,7 +132,7 @@ RSpec.describe Work::Import::CsvDryRun do
     context 'with columns not in the data dictionary' do
       let(:csv_file) do
         CsvFactory::Generic.new(
-          member_of_collection_ids: [collection.id, collection.id],
+          home_collection_id: [collection.id, collection.id],
           work_type: ['Generic', 'Generic'],
           title: ['My Work 1', 'My Work 2'],
           invalid_column: ['bad value 1', nil]
@@ -149,7 +149,7 @@ RSpec.describe Work::Import::CsvDryRun do
     context 'with multiple batch ids' do
       let(:csv_file) do
         CsvFactory::Generic.new(
-          member_of_collection_ids: [collection.id, collection.id],
+          home_collection_id: [collection.id, collection.id],
           work_type: ['Generic', 'Generic'],
           title: ['My Work 1', 'My Work 2'],
           batch_id: ['1', '2']
@@ -168,7 +168,7 @@ RSpec.describe Work::Import::CsvDryRun do
 
       let(:csv_file) do
         CsvFactory::Generic.new(
-          member_of_collection_ids: [collection.id], work_type: ['Generic'], title: ['My Stuff']
+          home_collection_id: [collection.id], work_type: ['Generic'], title: ['My Stuff']
         )
       end
 
@@ -186,7 +186,7 @@ RSpec.describe Work::Import::CsvDryRun do
     context 'with a bag for import' do
       let(:csv_file) do
         CsvFactory::Generic.new(
-          member_of_collection_ids: [collection.id],
+          home_collection_id: [collection.id],
           work_type_id: [work_type_id],
           title: ['My Awesome Work'],
           batch_id: ['batch1_2018-07-23'],
@@ -218,7 +218,7 @@ RSpec.describe Work::Import::CsvDryRun do
     context 'with a missing import work' do
       let(:csv_file) do
         CsvFactory::Generic.new(
-          member_of_collection_ids: [collection.id],
+          home_collection_id: [collection.id],
           work_type_id: [work_type_id],
           title: ['My Awesome Work'],
           batch_id: ['batch-missing-import-work_2018-07-24'],
@@ -252,7 +252,7 @@ RSpec.describe Work::Import::CsvDryRun do
     context 'with an invalid or missing bag' do
       let(:csv_file) do
         CsvFactory::Generic.new(
-          member_of_collection_ids: [collection.id],
+          home_collection_id: [collection.id],
           work_type_id: [work_type_id],
           title: ['My Awesome Work'],
           batch_id: ['bad-batch_2018-07-24'],

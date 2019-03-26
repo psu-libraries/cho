@@ -3,7 +3,7 @@
 # Validates a work hash using the Work::SubmissionChangeSet
 #
 # @example resource_hash
-#    {'member_of_collection_ids'=>'abc-123', 'work_type_id'=>'def-222', 'title'=>'my awesome work', 'description'=> ''}
+#    {'home_collection_id'=>'abc-123', 'work_type_id'=>'def-222', 'title'=>'my awesome work', 'description'=> ''}
 module Work
   module Import
     class WorkHashValidator < Csv::HashValidator
@@ -17,7 +17,7 @@ module Work
         end
 
         def clean_hash
-          resource_hash['member_of_collection_ids'] = collection_ids
+          resource_hash['home_collection_id'] = collection_ids
           resource_hash['creator'] = agents_with_roles
           if work_type.present?
             resource_hash['work_type_id'] = work_type.id
@@ -33,7 +33,7 @@ module Work
         end
 
         def collection_ids
-          Array.wrap(resource_hash['member_of_collection_ids']).map do |id|
+          Array.wrap(resource_hash['home_collection_id']).map do |id|
             psu_id_to_collection_id(id)
           end
         end
