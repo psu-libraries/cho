@@ -1,3 +1,11 @@
 @charset "UTF-8";
 
-@import 'cho/variables', 'cho/blacklight', 'cho/data_dictionary_fields', 'cho/facets', 'cho/footer', 'cho/form', 'cho/scaffolds';
+@import 'cho/fonts';
+@import 'cho/variables';
+@import 'cho/blacklight';
+@import 'cho/data_dictionary_fields';
+@import 'cho/facets';
+@import 'cho/footer';
+@import 'cho/form';
+@import 'cho/header';
+@import 'cho/scaffolds';

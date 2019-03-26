@@ -1,0 +1,18 @@
+<div class="dropdown">
+  <% if current_user %>
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <%= current_user.email %>
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <%= render_nav_actions do |config, action| %>
+      <li><%= action %></li>
+    <% end %>
+    <li class="nav-item">
+      <%= link_to t('blacklight.header_links.logout'), devise_remote.destroy_user_session_path, class: 'nav-link' %>
+    </li>
+  </ul>
+  <% else %>
+    <%= link_to t('blacklight.header_links.login'), devise_remote.new_user_session_path,
+                class: 'nav-link' %>
+  <% end %>
+</div>

@@ -185,5 +185,8 @@ class CatalogController < ApplicationController
     # Configuration for autocomplete suggestor
     # config.autocomplete_enabled = true
     # config.autocomplete_path = 'suggest'
+
+    config.add_nav_action(:my_works, partial: 'blacklight/nav/my_works')
+    config.add_nav_action(:my_collectionss, partial: 'blacklight/nav/my_collections')
   end
 end

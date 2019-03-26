@@ -1,0 +1,36 @@
+//
+// The Typekit service used to deliver this font or fonts for use on websites
+// is provided by Adobe and is subject to these Terms of Use
+// http://www.adobe.com/products/eulas/tou_typekit. For font license
+// information, see the list below.
+//
+// serifa:
+// - http://typekit.com/eulas/0000000000000000000178af
+// - http://typekit.com/eulas/0000000000000000000178b1
+//
+// © 2009-2019 Adobe Systems Incorporated. All Rights Reserved.
+//
+// {"last_published":"2019-03-26 16:34:03 UTC"}
+//
+
+@import url('https://p.typekit.net/p.css?s=1&k=uiy7uef&ht=tk&f=11005.11006&a=17689782&app=typekit&e=css');
+
+@font-face {
+  font-family: 'serifa';
+  font-style: normal;
+  font-weight: 400;
+  // scss-lint:disable UrlFormat
+  src: url('https://use.typekit.net/af/e3b960/0000000000000000000178af/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3') format('woff2'), url('https://use.typekit.net/af/e3b960/0000000000000000000178af/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3') format('woff'), url('https://use.typekit.net/af/e3b960/0000000000000000000178af/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3') format('opentype');
+  // scss-lint:enable UrlFormat
+}
+
+@font-face {
+  font-family: 'serifa';
+  font-style: normal;
+  font-weight: 500;
+  // scss-lint:disable UrlFormat
+  src: url('https://use.typekit.net/af/d399b4/0000000000000000000178b1/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n5&v=3') format('woff2'), url('https://use.typekit.net/af/d399b4/0000000000000000000178b1/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n5&v=3') format('woff'), url('https://use.typekit.net/af/d399b4/0000000000000000000178b1/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n5&v=3') format('opentype');
+  // scss-lint:enable UrlFormat
+}
+
+.tk-serifa { font-family: 'serifa', serif; }

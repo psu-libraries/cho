@@ -32,6 +32,9 @@ en:
       member_of_collections: "Collections"
       role: "Role"
     header_links:
+      alt_banner_image: "Penn State University Libraries"
+      collection:
+        my_collection: "My Collection"
       create_collection: "Create Collection"
       create_submission: "Create Resource"
       data_dictionary: "Data Dictionary"
@@ -39,6 +42,7 @@ en:
       work:
         csv_create: "Import New Resources"
         csv_update: "Update Resources"
+        my_works: "My Works"
       agent:
         list: "List Agents"
         csv_create: "Import New Agents"

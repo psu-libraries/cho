@@ -19,6 +19,7 @@
     <title><%= render_page_title %></title>
     <%= opensearch_description_tag application_name, opensearch_catalog_url(format: 'xml') %>
     <%= favicon_link_tag %>
+
     <%= stylesheet_link_tag 'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
     <%= javascript_include_tag 'matomo' if Rails.env.production? %>
@@ -27,12 +28,12 @@
   </head>
   <body class="<%= render_body_class %>">
     <div class="skip">
-      <a href="#main-container">Skip to main content</a>
+      <a href="#maincontainer">Skip to main content</a>
     </div>
 
     <%= render partial: 'shared/header_navbar' %>
 
-    <div id="main-container" class="<%= container_classes %>">
+    <main id="maincontainer" class="<%= container_classes %>">
       <%= content_for(:container_header) %>
 
       <%= render partial: 'shared/flash_msg', layout: 'shared/flash_messages' %>
@@ -40,7 +41,7 @@
       <div class="row">
         <%= content_for?(:content) ? yield(:content) : yield %>
       </div>
-    </div>
+    </main>
 
     <%= render partial: 'shared/footer' %>
     <%= render partial: 'shared/modal' %>

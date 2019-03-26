@@ -29,4 +29,12 @@ module LayoutHelperBehavior
   def sidebar_classes
     'col-sm-4 col-md-3 order-1'
   end
+
+  ##
+  # Class used for specifying main layout container classes. Can be
+  # overwritten to return 'container-fluid' for Bootstrap full-width layout
+  # @return [String]
+  def container_classes
+    'container-fluid'
+  end
 end
