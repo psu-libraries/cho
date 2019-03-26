@@ -140,4 +140,27 @@ RSpec.describe Work::Submission do
       its(:representative_file_set) { is_expected.to be_a(Work::Submission::NullRepresentativeFileSet) }
     end
   end
+
+  describe '#preservation_file_sets' do
+    context 'with no file sets' do
+      let(:work) { build(:work) }
+
+      it { expect(work.preservation_file_sets).to be_empty }
+    end
+
+    context 'with a single file set' do
+      let(:work)     { create(:work, member_ids: [file_set.id]) }
+      let(:file_set) { create(:file_set) }
+
+      it { expect(work.preservation_file_sets.map(&:id)).to contain_exactly(file_set.id) }
+    end
+
+    context 'with multiple file sets' do
+      let(:work)           { create(:work, member_ids: [file_set.id, representative.id]) }
+      let(:file_set)       { create(:file_set, alternate_ids: ['alt-id']) }
+      let(:representative) { create(:file_set, alternate_ids: []) }
+
+      it { expect(work.preservation_file_sets.map(&:id)).to contain_exactly(file_set.id) }
+    end
+  end
 end

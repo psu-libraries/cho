@@ -40,7 +40,7 @@ class SolrDocument
 
   # @return [Array<Work::FileSet>]
   def file_sets
-    Array.wrap(self['member_ids_ssim']).map do |id|
+    Array.wrap(self['preservation_file_set_ids_ssim']).map do |id|
       Work::FileSet.find(Valkyrie::ID.new(id.sub(/^id-/, '')))
     end
   end

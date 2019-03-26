@@ -25,7 +25,7 @@ RSpec.describe SolrDocument, type: :model do
     subject { solr_document.file_sets.first }
 
     let(:file_set) { create :file_set }
-    let(:document) { { 'internal_resource_tsim' => 'MyResource', member_ids_ssim: [file_set.id.to_s] } }
+    let(:document) { { 'internal_resource_tsim' => 'MyResource', preservation_file_set_ids_ssim: [file_set.id.to_s] } }
 
     its(:to_h) { is_expected.to include(title: ['Original File Name'],
                                         internal_resource: 'Work::FileSet',

@@ -13,7 +13,8 @@ module Work
       {
         work_type_ssim: label_for_id,
         member_of_collection_ssim: collection_labels_for_ids,
-        thumbnail_path_ss: thumbnail_path
+        thumbnail_path_ss: thumbnail_path,
+        preservation_file_set_ids_ssim: preservation_file_set_ids
       }
     end
 
@@ -51,6 +52,13 @@ module Work
         possible_thumbnails = resource.file_sets.select(&:thumbnail)
         return if possible_thumbnails.empty?
         possible_thumbnails.first.thumbnail
+      end
+
+      def preservation_file_set_ids
+        return unless resource.respond_to?(:preservation_file_sets)
+        resource.preservation_file_sets.map do |file_set|
+          "id-#{file_set.id}"
+        end
       end
   end
 end
