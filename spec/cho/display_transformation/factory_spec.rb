@@ -46,12 +46,12 @@ RSpec.describe DisplayTransformation::Factory, type: :model do
       described_class.transformations = transformations
     end
 
-    it { is_expected.to eq([:no_transformation]) }
+    it { is_expected.to eq([:no_transformation, :render_link_to_collection]) }
 
     context 'valid transformations set' do
       let(:transformations) { { abc: MyTransformation.new, other: OtherTransformation.new } }
 
-      it { is_expected.to eq([:abc, :other, :no_transformation]) }
+      it { is_expected.to eq([:abc, :other, :no_transformation, :render_link_to_collection]) }
     end
   end
 

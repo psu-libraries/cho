@@ -18,8 +18,8 @@ RSpec.describe Work::Submission, type: :feature do
       expect(page).to have_blacklight_field('title_tesim').with('Work Index View')
       expect(page).to have_blacklight_label('work_type_ssim').with('Resource Type')
       expect(page).to have_blacklight_field('work_type_ssim').with('Generic')
-      expect(page).to have_blacklight_label('member_of_collection_ids_ssim').with('Member of Collection')
-      expect(page).to have_blacklight_field('member_of_collection_ids_ssim').with('Library Collection')
+      expect(page).to have_blacklight_label('member_of_collection_ids_tesim').with('Collections')
+      expect(page).to have_blacklight_field('member_of_collection_ids_tesim').with('Library Collection')
       expect(page).to have_link('Library Collection')
     end
   end

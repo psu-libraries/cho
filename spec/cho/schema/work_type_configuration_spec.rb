@@ -70,7 +70,7 @@ RSpec.describe Schema::WorkTypeConfiguration, type: :model do
         expect(schema_fields.map(&:order_index)).to contain_exactly(25, 6, 7)
         expect(schema_fields.map(&:label)).to contain_exactly('subtitle', 'audio_field', 'member_of_collection_ids')
         expect(schema_fields.map(&:work_type).uniq).to contain_exactly(work_type)
-        expect(schema_fields.map(&:display_name)).to contain_exactly('Additional Info', nil, 'Member of Collection')
+        expect(schema_fields.map(&:display_name)).to contain_exactly('Additional Info', nil, 'Collections')
       end
     end
   end

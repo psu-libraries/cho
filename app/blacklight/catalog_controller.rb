@@ -47,16 +47,26 @@ class CatalogController < ApplicationController
 
     config.show.document_presenter_class = ShowPresenter
 
+    config.add_facet_field 'work_type_ssim', label: I18n.t('cho.field_label.work_type')
+    config.add_facet_field 'collection_type_ssim', label: I18n.t('cho.field_label.collection_type')
+
+    # @todo configuration of linked field indexing
+    config.add_facet_field 'creator_role_ssim', label: I18n.t('cho.field_label.role')
+
     DataDictionary::Field.all.sort_by(&:created_at).each do |map_field|
       catalog_field = map_field.solr_search_field
-      catalog_label = map_field.label.titleize
-      config.add_index_field catalog_field, label: catalog_label
-      config.add_show_field catalog_field, label: catalog_label
+      catalog_label = map_field.display_name || map_field.label.titleize
+      catalog_helper = map_field.display_transformation == 'no_transformation' ? nil : map_field.display_transformation.to_sym
+      config.add_index_field catalog_field, label: catalog_label, helper_method: catalog_helper
+      config.add_show_field catalog_field, label: catalog_label, helper_method: catalog_helper
       config.add_search_field(map_field.label) do |field|
         # solr_parameters hash are sent to Solr as ordinary url query params.
         field.solr_parameters = { 'spellcheck.dictionary': field.label,
                                   qf: catalog_field,
                                   pf: catalog_field }
+      end
+      if map_field.facet?
+        config.add_facet_field map_field.facet_field, label: catalog_label, helper_method: catalog_helper
       end
     end
 
@@ -93,17 +103,6 @@ class CatalogController < ApplicationController
     #  set of results) index_range can be an array or range of prefixes that will be used to create the navigation
     #  (note: It is case sensitive when searching values)
 
-    config.add_facet_field 'work_type_ssim', label: I18n.t('cho.field_label.work_type')
-    config.add_facet_field 'collection_type_ssim', label: I18n.t('cho.field_label.collection_type')
-    config.add_facet_field 'member_of_collection_ssim', label: I18n.t('cho.field_label.member_of_collections')
-
-    # @todo configuration of linked field indexing
-    config.add_facet_field 'creator_role_ssim', label: I18n.t('cho.field_label.role')
-
-    DataDictionary::Field.all.sort_by(&:created_at).select(&:facet?).each do |field|
-      config.add_facet_field field.facet_field, label: (field.display_name || field.label.titleize)
-    end
-
     # config.add_facet_field 'pub_date', label: 'Publication Year', single: true
     # config.add_facet_field 'subject_topic_facet', label: 'Topic', limit: 20, index_range: 'A'..'Z'
     # config.add_facet_field 'language_facet', label: 'Language', limit: true
@@ -131,20 +130,12 @@ class CatalogController < ApplicationController
     config.add_index_field 'workflow_ssim', label: I18n.t('cho.field_label.workflow')
     config.add_index_field 'collection_type_ssim', label: I18n.t('cho.field_label.collection_type')
 
-    config.add_index_field 'member_of_collection_ids_ssim',
-        label: I18n.t('cho.field_label.member_of_collections'),
-        helper_method: :render_link_to_collection
-
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
     config.add_show_field 'work_type_ssim', label: I18n.t('cho.field_label.work_type')
     config.add_show_field 'visibility_ssim', label: I18n.t('cho.field_label.visibility')
     config.add_show_field 'workflow_ssim', label: I18n.t('cho.field_label.workflow')
     config.add_show_field 'collection_type_ssim', label: I18n.t('cho.field_label.collection_type')
-
-    config.add_show_field 'member_of_collection_ids_ssim',
-        label: I18n.t('cho.field_label.member_of_collections'),
-        helper_method: :render_link_to_collection
 
     # "fielded" search configuration. Used by pulldown among other places.
     # For supported keys in hash, see rdoc for Blacklight::SearchFields

@@ -17,7 +17,7 @@ RSpec.describe CatalogController, type: :feature do
       visit(root_path)
 
       # Check facets
-      within('div.blacklight-member_of_collection_ssim') do
+      within('div.blacklight-member_of_collection_ids_ssim') do
         expect(page).to have_selector('h3', text: 'Collections')
         expect(page).to have_link('Searching Collection')
       end
