@@ -13,7 +13,7 @@ FactoryBot.define do
       collection_title { 'Sample Archival Collection' }
     end
 
-    member_of_collection_ids do
+    home_collection_id do
       if @build_strategy.is_a? FactoryBot::Strategy::Build
         build(:collection, title: collection_title).id
       else

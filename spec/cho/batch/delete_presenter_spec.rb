@@ -28,7 +28,7 @@ RSpec.describe Batch::DeletePresenter, type: :model do
 
     context 'with a collection containing works with files' do
       it 'lists all works, file sets, and files' do
-        collection = Collection::Archival.find(work.member_of_collection_ids)
+        collection = Collection::Archival.find(work.home_collection_id)
         presenter = Batch::DeletePresenter.new(collection)
         expect(presenter.children).to contain_exactly(
           'Work: Sample Generic Work',

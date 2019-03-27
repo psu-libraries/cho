@@ -46,22 +46,22 @@ RSpec.describe Work::Submission do
     end
   end
 
-  describe '#member_of_collection_ids' do
+  describe '#home_collection_id' do
     it 'is nil when not set' do
-      expect(resource_klass.new.member_of_collection_ids).to be_nil
+      expect(resource_klass.new.home_collection_id).to be_nil
     end
 
     it 'can be set as an attribute' do
-      resource = resource_klass.new(member_of_collection_ids: ['1'])
-      expect(resource.attributes[:member_of_collection_ids]).to eq(Valkyrie::ID.new('1'))
+      resource = resource_klass.new(home_collection_id: ['1'])
+      expect(resource.attributes[:home_collection_id]).to eq(Valkyrie::ID.new('1'))
     end
 
     it 'is included in the list of attributes' do
-      expect(resource_klass.new.has_attribute?(:member_of_collection_ids)).to eq true
+      expect(resource_klass.new.has_attribute?(:home_collection_id)).to eq true
     end
 
     it 'is included in the list of fields' do
-      expect(resource_klass.fields).to include(:member_of_collection_ids)
+      expect(resource_klass.fields).to include(:home_collection_id)
     end
   end
 

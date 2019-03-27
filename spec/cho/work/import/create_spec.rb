@@ -23,7 +23,7 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
     let(:csv_file) do
       CsvFactory::Generic.new(
         alternate_ids: ['work1', 'work2', 'work3'],
-        member_of_collection_ids: ['xyz_1234', 'xyz_1234', collection.id],
+        home_collection_id: ['xyz_1234', 'xyz_1234', collection.id],
         work_type: ['Generic', 'Generic', 'Generic'],
         title: ['My Work 1', 'My Work 2', 'My Work 3'],
         subtitle: [MetadataFactory.fancy_title, MetadataFactory.fancy_title, MetadataFactory.fancy_title],
@@ -116,7 +116,7 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
     let(:csv_file) do
       CsvFactory::Generic.new(
         alternate_ids: ids,
-        member_of_collection_ids: [collection.id, nil, nil, nil, nil],
+        home_collection_id: [collection.id, nil, nil, nil, nil],
         work_type: (([] << 'Generic') * 5),
         title: ids.map { |id| "My #{id.capitalize}" },
         batch_id: (([] << 'batch12_2018-09-17') * 5)
@@ -225,7 +225,7 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
     let(:csv_file) do
       CsvFactory::Generic.new(
         alternate_ids: ['work1', 'work1_00001_01', 'work1_00002_01'],
-        member_of_collection_ids: [collection.id, nil, nil],
+        home_collection_id: [collection.id, nil, nil],
         work_type: ['Generic', nil, nil],
         title: ['Extracted Text from Bag', 'Page1', 'Page 2'],
         batch_id: ['batch12_2018-10-19', nil, nil]
@@ -281,7 +281,7 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
   context 'when the csv has invalid columns' do
     let(:csv_file) do
       CsvFactory::Generic.new(
-        member_of_collection_ids: [collection.id, collection.id, collection.id],
+        home_collection_id: [collection.id, collection.id, collection.id],
         work_type: ['Generic', 'Generic', 'Generic'],
         title: ['My Work 1', 'My Work 2', 'My Work 3'],
         batch_id: ['batch1_2018-07-12', 'batch1_2018-07-12', 'batch1_2018-07-12'],
@@ -314,7 +314,7 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
     let(:csv_file) do
       CsvFactory::Generic.new(
         alternate_ids: ids,
-        member_of_collection_ids: [collection.id, collection.id, 'missing_alt_id', nil, nil, nil, nil],
+        home_collection_id: [collection.id, collection.id, 'missing_alt_id', nil, nil, nil, nil],
         work_type: [nil, 'Generic', 'Generic', nil, nil, nil, nil],
         title: ['My Work 1', nil, 'My Work 3', nil, nil, nil, nil],
         batch_id: (([] << 'batch1_2019-03-13') * 7),
@@ -388,7 +388,7 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
         expect(page).to have_selector('td', text: 'work1_00002_02')
         expect(page).to have_content("Work type can't be blank")
         expect(page).to have_content("Title can't be blank")
-        expect(page).to have_content('Member of collection ids missing_alt_id does not exist')
+        expect(page).to have_content('Home collection missing_alt_id does not exist')
         expect(page).to have_content("Creator role 'http://id.loc.gov/vocabulary/relators/asdf' does not exist")
         expect(page).to have_content("Creator agent 'Person, Missing' does not exist")
         expect(page).to have_content("Creator agent 'Guy, Bad' does not exist")
@@ -405,7 +405,7 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
     let(:csv_file) do
       CsvFactory::Generic.new(
         alternate_ids: ['work1', 'work2', 'work3'],
-        member_of_collection_ids: [collection.id, collection.id, collection.id],
+        home_collection_id: [collection.id, collection.id, collection.id],
         work_type: ['Generic', 'Generic', 'Generic'],
         title: ['My Work 1', 'My Work 2', 'My Work 3'],
         batch_id: ['batch2_2018-07-12', 'batch2_2018-07-12', 'batch2_2018-07-12']
@@ -444,7 +444,7 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
     let(:csv_file) do
       CsvFactory::Generic.new(
         alternate_ids: ['work1'],
-        member_of_collection_ids: [collection.id],
+        home_collection_id: [collection.id],
         work_type: ['Generic'],
         title: ['My Work 1'],
         batch_id: ['missingZip_2018-10-08']

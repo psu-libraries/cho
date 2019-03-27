@@ -3,7 +3,7 @@
 RSpec.shared_examples 'a collection with works' do
   before do
     (1..20).each do |count|
-      create(:work, title: "Work #{count}", member_of_collection_ids: [collection.id])
+      create(:work, title: "Work #{count}", home_collection_id: [collection.id])
     end
   end
 

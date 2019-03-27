@@ -8,7 +8,7 @@ RSpec.describe Transaction::Operations::File::Save do
   describe '#call' do
     context 'with a successful save' do
       let!(:collection) { create(:collection) }
-      let(:resource) { build(:work, title: 'with a file', member_of_collection_ids: [collection.id]) }
+      let(:resource) { build(:work, title: 'with a file', home_collection_id: [collection.id]) }
       let(:change_set) { Work::SubmissionChangeSet.new(resource) }
       let(:temp_file) { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'hello_world.txt')) }
       let(:resource_params) { { label: 'abc123', file: temp_file } }

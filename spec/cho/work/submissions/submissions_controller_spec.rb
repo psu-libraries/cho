@@ -42,7 +42,7 @@ RSpec.describe Work::SubmissionsController, type: :controller do
         {
           title: 'New Title',
           work_type_id: work_type_id,
-          member_of_collection_ids: [collection.id]
+          home_collection_id: [collection.id]
         }
       end
 

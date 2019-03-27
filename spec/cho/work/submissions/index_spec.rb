@@ -6,7 +6,7 @@ RSpec.describe Work::Submission, type: :feature do
   let(:collection) { create :library_collection }
 
   before do
-    create :work, title: 'Work Index View', member_of_collection_ids: [collection.id]
+    create :work, title: 'Work Index View', home_collection_id: [collection.id]
   end
 
   it 'displays a list of fields in the search result view' do
@@ -18,8 +18,8 @@ RSpec.describe Work::Submission, type: :feature do
       expect(page).to have_blacklight_field('title_tesim').with('Work Index View')
       expect(page).to have_blacklight_label('work_type_ssim').with('Resource Type')
       expect(page).to have_blacklight_field('work_type_ssim').with('Generic')
-      expect(page).to have_blacklight_label('member_of_collection_ids_tesim').with('Collections')
-      expect(page).to have_blacklight_field('member_of_collection_ids_tesim').with('Library Collection')
+      expect(page).to have_blacklight_label('home_collection_id_tesim').with('Collection')
+      expect(page).to have_blacklight_field('home_collection_id_tesim').with('Library Collection')
       expect(page).to have_link('Library Collection')
     end
   end

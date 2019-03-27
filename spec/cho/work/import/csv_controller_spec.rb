@@ -7,7 +7,7 @@ RSpec.describe Work::Import::CsvController, type: :controller do
 
   let(:csv_file) do
     CsvFactory::Generic.new(
-      member_of_collection_ids: [collection.id, collection.id, collection.id],
+      home_collection_id: [collection.id, collection.id, collection.id],
       work_type: ['Generic', 'Generic', 'Generic'],
       title: ['My Work 1', 'My Work 2', 'My Work 3']
     )
@@ -53,7 +53,7 @@ RSpec.describe Work::Import::CsvController, type: :controller do
     context 'when creating new works with errors' do
       let(:csv_file) do
         CsvFactory::Generic.new(
-          member_of_collection_ids: [nil, collection.id, 'bad'],
+          home_collection_id: [nil, collection.id, 'bad'],
           work_type: ['Generic', 'Bad', 'Generic'],
           title: ['My Work 1', 'My Work 2', nil]
         )
@@ -67,7 +67,7 @@ RSpec.describe Work::Import::CsvController, type: :controller do
         expect(assigns(:presenter).change_set_list.map(&:errors).map(&:messages)).to eq(
           [
             { work_type_id: ["can't be blank"] },
-            { member_of_collection_ids: ['bad does not exist'], title: ["can't be blank"] }
+            { home_collection_id: ['bad does not exist'], title: ["can't be blank"] }
           ]
         )
         expect(File).to be_exist(assigns(:file_name))
@@ -77,7 +77,7 @@ RSpec.describe Work::Import::CsvController, type: :controller do
     context 'when creating new works with a csv that has invalid columns' do
       let(:csv_file) do
         CsvFactory::Generic.new(
-          member_of_collection_ids: [collection.id, collection.id],
+          home_collection_id: [collection.id, collection.id],
           work_type: ['Generic', 'Generic'],
           title: ['My Work 1', 'My Work 2'],
           invalid_column: ['bad value 1', nil]

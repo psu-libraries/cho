@@ -71,7 +71,7 @@ class SolrDocument
   # @todo maybe this needs to be some kind of transformation done in the data dictionary?
   # @return [Array<SolrDocument>]
   def member_of_collections
-    Array.wrap(self['member_of_collection_ids_ssim']).map do |id|
+    Array.wrap(self['home_collection_id_ssim']).map do |id|
       SolrDocument.find(id.sub(/^id-/, ''))
     end
   end

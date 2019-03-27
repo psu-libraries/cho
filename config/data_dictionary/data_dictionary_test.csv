@@ -1,6 +1,6 @@
 Label,Field Type,Requirement Designation,Validation,Multiple,Controlled Vocabulary,Default Value,Display Name,Display Transformation,Index Type,Help Text,Core Field
 title,string,required,no_validation,true,no_vocabulary,,Object Title,no_transformation,no_facet,help me,true
-member_of_collection_ids,valkyrie_id,optional,resource_exists,false,cho_collections,,Collections,render_link_to_collection,facet,help me,false
+home_collection_id,valkyrie_id,optional,resource_exists,false,cho_collections,,Collection,render_link_to_collection,facet,help me,false
 subtitle,string,optional,no_validation,true,no_vocabulary,,,no_transformation,no_facet,help me,true
 description,text,optional,no_validation,true,no_vocabulary,,,no_transformation,no_facet,help me,true
 created,date,optional,edtf_date,true,no_vocabulary,,,no_transformation,date,help me,false

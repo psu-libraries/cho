@@ -8,11 +8,11 @@ module Work
       delegate :each, :map, to: :work_hashes
 
       def work_hashes
-        csv_hashes.reject { |hash| hash.fetch('member_of_collection_ids').nil? }
+        csv_hashes.reject { |hash| hash.fetch('home_collection_id').nil? }
       end
 
       def file_set_hashes
-        csv_hashes.select { |hash| hash.fetch('member_of_collection_ids').nil? }
+        csv_hashes.select { |hash| hash.fetch('home_collection_id').nil? }
       end
     end
   end

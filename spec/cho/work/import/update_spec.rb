@@ -87,7 +87,7 @@ RSpec.describe 'Preview of CSV Update', type: :feature do
     let(:csv_import_file) do
       CsvFactory::Generic.new(
         alternate_ids: ['work1', 'work1_01', 'work1_02', 'work1_03', 'work1_04'],
-        member_of_collection_ids: [collection.id, nil, nil, nil, nil],
+        home_collection_id: [collection.id, nil, nil, nil, nil],
         work_type: ['Generic', nil, nil, nil, nil],
         title: ['Work One', 'Page 1', 'Page 2', 'Page 3', 'Page 4'],
         batch_id: (([] << 'batch22_2013-03-13') * 5)

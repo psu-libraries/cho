@@ -27,7 +27,7 @@ module CsvFactory
 
       def work(hash)
         work = FactoryBot.create(:work)
-        hash[:member_of_collection_ids] = work.member_of_collection_ids.to_s
+        hash[:home_collection_id] = work.home_collection_id.to_s
         values(hash).unshift(work.id).to_csv
       end
 

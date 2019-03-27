@@ -11,7 +11,7 @@ development: &development
       update: Transaction::File::Update
       delete: Transaction::File::Delete
     fields:
-      member_of_collection_ids:
+      home_collection_id:
         requirement_designation: 'required'
         order_index: 1
   - schema: 'Document'
@@ -41,7 +41,7 @@ development: &development
         order_index: 9
       access_rights:
         order_index: 10
-      member_of_collection_ids:
+      home_collection_id:
         requirement_designation: 'required'
         order_index: 11
   - schema: 'Still Image'
@@ -64,7 +64,7 @@ development: &development
         order_index: 6
       access_rights:
         order_index: 7
-      member_of_collection_ids:
+      home_collection_id:
         requirement_designation: 'required'
         order_index: 8
   - schema: 'Map'
@@ -110,7 +110,7 @@ development: &development
         order_index: 17
       access_rights:
         order_index: 18
-      member_of_collection_ids:
+      home_collection_id:
         requirement_designation: 'required'
         order_index: 19
   - schema: 'Moving Image'
@@ -141,7 +141,7 @@ development: &development
         order_index: 10
       access_rights:
         order_index: 11
-      member_of_collection_ids:
+      home_collection_id:
         requirement_designation: 'required'
         order_index: 12
   - schema: 'Audio'
@@ -172,7 +172,7 @@ development: &development
         order_index: 10
       access_rights:
         order_index: 11
-      member_of_collection_ids:
+      home_collection_id:
         requirement_designation: 'required'
         order_index: 12
 test:
@@ -180,7 +180,7 @@ test:
     fields:
       generic_field:
         order_index: 1
-      member_of_collection_ids:
+      home_collection_id:
         requirement_designation: 'required'
         order_index: 2
       created:
@@ -189,7 +189,7 @@ test:
     fields:
       document_field:
         order_index: 1
-      member_of_collection_ids:
+      home_collection_id:
         requirement_designation: 'required'
         order_index: 2
   - schema: 'Still Image'
@@ -197,21 +197,21 @@ test:
       still_image_field:
         order_index: 1
         display_name: 'Photograph'
-      member_of_collection_ids:
+      home_collection_id:
         requirement_designation: 'required'
         order_index: 2
   - schema: 'Map'
     fields:
       map_field:
         order_index: 1
-      member_of_collection_ids:
+      home_collection_id:
         requirement_designation: 'required'
         order_index: 2
   - schema: 'Moving Image'
     fields:
       moving_image_field:
         order_index: 1
-      member_of_collection_ids:
+      home_collection_id:
         requirement_designation: 'required'
         order_index: 2
   - schema: 'Audio'
@@ -221,7 +221,7 @@ test:
         display_name: 'Additional Info'
       audio_field:
         order_index: 1
-      member_of_collection_ids:
+      home_collection_id:
         requirement_designation: 'required'
         order_index: 2
   - schema: 'Collection'

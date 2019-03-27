@@ -9,7 +9,7 @@ namespace :cho do
         print "Importing works from #{csv_file.basename} ... "
 
         reader = Work::Import::CsvReader.new(File.open(csv_file))
-        collection_id = reader.csv_hashes.map { |hash| hash.fetch('member_of_collection_ids', nil) }.compact.first
+        collection_id = reader.csv_hashes.map { |hash| hash.fetch('home_collection_id', nil) }.compact.first
         create_collection(collection_id)
 
         result = Transaction::Operations::Import::Csv.new.call(

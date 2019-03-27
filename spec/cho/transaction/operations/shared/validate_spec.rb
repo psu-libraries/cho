@@ -10,7 +10,7 @@ RSpec.describe Transaction::Operations::Shared::Validate do
     subject(:operation_result) { operation.call(Work::SubmissionChangeSet.new(resource)) }
 
     context 'when the resource is a work' do
-      let(:resource) { build :work_submission, member_of_collection_ids: [collection.id] }
+      let(:resource) { build :work_submission, home_collection_id: [collection.id] }
 
       its(:success) { is_expected.to be_a(Work::SubmissionChangeSet) }
     end

@@ -42,7 +42,7 @@ RSpec.describe ChangeSetPersister do
 
     context 'with files' do
       let!(:collection) { create(:collection) }
-      let(:resource) { build(:work, title: 'with a file', member_of_collection_ids: [collection.id]) }
+      let(:resource) { build(:work, title: 'with a file', home_collection_id: [collection.id]) }
       let(:change_set) { Work::SubmissionChangeSet.new(resource) }
       let(:temp_file) { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'hello_world.txt')) }
       let(:work_file_names) { Work::File.all.map(&:original_filename) }
@@ -89,7 +89,7 @@ RSpec.describe ChangeSetPersister do
       let!(:work) { create(:work) }
 
       it 'deletes the collection and all of its works' do
-        collection = Collection::Archival.find(work.member_of_collection_ids)
+        collection = Collection::Archival.find(work.home_collection_id)
         change_set = Collection::ArchivalChangeSet.new(collection)
         expect(Work::Submission.all.count).to eq(1)
         expect(Collection::Archival.all.count).to eq(1)

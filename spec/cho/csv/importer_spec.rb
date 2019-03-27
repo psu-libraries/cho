@@ -7,11 +7,11 @@ RSpec.describe Csv::Importer do
   let(:work_type_id) { Work::Type.find_using(label: 'Generic').first.id }
 
   let(:work_hash_1) do
-    { member_of_collection_ids: [collection.id], work_type_id: [work_type_id], title: 'My first work' }
+    { home_collection_id: [collection.id], work_type_id: [work_type_id], title: 'My first work' }
   end
 
   let(:work_hash_2) do
-    { member_of_collection_ids: [collection.id], work_type_id: [work_type_id], title: 'My second work' }
+    { home_collection_id: [collection.id], work_type_id: [work_type_id], title: 'My second work' }
   end
 
   let(:change_set_list) { [Work::SubmissionChangeSet.new(Work::Submission.new(work_hash_1)),
@@ -26,7 +26,7 @@ RSpec.describe Csv::Importer do
   end
 
   context 'invalid work hash' do
-    let(:work_hash_2) { { member_of_collection_ids: [collection.id], work_type_id: [work_type_id], title: nil } }
+    let(:work_hash_2) { { home_collection_id: [collection.id], work_type_id: [work_type_id], title: nil } }
 
     it 'does not create the works' do
       status = false
@@ -62,7 +62,7 @@ RSpec.describe Csv::Importer do
 
     let(:work_hash_1) do
       {
-        member_of_collection_ids: [collection.id],
+        home_collection_id: [collection.id],
         work_type_id: [work_type_id],
         title: 'My first work',
         file_name: file_name
