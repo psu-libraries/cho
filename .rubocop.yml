@@ -12,6 +12,7 @@ AllCops:
     - 'tmp/**/*'
     - 'vendor/**/*'
     - 'bin/**/*'
+    - 'node_modules/**/*'
 
 RSpec/DescribeClass:
   Exclude:
