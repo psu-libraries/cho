@@ -1,0 +1,19 @@
+<% if fs = document.representative_file_set %>
+
+  <div class="btn-group-vertical">
+    <% if access_file = fs.files.find(&:access?) %>
+      <%= link_to t('cho.work.show.download_representative_link'),
+                  download_path(fs.id, use_type: access_file.use.first.fragment),
+                  class: 'btn btn-outline-secondary',
+                  data: { turbolinks: false } %>
+    <% end %>
+
+    <% if text_file = fs.files.find(&:text?) %>
+      <%= link_to t('cho.work.show.download_text_link'),
+                  download_path(fs.id, use_type: text_file.use.first.fragment),
+                  class: 'btn btn-outline-secondary',
+                  data: { turbolinks: false } %>
+    <% end %>
+  </div>
+
+<% end %>

@@ -14,7 +14,8 @@ module Work
         work_type_ssim: label_for_id,
         member_of_collection_ssim: collection_labels_for_ids,
         thumbnail_path_ss: thumbnail_path,
-        preservation_file_set_ids_ssim: preservation_file_set_ids
+        preservation_file_set_ids_ssim: preservation_file_set_ids,
+        representative_file_set_id_ss: representative_file_set_id
       }
     end
 
@@ -59,6 +60,12 @@ module Work
         resource.preservation_file_sets.map do |file_set|
           "id-#{file_set.id}"
         end
+      end
+
+      def representative_file_set_id
+        return unless resource.respond_to?(:representative_file_set)
+        return if resource.representative_file_set.id.blank?
+        "id-#{resource.representative_file_set.id}"
       end
   end
 end

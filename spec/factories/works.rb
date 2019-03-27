@@ -53,6 +53,18 @@ FactoryBot.define do
     end
   end
 
+  trait :with_representative_file_set do
+    transient do
+      filename { 'hello_world.txt' }
+    end
+
+    to_create do |resource, evaluator|
+      saved_resource = Valkyrie::MetadataAdapter.find(:indexing_persister).persister.save(resource: resource)
+      FactoryBot.create(:file_set, :with_access_file, work: saved_resource, title: evaluator.filename)
+      saved_resource
+    end
+  end
+
   trait :with_creator do
     creator do
       if @build_strategy.is_a? FactoryBot::Strategy::Build

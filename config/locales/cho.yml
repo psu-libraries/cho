@@ -60,6 +60,8 @@ en:
       missing: "Missing"
       show:
         files_heading: "Parts"
+        download_representative_link: 'Download Work'
+        download_text_link: 'Download Plain Text'
     collection:
       members:
         title: "Title"

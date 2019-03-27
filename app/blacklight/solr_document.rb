@@ -45,6 +45,12 @@ class SolrDocument
     end
   end
 
+  # @ return Work::File or nil
+  def representative_file_set
+    return unless id = self['representative_file_set_id_ss'].presence
+    Work::FileSet.find(Valkyrie::ID.new(id.sub(/^id-/, '')))
+  end
+
   def member_ids
     Array.wrap(self['member_ids_ssim'])
   end
