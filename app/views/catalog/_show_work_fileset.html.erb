@@ -5,14 +5,27 @@
 <%# write method to grab the files from the file set %>
 <% unless @document.files.empty? %>
   <h2>Files</h2>
-  <ul>
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+        <th scope="col">Size</th>
+        <th scope="col">File</th>
+      </tr>
+    </thead>
+    <tbody>
     <%- @document.files.each do |file| %>
-      <li>
-        <%= link_to file.original_filename,
-                    download_path(@document.id, use_type: file.use.first.fragment),
-                    data: { turbolinks: false },
-                    aria: { label: t('cho.file_set.download.aria_label', name: file.original_filename) } %>
-      </li>
+      <tr>
+        <td><%= file.mime_type.first.friendly || file.mime_type.first.extensions.first %></td>
+        <td><%= number_to_human_size file.size %></td>
+        <td>
+          <%= link_to file.original_filename,
+                      download_path(@document.id, use_type: file.use.first.fragment),
+                      data: { turbolinks: false },
+                      aria: { label: t('cho.file_set.download.aria_label', name: file.original_filename) } %>
+        </td>
+      </tr>
     <%- end %>
-  </ul>
+    </tbody>
+  </table>
 <% end %>

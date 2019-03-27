@@ -20,6 +20,12 @@ class Work::File < Valkyrie::Resource
     file_identifier.id.gsub('disk://', '')
   end
 
+  # @todo I reckon this should be stored in Valkyrie on import rather than
+  #       hitting the disk every time
+  def size
+    File.exist?(path.to_s) ? File.size(path) : 0
+  end
+
   # @todo Update to use FITS data when available.
   def mime_type
     MIME::Types.type_for(path)
