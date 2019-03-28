@@ -5,7 +5,7 @@
 <%# write method to grab the files from the file set %>
 <% unless @document.files.empty? %>
   <h2>Files</h2>
-  <table>
+  <table class="table table-striped">
     <thead>
       <tr>
         <th scope="col">Type</th>
@@ -17,7 +17,7 @@
     <%- @document.files.each do |file| %>
       <tr>
         <td><%= file.mime_type.first.friendly || file.mime_type.first.extensions.first %></td>
-        <td><%= number_to_human_size file.size %></td>
+        <td class="text-nowrap"><%= number_to_human_size file.size %></td>
         <td>
           <%= link_to file.original_filename,
                       download_path(@document.id, use_type: file.use.first.fragment),
