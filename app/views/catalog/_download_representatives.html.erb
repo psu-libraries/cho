@@ -1,6 +1,6 @@
 <% if fs = document.representative_file_set %>
 
-  <div class="btn-group-vertical">
+  <div class="btn-group pb-4">
     <% if access_file = fs.files.find(&:access?) %>
       <%= link_to t('cho.work.show.download_representative_link'),
                   download_path(fs.id, use_type: access_file.use.first.fragment),

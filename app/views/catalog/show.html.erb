@@ -13,14 +13,12 @@
     <% if presenter(@document).thumbnail.exists? %>
       <div class="col-xs-12 col-md-4">
         <%= render 'thumbnail', document: @document, document_counter: 0 %>
-        <%= render 'download_representatives', document: @document %>
       </div>
       <div class="col-xs-12 col-md-8">
         <%= render_document_main_content_partial %>
       </div>
     <% else %>
       <div class="col-xs-12">
-        <%= render 'download_representatives', document: @document %>
         <%= render_document_main_content_partial %>
       </div>
     <% end %>
