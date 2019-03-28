@@ -74,7 +74,7 @@ RSpec.describe 'Preview of CSV Update', type: :feature do
       expect(page).to have_selector('h1', text: 'Import Preview')
       expect(page).to have_content('Total Number of Resources with Errors 1')
       within('table.table') do
-        expect(page).to have_content("Title can't be blank")
+        expect(page).to have_content("Object title can't be blank")
       end
     end
   end
@@ -214,7 +214,7 @@ RSpec.describe 'Preview of CSV Update', type: :feature do
       expect(page).to have_content('The following resources will be updated')
       expect(page).to have_content('Total Number of Resources with Errors 3')
       within('table') do
-        expect(page).to have_selector('td', text: "Title can't be blank")
+        expect(page).to have_selector('td', text: "Object title can't be blank")
         expect(page).to have_selector('td', text: 'Created Date not a date is not a valid EDTF date')
         expect(page).to have_selector('td', text: "Creator agent 'Dude, Bad Agent' does not exist")
       end

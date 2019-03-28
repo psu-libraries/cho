@@ -32,6 +32,7 @@ module Work
     include DataDictionary::FieldsForChangeSet
     include WithValidMembers
     include WithFormFields
+    include Work::WithErrorMessages
 
     delegate :url_helpers, to: 'Rails.application.routes'
 

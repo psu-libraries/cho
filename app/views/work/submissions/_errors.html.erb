@@ -2,7 +2,7 @@
   <h2><%= t('cho.work.error', count: pluralize(work.errors.count, 'error')) %></h2>
 
   <ul>
-  <% work.errors.full_messages.each do |message| %>
+  <% work.error_messages.each do |message| %>
     <li><%= message %></li>
   <% end %>
   </ul>
