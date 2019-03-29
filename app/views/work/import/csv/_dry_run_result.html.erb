@@ -3,7 +3,7 @@
   <td><%= dry_run_result.alternate_ids.first %></td>
   <td>
     <% if dry_run_result.errors.present? %>
-      <%= render 'csv/dry_run_error_list', errors: dry_run_result.errors.full_messages %>
+      <%= render 'csv/dry_run_error_list', errors: dry_run_result.error_messages %>
     <% else %>
       <%= t('cho.csv.work.dry_run.work_success') %>
     <% end %>

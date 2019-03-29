@@ -67,8 +67,8 @@ RSpec.describe Work::Submission, type: :feature do
       click_button('Create Resource')
       within('.error-explanation') do
         expect(page).to have_selector('h2', text: '2 errors prohibited this resource from being saved:')
-        expect(page).to have_content("Title can't be blank")
-        expect(page).to have_content("Home collection can't be blank")
+        expect(page).to have_content("Object title can't be blank")
+        expect(page).to have_content("Collection can't be blank")
       end
       fill_in('work_submission[title]', with: 'Required Title')
       fill_in('work_submission[home_collection_id]', with: archival_collection.id)
