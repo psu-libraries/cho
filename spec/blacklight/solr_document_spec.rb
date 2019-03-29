@@ -32,6 +32,23 @@ RSpec.describe SolrDocument, type: :model do
                                         id: Valkyrie::ID.new(file_set.id)) }
   end
 
+  describe '#representative_file_set' do
+    subject { solr_document.representative_file_set }
+
+    let(:file_set) { create :file_set }
+    let(:document) { { 'internal_resource_tsim' => 'MyResource', representative_file_set_id_ss: file_set.id.to_s } }
+
+    its(:to_h) { is_expected.to include(title: ['Original File Name'],
+                                        internal_resource: 'Work::FileSet',
+                                        id: Valkyrie::ID.new(file_set.id)) }
+
+    context 'when representative_file_set_id_ss is nil' do
+      let(:document) { { 'internal_resource_tsim' => 'MyResource', representative_file_set_id_ss: nil } }
+
+      it { is_expected.to be_nil }
+    end
+  end
+
   describe '#member_of_collections' do
     subject { solr_document.member_of_collections.first }
 

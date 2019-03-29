@@ -60,6 +60,10 @@ module Work
       def thumbnail
         @thumbnail ||= Thumbnail.new(nil)
       end
+
+      def id
+        nil
+      end
     end
   end
 end

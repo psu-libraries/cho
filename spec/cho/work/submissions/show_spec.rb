@@ -29,7 +29,7 @@ RSpec.describe Work::Submission, type: :feature do
   end
 
   context 'when the work has a file' do
-    let(:work) { create(:work, :with_file, title: 'An editable file', work_type_id: work_type.id) }
+    let(:work) { create(:work, :with_representative_file_set, title: 'An editable file', work_type_id: work_type.id) }
 
     it 'displays metadata and files' do
       visit(polymorphic_path([:solr_document], id: work.id))
@@ -39,6 +39,10 @@ RSpec.describe Work::Submission, type: :feature do
         expect(page).to have_blacklight_label('work_type_ssim').with('Resource Type')
         expect(page).to have_blacklight_field('work_type_ssim').with('Document')
       end
+      expect(page).to have_link(
+        'Download Work',
+        href: download_path(work.representative_file_set.id, use_type: Vocab::FileUse.AccessFile.fragment)
+      )
       expect(page).to have_selector('h2', text: 'Parts')
       expect(page).to have_content('hello_world.txt')
       click_link('Edit')
