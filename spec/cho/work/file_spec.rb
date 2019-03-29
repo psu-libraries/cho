@@ -41,4 +41,21 @@ RSpec.describe Work::File do
       its(:path) { is_expected.to eq(Metrics::Repository.storage_directory.join('My File.txt').to_s) }
     end
   end
+
+  describe '#size' do
+    subject { file.size }
+
+    context 'when no file is present' do
+      it { is_expected.to eq 0 }
+    end
+
+    context 'with a file' do
+      before do
+        file.file_identifier = binary_content.id
+        allow(File).to receive(:size).with(file.path).and_return(:the_file_size_from_disk)
+      end
+
+      it { is_expected.to eq :the_file_size_from_disk }
+    end
+  end
 end
