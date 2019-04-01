@@ -10,7 +10,7 @@ RSpec.describe 'shared/input_partials/creator', type: :view do
   before do
     allow(field).to receive(:datalist).with(component: :roles).and_return(MockRDF.relators)
     allow(field).to receive(:datalist).with(component: :agents).and_return([agent1, agent2])
-    allow(field).to receive(:value).and_return(creator_hash)
+    allow(field).to receive(:values).and_return([creator_hash])
     view.form_for(resource, url: 'blah') do |form|
       render 'shared/input_partials/creator', form: form, field: field
     end

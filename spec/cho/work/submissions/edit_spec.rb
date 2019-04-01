@@ -11,15 +11,15 @@ RSpec.describe 'Editing works', type: :feature do
   context 'with all the required metadata' do
     it 'updates an existing work with new metadata' do
       visit(edit_work_path(resource))
-      expect(page).to have_field('work_submission_creator_role', with: resource.creator.first[:role])
-      expect(page).to have_field('work_submission_creator_agent', with: resource.creator.first[:agent])
+      expect(page).to have_field('work_submission_creator__role', with: resource.creator.first[:role])
+      expect(page).to have_field('work_submission_creator__agent', with: resource.creator.first[:agent])
       expect(page).to have_content('Editing Resource')
       expect(page).to have_selector('h2', text: 'Work to edit')
       expect(page).to have_link('Show')
       expect(page).to have_field('Description', type: 'textarea', with: nil)
       expect(page).not_to have_field('work_submission[file]')
-      fill_in('work_submission[title]', with: 'Updated Work Title')
-      fill_in('work_submission[description]', with: 'Updated description')
+      fill_in('work_submission[title][]', with: 'Updated Work Title')
+      fill_in('work_submission[description][]', with: 'Updated description')
       click_button('Update Resource')
       expect(page).to have_content('Updated Work Title')
       expect(page).to have_content('Updated description')
@@ -31,7 +31,7 @@ RSpec.describe 'Editing works', type: :feature do
   context 'with a blank title' do
     it 'reports errors' do
       visit(edit_work_path(resource))
-      fill_in('work_submission[title]', with: '')
+      fill_in('work_submission[title][]', with: '')
       click_button('Update Resource')
       within('.error-explanation') do
         expect(page).to have_content('1 error prohibited this resource from being saved:')

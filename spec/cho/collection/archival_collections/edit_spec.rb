@@ -11,8 +11,8 @@ RSpec.describe Collection::Archival, type: :feature do
     it 'updates an existing work with new metadata' do
       visit(edit_archival_collection_path(resource))
       expect(page).to have_field('Description', type: 'textarea', with: 'Sample archival collection')
-      fill_in('archival_collection[title]', with: 'Updated Archival Collection Title')
-      fill_in('archival_collection[description]', with: 'Updated archival collection description')
+      fill_in('archival_collection[title][]', with: 'Updated Archival Collection Title')
+      fill_in('archival_collection[description][]', with: 'Updated archival collection description')
       click_button('Update Archival collection')
       expect(page).to have_content('Updated Archival Collection Title')
       expect(page).to have_content('Updated archival collection description')
@@ -24,7 +24,7 @@ RSpec.describe Collection::Archival, type: :feature do
   context 'with a blank title' do
     it 'reports errors' do
       visit(edit_archival_collection_path(resource))
-      fill_in('archival_collection[title]', with: '')
+      fill_in('archival_collection[title][]', with: '')
       click_button('Update Archival collection')
       expect(page).to have_css('ul li', text: "can't be blank")
     end

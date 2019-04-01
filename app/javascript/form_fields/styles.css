@@ -1,0 +1,12 @@
+.ff-remove {
+  color: #d33a35;
+}
+
+.ff-add {
+  color: green;
+}
+
+/* Hides the ff-remove class if there is only one present */
+.ff-multiple .ff-group:only-of-type .ff-remove {
+  display: none;
+}

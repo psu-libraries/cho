@@ -26,6 +26,8 @@ RSpec.describe Schema::InputField, type: :model do
   it { is_expected.to respond_to(:text?) }
   it { is_expected.to respond_to(:required?) }
   it { is_expected.to respond_to(:valkyrie_id?) }
+  it { is_expected.to respond_to(:linked_field?) }
+  it { is_expected.to respond_to(:creator?) }
   it { is_expected.to respond_to(:label) }
 
   describe '#display_label' do
@@ -145,5 +147,58 @@ RSpec.describe Schema::InputField, type: :model do
     before { allow(form).to receive(:object).and_return(resource) }
 
     its(:value) { is_expected.to eq('value') }
+  end
+
+  describe '#values' do
+    context 'when values are present' do
+      let(:resource) { instance_double('Resource', abc123_label: ['value']) }
+
+      before { allow(form).to receive(:object).and_return(resource) }
+
+      its(:values) { is_expected.to contain_exactly('value') }
+    end
+
+    context 'when no values are present' do
+      let(:resource) { instance_double('Resource', abc123_label: nil) }
+
+      before { allow(form).to receive(:object).and_return(resource) }
+
+      its(:values) { is_expected.to contain_exactly('') }
+    end
+
+    context 'with empty linked fields' do
+      let(:resource) { instance_double('Resource', abc123_label: nil) }
+
+      before do
+        allow(model).to receive(:linked_field?).and_return(true)
+        allow(form).to receive(:object).and_return(resource)
+      end
+
+      its(:values) { is_expected.to contain_exactly({}) }
+    end
+  end
+
+  describe 'multiple?' do
+    context 'when the field is not multiple' do
+      it { is_expected.not_to be_multiple }
+    end
+
+    context 'when the field is multiple' do
+      let(:metadata_field) { build(:schema_metadata_field, multiple: true) }
+
+      it { is_expected.to be_multiple }
+    end
+  end
+
+  describe 'multiple_class' do
+    context 'when the field is not multiple' do
+      its(:multiple_class) { is_expected.to eq('ff-single') }
+    end
+
+    context 'when the field is multiple' do
+      let(:metadata_field) { build(:schema_metadata_field, multiple: true) }
+
+      its(:multiple_class) { is_expected.to eq('ff-multiple') }
+    end
   end
 end

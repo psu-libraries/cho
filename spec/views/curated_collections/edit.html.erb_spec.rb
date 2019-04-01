@@ -13,9 +13,9 @@ RSpec.describe 'collection/curated_collections/edit', type: :view do
 
   it 'renders the edit form' do
     assert_select 'form[action=?][method=?]', curated_collection_path(@collection), 'post' do
-      assert_select 'input[name=?]', 'curated_collection[title]'
-      assert_select 'input[name=?]', 'curated_collection[subtitle]'
-      assert_select 'textarea[name=?]', 'curated_collection[description]'
+      assert_select 'input[name=?]', 'curated_collection[title][]'
+      assert_select 'input[name=?]', 'curated_collection[subtitle][]'
+      assert_select 'textarea[name=?]', 'curated_collection[description][]'
       assert_select 'input[name=?]', 'curated_collection[workflow]'
       assert_select 'input[name=?]', 'curated_collection[visibility]'
       # Added to make sure accessibility changes are in place

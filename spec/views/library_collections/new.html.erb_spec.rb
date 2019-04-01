@@ -12,9 +12,9 @@ RSpec.describe 'collection/library_collections/new', type: :view do
 
   it 'renders the new form' do
     assert_select 'form[action=?][method=?]', library_collections_path, 'post' do
-      assert_select 'input[name=?]', 'library_collection[title]'
-      assert_select 'input[name=?]', 'library_collection[subtitle]'
-      assert_select 'textarea[name=?]', 'library_collection[description]'
+      assert_select 'input[name=?]', 'library_collection[title][]'
+      assert_select 'input[name=?]', 'library_collection[subtitle][]'
+      assert_select 'textarea[name=?]', 'library_collection[description][]'
       assert_select 'input[name=?]', 'library_collection[workflow]'
       assert_select 'input[name=?]', 'library_collection[visibility]'
       # Added to make sure accessibility changes are in place

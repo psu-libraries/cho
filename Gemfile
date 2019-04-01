@@ -86,6 +86,7 @@ group :test do
   gem 'rspec-rails'
   gem 'selenium-webdriver'
   gem 'shoulda-matchers', '~> 3.1'
+  gem 'webdrivers'
 end
 
 group :production do

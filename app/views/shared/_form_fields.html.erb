@@ -1,10 +1,14 @@
 <%- resource.input_fields(form).each do |input_field| %>
-  <%= form.label input_field.label do %>
-    <%= input_field.display_label %>
-    <% if input_field.required? %>
-      <span class="required no-bold"> required</span>
+  <%= content_tag :div, class: "form-group #{input_field.multiple_class} #{input_field.label}" do -%>
+    <%= form.label input_field.label do %>
+      <%= input_field.display_label %>
+      <% if input_field.required? %>
+        <span class="required no-bold"> required</span>
+      <% end %>
     <% end %>
-  <% end %>
 
-  <%= render "/shared/input_partials/#{input_field.partial}", field: input_field, form: form %>
+    <%= render "/shared/input_partials/#{input_field.partial}", field: input_field, form: form %>
+  <%- end %>
 <%- end %>
+
+<%= javascript_pack_tag 'form_fields' %>
