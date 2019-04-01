@@ -23,12 +23,15 @@ module Csv::ControllerBehavior
   # POST /csv/validate
   def validate
     file = params[:csv_file][:file]
-    @presenter = csv_presenter.new(csv_dry_run.new(file.path, update: update?))
-    @file_name = file.path
-    render :dry_run_results
-  rescue Csv::ValidationError => exception
-    flash[:error] = exception.message
-    redirect_to action: (update? ? :update : :create)
+    transaction_result = Csv::DryRunTransaction.new.call(csv_dry_run: csv_dry_run, path: file.path, update: update?)
+    if transaction_result.success?
+      @presenter = csv_presenter.new(transaction_result.success)
+      @file_name = file.path
+      render :dry_run_results
+    else
+      flash[:error] = transaction_result.failure
+      redirect_to action: (update? ? :update : :create)
+    end
   end
 
   # POST /csv/import

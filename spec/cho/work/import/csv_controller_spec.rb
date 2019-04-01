@@ -98,6 +98,16 @@ RSpec.describe Work::Import::CsvController, type: :controller do
         expect(flash[:error]).to eq('Missing id column for update')
       end
     end
+
+    context 'when updating works with a file that is not a csv' do
+      let(:referrer) { 'http://test.host.com/csv/works/update' }
+      let(:file) { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'sample_zip.zip')) }
+
+      it 'redirects to the update page' do
+        expect(call).to redirect_to(csv_works_update_path)
+        expect(flash[:error]).to eq('invalid byte sequence in UTF-8')
+      end
+    end
   end
 
   describe 'POST #import' do
