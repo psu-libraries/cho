@@ -39,6 +39,7 @@ RSpec.describe Collection::Library, type: :feature do
     let(:description) { Faker::Hipster.sentence }
     let(:identifier) { Faker::Number.leading_zero_number(10) }
     let(:acknowledgments) { Faker::Lorem.paragraph }
+    let(:narrative) { Faker::Lorem.paragraph }
 
     it 'creates a new library collection' do
       visit(new_library_collection_path)
@@ -47,6 +48,7 @@ RSpec.describe Collection::Library, type: :feature do
       fill_in('library_collection[description]', with: description)
       fill_in('library_collection[alternate_ids]', with: identifier)
       fill_in('library_collection[acknowledgments]', with: acknowledgments)
+      fill_in('library_collection[narrative]', with: narrative)
       select(agent, from: 'library_collection[creator][agent]')
       select('blasting', from: 'library_collection[creator][role]')
       choose('Mediated')
@@ -59,6 +61,7 @@ RSpec.describe Collection::Library, type: :feature do
       expect(page).to have_content("#{agent.display_name}, blasting")
       expect(page).to have_selector('h2', text: 'Acknowledgments')
       expect(page).to have_content(acknowledgments)
+      expect(page).to have_content(narrative)
     end
   end
 end

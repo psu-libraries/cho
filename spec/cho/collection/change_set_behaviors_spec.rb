@@ -86,7 +86,8 @@ RSpec.describe Collection::ChangeSetBehaviors do
         'title',
         'alternate_ids',
         'creator',
-        'acknowledgments'
+        'acknowledgments',
+        'narrative'
       )
     end
   end
@@ -101,7 +102,8 @@ RSpec.describe Collection::ChangeSetBehaviors do
         'title',
         'alternate_ids',
         'creator',
-        'acknowledgments'
+        'acknowledgments',
+        'narrative'
       )
     end
   end

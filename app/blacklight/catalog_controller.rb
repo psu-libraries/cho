@@ -53,12 +53,17 @@ class CatalogController < ApplicationController
     # @todo configuration of linked field indexing
     config.add_facet_field 'creator_role_ssim', label: I18n.t('cho.field_label.role')
 
+    fields_excluded_from_metadata_list = %w[
+      acknowledgments
+      narrative
+    ]
+
     DataDictionary::Field.all.sort_by(&:created_at).each do |map_field|
       catalog_field = map_field.solr_search_field
       catalog_label = map_field.display_name || map_field.label.titleize
       catalog_helper = map_field.display_transformation == 'no_transformation' ? nil : map_field.display_transformation.to_sym
 
-      unless map_field.display_transformation == 'paragraph_heading'
+      unless fields_excluded_from_metadata_list.include?(map_field.label)
         config.add_index_field catalog_field, label: catalog_label, helper_method: catalog_helper
         config.add_show_field catalog_field, label: catalog_label, helper_method: catalog_helper
       end
