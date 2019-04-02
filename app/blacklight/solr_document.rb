@@ -101,4 +101,17 @@ class SolrDocument
                         work_type
                       end
   end
+
+  def metadata_fields
+    @metadata_fields ||= schema.field_ids.map do |field_id|
+      Schema::MetadataField.find(field_id)
+    end
+  end
+
+  def transformed_fields
+    @transformed_fields ||= begin
+      field_list = metadata_fields.reject { |field| field.display_transformation == 'no_transformation' }
+      field_list.map { |field| MetadataFieldPresenter.new(field: field, document: self) }
+    end
+  end
 end

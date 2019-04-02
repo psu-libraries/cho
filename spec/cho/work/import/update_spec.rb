@@ -116,7 +116,7 @@ RSpec.describe 'Preview of CSV Update', type: :feature do
                    "#{agent.display_name}#{CsvParsing::SUBVALUE_SEPARATOR}cli"
                  end
 
-        row[8] = dates[i - 1]
+        row[9] = dates[i - 1]
       end
 
       Tempfile.open do |csv_file|
@@ -133,7 +133,7 @@ RSpec.describe 'Preview of CSV Update', type: :feature do
         next if i == 0
         row[2] = missing_titles[i - 1]
         row[6] = [nil, nil, nil, nil, 'Dude, Bad Agent', nil][i - 1]
-        row[8] = bad_dates[i - 1]
+        row[9] = bad_dates[i - 1]
       end
 
       Tempfile.open do |csv_file|

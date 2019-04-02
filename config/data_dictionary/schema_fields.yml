@@ -1,6 +1,8 @@
 development: &development
   - schema: 'Collection'
-    fields: []
+    fields:
+      acknowledgments:
+        order_index: 1
     work_type: 'false'
   - schema: 'FileSet'
     fields: []
@@ -225,7 +227,9 @@ test:
         requirement_designation: 'required'
         order_index: 2
   - schema: 'Collection'
-    fields: []
+    fields:
+      acknowledgments:
+        order_index: 1
     work_type: 'false'
   - schema: 'FileSet'
     fields: []

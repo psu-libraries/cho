@@ -57,8 +57,12 @@ class CatalogController < ApplicationController
       catalog_field = map_field.solr_search_field
       catalog_label = map_field.display_name || map_field.label.titleize
       catalog_helper = map_field.display_transformation == 'no_transformation' ? nil : map_field.display_transformation.to_sym
-      config.add_index_field catalog_field, label: catalog_label, helper_method: catalog_helper
-      config.add_show_field catalog_field, label: catalog_label, helper_method: catalog_helper
+
+      unless map_field.display_transformation == 'paragraph_heading'
+        config.add_index_field catalog_field, label: catalog_label, helper_method: catalog_helper
+        config.add_show_field catalog_field, label: catalog_label, helper_method: catalog_helper
+      end
+
       config.add_search_field(map_field.label) do |field|
         # solr_parameters hash are sent to Solr as ordinary url query params.
         field.solr_parameters = { 'spellcheck.dictionary': field.label,

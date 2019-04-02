@@ -15,4 +15,9 @@ module LocalHelperBehavior
       doc['title_tesim'].first
     end
   end
+
+  # @note Avoids any NoMethodError problems when specifying a custom partial display transformation
+  def paragraph_heading(*args)
+    # noop
+  end
 end

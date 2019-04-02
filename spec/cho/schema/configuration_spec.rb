@@ -49,7 +49,11 @@ RSpec.describe Schema::Configuration, type: :model do
             'audio_field' => { 'order_index' => 1 }
           }
         },
-        { 'schema' => 'Collection', 'fields' => [], 'work_type' => 'false' },
+        {
+          'schema' => 'Collection',
+          'fields' => { 'acknowledgments' => { 'order_index' => 1 } },
+          'work_type' => 'false'
+        },
         { 'schema' => 'FileSet', 'fields' => [], 'work_type' => 'false' }
       ]
     )
