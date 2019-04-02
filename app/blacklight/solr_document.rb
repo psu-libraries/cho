@@ -103,9 +103,9 @@ class SolrDocument
   end
 
   def metadata_fields
-    @metadata_fields ||= schema.field_ids.map do |field_id|
-      Schema::MetadataField.find(field_id)
-    end
+    @metadata_fields ||= schema.field_ids
+      .map { |field_id| Schema::MetadataField.find(field_id) }
+      .sort_by(&:order_index)
   end
 
   def transformed_fields

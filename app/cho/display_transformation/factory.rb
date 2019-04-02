@@ -36,7 +36,8 @@ module DisplayTransformation
           {
             default_key => DisplayTransformation::None.new,
             render_link_to_collection: DisplayTransformation::None.new,
-            paragraph_heading: DisplayTransformation::None.new
+            paragraph_heading: DisplayTransformation::None.new,
+            paragraph: DisplayTransformation::None.new
           }
         end
 

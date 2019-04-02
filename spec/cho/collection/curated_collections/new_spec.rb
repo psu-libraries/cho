@@ -38,7 +38,8 @@ RSpec.describe Collection::Curated, type: :feature do
     let(:subtitle) { Faker::Hipster.sentence }
     let(:description) { Faker::Hipster.sentence }
     let(:identifier) { Faker::Number.leading_zero_number(10) }
-    let(:acknowledgments) { Faker::Lorem.paragraph }
+    let(:acknowledgments) { 'Acknowledgmentium ' + Faker::Lorem.paragraph }
+    let(:narrative) { 'Narratismus ' + Faker::Lorem.paragraph }
 
     it 'creates a new curated collection' do
       visit(new_curated_collection_path)
@@ -47,6 +48,7 @@ RSpec.describe Collection::Curated, type: :feature do
       fill_in('curated_collection[description]', with: description)
       fill_in('curated_collection[alternate_ids]', with: identifier)
       fill_in('curated_collection[acknowledgments]', with: acknowledgments)
+      fill_in('curated_collection[narrative]', with: narrative)
       select(agent, from: 'curated_collection[creator][agent]')
       select('blasting', from: 'curated_collection[creator][role]')
       choose('Mediated')
@@ -59,6 +61,7 @@ RSpec.describe Collection::Curated, type: :feature do
       expect(page).to have_content("#{agent.display_name}, blasting")
       expect(page).to have_selector('h2', text: 'Acknowledgments')
       expect(page).to have_content(acknowledgments)
+      expect(page).to have_content(narrative)
     end
   end
 end

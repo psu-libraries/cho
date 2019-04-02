@@ -20,4 +20,9 @@ module LocalHelperBehavior
   def paragraph_heading(*args)
     # noop
   end
+
+  # @note Avoids any NoMethodError problems when specifying a custom partial display transformation
+  def paragraph(*args)
+    # noop
+  end
 end

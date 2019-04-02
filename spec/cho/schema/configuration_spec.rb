@@ -51,7 +51,10 @@ RSpec.describe Schema::Configuration, type: :model do
         },
         {
           'schema' => 'Collection',
-          'fields' => { 'acknowledgments' => { 'order_index' => 1 } },
+          'fields' => {
+            'acknowledgments' => { 'order_index' => 2 },
+            'narrative' => { 'order_index' => 1 }
+          },
           'work_type' => 'false'
         },
         { 'schema' => 'FileSet', 'fields' => [], 'work_type' => 'false' }
