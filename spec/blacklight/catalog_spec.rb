@@ -14,7 +14,7 @@ RSpec.describe CatalogController, type: :feature do
     end
 
     it 'returns the work and excludes file sets and files' do
-      visit(root_path)
+      visit(search_catalog_path)
 
       # Check facets
       within('div.blacklight-home_collection_id_ssim') do

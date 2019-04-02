@@ -6,7 +6,7 @@ RSpec.describe Collection::Curated, type: :feature do
   before { create(:curated_collection, title: 'Curated collection index view') }
 
   it 'displays facets and the collection in an index view' do
-    visit(root_path)
+    visit(search_catalog_path)
     within('div#facet-collection_type_ssim') do
       click_link('Curated Collection')
     end

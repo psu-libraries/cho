@@ -8,21 +8,12 @@
 
 <%= render partial: 'shared/header_navbar' %>
 
-<%# Temporary layout until the search bar moves to primary nav %>
-<div class="row">
-  <div class="col-12 col-md-8 offset-md-4 p-2">
-    <%= render partial: 'shared/search_bar' %>
-  </div>
-</div>
-
-<main id="maincontainer" class="<%= container_classes %>">
+<main id="maincontainer" class="<%= container_classes %> homepage">
   <%= content_for(:container_header) %>
 
   <%= render partial: 'shared/flash_msg', layout: 'shared/flash_messages' %>
 
-  <div class="row">
-    <%= content_for?(:content) ? yield(:content) : yield %>
-  </div>
+  <%= content_for?(:content) ? yield(:content) : yield %>
 </main>
 
 <%= render partial: 'shared/footer' %>

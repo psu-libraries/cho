@@ -1,0 +1,28 @@
+@media screen and (min-width: 300px) {
+
+  .home-bg-image {
+    background-image: url('mdfls_46_full.jpg');
+    background-position: center;
+    background-size: cover;
+  }
+
+  .home-search { padding: 3rem 0; }
+
+  .home-search-help-text {
+    background-color: $primary-black;
+    color: $primary-white;
+    display: inline-block;
+    margin: 1rem;
+    padding: .35rem;
+  }
+
+  .home-browse-featured { background-color: $gray-middle-home; }
+  .home-figure.featured { background-color: $psul-light-blue; }
+
+  .home-figure figcaption { word-break: break-word; }
+}
+
+@media screen and (min-width: 700px) {
+  .home-bg-image { min-height: 22rem; }
+  .home-search { padding-top: 8rem; }
+}

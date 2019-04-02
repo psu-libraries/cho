@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   mount DeviseRemote::Engine => '/devise_remote'
   devise_for :users
   mount Blacklight::Engine => '/'
-  root to: 'catalog#index'
+  root to: 'repository/home#index'
   concern :searchable, Blacklight::Routes::Searchable.new
 
   resource :catalog, only: [:index], as: 'catalog', path: '/catalog', controller: 'catalog' do

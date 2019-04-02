@@ -1,0 +1,12 @@
+<div class="row home-bg-image">
+  <div class="col-md-8 offset-md-2">
+    <h1 id="home-title" class="sr-only"><%= t('cho.home.title') %></h1>
+    <div class="home-search">
+      <%= render partial: 'shared/search_bar' %>
+    </div>
+  </div>
+</div>
+<div class="row home-browse-featured p-4">
+  <%= render partial: 'browse_by' %>
+  <%= render partial: 'featured' %>
+</div>
