@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
   include Blacklight::Controller
   include DeviseRemote::HttpHeaderAuthenticatableBehavior
 
+  helper LocalHelperBehavior, LayoutHelperBehavior
+
   layout 'blacklight'
 
   protect_from_forgery with: :exception

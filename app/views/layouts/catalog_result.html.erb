@@ -1,0 +1,17 @@
+<%# Overrides the layout from Blacklight to use our local cho layout %>
+<% content_for(:content) do %>
+  <% if content_for? :sidebar %>
+    <main id="content" class="<%= main_content_classes %>" role="main">
+      <%= yield %>
+    </main>
+    <section id="sidebar" class="<%= sidebar_classes %>">
+      <%= content_for(:sidebar) %>
+    </section>
+  <% else %>
+    <main class="col-md-12" role="main">
+      <%= yield %>
+    </main>
+  <% end %>
+<% end %>
+
+<%= render template: 'layouts/cho' %>

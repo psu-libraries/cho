@@ -1,0 +1,20 @@
+.banner {
+  background: $psu-libraries url('header_bg.jpg') no-repeat;
+  padding: 1rem;
+}
+
+.psul { padding-right: 2rem; }
+
+.cho-banner {
+  font-family: serifa, serif;
+  font-size: 1.75rem;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: .075rem;
+}
+
+.cho-banner:link,
+.cho-banner:visited { color: $primary-white; }
+
+.bg-cho { background-color: $psul-light-blue; }
+
