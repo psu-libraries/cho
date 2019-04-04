@@ -18,23 +18,23 @@ RSpec.describe CatalogController, type: :feature do
 
       # Check facets
       within('div.blacklight-home_collection_id_ssim') do
-        expect(page).to have_selector('h3', text: 'Collection')
+        expect(page).to have_selector('h3[data-target="#facet-home_collection_id_ssim"]')
         expect(page).to have_link('Searching Collection')
       end
       within('div.blacklight-work_type_ssim') do
-        expect(page).to have_selector('h3', text: 'Resource Type')
+        expect(page).to have_selector('h3[data-target="#facet-work_type_ssim"]')
         expect(page).to have_link('Generic')
       end
       within('div.blacklight-collection_type_ssim') do
-        expect(page).to have_selector('h3', text: 'Collection Type')
+        expect(page).to have_selector('h3[data-target="#facet-collection_type_ssim"]')
         expect(page).to have_link('Archival Collection')
       end
       within('div.blacklight-generic_field_ssim') do
-        expect(page).to have_selector('h3', text: 'Generic Field')
+        expect(page).to have_selector('h3[data-target="#facet-generic_field_ssim"]')
         expect(page).to have_link('Faceted Value')
       end
       within('div.blacklight-creator_role_ssim') do
-        expect(page).to have_selector('h3', text: 'Role')
+        expect(page).to have_selector('h3[data-target="#facet-creator_role_ssim"]')
         expect(page).to have_link('blasting')
       end
 

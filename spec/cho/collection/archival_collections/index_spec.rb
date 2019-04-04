@@ -12,9 +12,9 @@ RSpec.describe Collection::Archival, type: :feature do
     end
     within('div.documents-list') do
       expect(page).to have_link('Archival collection index view')
-      expect(page).to have_blacklight_label('title_tesim').with('Title')
+      expect(page).to have_blacklight_label('title_tesim')
       expect(page).to have_blacklight_field('title_tesim').with('Archival collection index view')
-      expect(page).to have_blacklight_label('collection_type_ssim').with('Collection Type')
+      expect(page).to have_blacklight_label('collection_type_ssim')
       expect(page).to have_blacklight_field('collection_type_ssim').with('Archival Collection')
     end
   end

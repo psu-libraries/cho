@@ -388,7 +388,7 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
         expect(page).to have_selector('td', text: 'work1_00002_02')
         expect(page).to have_content("Work type can't be blank")
         expect(page).to have_content("Object title can't be blank")
-        expect(page).to have_content('Collection missing_alt_id does not exist')
+        expect(page).to have_content(/missing_alt_id does not exist/)
         expect(page).to have_content("Creator role 'http://id.loc.gov/vocabulary/relators/asdf' does not exist")
         expect(page).to have_content("Creator agent 'Person, Missing' does not exist")
         expect(page).to have_content("Creator agent 'Guy, Bad' does not exist")
