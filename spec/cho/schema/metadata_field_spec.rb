@@ -80,7 +80,7 @@ RSpec.describe Schema::MetadataField, type: :model do
                                 multiple: true,
                                 requirement_designation: 'required',
                                 order_index: nil,
-                                validation: 'no_validation' } }
+                                validation: 'character_encoding' } }
 
     its(:attributes) { is_expected.to include(expected_metadata) }
 
@@ -99,7 +99,7 @@ RSpec.describe Schema::MetadataField, type: :model do
                                     requirement_designation: 'required_to_publish',
                                     core_field: false,
                                     order_index: 20,
-                                    validation: 'no_validation' } }
+                                    validation: 'character_encoding' } }
 
       let(:expected_metadata) { { controlled_vocabulary: 'no_vocabulary',
                                   core_field: true,
@@ -114,7 +114,7 @@ RSpec.describe Schema::MetadataField, type: :model do
                                   multiple: true,
                                   requirement_designation: 'required',
                                   order_index: 20,
-                                  validation: 'no_validation' } }
+                                  validation: 'character_encoding' } }
 
       its(:attributes) { is_expected.to include(expected_metadata) }
     end
