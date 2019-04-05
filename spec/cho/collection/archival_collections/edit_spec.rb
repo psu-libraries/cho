@@ -26,7 +26,7 @@ RSpec.describe Collection::Archival, type: :feature do
       visit(edit_archival_collection_path(resource))
       fill_in('archival_collection[title]', with: '')
       click_button('Update Archival collection')
-      expect(page).to have_content("Object title can't be blank")
+      expect(page).to have_css('ul li', text: "can't be blank")
     end
   end
 

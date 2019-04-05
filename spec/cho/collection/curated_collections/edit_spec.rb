@@ -26,7 +26,7 @@ RSpec.describe Collection::Curated, type: :feature do
       visit(edit_curated_collection_path(resource))
       fill_in('curated_collection[title]', with: '')
       click_button('Update Curated collection')
-      expect(page).to have_content("Object title can't be blank")
+      expect(page).to have_css('ul li', text: "can't be blank")
     end
   end
 

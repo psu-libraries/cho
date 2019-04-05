@@ -27,7 +27,7 @@ RSpec.describe Collection::Library, type: :feature do
       visit(new_library_collection_path)
       fill_in('library_collection[alternate_ids]', with: 'existing-id')
       click_button('Create Library collection')
-      expect(page).to have_content("Object title can't be blank")
+      expect(page).to have_css('ul li', text: "can't be blank")
       expect(page).to have_content('Identifier existing-id already exists')
     end
   end
