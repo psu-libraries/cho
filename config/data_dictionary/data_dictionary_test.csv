@@ -1,10 +1,10 @@
 Label,Field Type,Requirement Designation,Validation,Multiple,Controlled Vocabulary,Default Value,Display Name,Display Transformation,Index Type,Help Text,Core Field
-title,string,required,no_validation,true,no_vocabulary,,Object Title,no_transformation,no_facet,help me,true
+title,string,required,character_encoding,true,no_vocabulary,,Object Title,no_transformation,no_facet,help me,true
 home_collection_id,valkyrie_id,optional,resource_exists,false,cho_collections,,Collection,render_link_to_collection,facet,help me,false
-subtitle,string,optional,no_validation,true,no_vocabulary,,,no_transformation,no_facet,help me,true
-description,text,optional,no_validation,true,no_vocabulary,,,no_transformation,no_facet,help me,true
-acknowledgments,text,optional,no_validation,true,no_vocabulary,,,paragraph_heading,no_facet,help me,false
-narrative,text,optional,no_validation,true,no_vocabulary,,Narrative,paragraph,no_facet,help me,false
+subtitle,string,optional,character_encoding,true,no_vocabulary,,,no_transformation,no_facet,help me,true
+description,text,optional,character_encoding,true,no_vocabulary,,,no_transformation,no_facet,help me,true
+acknowledgments,text,optional,character_encoding,true,no_vocabulary,,,paragraph_heading,no_facet,help me,false
+narrative,text,optional,character_encoding,true,no_vocabulary,,Narrative,paragraph,no_facet,help me,false
 created,date,optional,edtf_date,true,no_vocabulary,,,no_transformation,date,help me,false
 generic_field,string,optional,no_validation,true,no_vocabulary,,,no_transformation,facet,help me,false
 document_field,string,optional,no_validation,true,no_vocabulary,,,no_transformation,no_facet,help me,false

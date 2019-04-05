@@ -173,3 +173,6 @@ en:
         hash_keys: "must contain an agent and a role"
         role: "role '%{role}' does not exist"
         agent: "agent '%{agent}' does not exist"
+      character_encoding:
+        invalid_character_replacement: ! "\U0001F4A9"
+        message: "contains invalid characters. The %{invalid_character_replacement} character represents an invalid character that needs to be replaced before re-submitting this form: \"%{corrected_string}\""

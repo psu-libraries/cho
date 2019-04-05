@@ -36,7 +36,8 @@ RSpec.describe Validation::Factory, type: :model do
           'no_validation',
           'resource_exists',
           'unique',
-          'edtf_date'
+          'edtf_date',
+          'character_encoding'
         )
       end
     end
@@ -77,7 +78,8 @@ RSpec.describe Validation::Factory, type: :model do
           'no_validation',
           'resource_exists',
           'edtf_date',
-          'unique'
+          'unique',
+          'character_encoding'
         )
       end
     end

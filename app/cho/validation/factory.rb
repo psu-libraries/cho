@@ -19,7 +19,8 @@ module Validation
             resource_exists: Validation::ResourceExists,
             edtf_date: Validation::EDTFDate,
             creator: Validation::Creator,
-            unique: Validation::Unique
+            unique: Validation::Unique,
+            character_encoding: Validation::CharacterEncoding
           }
         end
 
