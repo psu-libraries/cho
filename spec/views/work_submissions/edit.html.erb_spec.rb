@@ -66,13 +66,13 @@ RSpec.describe 'work/submissions/edit', type: :view do
   def assert_form(specific_field)
     assert_select 'form[action=?][method=?]', work_path(@work.model), 'post' do
       assert_select 'label[for=?]', 'work_submission_title', text: /(\s*)required/
-      assert_select 'input[name=?]', 'work_submission[title]'
+      assert_select 'input[name=?]', 'work_submission[title][]'
       assert_select 'label[for=?]', 'work_submission_subtitle'
-      assert_select 'input[name=?]', 'work_submission[subtitle]'
+      assert_select 'input[name=?]', 'work_submission[subtitle][]'
       assert_select 'label[for=?]', 'work_submission_description'
-      assert_select 'textarea[name=?]', 'work_submission[description]'
+      assert_select 'textarea[name=?]', 'work_submission[description][]'
       assert_select 'label[for=?]', "work_submission_#{specific_field}"
-      assert_select 'input[name=?]', "work_submission[#{specific_field}]"
+      assert_select 'input[name=?]', "work_submission[#{specific_field}][]"
       assert_select 'label[for=?]', 'work_submission_file', false
     end
   end

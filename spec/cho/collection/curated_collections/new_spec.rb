@@ -6,9 +6,9 @@ RSpec.describe Collection::Curated, type: :feature do
   context 'when filling in all the required fields' do
     it 'creates a new curated collection' do
       visit(new_curated_collection_path)
-      fill_in('curated_collection[title]', with: 'New Title')
-      fill_in('curated_collection[subtitle]', with: 'new subtitle')
-      fill_in('curated_collection[description]', with: 'Description of new collection')
+      fill_in('curated_collection[title][]', with: 'New Title')
+      fill_in('curated_collection[subtitle][]', with: 'new subtitle')
+      fill_in('curated_collection[description][]', with: 'Description of new collection')
       choose('Mediated')
       choose('PSU Access')
       click_button('Create Curated collection')
@@ -25,7 +25,7 @@ RSpec.describe Collection::Curated, type: :feature do
 
     it 'reports the errors' do
       visit(new_curated_collection_path)
-      fill_in('curated_collection[alternate_ids]', with: 'existing-id')
+      fill_in('curated_collection[alternate_ids][]', with: 'existing-id')
       click_button('Create Curated collection')
       expect(page).to have_css('ul li', text: "can't be blank")
       expect(page).to have_content('Identifier existing-id already exists')
@@ -43,14 +43,14 @@ RSpec.describe Collection::Curated, type: :feature do
 
     it 'creates a new curated collection' do
       visit(new_curated_collection_path)
-      fill_in('curated_collection[title]', with: title)
-      fill_in('curated_collection[subtitle]', with: subtitle)
-      fill_in('curated_collection[description]', with: description)
-      fill_in('curated_collection[alternate_ids]', with: identifier)
-      fill_in('curated_collection[acknowledgments]', with: acknowledgments)
-      fill_in('curated_collection[narrative]', with: narrative)
-      select(agent, from: 'curated_collection[creator][agent]')
-      select('blasting', from: 'curated_collection[creator][role]')
+      fill_in('curated_collection[title][]', with: title)
+      fill_in('curated_collection[subtitle][]', with: subtitle)
+      fill_in('curated_collection[description][]', with: description)
+      fill_in('curated_collection[alternate_ids][]', with: identifier)
+      fill_in('curated_collection[acknowledgments][]', with: acknowledgments)
+      fill_in('curated_collection[narrative][]', with: narrative)
+      select(agent, from: 'curated_collection[creator][][agent]')
+      select('blasting', from: 'curated_collection[creator][][role]')
       choose('Mediated')
       choose('PSU Access')
       click_button('Create Curated collection')

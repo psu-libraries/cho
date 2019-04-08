@@ -14,7 +14,7 @@ RSpec.describe Collection::Library, type: :feature do
       expect(page).to have_content('default')
       expect(page).to have_content('public')
       click_link('Edit')
-      expect(page).to have_field('library_collection[title]', with: 'Library Collection')
+      expect(page).to have_field('library_collection[title][]', with: 'Library Collection')
       expect(page).not_to have_link('Back')
     end
   end

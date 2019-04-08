@@ -2,8 +2,8 @@
 
 RSpec.shared_examples 'a creator form' do
   it 'renders the new form' do
-    assert_select 'input[name=?]', "#{resource.model_name.param_key}[creator][agent]"
-    assert_select 'input[name=?]', "#{resource.model_name.param_key}[creator][role]"
+    assert_select 'input[name=?]', "#{resource.model_name.param_key}[creator][][agent]"
+    assert_select 'input[name=?]', "#{resource.model_name.param_key}[creator][][role]"
 
     if creator_hash.present?
       assert_select 'input[value=?]', agent1.id.to_s

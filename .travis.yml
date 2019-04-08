@@ -1,12 +1,15 @@
 language: ruby
 cache:
   bundler: true
+  yarn: true
   directories:
     - dep_cache
+    - node_modules
 bundler_args: --without development debug
 sudo: false
 addons:
   postgresql: "9.6"
+  chrome: stable
 rvm:
   - 2.4.1
 jdk:

@@ -23,3 +23,10 @@
 config/database.yml
 config/hydra-ldap.yml
 public/files
+
+/public/packs
+/public/packs-test
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity

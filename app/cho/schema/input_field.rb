@@ -6,7 +6,7 @@ module Schema
 
     attr_reader :form, :metadata_field
 
-    delegate :text?, :required?, :valkyrie_id?, :creator?, :label, to: :metadata_field
+    delegate :text?, :required?, :valkyrie_id?, :linked_field?, :creator?, :label, to: :metadata_field
 
     # @param [ActionView::Helpers::FormBuilder] form
     # @param [Schema::MetadataField] metadata_field
@@ -27,8 +27,22 @@ module Schema
       end
     end
 
+    def multiple_class
+      return 'ff-multiple' if multiple?
+      'ff-single'
+    end
+
+    def values
+      return empty_values if value_set.empty?
+      value_set
+    end
+
+    def multiple?
+      metadata_field.multiple
+    end
+
     def options
-      { required: required?, 'aria-required': required? }
+      { required: required?, 'aria-required': required?, class: 'form-control ff-control' }
     end
 
     def datalist(component: nil)
@@ -36,7 +50,18 @@ module Schema
     end
 
     def value
-      form.object.send(label).first
+      value_set.first
     end
+
+    private
+
+      def value_set
+        @value_set ||= Array.wrap(form.object.send(label.to_sym))
+      end
+
+      def empty_values
+        return [{}] if linked_field?
+        ['']
+      end
   end
 end
