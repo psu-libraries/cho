@@ -17,7 +17,7 @@ RSpec.describe Work::FileSetChangeSet do
   describe '#fields=' do
     before { change_set.prepopulate! }
 
-    its(:title) { is_expected.to be_empty }
+    its(:title) { is_expected.to be_nil }
     its(:member_ids) { is_expected.to be_empty }
   end
 

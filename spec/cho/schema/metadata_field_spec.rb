@@ -77,7 +77,7 @@ RSpec.describe Schema::MetadataField, type: :model do
                                 index_type: 'no_facet',
                                 internal_resource: 'Schema::MetadataField',
                                 label: 'title',
-                                multiple: true,
+                                multiple: false,
                                 requirement_designation: 'required',
                                 order_index: nil,
                                 validation: 'character_encoding' } }
@@ -111,7 +111,7 @@ RSpec.describe Schema::MetadataField, type: :model do
                                   index_type: 'facet',
                                   internal_resource: 'Schema::MetadataField',
                                   label: 'title',
-                                  multiple: true,
+                                  multiple: false,
                                   requirement_designation: 'required',
                                   order_index: 20,
                                   validation: 'character_encoding' } }

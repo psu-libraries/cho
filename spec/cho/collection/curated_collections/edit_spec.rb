@@ -11,7 +11,7 @@ RSpec.describe Collection::Curated, type: :feature do
     it 'updates an existing work with new metadata' do
       visit(edit_curated_collection_path(resource))
       expect(page).to have_field('Description', type: 'textarea', with: 'Sample curated collection')
-      fill_in('curated_collection[title][]', with: 'Updated Curated Collection Title')
+      fill_in('curated_collection[title]', with: 'Updated Curated Collection Title')
       fill_in('curated_collection[description][]', with: 'Updated curated collection description')
       click_button('Update Curated collection')
       expect(page).to have_content('Updated Curated Collection Title')
@@ -24,7 +24,7 @@ RSpec.describe Collection::Curated, type: :feature do
   context 'with a blank title' do
     it 'reports errors' do
       visit(edit_curated_collection_path(resource))
-      fill_in('curated_collection[title][]', with: '')
+      fill_in('curated_collection[title]', with: '')
       click_button('Update Curated collection')
       expect(page).to have_css('ul li', text: "can't be blank")
     end
