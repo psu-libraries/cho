@@ -71,4 +71,17 @@ RSpec.describe FindUsing do
       expect(results.first.id).to eq(persisted_sample.id)
     end
   end
+
+  context 'when escaping punctuation in the search term' do
+    let(:retrieved_resource) { query_service.custom_queries.find_using(framjam: "Pot 'o Gold").first }
+
+    before do
+      resource = SampleResource.new(framjam: "Pot 'o Gold")
+      Valkyrie.config.metadata_adapter.persister.save(resource: resource)
+    end
+
+    it 'retrieves the correct resource' do
+      expect(retrieved_resource.framjam).to eq("Pot 'o Gold")
+    end
+  end
 end
