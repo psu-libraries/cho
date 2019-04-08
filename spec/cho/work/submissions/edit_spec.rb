@@ -33,8 +33,10 @@ RSpec.describe 'Editing works', type: :feature do
       visit(edit_work_path(resource))
       fill_in('work_submission[title]', with: '')
       click_button('Update Resource')
-      expect(page).to have_content("Object title can't be blank")
-      expect(page).to have_content('1 error prohibited this resource from being saved:')
+      within('.error-explanation') do
+        expect(page).to have_content('1 error prohibited this resource from being saved:')
+        expect(page).to have_css('ul li', text: "can't be blank")
+      end
     end
   end
 end

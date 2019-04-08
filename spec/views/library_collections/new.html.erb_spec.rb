@@ -19,7 +19,7 @@ RSpec.describe 'collection/library_collections/new', type: :view do
       assert_select 'input[name=?]', 'library_collection[visibility]'
       # Added to make sure accessibility changes are in place
       assert_select 'legend', 'Basic Metadata'
-      assert_select 'label', /Title\s.* required/
+      assert_select 'label[for=?]', 'library_collection_title', text: /\s.* required/
       assert_select 'legend', 'Workflow'
       assert_select 'legend', 'Access Level'
     end

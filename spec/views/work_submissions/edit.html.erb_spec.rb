@@ -35,7 +35,7 @@ RSpec.describe 'work/submissions/edit', type: :view do
     let(:work_type) { Work::Type.where(label: 'Still Image').first }
 
     it 'renders the edit form' do
-      assert_form('still_image_field', 'Photograph')
+      assert_form('still_image_field')
     end
   end
 
@@ -59,21 +59,19 @@ RSpec.describe 'work/submissions/edit', type: :view do
     let(:work_type) { Work::Type.where(label: 'Audio').first }
 
     it 'renders the edit form' do
-      assert_form('audio_field', 'Audio Field', 'Additional Info')
+      assert_form('audio_field')
     end
   end
 
-  def assert_form(specific_field, display_label = nil, subtitle_label = nil)
-    display_label ||= specific_field.titleize
-    subtitle_label ||= 'Subtitle'
+  def assert_form(specific_field)
     assert_select 'form[action=?][method=?]', work_path(@work.model), 'post' do
-      assert_select 'label[for=?]', 'work_submission_title', text: /Object Title(\s*)required/
+      assert_select 'label[for=?]', 'work_submission_title', text: /(\s*)required/
       assert_select 'input[name=?]', 'work_submission[title]'
-      assert_select 'label[for=?]', 'work_submission_subtitle', text: subtitle_label
+      assert_select 'label[for=?]', 'work_submission_subtitle'
       assert_select 'input[name=?]', 'work_submission[subtitle]'
-      assert_select 'label[for=?]', 'work_submission_description', text: 'Description'
+      assert_select 'label[for=?]', 'work_submission_description'
       assert_select 'textarea[name=?]', 'work_submission[description]'
-      assert_select 'label[for=?]', "work_submission_#{specific_field}", text: display_label
+      assert_select 'label[for=?]', "work_submission_#{specific_field}"
       assert_select 'input[name=?]', "work_submission[#{specific_field}]"
       assert_select 'label[for=?]', 'work_submission_file', false
     end

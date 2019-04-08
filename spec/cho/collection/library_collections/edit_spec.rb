@@ -26,7 +26,7 @@ RSpec.describe Collection::Library, type: :feature do
       visit(edit_library_collection_path(resource))
       fill_in('library_collection[title]', with: '')
       click_button('Update Library collection')
-      expect(page).to have_content("Object title can't be blank")
+      expect(page).to have_css('ul li', text: "can't be blank")
     end
   end
 
