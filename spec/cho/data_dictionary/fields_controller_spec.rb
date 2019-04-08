@@ -63,7 +63,7 @@ RSpec.describe DataDictionary::FieldsController, type: :controller do
       'field_type' => 'string',
       'requirement_designation' => 'required',
       'validation' => 'character_encoding',
-      'multiple' => true,
+      'multiple' => false,
       'controlled_vocabulary' => 'no_vocabulary',
       'default_value' => nil,
       'display_name' => 'Object Title',
@@ -128,7 +128,7 @@ RSpec.describe DataDictionary::FieldsController, type: :controller do
           "Default Value,Display Name,Display Transformation,Index Type,Help Text,Core Field\n"
         )
         expect(response.body).to include(
-          'title,string,required,character_encoding,true,no_vocabulary,,Object Title,'\
+          'title,string,required,character_encoding,false,no_vocabulary,,Object Title,'\
           "no_transformation,no_facet,help me,true\n"
         )
         expect(response.body).to include(

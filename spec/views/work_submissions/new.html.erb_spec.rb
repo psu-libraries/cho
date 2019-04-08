@@ -14,7 +14,7 @@ RSpec.describe 'work/submissions/new', type: :view do
 
   it 'renders the new form' do
     assert_select 'form[action=?][method=?]', works_path, 'post' do
-      assert_select 'input[name=?]', 'work_submission[title][]'
+      assert_select 'input[name=?]', 'work_submission[title]'
       assert_select 'input[name=?]', 'work_submission[home_collection_id]'
       assert_select 'input[name=?]', 'work_submission[creator][][agent]'
       assert_select 'input[name=?]', 'work_submission[creator][][role]'

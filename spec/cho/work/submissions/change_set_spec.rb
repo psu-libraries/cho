@@ -16,8 +16,8 @@ RSpec.describe Work::SubmissionChangeSet do
   end
 
   describe '#multiple?' do
-    it 'has multiple titles' do
-      expect(change_set).to be_multiple(:title)
+    it 'has a singular title' do
+      expect(change_set).not_to be_multiple(:title)
     end
 
     it 'has a single work type' do
@@ -46,7 +46,7 @@ RSpec.describe Work::SubmissionChangeSet do
   describe '#fields=' do
     before { change_set.prepopulate! }
 
-    its(:title) { is_expected.to be_empty }
+    its(:title) { is_expected.to be_nil }
     its(:work_type_id) { is_expected.to eq(Valkyrie::ID.new(nil)) }
     its(:work_type) { is_expected.to be_nil }
     its(:file) { is_expected.to be_nil }

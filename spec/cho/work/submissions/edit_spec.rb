@@ -18,7 +18,7 @@ RSpec.describe 'Editing works', type: :feature do
       expect(page).to have_link('Show')
       expect(page).to have_field('Description', type: 'textarea', with: nil)
       expect(page).not_to have_field('work_submission[file]')
-      fill_in('work_submission[title][]', with: 'Updated Work Title')
+      fill_in('work_submission[title]', with: 'Updated Work Title')
       fill_in('work_submission[description][]', with: 'Updated description')
       click_button('Update Resource')
       expect(page).to have_content('Updated Work Title')
@@ -31,7 +31,7 @@ RSpec.describe 'Editing works', type: :feature do
   context 'with a blank title' do
     it 'reports errors' do
       visit(edit_work_path(resource))
-      fill_in('work_submission[title][]', with: '')
+      fill_in('work_submission[title]', with: '')
       click_button('Update Resource')
       within('.error-explanation') do
         expect(page).to have_content('1 error prohibited this resource from being saved:')

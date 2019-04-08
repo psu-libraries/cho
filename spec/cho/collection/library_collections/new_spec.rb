@@ -6,7 +6,7 @@ RSpec.describe Collection::Library, type: :feature do
   context 'when filling in all the required fields' do
     it 'creates a new archival collection' do
       visit(new_library_collection_path)
-      fill_in('library_collection[title][]', with: 'New Title')
+      fill_in('library_collection[title]', with: 'New Title')
       fill_in('library_collection[subtitle][]', with: 'new subtitle')
       fill_in('library_collection[description][]', with: 'Description of new collection')
       choose('Mediated')
@@ -43,7 +43,7 @@ RSpec.describe Collection::Library, type: :feature do
 
     it 'creates a new library collection' do
       visit(new_library_collection_path)
-      fill_in('library_collection[title][]', with: title)
+      fill_in('library_collection[title]', with: title)
       fill_in('library_collection[subtitle][]', with: subtitle)
       fill_in('library_collection[description][]', with: description)
       fill_in('library_collection[alternate_ids][]', with: identifier)

@@ -20,7 +20,6 @@ RSpec.describe 'Works with multiple fields', with_named_js: :multiple_fields, ty
       click_link('Create Resource')
       click_link('Generic')
       expect(page).to have_content('New Generic Resource', wait: Capybara.default_max_wait_time * 5)
-      check_field(label: 'title', display: 'Object Title')
       check_field(label: 'subtitle')
       check_field(label: 'description')
       check_field(label: 'alternate_ids', display: 'Identifier')
@@ -67,7 +66,7 @@ RSpec.describe 'Works with multiple fields', with_named_js: :multiple_fields, ty
       click_link('Create Resource')
       click_link('Generic')
       expect(page).to have_content('New Generic Resource', wait: Capybara.default_max_wait_time * 5)
-      fill_in_multiple(:title)
+      fill_in('work_submission[title]', with: 'New Title')
       fill_in_multiple(:subtitle)
       fill_in_multiple(:description)
       fill_in_multiple(:alternate_ids)
@@ -88,7 +87,6 @@ RSpec.describe 'Works with multiple fields', with_named_js: :multiple_fields, ty
 
       fill_in('work_submission[home_collection_id]', with: archival_collection.id)
       click_button('Create Resource')
-      verify_multiple(:title)
       verify_multiple(:subtitle)
       verify_multiple(:description)
       verify_multiple(
