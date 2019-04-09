@@ -16,7 +16,7 @@ RSpec.describe Work::Import::CsvDryRun do
     context 'by default' do
       subject { described_class.new('path') }
 
-      let(:mock_reader) { instance_double(Work::Import::CsvReader, headers: [], map: []) }
+      let(:mock_reader) { instance_double(Work::Import::CsvReader, headers: [], map: [].to_enum) }
 
       it { is_expected.not_to be_update }
     end
@@ -24,7 +24,7 @@ RSpec.describe Work::Import::CsvDryRun do
     context 'when set to true' do
       subject { described_class.new('path', update: true) }
 
-      let(:mock_reader) { instance_double(Work::Import::CsvReader, headers: ['id'], map: []) }
+      let(:mock_reader) { instance_double(Work::Import::CsvReader, headers: ['id'], map: [].to_enum) }
 
       it { is_expected.to be_update }
       its(:bag) { is_expected.to be_a(Dry::Monads::Result::Failure) }
@@ -48,6 +48,7 @@ RSpec.describe Work::Import::CsvDryRun do
         expect(dry_run_results.count).to eq(1)
         expect(dry_run_results.first).to be_valid
         expect(dry_run_results.first.title).to eq(['My Awesome Work'])
+        expect(dry_run_results.first.order_index).to eq(1)
       end
     end
 
@@ -176,6 +177,62 @@ RSpec.describe Work::Import::CsvDryRun do
         expect { dry_run_results }.to raise_error(
           Csv::ValidationError, 'Missing id column for update'
         )
+      end
+    end
+
+    describe 'order index' do
+      context 'when no home collection previously exists' do
+        let(:csv_file) do
+          CsvFactory::Generic.new(
+            home_collection_id: [collection.id, collection.id],
+            work_type_id: [work_type_id, work_type_id],
+            title: ['My Work 1', 'My Work 2']
+          )
+        end
+
+        it 'increments the order_index starting at 1' do
+          expect(dry_run_results.count).to eq(2)
+          expect(dry_run_results.first.title).to eq(['My Work 1'])
+          expect(dry_run_results.first.order_index).to eq(1)
+          expect(dry_run_results.last.title).to eq(['My Work 2'])
+          expect(dry_run_results.last.order_index).to eq(2)
+        end
+      end
+
+      context 'when the home collection previously exists with other works' do
+        let(:collection) { create :library_collection, alternate_ids: [alternate_id] }
+        let(:alternate_id) { 'asdf1234' }
+        let(:csv_file) do
+          CsvFactory::Generic.new(
+            home_collection_id: [alternate_id, alternate_id],
+            work_type_id: [work_type_id, work_type_id],
+            title: ['My Work 1', 'My Work 2']
+          )
+        end
+
+        before do
+          # Create two existing works in that collection
+          create :work, home_collection_id: collection.id
+          create :work, home_collection_id: collection.id
+        end
+
+        it 'increments the order_index starting at the number of prior works in the collection' do
+          expect(dry_run_results.count).to eq(2)
+          expect(dry_run_results.first.title).to eq(['My Work 1'])
+          expect(dry_run_results.first.order_index).to eq(3)
+          expect(dry_run_results.last.title).to eq(['My Work 2'])
+          expect(dry_run_results.last.order_index).to eq(4)
+        end
+      end
+
+      context 'during an update' do
+        let(:update) { true }
+        let(:csv_file) { CsvFactory::Update.new(title: 'My Updated Work 1') }
+
+        it 'does not add an order_index on an update' do
+          expect(dry_run_results.count).to eq(1)
+          expect(dry_run_results.first.order_index).to eq(0)
+        end
       end
     end
   end

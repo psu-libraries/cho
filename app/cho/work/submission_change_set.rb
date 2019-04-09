@@ -17,6 +17,12 @@ module Work
 
     property :batch_id, multiple: false, required: false
 
+    property :order_index,
+             multiple: false,
+             required: false,
+             default: 0,
+             type: Valkyrie::Types::Integer
+
     # File submitted via the GUI upload
     property :file, multiple: false, required: false
 

@@ -35,6 +35,10 @@ RSpec.describe Work::SubmissionChangeSet do
     it 'has a single batch id' do
       expect(change_set).not_to be_multiple(:batch_id)
     end
+
+    it 'has a single order index' do
+      expect(change_set).not_to be_multiple(:order_index)
+    end
   end
 
   describe '#required?' do
@@ -53,6 +57,7 @@ RSpec.describe Work::SubmissionChangeSet do
     its(:home_collection_id) { is_expected.to be_nil }
     its(:member_ids) { is_expected.to be_empty }
     its(:batch_id) { is_expected.to be_nil }
+    its(:order_index) { is_expected.to eq(0) }
     its(:import_work) { is_expected.to be_nil }
     its(:file_set_hashes) { is_expected.to be_empty }
   end

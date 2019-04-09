@@ -113,6 +113,25 @@ RSpec.describe Work::Submission do
     end
   end
 
+  describe '#order_index' do
+    it 'is nil when not set' do
+      expect(resource_klass.new.order_index).to be_nil
+    end
+
+    it 'can be set as an attribute' do
+      resource = resource_klass.new(order_index: 123)
+      expect(resource.attributes[:order_index].to_s).to eq('123')
+    end
+
+    it 'is included in the list of attributes' do
+      expect(resource_klass.new.has_attribute?(:order_index)).to eq true
+    end
+
+    it 'is included in the list of fields' do
+      expect(resource_klass.fields).to include(:order_index)
+    end
+  end
+
   describe '#file_sets' do
     let(:work)     { create(:work, member_ids: [file_set.id]) }
     let(:file_set) { create(:file_set) }
