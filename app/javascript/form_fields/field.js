@@ -1,25 +1,23 @@
 export default class Field {
-
-  constructor(input_group) {
-    this.input_group = input_group
+  constructor (inputGroup) {
+    this.input_group = inputGroup
   }
 
-  register() {
+  register () {
     let remover = this.removeFieldNode
     try {
-      remover.addEventListener('click', () => { this.removeAction(remover); });
+      remover.addEventListener('click', () => { this.removeAction(remover) })
       this.input_group.appendChild(remover)
-    }
-    catch(error) {
+    } catch (error) {
       console.log(error)
     }
   }
 
-  removeAction(button) {
+  removeAction (button) {
     button.parentElement.remove()
   }
 
-  get removeFieldNode() {
+  get removeFieldNode () {
     let node = document.createElement('span')
     node.className = 'ff-remove'
     let content = document.createTextNode('(-) Remove')
@@ -27,14 +25,13 @@ export default class Field {
     return node
   }
 
-  get clonedField() {
+  get clonedField () {
     let group = this.input_group.cloneNode(true)
     Array.from(group.getElementsByClassName('ff-control')).forEach((input) => {
       input.value = ''
     })
     let remover = group.getElementsByClassName('ff-remove').item(0)
-    remover.addEventListener('click', () => { this.removeAction(remover); });
+    remover.addEventListener('click', () => { this.removeAction(remover) })
     return group
   }
-
 }
