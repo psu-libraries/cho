@@ -1,16 +1,16 @@
 <%# Do the two column thing here %>
-<p>Fileset | Part of: <%= link_to @document.work_title, solr_document_path(@document.work) %></p>
+<p><%= t('cho.file_set.show.part_of') %> <%= link_to @document.work_title, solr_document_path(@document.work) %></p>
 <%= render partial: 'show', locals: { document: @document } %>
 
 <%# write method to grab the files from the file set %>
 <% unless @document.files.empty? %>
-  <h2>Files</h2>
+  <h2><%= t('cho.file_set.show.heading') %></h2>
   <table class="table table-striped">
     <thead>
       <tr>
-        <th scope="col">Type</th>
-        <th scope="col">Size</th>
-        <th scope="col">File</th>
+        <th scope="col"><%= t('cho.file_set.show.table.type') %></th>
+        <th scope="col"><%= t('cho.file_set.show.table.size') %></th>
+        <th scope="col"><%= t('cho.file_set.show.table.file') %></th>
       </tr>
     </thead>
     <tbody>

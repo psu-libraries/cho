@@ -18,9 +18,7 @@
       <li>
         <span><%= link_to_previous_search(search.query_params) %></span>
         <span>
-          &lsqb;
           <%= link_to t('blacklight.saved_searches.delete'), blacklight.forget_search_path(search.id) %>
-          &rsqb;
         </span>
       </li>
       <%- end -%>

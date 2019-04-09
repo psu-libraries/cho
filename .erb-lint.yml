@@ -12,7 +12,10 @@ linters:
   FinalNewline:
     enabled: true
   HardCodedString:
-    enabled: false
+    enabled: true
+    exclude:
+      - '*app/views/repository/home/*'
+      - '*app/views/data_dictionary/*'
   RightTrim:
     enabled: true
     enforced_style: '-'
