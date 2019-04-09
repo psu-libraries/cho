@@ -11,21 +11,23 @@
 <div class="container mt-4">
   <div class="row">
     <% if presenter(@document).thumbnail.exists? %>
-      <div class="col-xs-12 col-md-4">
+      <div class="col-xs-12 col-sm-12 col-md-4">
         <%= render 'thumbnail', document: @document, document_counter: 0 %>
+        <%= render 'document_edit_link' %>
       </div>
-      <div class="col-xs-12 col-md-8">
+      <div class="col-xs-12 col-sm-12 col-md-7">
         <%= render_document_main_content_partial %>
       </div>
     <% else %>
-      <div class="col-xs-12">
+      <div class="col-xs-12 col-sm-11">
         <%= render_document_main_content_partial %>
+      </div>
+      <div class="col-xs-12 col-sm-1">
+        <%= render 'document_edit_link' %>
       </div>
     <% end %>
   </div>
 </div>
-
-<%= link_to(t('cho.catalog.edit'), edit_cho_resource_path) if can? :edit, @document %>
 
 <% content_for(:sidebar) do %>
   <%= render_document_sidebar_partial %>

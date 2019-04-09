@@ -17,3 +17,29 @@
 .cho-banner:visited { color: $primary-white; }
 
 .bg-cho { background-color: $psul-light-blue; }
+
+.banner .nav-link:hover,
+.bg-cho .dropdown-item:hover {
+  background-color: $psul-dark-blue;
+  color: $primary-white;
+}
+
+// scss-lint:disable MergeableSelector
+.banner .nav-link:hover .badge.badge-secondary {
+  background-color: $blue-light;
+  color: $psul-dark-blue;
+}
+// scss-lint:enable MergeableSelector
+
+.banner .nav-link,
+.bg-cho .dropdown-item {
+  color: $psul-dark-blue;
+}
+
+// scss-lint:disable SelectorFormat
+.index_title a,
+.document a,
+.mt-4 a {
+  text-decoration: underline;
+}
+// scss-lint:enable SelectorFormat
