@@ -18,12 +18,16 @@
     "eslint-plugin-standard": "^4.0.0",
     "jest": "^24.8.0",
     "mutationobserver-shim": "^0.3.3",
+    "universalviewer": "^3.0.35",
     "webpack-dev-server": "^3.2.1"
   },
   "scripts": {
     "lint": "yarn run eslint --ext .js app/javascript spec/javascript",
     "test": "jest",
-    "debug": "echo \"Goto chrome://inspect and click 'Open dedicated DevTools for Node'\" && node --inspect-brk node_modules/.bin/jest --runInBand"
+    "debug": "echo \"Goto chrome://inspect and click 'Open dedicated DevTools for Node'\" && node --inspect-brk node_modules/.bin/jest --runInBand",
+    "postinstall": "npm run copy-uv && npm run install-sample-manifest",
+    "copy-uv": "rm -rf public/uv && cp -R node_modules/universalviewer/dist public/uv",
+    "install-sample-manifest": "wget http://api.bl.uk/metadata/iiif/ark:/81055/vdc_00000004216E/manifest.json -O public/manifest.json"
   },
   "jest": {
     "setupFiles": [

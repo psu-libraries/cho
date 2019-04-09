@@ -3,6 +3,8 @@ en:
     catalog:
       edit: "Edit"
       link_back: "Back to Search Results"
+    viewer:
+      title: "Sample Universal Viewer"
     file_set:
       edit:
         delete_link: "Delete File Set"

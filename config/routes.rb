@@ -62,6 +62,8 @@ Rails.application.routes.draw do
 
   get '/downloads/:id', to: 'repository/downloads#download', as: 'download'
 
+  get '/viewer', to: 'repository/viewer#index'
+
   resource :select, only: [:index], as: 'select', path: 'select', controller: 'batch/select' do
     concerns :searchable
   end
