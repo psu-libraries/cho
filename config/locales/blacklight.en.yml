@@ -5,5 +5,8 @@ en:
       files:
       heading: 'Files'
     search:
+      form:
+        search:
+          placeholder: ''
       search_results_header: 'Search Results'
       search_results: 'Listing of Search Results'

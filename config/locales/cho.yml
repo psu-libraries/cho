@@ -176,3 +176,10 @@ en:
       character_encoding:
         invalid_character_replacement: ! "\U0001F4A9"
         message: "contains invalid characters. The %{invalid_character_replacement} character represents an invalid character that needs to be replaced before re-submitting this form: \"%{corrected_string}\""
+    home:
+      browse_by:
+        title: "Browse By"
+        resource: "Resource"
+        collection: "Collection"
+      featured: "Featured"
+      title: "Search by keyword, browse resources and collections or view featured collections"
