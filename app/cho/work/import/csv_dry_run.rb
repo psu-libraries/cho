@@ -29,7 +29,8 @@ module Work
       end
 
       def results
-        @results ||= reader.map do |work_hash|
+        @results ||= reader.map.with_index do |work_hash, index|
+          add_order_index!(work_hash, index) unless update?
           WorkHashValidator.new(work_hash,
             resource_class: Work::Submission,
             change_set_class: Work::SubmissionChangeSet).change_set
@@ -37,6 +38,29 @@ module Work
       end
 
       private
+
+        def add_order_index!(work_hash, index)
+          order_index = num_works_in_home_collection(work_hash) + index + 1
+          work_hash.merge!(order_index: order_index)
+        end
+
+        def num_works_in_home_collection(work_hash)
+          collection_id = work_hash['home_collection_id']
+
+          @num_works_in_home_collection ||= {}
+          @num_works_in_home_collection.fetch(collection_id) do
+            @num_works_in_home_collection[collection_id] = load_num_works_in_collection(collection_id)
+          end
+        end
+
+        def load_num_works_in_collection(home_collection_id)
+          Valkyrie.config.metadata_adapter.query_service
+            .find_by_alternate_identifier(alternate_identifier: home_collection_id)
+            .members
+            .count
+        rescue Valkyrie::Persistence::ObjectNotFoundError
+          0
+        end
 
         # @todo see https://github.com/psu-libraries/cho/issues/605
         # @note if there's more than one work in the bag with the same identifier, the duplicates will be ignored.

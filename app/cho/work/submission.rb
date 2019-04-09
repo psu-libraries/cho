@@ -18,6 +18,8 @@ module Work
 
     attribute :batch_id, Valkyrie::Types::String.optional
 
+    attribute :order_index, Valkyrie::Types::Integer.optional
+
     # Accessors needed for shrine to send the temporary uploaded file
     #  to the controller
     # For the moment we are uploading a single file.
