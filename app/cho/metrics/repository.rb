@@ -18,14 +18,9 @@ module Metrics
       end
 
       def reset_directories
-        reset_directory(Rails.root.join(storage_directory))
-        reset_directory(Rails.root.join(network_ingest_directory)) if Rails.env.test?
-        reset_directory(Rails.root.join(extraction_directory))
-      end
-
-      # @return [Pathname] absolute path to the location of stored files
-      def storage_directory
-        Pathname.new(ENV['storage_directory']).expand_path
+        reset_directory(Cho::Application.config.storage_directory)
+        reset_directory(Cho::Application.config.network_ingest_directory) if Rails.env.test?
+        reset_directory(Cho::Application.config.extraction_directory)
       end
 
       private
@@ -36,14 +31,6 @@ module Metrics
           else
             FileUtils.mkdir(path.to_s)
           end
-        end
-
-        def network_ingest_directory
-          Pathname.new(ENV['network_ingest_directory'])
-        end
-
-        def extraction_directory
-          Pathname.new(ENV['extraction_directory'])
         end
     end
   end

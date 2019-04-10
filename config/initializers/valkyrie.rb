@@ -40,7 +40,7 @@ Rails.application.config.to_prepare do
   # Storage Adapters
 
   Valkyrie::StorageAdapter.register(
-    Valkyrie::Storage::Disk.new(base_path: Metrics::Repository.storage_directory),
+    Valkyrie::Storage::Disk.new(base_path: Cho::Application.config.storage_directory),
     :disk
   )
 

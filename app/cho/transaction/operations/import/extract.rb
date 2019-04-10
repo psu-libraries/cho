@@ -13,8 +13,8 @@ module Transaction
         # @param [Pathname] zip_path full path to the zip file containing the bag
         def call(zip_name: nil, zip_path: nil)
           zip_name ||= zip_path.basename('.zip')
-          zip_path ||= network_ingest_directory.join("#{zip_name}.zip")
-          destination = extraction_directory.join(zip_name)
+          zip_path ||= Cho::Application.config.network_ingest_directory.join("#{zip_name}.zip")
+          destination = Cho::Application.config.extraction_directory.join(zip_name)
           FileUtils.rm_rf(destination)
 
           unzip_bag(zip_path)
@@ -29,19 +29,11 @@ module Transaction
           def unzip_bag(path)
             ::Zip::File.open_buffer(::File.open(path)) do |zip_file|
               zip_file.each do |entry|
-                path = extraction_directory.join(entry.name)
+                path = Cho::Application.config.extraction_directory.join(entry.name)
                 FileUtils.mkdir_p(path.dirname)
                 zip_file.extract(entry, path) unless path.exist?
               end
             end
-          end
-
-          def network_ingest_directory
-            @network_ingest_directory ||= Pathname.new(ENV['network_ingest_directory']).expand_path
-          end
-
-          def extraction_directory
-            @extraction_directory ||= Pathname.new(ENV['extraction_directory']).expand_path
           end
       end
     end
