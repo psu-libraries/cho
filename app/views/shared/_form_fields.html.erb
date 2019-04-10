@@ -1,3 +1,7 @@
+<% content_for(:head) do %>
+  <%= stylesheet_pack_tag 'form_fields' %>
+<% end %>
+
 <%- resource.input_fields(form).each do |input_field| %>
   <%= content_tag :div, class: "form-group #{input_field.multiple_class} #{input_field.label}" do -%>
     <%= form.label input_field.label do %>

@@ -23,6 +23,7 @@
 config/database.yml
 config/hydra-ldap.yml
 public/files
+public/assets
 
 /public/packs
 /public/packs-test
