@@ -1,5 +1,5 @@
 import FieldSet from '../form_fields/field_set'
-import '../form_fields/styles.css'
+require('../form_fields/styles.css')
 
 let fieldSets = document.getElementsByClassName('ff-multiple')
 
