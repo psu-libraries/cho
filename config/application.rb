@@ -23,5 +23,9 @@ module Cho
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
+
+    config.storage_directory = Pathname.new(ENV['storage_directory']).expand_path
+    config.network_ingest_directory = Pathname.new(ENV['network_ingest_directory']).expand_path
+    config.extraction_directory = Pathname.new(ENV['extraction_directory']).expand_path
   end
 end

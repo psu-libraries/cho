@@ -4,8 +4,7 @@ namespace :cho do
   namespace :ingest do
     desc 'Batch load works from a directory of csv files'
     task works: :environment do
-      ingest_directory = Pathname.new(ENV['network_ingest_directory'])
-      Pathname.glob(ingest_directory.join('*.csv')).each do |csv_file|
+      Pathname.glob(Cho::Application.config.network_ingest_directory.join('*.csv')).each do |csv_file|
         print "Importing works from #{csv_file.basename} ... "
 
         reader = Work::Import::CsvReader.new(File.open(csv_file))

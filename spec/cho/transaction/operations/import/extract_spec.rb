@@ -7,16 +7,11 @@ RSpec.describe Transaction::Operations::Import::Extract do
 
   describe '#call' do
     context 'with the name of the zip file' do
-      let(:bag_path) { Pathname.new(ENV['extraction_directory']).expand_path.join('sample_zip') }
+      let(:bag_path) { Cho::Application.config.extraction_directory.join('sample_zip') }
 
       before do
         FileUtils.rm_rf(bag_path)
-        @network_ingest_directory = ENV['network_ingest_directory']
-        ENV['network_ingest_directory'] = fixture_path
-      end
-
-      after do
-        ENV['network_ingest_directory'] = @network_ingest_directory
+        allow(Cho::Application.config).to receive(:network_ingest_directory).and_return(Pathname.new(fixture_path))
       end
 
       it 'successfully extracts the zip' do
@@ -31,7 +26,7 @@ RSpec.describe Transaction::Operations::Import::Extract do
     end
 
     context 'with a full path to the zip file' do
-      let(:bag_path) { Pathname.new(ENV['extraction_directory']).expand_path.join('sample_zip') }
+      let(:bag_path) { Cho::Application.config.extraction_directory.join('sample_zip') }
       let(:zip_path) { Pathname.new(fixture_path).join('sample_zip.zip') }
 
       before { FileUtils.rm_rf(bag_path) }

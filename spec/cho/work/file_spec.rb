@@ -38,7 +38,7 @@ RSpec.describe Work::File do
     context 'with a file' do
       before { file.file_identifier = binary_content.id }
 
-      its(:path) { is_expected.to eq(Metrics::Repository.storage_directory.join('My File.txt').to_s) }
+      its(:path) { is_expected.to eq(Cho::Application.config.storage_directory.join('My File.txt').to_s) }
     end
   end
 
