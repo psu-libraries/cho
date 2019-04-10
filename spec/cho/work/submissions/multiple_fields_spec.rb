@@ -4,9 +4,9 @@ require 'rails_helper'
 
 RSpec.describe 'Works with multiple fields', with_named_js: :multiple_fields, type: :feature do
   context 'when adding new fields for entry' do
-    def check_field(label:, display: nil)
+    def check_field(label:)
       within(".ff-multiple.#{label}") do
-        expect(page).to have_text("(+) Add another #{display || label.titleize}")
+        expect(page).to have_css('.ff-add', text: /\(\+\) Add another/)
         expect(page).to have_selector('span.ff-remove', text: '(-) Remove', count: 1, visible: false)
         find('.ff-add').click
         expect(page).to have_selector('span.ff-remove', text: '(-) Remove', count: 2, visible: true)
@@ -22,7 +22,7 @@ RSpec.describe 'Works with multiple fields', with_named_js: :multiple_fields, ty
       expect(page).to have_content('New Generic Resource', wait: Capybara.default_max_wait_time * 5)
       check_field(label: 'subtitle')
       check_field(label: 'description')
-      check_field(label: 'alternate_ids', display: 'Identifier')
+      check_field(label: 'alternate_ids')
       check_field(label: 'creator')
       check_field(label: 'generic_field')
       check_field(label: 'created')
