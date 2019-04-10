@@ -28,7 +28,7 @@ RSpec.describe Collection::Curated, type: :feature do
       fill_in('curated_collection[alternate_ids][]', with: 'existing-id')
       click_button('Create Curated collection')
       expect(page).to have_css('ul li', text: "can't be blank")
-      expect(page).to have_content('Identifier existing-id already exists')
+      expect(page).to have_css('ul li', text: /existing-id already exists/)
     end
   end
 

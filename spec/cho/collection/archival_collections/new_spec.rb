@@ -28,7 +28,7 @@ RSpec.describe Collection::Archival, type: :feature do
       fill_in('archival_collection[alternate_ids][]', with: 'existing-id')
       click_button('Create Archival collection')
       expect(page).to have_css('ul li', text: "can't be blank")
-      expect(page).to have_content('Identifier existing-id already exists')
+      expect(page).to have_css('ul li', text: /existing-id already exists/)
     end
   end
 
