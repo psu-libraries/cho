@@ -46,16 +46,13 @@ set :format_options, command_output: false
 # Default value for :linked_files is []
 # Example link: ln -s /opt/heracles/deploy/cho/shared/config/redis.yml /opt/heracles/deploy/cho/current/config/redis.yml
 set :linked_files, fetch(:linked_files, []).push(
-  'config/analytics.yml',
   'config/application.yml',
   'config/blacklight.yml',
   'config/database.yml',
   'config/fedora.yml',
-  'config/ga-privatekey.p12',
   'config/hydra-ldap.yml',
   'config/newrelic.yml',
   'config/redis.yml',
-  'config/role_map.yml',
   'config/secrets.yml',
   'config/solr.yml',
   'public/robots.txt'
@@ -93,7 +90,8 @@ namespace :deploy do
   desc 'set up the shared directory to have the symbolic links to the appropriate directories shared between servers'
   task :symlink_shared_directories do
     on roles(:web, :job) do
-      execute "ln -sf /#{fetch(:application)}/config_#{fetch(:stage)}/cho/ /home/deploy/cho/shared/config"
+      execute 'rm -f /home/deploy/cho/shared/config'
+      execute "ln -sf /#{fetch(:application)}/config_#{fetch(:stage)}/cho /home/deploy/cho/shared/config"
     end
   end
   before 'deploy:check:linked_dirs', :symlink_shared_directories
@@ -109,6 +107,14 @@ namespace :deploy do
     end
   end
   after :migrate, :roleassets
+
+  desc 'Restart passenger'
+  task :restart_passenger do
+    on roles(:web, :job) do
+      execute 'touch /home/deploy/cho/current/tmp/restart.txt'
+    end
+  end
+  after 'deploy:cleanup', :restart_passenger
 end
 
 # Used to keep x-1 instances of ruby on a machine.  Ex +4 leaves 3 versions on a machine.  +3 leaves 2 versions
