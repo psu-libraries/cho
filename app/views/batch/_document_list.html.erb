@@ -1,14 +1,15 @@
 <%# container for all documents in index list view -%>
 <div id="documents" class="documents-<%= document_index_view_type %>">
   <%= form_for(:delete, url: batch_delete_path, method: :post) do |form| %>
-    Select resources to delete:
+    <%= t('cho.batch.document_list.select') %>
     <ol class="select-resources">
       <% documents.each do |document| %>
         <li>
           <%= link_to_document document, document_show_link_field(document) %>
           [ <%= form.check_box :ids, { multiple: true }, document.id, nil %>
              <%= label_tag('delete_ids_' + document.id) do %>
-               Delete <span class="sr-only"><%= document.title_data_dictionary_field.first %></span>
+               <%= t('cho.batch.document_list.delete') %>
+               <span class="sr-only"><%= document.title_data_dictionary_field.first %></span>
           <% end %> ]
         </li>
       <% end %>

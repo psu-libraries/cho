@@ -1,16 +1,16 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Givenname:</strong>
+  <strong><%= t('cho.agent.show.given_name') %></strong>
   <%= @agent.given_name %>
 </p>
 
 <p>
-  <strong>Surname:</strong>
+  <strong><%= t('cho.agent.show.surname') %></strong>
   <%= @agent.surname %>
 </p>
 
 <% if can? :manage, @agent %>
-  <%= link_to 'Edit', edit_agent_resource_path(@agent) %> |
+  <%= link_to t('cho.agent.show.edit'), edit_agent_resource_path(@agent) %> |
 <% end %>
-<%= link_to 'Back', agent_resources_path %>
+<%= link_to t('cho.agent.show.back'), agent_resources_path %>

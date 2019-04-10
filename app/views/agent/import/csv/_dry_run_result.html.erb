@@ -5,7 +5,7 @@
     <% if dry_run_result.errors.present? %>
       <%= render 'csv/dry_run_error_list', errors: dry_run_result.errors.full_messages %>
     <% else %>
-      Success
+      <%= t('cho.agent.dry_run.success') %>
     <% end %>
   </td>
 </tr>

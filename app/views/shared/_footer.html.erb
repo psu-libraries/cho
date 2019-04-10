@@ -1,7 +1,7 @@
 <footer class="footer bg-dark">
-  <a href="/" class="footer-logo">Cultural Heritage Objects</a>
-  <p class="footer-service">A service of the University Libraries</p>
+  <a href="/" class="footer-logo"><%= t('cho.footer.logo') %></a>
+  <p class="footer-service"><%= t('cho.footer.service') %></p>
   <% if Git.revision %>
-    <p>Current Revision: <%= link_to Git.revision, "https://github.com/psu-libraries/cho/commit/#{Git.revision}" %></p>
+    <p><%= t('cho.footer.revision') %> <%= link_to Git.revision, "https://github.com/psu-libraries/cho/commit/#{Git.revision}" %></p>
   <% end %>
 </footer>

@@ -1,7 +1,7 @@
 <%= form_with(model: agent, local: true) do |form| %>
   <% if agent.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(agent.errors.count, 'error') %> prohibited this agent from being saved:</h2>
+      <h2><%= t('cho.form.error_heading', count: pluralize(agent.errors.count, 'error')) %></h2>
 
       <ul>
       <% agent.errors.full_messages.each do |message| %>

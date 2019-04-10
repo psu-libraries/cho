@@ -1,5 +1,5 @@
-<h1>New Agent</h1>
+<h1><%= t('cho.agent.new.heading') %></h1>
 
 <%= render 'form', agent: @agent %>
 
-<%= link_to 'Back', agent_resources_path %>
+<%= link_to t('cho.agent.new.back'), agent_resources_path %>
