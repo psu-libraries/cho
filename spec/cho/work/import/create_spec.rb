@@ -389,13 +389,13 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
         expect(page).to have_content("Work type can't be blank")
         expect(page).to have_css('ul li', text: "can't be blank", count: 6)
         expect(page).to have_content(/missing_alt_id does not exist/)
-        expect(page).to have_content("Creator role 'http://id.loc.gov/vocabulary/relators/asdf' does not exist")
-        expect(page).to have_content("Creator agent 'Person, Missing' does not exist")
-        expect(page).to have_content("Creator agent 'Guy, Bad' does not exist")
-        expect(page).to have_content("Creator agent 'Guy, Badder' does not exist")
-        expect(page).to have_content("Creator agent 'Creator, Missing Fileset' does not exist")
+        expect(page).to have_content(/role \'http:\/\/id\.loc\.gov\/vocabulary\/relators\/asdf\' does not exist/)
+        expect(page).to have_content(/agent \'Person, Missing\' does not exist/)
+        expect(page).to have_content(/agent \'Guy, Bad\' does not exist/)
+        expect(page).to have_content(/agent \'Guy, Badder\' does not exist/)
+        expect(page).to have_content(/agent \'Creator, Missing Fileset\' does not exist/)
         expect(page).to have_content(
-          "Creator role 'http://id.loc.gov/vocabulary/relators/bad fileset role' does not exist"
+          /role \'http:\/\/id\.loc\.gov\/vocabulary\/relators\/bad fileset role\' does not exist/
         )
       end
     end

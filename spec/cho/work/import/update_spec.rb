@@ -216,7 +216,7 @@ RSpec.describe 'Preview of CSV Update', type: :feature do
       within('table') do
         expect(page).to have_css('ul li', text: "can't be blank")
         expect(page).to have_selector('td', text: 'Created Date not a date is not a valid EDTF date')
-        expect(page).to have_selector('td', text: "Creator agent 'Dude, Bad Agent' does not exist")
+        expect(page).to have_selector('td', text: /agent 'Dude, Bad Agent' does not exist/)
       end
     end
   end
