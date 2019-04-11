@@ -9,13 +9,11 @@ module Validation
       self.errors = []
 
       Array.wrap(field_value).each do |value|
-        begin
-          value.to_s.encode('UTF-8', 'binary') # will raise UndefinedConversionError
+        unless value.to_s.dup.force_encoding('UTF-8').valid_encoding?
+          errors << error_message_for(value)
+        end
 
-          if other_bad_characters.any? { |char| value.to_s.include?(char) }
-            errors << error_message_for(value)
-          end
-        rescue Encoding::UndefinedConversionError
+        if other_bad_characters.any? { |char| value.to_s.include?(char) }
           errors << error_message_for(value)
         end
       end
