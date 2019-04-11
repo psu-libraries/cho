@@ -1,3 +1,13 @@
+GIT
+  remote: https://github.com/projectblacklight/blacklight-gallery
+  revision: f885a5a57db751b4cdf57ebdff47d86a2fcad426
+  specs:
+    blacklight-gallery (1.0.0.alpha)
+      blacklight (~> 7.0)
+      bootstrap (~> 4.0)
+      openseadragon (>= 0.2.0)
+      rails
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -377,6 +387,8 @@ GEM
     nio4r (2.3.1)
     nokogiri (1.10.1)
       mini_portile2 (~> 2.4.0)
+    openseadragon (0.5.0)
+      rails (> 3.2.0)
     orm_adapter (0.5.0)
     parallel (1.12.1)
     parser (2.5.3.0)
@@ -675,6 +687,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   blacklight (~> 7.0)
+  blacklight-gallery!
   bootsnap
   bootstrap (~> 4.3)
   byebug

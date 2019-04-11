@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   include DeviseRemote::HttpHeaderAuthenticatableBehavior
 
   helper LocalHelperBehavior, LayoutHelperBehavior
+  helper Openseadragon::OpenseadragonHelper
 
   layout 'blacklight'
 
