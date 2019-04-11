@@ -83,18 +83,21 @@ en:
       edit:
         delete_link: "Delete Archival Collection"
         heading: "Edit Collection"
+        show: "Show"
       new:
         heading: "New Archival Collection"
     library_collection:
       edit:
         delete_link: "Delete Library Collection"
         heading: "Edit Collection"
+        show: "Show"
       new:
         heading: "New Library Collection"
     curated_collection:
       edit:
         delete_link: "Delete Curated Collection"
         heading: "Edit Collection"
+        show: "Show"
       new:
         heading: "New Curated Collection"
     agent:
