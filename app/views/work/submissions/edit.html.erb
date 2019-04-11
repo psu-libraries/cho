@@ -3,4 +3,4 @@
 
 <%= render partial: 'form', locals: { work_form: @work } %>
 <%= render 'shared/form_delete', resource: @work %>
-<%= link_to t('cho.work.edit.show_link'), work_path(@work.model) %>
+<%= link_to t('cho.work.edit.show_link'), polymorphic_path([:solr_document], id: @work.id) %>

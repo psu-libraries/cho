@@ -75,5 +75,6 @@ RSpec.describe 'work/submissions/edit', type: :view do
       assert_select 'input[name=?]', "work_submission[#{specific_field}][]"
       assert_select 'label[for=?]', 'work_submission_file', false
     end
+    assert_select 'a[href=?]', "/catalog/#{@work.id}"
   end
 end
