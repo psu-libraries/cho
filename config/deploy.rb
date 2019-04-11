@@ -87,6 +87,16 @@ namespace :apache do
 end
 
 namespace :deploy do
+  desc 'Verify yaml configuration files are present and contain the correct keys'
+  task :check_configs do
+    on roles(:all) do
+      within release_path do
+        execute :rake, 'cho:repository:check', 'RAILS_ENV=production'
+      end
+    end
+  end
+  after :updated, :check_configs
+
   desc 'set up the shared directory to have the symbolic links to the appropriate directories shared between servers'
   task :symlink_shared_directories do
     on roles(:web, :job) do
