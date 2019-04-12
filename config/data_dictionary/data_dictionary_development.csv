@@ -3,7 +3,7 @@ title,string,required,character_encoding,false,no_vocabulary,,Title,no_transform
 home_collection_id,valkyrie_id,optional,resource_exists,false,cho_collections,,Collection,render_link_to_collection,facet,help me,false
 alternate_ids,alternate_id,required_to_publish,unique,true,no_vocabulary,,Identifier,no_transformation,no_facet,help me,true
 creator,creator,optional,creator,true,creator_vocabulary,,Creator,no_transformation,linked_field,help me,true
-date_created,string,required_to_publish,no_validation,true,no_vocabulary,,Date Created,no_transformation,date,help me,true
+date_created,date,required_to_publish,edtf_date,true,no_vocabulary,,Date Created,no_transformation,date,help me,true
 subject,string,optional,character_encoding,true,no_vocabulary,,Subject,no_transformation,no_facet,help me,true
 location,string,optional,character_encoding,true,no_vocabulary,,Location,no_transformation,no_facet,help me,true
 description,text,optional,character_encoding,true,no_vocabulary,,Description,no_transformation,no_facet,help me,true
