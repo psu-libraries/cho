@@ -15,5 +15,10 @@ test:
   network_ingest_directory: 'tmp/ingest-test'
   extraction_directory: 'tmp/extract-test'
   storage_directory: 'public/files'
-
 production:
+  service_name: "example-test"
+  service_instance: "example-test"
+  virtual_host: "http://test.com/"
+  network_ingest_directory: 'tmp/ingest-test'
+  extraction_directory: 'tmp/extract-test'
+  storage_directory: 'public/files'
