@@ -19,6 +19,7 @@ gem 'twitter-typeahead-rails', '0.11.1.pre.corejavascript'
 
 # Supporting gems
 gem 'bagit'
+gem 'blacklight-gallery', git: 'https://github.com/projectblacklight/blacklight-gallery'
 gem 'bootsnap', require: false
 gem 'cancancan'
 gem 'coffee-rails', '~> 4.2'

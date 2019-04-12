@@ -10,6 +10,14 @@ class CatalogController < ApplicationController
   Blacklight::IndexPresenter.thumbnail_presenter = ::ThumbnailPresenter
 
   configure_blacklight do |config|
+    ## Configure blacklight-gallery
+    config.view.gallery.partials = [:index_header, :index]
+    config.view.masonry.partials = [:index]
+    config.view.slideshow.partials = [:index]
+
+    config.show.tile_source_field = :content_metadata_image_iiif_info_ssm
+    config.show.partials.insert(1, :openseadragon)
+
     ## Class for sending and receiving requests from a search index
     # config.repository_class = Blacklight::Solr::Repository
     #
