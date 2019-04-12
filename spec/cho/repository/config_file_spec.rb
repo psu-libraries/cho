@@ -13,7 +13,7 @@ RSpec.describe Repository::ConfigFile do
       end
     end
 
-    let(:requirements) { [{ 'required_key' => :required }] }
+    let(:requirements) { [{ 'required_key' => { required: true } }] }
 
     specify do
       expect { config_file.validate }
@@ -29,11 +29,39 @@ RSpec.describe Repository::ConfigFile do
       end
     end
 
-    let(:requirements) { [{ 'required_directory' => :required_directory }] }
+    let(:requirements) { [{ 'required_directory' => { required: true, directory: { writable: false } } }] }
 
     specify do
-      expect { config_file.validate }
-        .to raise_error(Repository::Configuration::Error, "i/do/not/exist is a required directory in #{file.basename}")
+      expect {
+        config_file.validate
+      }.to raise_error(
+        Repository::Configuration::Error, "i/do/not/exist must be present and readable in #{file.basename}"
+      )
+    end
+  end
+
+  context 'when a directory is not writable' do
+    let!(:directory) { Pathname.new(Dir.mktmpdir) }
+
+    let(:file) do
+      Tempfile.open do |yaml_file|
+        yaml_file.write(Psych.dump('production' => { 'writable_directory' => directory.to_s }))
+        Pathname.new(yaml_file.path)
+      end
+    end
+
+    let(:requirements) { [{ 'writable_directory' => { required: true, directory: { writable: true } } }] }
+
+    before { directory.chmod(0o500) }
+
+    after { FileUtils.rm_rf(directory) }
+
+    specify do
+      expect {
+        config_file.validate
+      }.to raise_error(
+        Repository::Configuration::Error, "#{directory} must be writable in #{file.basename}"
+      )
     end
   end
 end

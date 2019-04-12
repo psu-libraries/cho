@@ -6,12 +6,12 @@ module Repository
 
     REQUIREMENTS = {
       'application.yml' => [
-        { 'service_name' => :required },
-        { 'service_instance' => :required },
-        { 'virtual_host' => :required },
-        { 'network_ingest_directory' => :required_directory },
-        { 'extraction_directory' => :required_directory },
-        { 'storage_directory' => :required_directory }
+        { 'service_name' => { required: true } },
+        { 'service_instance' => { required: true } },
+        { 'virtual_host' => { required: true } },
+        { 'network_ingest_directory' => { required: true, directory: { writable: false } } },
+        { 'extraction_directory' => { required: true, directory: { writable: true } } },
+        { 'storage_directory' => { required: true, directory: { writable: true } } }
       ]
     }.freeze
 
