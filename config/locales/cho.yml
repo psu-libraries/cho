@@ -71,9 +71,9 @@ en:
       error: "%{count} prohibited this resource from being saved:"
       missing: "Missing"
       show:
-        files_heading: "Parts"
-        download_representative_link: 'Download Work'
-        download_text_link: 'Download Plain Text'
+        files_heading: "Resource Parts"
+        download_representative_link: "Download Resource"
+        download_text_link: "Download Text"
     collection:
       members:
         title: "Title"
