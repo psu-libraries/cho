@@ -102,6 +102,10 @@ namespace :deploy do
     on roles(:web, :job) do
       execute 'rm -f /home/deploy/cho/shared/config'
       execute "ln -sf /#{fetch(:application)}/config_#{fetch(:stage)}/cho /home/deploy/cho/shared/config"
+      execute 'rm -f /home/deploy/cho/shared/public/files'
+      execute "ln -sf /#{fetch(:application)}/shared_#{fetch(:stage)}/public/files /home/deploy/cho/shared/public/files"
+      execute 'rm -f /home/deploy/cho/shared/public/robots.txt'
+      execute "ln -sf /#{fetch(:application)}/shared_#{fetch(:stage)}/public/robots.txt /home/deploy/cho/shared/public/robots.txt"
     end
   end
   before 'deploy:check:linked_dirs', :symlink_shared_directories
