@@ -23,6 +23,7 @@ require 'capistrano/scm/git'
 install_plugin Capistrano::SCM::Git
 require 'capistrano-resque' # resque
 require 'capistrano/rbenv_install' # rbenv install plugin
+require 'capistrano/passenger'
 
 # Loads custom tasks from `lib/capistrano/tasks' if you have any defined.
 # tasks included: passenger, checksum

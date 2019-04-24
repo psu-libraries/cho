@@ -75,6 +75,7 @@ group :development do
   gem 'capistrano-rbenv', '~> 2.1', require: false
   gem 'capistrano-rbenv-install'
   gem 'capistrano-resque', '~> 0.2.1', require: false
+  gem 'capistrano-passenger'
 end
 
 group :test do

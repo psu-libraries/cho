@@ -121,14 +121,6 @@ namespace :deploy do
     end
   end
   after :migrate, :roleassets
-
-  desc 'Restart passenger'
-  task :restart_passenger do
-    on roles(:web, :job) do
-      execute 'touch /home/deploy/cho/current/tmp/restart.txt'
-    end
-  end
-  after 'deploy:cleanup', :restart_passenger
 end
 
 # Used to keep x-1 instances of ruby on a machine.  Ex +4 leaves 3 versions on a machine.  +3 leaves 2 versions
