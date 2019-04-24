@@ -71,11 +71,11 @@ group :development do
   # Use Capistrano for deployment
   gem 'capistrano', '~> 3.7', require: false
   gem 'capistrano-bundler', '~> 1.2', require: false
+  gem 'capistrano-passenger'
   gem 'capistrano-rails', '~> 1.2', require: false
   gem 'capistrano-rbenv', '~> 2.1', require: false
   gem 'capistrano-rbenv-install'
   gem 'capistrano-resque', '~> 0.2.1', require: false
-  gem 'capistrano-passenger'
 end
 
 group :test do
