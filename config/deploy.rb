@@ -69,10 +69,7 @@ set :linked_dirs, fetch(:linked_dirs, []).push(
 )
 
 # Default value for keep_releases is 5
-set :keep_releases, 7
-
-# Default value for keep_releases is 5, setting to 7
-set :keep_releases, 7
+set :keep_releases, 3
 
 # Apache namespace to control apache
 namespace :apache do
