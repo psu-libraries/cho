@@ -695,11 +695,11 @@ DEPENDENCIES
   cancancan
   capistrano (~> 3.11)
   capistrano-bundler (~> 1.5)
-  capistrano-passenger
+  capistrano-passenger (~> 0.2)
   capistrano-rails (~> 1.4)
   capistrano-rbenv (~> 2.1)
-  capistrano-rbenv-install
-  capistrano-resque (~> 0.2)
+  capistrano-rbenv-install (~> 1.2)
+  capistrano-resque (~> 0.2.1)
   capybara
   coffee-rails (~> 4.2)
   coveralls
