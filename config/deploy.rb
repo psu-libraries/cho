@@ -69,10 +69,7 @@ set :linked_dirs, fetch(:linked_dirs, []).push(
 )
 
 # Default value for keep_releases is 5
-set :keep_releases, 7
-
-# Default value for keep_releases is 5, setting to 7
-set :keep_releases, 7
+set :keep_releases, 3
 
 # Apache namespace to control apache
 namespace :apache do
@@ -101,7 +98,7 @@ namespace :deploy do
   task :symlink_shared_directories do
     on roles(:web, :job) do
       execute 'rm -f /home/deploy/cho/shared/config'
-      execute "ln -sf /#{fetch(:application)}/config_#{fetch(:stage)}/cho /home/deploy/cho/shared/config"
+      execute "ln -sf /#{fetch(:application)}/config_#{fetch(:stage)} /home/deploy/cho/shared/config"
       execute 'rm -f /home/deploy/cho/shared/public/files'
       execute "ln -sf /#{fetch(:application)}/shared_#{fetch(:stage)}/public/files /home/deploy/cho/shared/public/files"
       execute 'rm -f /home/deploy/cho/shared/public/robots.txt'
@@ -121,14 +118,6 @@ namespace :deploy do
     end
   end
   after :migrate, :roleassets
-
-  desc 'Restart passenger'
-  task :restart_passenger do
-    on roles(:web, :job) do
-      execute 'touch /home/deploy/cho/current/tmp/restart.txt'
-    end
-  end
-  after 'deploy:cleanup', :restart_passenger
 end
 
 # Used to keep x-1 instances of ruby on a machine.  Ex +4 leaves 3 versions on a machine.  +3 leaves 2 versions

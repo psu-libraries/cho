@@ -69,11 +69,12 @@ group :development do
   gem 'xray-rails'
 
   # Use Capistrano for deployment
-  gem 'capistrano', '~> 3.7', require: false
-  gem 'capistrano-bundler', '~> 1.2', require: false
-  gem 'capistrano-rails', '~> 1.2', require: false
+  gem 'capistrano', '~> 3.11', require: false
+  gem 'capistrano-bundler', '~> 1.5', require: false
+  gem 'capistrano-passenger', '~> 0.2', require: false
+  gem 'capistrano-rails', '~> 1.4', require: false
   gem 'capistrano-rbenv', '~> 2.1', require: false
-  gem 'capistrano-rbenv-install'
+  gem 'capistrano-rbenv-install', '~> 1.2', require: false
   gem 'capistrano-resque', '~> 0.2.1', require: false
 end
 
