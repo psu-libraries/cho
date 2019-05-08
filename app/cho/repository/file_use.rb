@@ -30,16 +30,19 @@ module Repository
 
     def get_method
       return unless uri
+
       NAME[uri].to_sym
     end
 
     def set_method
       return unless uri
+
       "#{NAME[uri]}!".to_sym
     end
 
     def ask_method
       return unless uri
+
       "#{NAME[uri]}?".to_sym
     end
 

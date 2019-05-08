@@ -23,6 +23,7 @@ module Work::Import::WithHashCreators
 
   def find_role(role)
     return if role.blank?
+
     RDF::URI("http://id.loc.gov/vocabulary/relators/#{role}")
   end
 end

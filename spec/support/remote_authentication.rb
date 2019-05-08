@@ -28,8 +28,8 @@ module RemoteAuthentication
         Capybara.register_driver js_driver do |app|
           capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(chromeOptions: chrome_options)
           Capybara::Selenium::Driver.new(app,
-                                           browser: :chrome,
-                                           desired_capabilities: capabilities)
+                                         browser: :chrome,
+                                         desired_capabilities: capabilities)
         end
       end
       Capybara.current_driver = js_driver

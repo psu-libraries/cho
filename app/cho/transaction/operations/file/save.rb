@@ -14,8 +14,8 @@ module Transaction
           saved_work_file_set = metadata_adapter.persister.save(resource: work_file_set(change_set))
           change_set.model.member_ids << saved_work_file_set.id
           Success(change_set)
-        rescue StandardError => exception
-          Failure(Transaction::Rejection.new("Error persisting file: #{exception.message}"))
+        rescue StandardError => e
+          Failure(Transaction::Rejection.new("Error persisting file: #{e.message}"))
         end
 
         private

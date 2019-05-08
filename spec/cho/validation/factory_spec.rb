@@ -27,10 +27,10 @@ RSpec.describe Validation::Factory, type: :model do
     it { within_block_is_expected.not_to raise_exception }
 
     describe '#validator_names' do
-      subject { described_class.validator_names }
+      subject(:names) { described_class.validator_names }
 
       it do
-        is_expected.to contain_exactly(
+        expect(names).to contain_exactly(
           'creator',
           'my_validator',
           'no_validation',

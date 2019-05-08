@@ -29,6 +29,7 @@ module Batch
 
       def contained_resources(type)
         return [] unless resource.try(type)
+
         resource.send(type)
       end
   end

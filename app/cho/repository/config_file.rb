@@ -27,11 +27,13 @@ module Repository
 
       def check_requirement(property:, setting:)
         return if keys.include?(property) || !setting.required
+
         raise Configuration::Error, "#{property} is a required key in #{name}"
       end
 
       def check_directory(property:, setting:)
         return unless setting.directory
+
         directory_exists(property)
         directory_writable(property: property, setting: setting)
       end
@@ -39,11 +41,13 @@ module Repository
       def directory_exists(value)
         path = Pathname.new(config.fetch(value))
         return if path.exist? && path.readable?
+
         raise Configuration::Error, "#{config.fetch(value)} must be present and readable in #{name}"
       end
 
       def directory_writable(property:, setting:)
         return if Pathname.new(config.fetch(property)).writable? || !setting.directory.writable
+
         raise Configuration::Error, "#{config.fetch(property)} must be writable in #{name}"
       end
   end

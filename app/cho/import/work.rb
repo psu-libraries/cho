@@ -51,11 +51,13 @@ class Import::Work
 
     def validate_representative_file_set(file_set)
       return if file_set.access.present?
+
       errors.add(:file_sets, 'representative does not have an access file')
     end
 
     def validate_file_set(file_set)
       return if file_set.preservation.present? || file_set.service.present?
+
       errors.add(:file_sets, "#{file_set} does not have a service or preservation file")
     end
 

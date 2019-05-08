@@ -12,8 +12,8 @@ module Transaction
         rescue Valkyrie::Persistence::StaleObjectError
           change_set.errors.add(:save, I18n.t('cho.stale_object_error', object_name: change_set.work_type.label))
           Failure(change_set)
-        rescue StandardError => error
-          change_set.errors.add(:save, error.message)
+        rescue StandardError => e
+          change_set.errors.add(:save, e.message)
           Failure(change_set)
         end
       end

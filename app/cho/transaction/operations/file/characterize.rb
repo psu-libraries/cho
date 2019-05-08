@@ -15,8 +15,8 @@ module Transaction
           change_set.validate(fits_output: xml_string)
 
           Success(change_set)
-        rescue StandardError => exception
-          Failure(Transaction::Rejection.new("Error characterizing file: #{exception.message}"))
+        rescue StandardError => e
+          Failure(Transaction::Rejection.new("Error characterizing file: #{e.message}"))
         end
 
         private

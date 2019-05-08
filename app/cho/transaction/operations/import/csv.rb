@@ -19,14 +19,15 @@ module Transaction
           else
             Success(importer.created)
           end
-        rescue StandardError => exception
-          Failure(Array.wrap(exception.message))
+        rescue StandardError => e
+          Failure(Array.wrap(e.message))
         end
 
         private
 
           def delete_bag(dry_run)
             return unless dry_run.bag.success?
+
             FileUtils.rm_rf(dry_run.bag.success.path)
           end
       end

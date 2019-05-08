@@ -17,7 +17,7 @@ module Repository
 
     def self.check
       files = Rails.root.join('config').children
-      check_files = files.select { |file| REQUIREMENTS.keys.include?(file.basename.to_s) }
+      check_files = files.select { |file| REQUIREMENTS.key?(file.basename.to_s) }
       check_files.each do |file|
         ConfigFile.new(file: file, requirements: REQUIREMENTS[file.basename.to_s]).validate
       end

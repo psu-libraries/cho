@@ -68,10 +68,10 @@ RSpec.describe Work::FileSetChangeSet do
     it 'contains an array of Schema::InputFields' do
       expect(change_set.input_fields(form).map(&:label)).to contain_exactly(
         'subtitle',
-                                                                'description',
-                                                                'title',
-                                                                'alternate_ids',
-                                                                'creator'
+        'description',
+        'title',
+        'alternate_ids',
+        'creator'
       )
     end
   end

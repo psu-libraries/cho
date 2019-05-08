@@ -18,6 +18,7 @@ class MetadataFieldPresenter
 
   def paragraphs
     return [] if blank?
+
     content.join("\n").split(/\n+/)
   end
 end

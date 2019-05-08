@@ -17,8 +17,8 @@ module Agent
       def results
         @results ||= reader.map do |work_hash|
           Csv::HashValidator.new(work_hash,
-            resource_class: Agent::Resource,
-            change_set_class: Agent::ChangeSet).change_set
+                                 resource_class: Agent::Resource,
+                                 change_set_class: Agent::ChangeSet).change_set
         end
       end
 

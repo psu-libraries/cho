@@ -8,9 +8,9 @@ module Csv
 
     def create_dry_run(csv_dry_run:, path:, update:)
       result = csv_dry_run.new(path, update: update)
-      return Success(result)
-    rescue StandardError => error
-      return Failure(error.message)
+      Success(result)
+    rescue StandardError => e
+      Failure(e.message)
     end
   end
 end

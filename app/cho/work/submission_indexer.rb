@@ -52,11 +52,13 @@ module Work
       def select_thumbnail
         possible_thumbnails = resource.file_sets.select(&:thumbnail)
         return if possible_thumbnails.empty?
+
         possible_thumbnails.first.thumbnail
       end
 
       def preservation_file_set_ids
         return unless resource.respond_to?(:preservation_file_sets)
+
         resource.preservation_file_sets.map do |file_set|
           "id-#{file_set.id}"
         end
@@ -65,6 +67,7 @@ module Work
       def representative_file_set_id
         return unless resource.respond_to?(:representative_file_set)
         return if resource.representative_file_set.id.blank?
+
         "id-#{resource.representative_file_set.id}"
       end
   end

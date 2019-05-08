@@ -47,11 +47,13 @@ module Validation
 
         def valid_agent?
           return true if agent.blank?
+
           Validation::Member.new(agent).exists?
         end
 
         def valid_role?
           return true if role.blank?
+
           RDF::Vocab::MARCRelators.to_a.map(&:to_s).include?(role)
         end
     end

@@ -5,13 +5,21 @@ cache:
   directories:
     - dep_cache
     - node_modules
+before_install:
+  - gem update --system
+  - gem install bundler
+  - travis_retry nvm install 11.8.0
+  - node -v
+  - travis_retry npm i -g yarn
+  - travis_retry yarn
+  - yarn
 bundler_args: --without development debug
 sudo: false
 addons:
   postgresql: "9.6"
   chrome: stable
 rvm:
-  - 2.4.1
+  - 2.6.3
 jdk:
   - oraclejdk8
 env:
