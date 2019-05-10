@@ -33,17 +33,20 @@ module Indexing
       # @return [String]
       def role
         return if role_id.blank?
+
         RDF::Vocab::MARCRelators.to_a.select { |relator| relator.to_uri == role_id }.first.label.to_s
       end
 
       # @return [String]
       def agent
         return if agent_id.blank?
+
         Agent::Resource.find(Valkyrie::ID.new(agent_id))
       end
 
       def agent_display
         return if blank?
+
         agent.to_s
       end
 
@@ -53,6 +56,7 @@ module Indexing
 
       def display_name
         return if blank?
+
         [agent.display_name, role].compact.join(', ')
       end
     end

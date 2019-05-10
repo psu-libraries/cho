@@ -5,8 +5,8 @@ require 'rails_helper'
 RSpec.describe Work::Import::WorkHashValidator do
   let(:reader) do
     described_class.new(work_hash,
-      resource_class: Work::Submission,
-      change_set_class: Work::SubmissionChangeSet)
+                        resource_class: Work::Submission,
+                        change_set_class: Work::SubmissionChangeSet)
   end
 
   let(:collection) { create :library_collection }

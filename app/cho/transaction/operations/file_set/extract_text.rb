@@ -18,8 +18,8 @@ module Transaction
             file_set.member_ids += [text_file_result.id]
           end
           Success(file_set)
-        rescue StandardError => exception
-          Failure(Transaction::Rejection.new("Error extracting text: #{exception.message}"))
+        rescue StandardError => e
+          Failure(Transaction::Rejection.new("Error extracting text: #{e.message}"))
         end
 
         private

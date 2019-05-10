@@ -16,8 +16,8 @@ module Transaction
           file_sets = saved_file_sets(change_set.import_work, file_set_hashes: change_set.file_set_hashes)
           change_set.member_ids = file_sets.map(&:id)
           Success(change_set)
-        rescue StandardError => exception
-          Failure(Transaction::Rejection.new("Error importing the work: #{exception.message}"))
+        rescue StandardError => e
+          Failure(Transaction::Rejection.new("Error importing the work: #{e.message}"))
         end
 
         private

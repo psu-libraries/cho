@@ -46,6 +46,7 @@ module Work
 
     def preservation_file_sets
       return file_sets if file_sets.count == 1
+
       file_sets.reject(&:representative?)
     end
 

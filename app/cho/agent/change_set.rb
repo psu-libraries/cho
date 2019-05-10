@@ -16,6 +16,7 @@ module Agent
 
     def unique_name(_attribute)
       return if resource.to_s == to_s
+
       Agent::Resource.all.map do |agent|
         unique_agent_error(agent)
       end
@@ -26,6 +27,7 @@ module Agent
       def unique_agent_error(agent)
         message = "#{agent} already exists"
         return if errors[:base].include?(message)
+
         errors.add(:base, message) if agent.to_s == to_s
       end
   end

@@ -8,9 +8,9 @@ RSpec.describe CatalogController, type: :feature do
   context 'when searching for works' do
     before do
       create(:work_submission, :with_file, :with_creator,
-        collection_title: 'Searching Collection',
-        generic_field: 'Faceted Value',
-        alternate_ids: ['abc_123_999'])
+             collection_title: 'Searching Collection',
+             generic_field: 'Faceted Value',
+             alternate_ids: ['abc_123_999'])
     end
 
     it 'returns the work and excludes file sets and files' do
@@ -92,8 +92,8 @@ RSpec.describe CatalogController, type: :feature do
   context 'when searching extracted text' do
     before do
       create(:work_submission, :with_file_and_extracted_text,
-        filename: 'example_extracted_text.txt',
-        title: 'Sample Extracted Text Work')
+             filename: 'example_extracted_text.txt',
+             title: 'Sample Extracted Text Work')
     end
 
     it 'returns the work containing the extracted text' do

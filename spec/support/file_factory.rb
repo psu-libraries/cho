@@ -11,6 +11,7 @@ class FileFactory
 
   def build_file_set(attributes:, resource:)
     raise text_file.failure if text_file.failure?
+
     resource.member_ids = [text_file.success.id]
     fileset = Valkyrie::MetadataAdapter.find(:indexing_persister).persister.save(resource: resource)
     work = attributes.work

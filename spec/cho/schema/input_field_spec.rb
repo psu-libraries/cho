@@ -9,16 +9,16 @@ RSpec.describe Schema::InputField, type: :model do
   let(:model) { described_class.new(form: form, metadata_field: metadata_field) }
   let(:metadata_field) do
     build :schema_metadata_field,
-      label: 'abc123_label',
-      field_type: 'date',
-      requirement_designation: 'recommended',
-      controlled_vocabulary: 'no_vocabulary',
-      default_value: 'abc123',
-      display_name: 'My Abc123',
-      display_transformation: 'no_transformation',
-      multiple: false, validation: 'no_validation',
-      core_field: false, order_index: 0,
-      work_type: 'something'
+          label: 'abc123_label',
+          field_type: 'date',
+          requirement_designation: 'recommended',
+          controlled_vocabulary: 'no_vocabulary',
+          default_value: 'abc123',
+          display_name: 'My Abc123',
+          display_transformation: 'no_transformation',
+          multiple: false, validation: 'no_validation',
+          core_field: false, order_index: 0,
+          work_type: 'something'
   end
 
   let(:form) { instance_double ActionView::Helpers::FormBuilder }

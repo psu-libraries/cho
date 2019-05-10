@@ -131,6 +131,7 @@ RSpec.describe 'Preview of CSV Update', type: :feature do
 
       matrix.each_with_index do |row, i|
         next if i == 0
+
         row[2] = missing_titles[i - 1]
         row[6] = [nil, nil, nil, nil, 'Dude, Bad Agent', nil][i - 1]
         row[9] = bad_dates[i - 1]

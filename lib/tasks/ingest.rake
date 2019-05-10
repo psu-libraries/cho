@@ -27,6 +27,7 @@ namespace :cho do
 
     def create_collection(id)
       return if collection_exists?(id)
+
       collection = Collection::Archival.new(
         title: "Collection for #{id}",
         alternate_ids: [id],

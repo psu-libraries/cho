@@ -16,6 +16,7 @@ module Repository
     def file
       @file ||= begin
                   return if file_set.nil?
+
                   select_file
                 end
     end
@@ -27,6 +28,7 @@ module Repository
       def select_file
         get_method = FileUse.new(use).get_method
         return default_file unless get_method
+
         file_set.send(get_method)
       end
 

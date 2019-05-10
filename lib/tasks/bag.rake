@@ -53,6 +53,7 @@ namespace :cho do
         file_path = File.join(path, file)
         if File.directory?(file_path)
           next if ['data', '.', '..'].include?(file)
+
           directory_entry(bag, file_path, File.join(base_path, file))
           FileUtils.remove_dir(file_path)
         elsif file == '.DS_Store'
@@ -60,6 +61,7 @@ namespace :cho do
           File.delete(file_path)
         else
           next if ['bagit.txt', 'bag-info.txt'].include?(file)
+
           puts "Moving file #{file_path} to the bag"
           bag.add_file(File.join(base_path, file), file_path)
           File.delete(file_path)

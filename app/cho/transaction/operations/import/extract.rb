@@ -19,8 +19,8 @@ module Transaction
 
           unzip_bag(zip_path)
           Success(destination)
-        rescue StandardError => exception
-          Failure(Transaction::Rejection.new("Error extracting the bag: #{exception.message}"))
+        rescue StandardError => e
+          Failure(Transaction::Rejection.new("Error extracting the bag: #{e.message}"))
         end
 
         private

@@ -48,6 +48,7 @@ module Work
 
     def validate_work_type_id!(field)
       return if work_type_id.blank?
+
       errors.add(field, 'can not be changed') if id.present? && work_type_id.id != model.work_type_id.id
       errors.add(field, "#{work_type_id} does not exist") if work_type.blank?
     end

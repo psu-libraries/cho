@@ -44,8 +44,8 @@ class ChangeSetPersister
     else
       result.failure
     end
-  rescue StandardError => error
-    change_set.errors.add(:save, error.message)
+  rescue StandardError => e
+    change_set.errors.add(:save, e.message)
     change_set
   end
 
@@ -68,6 +68,7 @@ class ChangeSetPersister
 
     def delete_members(resource)
       return unless resource.try(:member_ids)
+
       resource.member_ids.each do |member_id|
         member = Valkyrie.config.metadata_adapter.query_service.find_by(id: member_id)
         delete_members(member)

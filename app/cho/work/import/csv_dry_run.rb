@@ -32,8 +32,8 @@ module Work
         @results ||= reader.map.with_index do |work_hash, index|
           add_order_index!(work_hash, index) unless update?
           WorkHashValidator.new(work_hash,
-            resource_class: Work::Submission,
-            change_set_class: Work::SubmissionChangeSet).change_set
+                                resource_class: Work::Submission,
+                                change_set_class: Work::SubmissionChangeSet).change_set
         end
       end
 
@@ -84,8 +84,8 @@ module Work
             next if file_set_hash.nil?
 
             FileSetHashValidator.new(file_set_hash,
-              resource_class: Work::FileSet,
-              change_set_class: Work::FileSetChangeSet).change_set
+                                     resource_class: Work::FileSet,
+                                     change_set_class: Work::FileSetChangeSet).change_set
           end
         end
 

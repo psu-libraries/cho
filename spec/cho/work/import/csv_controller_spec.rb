@@ -105,7 +105,7 @@ RSpec.describe Work::Import::CsvController, type: :controller do
 
       it 'redirects to the update page' do
         expect(call).to redirect_to(csv_works_update_path)
-        expect(flash[:error]).to eq('invalid byte sequence in UTF-8')
+        expect(flash[:error]).to eq('Invalid byte sequence in UTF-8 in line 1.')
       end
     end
   end

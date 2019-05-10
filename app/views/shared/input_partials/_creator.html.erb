@@ -5,7 +5,7 @@
       <div class="col-md-12 col-lg-3">
         <%= label_tag :role %>
         <%= text_field_tag "#{form.object_name}[creator][][role]", value.fetch(:role, nil),
-            field.options.merge!(list: "#{field.label}_role") %>
+                           field.options.merge!(list: "#{field.label}_role") %>
         <datalist id="<%= "#{field.label}_role" %>">
           <% field.datalist(component: :roles).each do |item| %>
             <option value="<%= item %>"><%= item.label %></option>
@@ -16,7 +16,7 @@
       <div class="col-md-12 col-lg-3">
         <%= label_tag :agent %>
         <%= text_field_tag "#{form.object_name}[creator][][agent]", value.fetch(:agent, nil),
-            field.options.merge!(list: "#{field.label}_agent") %>
+                           field.options.merge!(list: "#{field.label}_agent") %>
         <datalist id="<%= "#{field.label}_agent" %>">
           <% field.datalist(component: :agents).each do |item| %>
             <option value="<%= item.id %>"><%= item %></option>

@@ -5,18 +5,18 @@ require 'rails_helper'
 RSpec.describe 'data_dictionary/fields/show', type: :view do
   let(:data_dictionary_field) do
     build :data_dictionary_field,
-      label: 'Label',
-      field_type: DataDictionary::Field::FieldTypes['numeric'],
-      requirement_designation: DataDictionary::Field::RequirementDesignations['required_to_publish'],
-      core_field: true,
-      validation: 'no_validation',
-      multiple: false,
-      controlled_vocabulary: 'no_vocabulary',
-      default_value: 'Default Value',
-      display_name: 'Display Name',
-      display_transformation: 'no_transformation',
-      help_text: 'helping me',
-      index_type: 'facet'
+          label: 'Label',
+          field_type: DataDictionary::Field::FieldTypes['numeric'],
+          requirement_designation: DataDictionary::Field::RequirementDesignations['required_to_publish'],
+          core_field: true,
+          validation: 'no_validation',
+          multiple: false,
+          controlled_vocabulary: 'no_vocabulary',
+          default_value: 'Default Value',
+          display_name: 'Display Name',
+          display_transformation: 'no_transformation',
+          help_text: 'helping me',
+          index_type: 'facet'
   end
 
   before do

@@ -7,8 +7,8 @@ RSpec.describe Csv::HashValidator, type: :model do
 
   let(:validator) do
     described_class.new(hash,
-      resource_class: SampleResource,
-      change_set_class: SampleChangeSet)
+                        resource_class: SampleResource,
+                        change_set_class: SampleChangeSet)
   end
 
   before do

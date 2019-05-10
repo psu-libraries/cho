@@ -8,9 +8,9 @@ RSpec.describe Work::Submission, type: :feature do
   context 'when the work has no files' do
     let(:collection) { create(:library_collection) }
     let(:work) do create(:work,
-      title: 'No files',
-      home_collection_id: [collection.id],
-      work_type_id: work_type.id)
+                         title: 'No files',
+                         home_collection_id: [collection.id],
+                         work_type_id: work_type.id)
     end
 
     it 'displays only metadata' do

@@ -14,18 +14,16 @@ if [ ! -f dep_cache/cc-test-reporter ]; then
 fi
 export PATH=$PATH:$(pwd)/dep_cache
 
+echo -e "\n\n\033[1;33mCopy config files and build database\033[0m"
+cp config/travis/hydra-ldap.yml config/hydra-ldap.yml
+cp config/travis/database.yml config/database.yml
+psql -c 'create database travis_ci_test;' -U postgres
+
 echo -e "\n\n\033[1;33mCompiling webpacks\033[0m"
-nvm install node
-node -v
-npm i -g yarn
-yarn
 bundle exec rails webpacker:compile
 
 echo -e "\n\n\033[1;33mPreparing...\033[0m"
 google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
-cp config/travis/hydra-ldap.yml config/hydra-ldap.yml
-cp config/travis/database.yml config/database.yml
-psql -c 'create database travis_ci_test;' -U postgres
 bundle exec solr_wrapper --config config/travis/solr_wrapper_test.yml &
 bin/jetty_wait
 

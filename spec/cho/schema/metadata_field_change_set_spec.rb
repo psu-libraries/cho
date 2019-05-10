@@ -176,8 +176,8 @@ RSpec.describe Schema::MetadataFieldChangeSet do
 
       its(:full_messages) {
         is_expected.to contain_exactly("Data dictionary field can't be blank",
-                        "Label can't be blank", "Order index can't be blank",
-                        "Work type can't be blank") }
+                                       "Label can't be blank", "Order index can't be blank",
+                                       "Work type can't be blank") }
     end
 
     context 'with an invalid validation' do

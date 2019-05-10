@@ -18,19 +18,19 @@ module Schema
         field
       end
 
-      private
+       private
 
-        def merge_attributes(data_dictionary_attributes, schema_field_config)
-          return data_dictionary_attributes if schema_field_config.blank?
+         def merge_attributes(data_dictionary_attributes, schema_field_config)
+           return data_dictionary_attributes if schema_field_config.blank?
 
-          safe_schema_field_config = schema_field_config.symbolize_keys
-            .reject { |key, _value| reserved_keys.include?(key) }
-          data_dictionary_attributes.merge(safe_schema_field_config)
-        end
+           safe_schema_field_config = schema_field_config.symbolize_keys
+             .reject { |key, _value| reserved_keys.include?(key) }
+           data_dictionary_attributes.merge(safe_schema_field_config)
+         end
 
-        def reserved_keys
-          [:label, :requirement_designation, :core_field]
-        end
+         def reserved_keys
+           [:label, :requirement_designation, :core_field]
+         end
      end
   end
 end

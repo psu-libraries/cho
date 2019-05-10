@@ -29,11 +29,13 @@ module Schema
 
     def multiple_class
       return 'ff-multiple' if multiple?
+
       'ff-single'
     end
 
     def values
       return empty_values if value_set.empty?
+
       value_set
     end
 
@@ -61,6 +63,7 @@ module Schema
 
       def empty_values
         return [{}] if linked_field?
+
         ['']
       end
   end

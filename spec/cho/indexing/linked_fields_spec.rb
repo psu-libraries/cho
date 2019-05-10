@@ -7,7 +7,7 @@ RSpec.describe Indexing::LinkedFields do
   let(:indexer) { described_class.new(resource: resource) }
 
   describe '#to_solr' do
-    subject { indexer.to_solr }
+    subject(:document) { indexer.to_solr }
 
     context 'when the field is empty' do
       it { is_expected.to eq({}) }
@@ -17,7 +17,7 @@ RSpec.describe Indexing::LinkedFields do
       before { resource.creator = [{ role: '', agent: '' }] }
 
       it do
-        is_expected.to eq(
+        expect(document).to eq(
           'creator_tesim' => [],
           'creator_agent_tesim' => [],
           'creator_role_tesim' => [],
@@ -34,7 +34,7 @@ RSpec.describe Indexing::LinkedFields do
       before { resource.creator = [{ role: MockRDF.relators.first.to_uri.to_s, agent: agent.id }] }
 
       it do
-        is_expected.to eq(
+        expect(document).to eq(
           'creator_tesim' => ['Fox, Bud, blasting'],
           'creator_agent_tesim' => ['Bud Fox'],
           'creator_role_tesim' => ['blasting'],
