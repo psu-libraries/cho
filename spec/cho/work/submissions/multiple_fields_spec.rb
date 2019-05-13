@@ -8,7 +8,7 @@ RSpec.describe 'Works with multiple fields', with_named_js: :multiple_fields, ty
       within(".ff-multiple.#{label}") do
         expect(page).to have_css('.ff-add', text: /\(\+\) Add another/)
         expect(page).to have_selector('span.ff-remove', text: '(-) Remove', count: 1, visible: false)
-        find('.ff-add').click
+        retry_click { find('.ff-add').click }
         expect(page).to have_selector('span.ff-remove', text: '(-) Remove', count: 2, visible: true)
         page.all('.ff-remove').last.click
         expect(page).to have_selector('span.ff-remove', text: '(-) Remove', count: 1, visible: false)
@@ -43,7 +43,7 @@ RSpec.describe 'Works with multiple fields', with_named_js: :multiple_fields, ty
     def fill_in_multiple(field)
       within(".ff-multiple.#{field}") do
         fill_in("work_submission[#{field}][]", with: attributes1[field])
-        find('.ff-add').click
+        retry_click { find('.ff-add').click }
         expect(page.all('.ff-control').last.value).to be_empty
         page.all('.ff-control').last.set(attributes2[field])
       end
@@ -77,7 +77,7 @@ RSpec.describe 'Works with multiple fields', with_named_js: :multiple_fields, ty
       within('.ff-multiple.creator') do
         fill_in('work_submission[creator][][role]', with: MockRDF.relators.first)
         fill_in('work_submission[creator][][agent]', with: agent1.id)
-        find('.ff-add').click
+        retry_click { find('.ff-add').click }
         inputs = page.all('.ff-control')
         expect(inputs[2].value).to be_empty
         expect(inputs[3].value).to be_empty
@@ -86,7 +86,7 @@ RSpec.describe 'Works with multiple fields', with_named_js: :multiple_fields, ty
       end
 
       fill_in('work_submission[home_collection_id]', with: archival_collection.id)
-      click_button('Create Resource')
+      retry_click { click_button('Create Resource') }
       verify_multiple(:subtitle)
       verify_multiple(:description)
       verify_multiple(
