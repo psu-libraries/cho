@@ -7,6 +7,7 @@ RSpec.describe Work::FileSet do
   let(:resource_klass) { described_class }
 
   it_behaves_like 'a Valkyrie::Resource'
+  it_behaves_like 'a resource with Valkyrie::Resource::AccessControls'
 
   describe '#member_ids' do
     its(:member_ids) { is_expected.to be_empty }

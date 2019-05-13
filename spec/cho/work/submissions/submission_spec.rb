@@ -7,6 +7,7 @@ RSpec.describe Work::Submission do
   let(:resource_klass) { described_class }
 
   it_behaves_like 'a Valkyrie::Resource'
+  it_behaves_like 'a resource with Valkyrie::Resource::AccessControls'
 
   describe '#title' do
     it 'is nil when not set' do
