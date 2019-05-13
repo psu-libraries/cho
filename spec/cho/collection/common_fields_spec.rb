@@ -17,14 +17,14 @@ RSpec.describe Collection::CommonFields, type: :model do
 
   it { is_expected.to respond_to(:id) }
   it { is_expected.to respond_to(:workflow) }
-  it { is_expected.to respond_to(:visibility) }
+  it { is_expected.to respond_to(:access_level) }
 
-  describe '#visibility=' do
+  describe '#access_level=' do
     it 'can be set' do
-      expect { collection.visibility = 'public' }.not_to raise_error
-      expect { collection.visibility = 'authenticated' }.not_to raise_error
-      expect { collection.visibility = 'private' }.not_to raise_error
-      expect { collection.visibility = 'bogus' }.to raise_error(Dry::Types::ConstraintError)
+      expect { collection.access_level = 'public' }.not_to raise_error
+      expect { collection.access_level = 'authenticated' }.not_to raise_error
+      expect { collection.access_level = 'private' }.not_to raise_error
+      expect { collection.access_level = 'bogus' }.to raise_error(Dry::Types::ConstraintError)
     end
   end
 

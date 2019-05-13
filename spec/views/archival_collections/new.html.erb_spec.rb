@@ -16,7 +16,7 @@ RSpec.describe 'collection/archival_collections/new', type: :view do
       assert_select 'input[name=?]', 'archival_collection[subtitle][]'
       assert_select 'textarea[name=?]', 'archival_collection[description][]'
       assert_select 'input[name=?]', 'archival_collection[workflow]'
-      assert_select 'input[name=?]', 'archival_collection[visibility]'
+      assert_select 'input[name=?]', 'archival_collection[access_level]'
       # Added to make sure accessibility changes are in place
       assert_select 'legend', 'Basic Metadata'
       assert_select 'label[for=?]', 'archival_collection_title', text: /\s.* required/

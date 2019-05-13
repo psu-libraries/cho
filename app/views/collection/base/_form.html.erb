@@ -17,17 +17,17 @@
   </fieldset>
 
   <fieldset>
-    <legend><%= t('cho.form.visibility') %></legend>
-    <%= form.label :visibility_public do %>
-      <%= form.radio_button :visibility, 'public' %> <%= t('cho.field_label.public') %>
+    <legend><%= t('cho.form.access_level') %></legend>
+    <%= form.label :access_level_public do %>
+      <%= form.radio_button :access_level, 'public' %> <%= t('cho.field_label.public') %>
     <% end %>
 
-    <%= form.label :visibility_authenticated do %>
-      <%= form.radio_button :visibility, 'authenticated' %> <%= t('cho.field_label.authenticated') %>
+    <%= form.label :access_level_authenticated do %>
+      <%= form.radio_button :access_level, 'authenticated' %> <%= t('cho.field_label.authenticated') %>
     <% end %>
 
-    <%= form.label :visibility_private do %>
-      <%= form.radio_button :visibility, 'private' %> <%= t('cho.field_label.private') %>
+    <%= form.label :access_level_private do %>
+      <%= form.radio_button :access_level, 'private' %> <%= t('cho.field_label.private') %>
     <% end %>
   </fieldset>
 

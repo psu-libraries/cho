@@ -21,7 +21,7 @@ en:
     form:
       metadata: "Basic Metadata"
       workflow: "Workflow"
-      visibility: "Access Level"
+      access_level: "Access Level"
       file_selection: "File Selection"
       required: "required"
     field_label:
@@ -31,7 +31,7 @@ en:
       workflow: "Workflow"
       default: "Publish Immediately"
       mediated: "Mediated"
-      visibility: "Access Level"
+      access_level: "Access Level"
       public: "Public Access"
       authenticated: "PSU Access"
       private: "Restricted Access"

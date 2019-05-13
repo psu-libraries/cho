@@ -17,7 +17,7 @@ RSpec.describe 'collection/curated_collections/edit', type: :view do
       assert_select 'input[name=?]', 'curated_collection[subtitle][]'
       assert_select 'textarea[name=?]', 'curated_collection[description][]'
       assert_select 'input[name=?]', 'curated_collection[workflow]'
-      assert_select 'input[name=?]', 'curated_collection[visibility]'
+      assert_select 'input[name=?]', 'curated_collection[access_level]'
       # Added to make sure accessibility changes are in place
       assert_select 'legend', 'Basic Metadata'
       assert_select 'label[for=?]', 'curated_collection_title', text: /\s.* required/

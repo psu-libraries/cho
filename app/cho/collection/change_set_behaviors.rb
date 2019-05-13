@@ -10,9 +10,9 @@ module Collection::ChangeSetBehaviors
     validates :workflow, inclusion: { in: ::Collection::CommonFields::WORKFLOW }
     validates :workflow, presence: true
 
-    property :visibility, multiple: false, required: true
-    validates :visibility, inclusion: { in: ::Collection::CommonFields::VISIBILITY }
-    validates :visibility, presence: true
+    property :access_level, multiple: false, required: true
+    validates :access_level, inclusion: { in: ::Collection::CommonFields::ACCESS_LEVEL }
+    validates :access_level, presence: true
   end
 
   # @return [Array<Schema::MetadataField>]

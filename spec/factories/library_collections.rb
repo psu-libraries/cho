@@ -6,6 +6,6 @@ FactoryBot.define do
     description { 'Sample library collection' }
     subtitle { 'subtitle for a library collection' }
     workflow { 'default' }
-    visibility { 'public' }
+    access_level { 'public' }
   end
 end
