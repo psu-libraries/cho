@@ -37,10 +37,17 @@ module Transaction
           def work_file(change_set)
             file = Work::File.new(original_filename: change_set.file.original_filename)
             file_change_set = Work::FileChangeSet.new(file)
+
             response = Create.new.call(file_change_set, temp_file: change_set.file.tempfile)
             raise response.failure if response.failure?
 
-            response.success.model
+            if file.preservation?
+              Operations::File::Characterize.new.call(response.success)
+              response.success.sync
+              metadata_adapter.persister.save(resource: response.success.resource)
+            else
+              response.success.resource
+            end
           end
 
           def metadata_adapter

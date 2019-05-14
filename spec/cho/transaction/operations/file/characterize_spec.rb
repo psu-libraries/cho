@@ -6,7 +6,6 @@ RSpec.describe Transaction::Operations::File::Characterize do
   let(:operation) { described_class.new }
   let(:collection) { create(:collection) }
   let(:change_set) { Work::FileChangeSet.new(resource) }
-  let(:fits_output) { File.read(Pathname.new(fixture_path).join('fits_output.xml')) }
 
   describe '#call' do
     context 'with a file' do
@@ -44,12 +43,6 @@ RSpec.describe Transaction::Operations::File::Characterize do
         expect(result).to be_failure
         expect(result.failure.message).to eq('Error characterizing file: Valkyrie::StorageAdapter::FileNotFound')
       end
-    end
-
-    def mock_fits_for_travis
-      return unless ENV['TRAVIS']
-
-      allow(Hydra::FileCharacterization).to receive(:characterize).and_return(fits_output)
     end
   end
 end
