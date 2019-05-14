@@ -6,6 +6,6 @@ FactoryBot.define do
     description { 'Sample curated collection' }
     subtitle { 'subtitle for a curated collection' }
     workflow { 'default' }
-    visibility { 'public' }
+    access_level { 'public' }
   end
 end

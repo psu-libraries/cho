@@ -5,10 +5,10 @@ module Collection::CommonFields
   include DataDictionary::FieldsForObject
 
   WORKFLOW = ['default', 'mediated'].freeze
-  VISIBILITY = ['public', 'authenticated', 'private'].freeze
+  ACCESS_LEVEL = ['public', 'authenticated', 'private'].freeze
 
   included do
     attribute :workflow, Valkyrie::Types::Set.of(Valkyrie::Types::String.enum(*WORKFLOW))
-    attribute :visibility, Valkyrie::Types::Set.of(Valkyrie::Types::String.enum(*VISIBILITY))
+    attribute :access_level, Valkyrie::Types::Set.of(Valkyrie::Types::String.enum(*ACCESS_LEVEL))
   end
 end

@@ -17,7 +17,7 @@ RSpec.describe 'collection/library_collections/edit', type: :view do
       assert_select 'input[name=?]', 'library_collection[subtitle][]'
       assert_select 'textarea[name=?]', 'library_collection[description][]'
       assert_select 'input[name=?]', 'library_collection[workflow]'
-      assert_select 'input[name=?]', 'library_collection[visibility]'
+      assert_select 'input[name=?]', 'library_collection[access_level]'
       # Added to make sure accessibility changes are in place
       assert_select 'legend', 'Basic Metadata'
       assert_select 'label[for=?]', 'library_collection_title', text: /\s.* required/

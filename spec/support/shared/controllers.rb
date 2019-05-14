@@ -7,7 +7,7 @@ RSpec.shared_examples 'a collection controller' do
       subtitle: 'use only for testing',
       description: 'A sample collection',
       workflow: 'default',
-      visibility: 'public'
+      access_level: 'public'
     }
   end
 
@@ -68,7 +68,7 @@ RSpec.shared_examples 'a collection controller' do
           subtitle: 'use only for testing',
           description: 'An updated sample collection',
           workflow: 'default',
-          visibility: 'public'
+          access_level: 'public'
         }
       end
 
