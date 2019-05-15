@@ -12,7 +12,7 @@ RSpec.describe Collection::Archival, type: :feature do
       expect(page).to have_content('subtitle for an archival collection')
       expect(page).to have_content('Sample archival collection')
       expect(page).to have_content('default')
-      expect(page).to have_content('public')
+      expect(page).to have_content(Repository::AccessLevel.public)
       click_button('Edit')
       expect(page).to have_field('archival_collection[title]', with: 'Archival Collection')
       expect(page).not_to have_link('Back')

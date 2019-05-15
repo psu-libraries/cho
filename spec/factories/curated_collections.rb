@@ -6,6 +6,6 @@ FactoryBot.define do
     description { 'Sample curated collection' }
     subtitle { 'subtitle for a curated collection' }
     workflow { 'default' }
-    access_level { 'public' }
+    access_level { Repository::AccessLevel.public }
   end
 end

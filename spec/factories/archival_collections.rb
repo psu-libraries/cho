@@ -6,6 +6,6 @@ FactoryBot.define do
     subtitle { 'subtitle for an archival collection' }
     description { 'Sample archival collection' }
     workflow { 'default' }
-    access_level { 'public' }
+    access_level { Repository::AccessLevel.public }
   end
 end

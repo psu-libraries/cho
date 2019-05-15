@@ -12,7 +12,7 @@ RSpec.describe Collection::Library, type: :feature do
       expect(page).to have_content('subtitle for a library collection')
       expect(page).to have_content('Sample library collection')
       expect(page).to have_content('default')
-      expect(page).to have_content('public')
+      expect(page).to have_content(Repository::AccessLevel.public)
       click_button('Edit')
       expect(page).to have_field('library_collection[title]', with: 'Library Collection')
       expect(page).not_to have_link('Back')

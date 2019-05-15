@@ -31,6 +31,9 @@ module Transaction
         register 'save' do
           Operations::Shared::Save.new
         end
+        register 'apply_access_level' do
+          Operations::Shared::ApplyAccessLevel.new
+        end
       end
 
       namespace 'import' do

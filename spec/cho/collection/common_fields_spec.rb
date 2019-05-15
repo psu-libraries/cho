@@ -21,9 +21,9 @@ RSpec.describe Collection::CommonFields, type: :model do
 
   describe '#access_level=' do
     it 'can be set' do
-      expect { collection.access_level = 'public' }.not_to raise_error
-      expect { collection.access_level = 'authenticated' }.not_to raise_error
-      expect { collection.access_level = 'private' }.not_to raise_error
+      expect { collection.access_level = Repository::AccessLevel.public }.not_to raise_error
+      expect { collection.access_level = Repository::AccessLevel.psu }.not_to raise_error
+      expect { collection.access_level = Repository::AccessLevel.restricted }.not_to raise_error
       expect { collection.access_level = 'bogus' }.to raise_error(Dry::Types::ConstraintError)
     end
   end

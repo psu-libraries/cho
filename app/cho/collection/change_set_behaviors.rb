@@ -11,7 +11,7 @@ module Collection::ChangeSetBehaviors
     validates :workflow, presence: true
 
     property :access_level, multiple: false, required: true
-    validates :access_level, inclusion: { in: ::Collection::CommonFields::ACCESS_LEVEL }
+    validates :access_level, inclusion: { in: Repository::AccessLevel.names }
     validates :access_level, presence: true
   end
 
