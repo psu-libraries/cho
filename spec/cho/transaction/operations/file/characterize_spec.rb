@@ -16,7 +16,6 @@ RSpec.describe Transaction::Operations::File::Characterize do
       let(:resource_params) { { label: 'abc123', file: temp_file } }
 
       before do
-        mock_fits_for_travis
         work_change_set.validate(resource_params)
         Transaction::Operations::File::Save.new.call(work_change_set)
       end

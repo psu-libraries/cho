@@ -18,7 +18,7 @@ RSpec.describe Transaction::Operations::Import::Work do
     )
   end
 
-  before { mock_fits_for_travis }
+  before { mock_fits }
 
   describe '#call' do
     context 'when there is no import work' do

@@ -18,6 +18,11 @@ sudo: false
 addons:
   postgresql: "9.6"
   chrome: stable
+  apt:
+    sources:
+      - sourceline: 'ppa:conorsheehan1/fits-ppa'
+    packages:
+      - fits
 rvm:
   - 2.6.3
 jdk:
