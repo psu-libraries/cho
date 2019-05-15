@@ -78,11 +78,23 @@ module Transaction
           # @param [Import::File] file
           # @return [Work::File]
           def import_file(file)
-            ::Work::File.new(
+            change_set = ::Work::FileChangeSet.new(::Work::File.new)
+
+            change_set.validate(
               file_identifier: adapter_file(file).id,
               original_filename: file.original_filename,
               use: file.type
             )
+
+            change_set.sync
+
+            if file.preservation?
+              Operations::File::Characterize.new.call(change_set)
+            end
+
+            change_set.sync
+
+            change_set.resource
           end
 
           def adapter_file(file)

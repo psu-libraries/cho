@@ -18,6 +18,8 @@ RSpec.describe Transaction::Operations::Import::Work do
     )
   end
 
+  before { mock_fits_for_travis }
+
   describe '#call' do
     context 'when there is no import work' do
       subject { operation.call(change_set) }
@@ -72,6 +74,18 @@ RSpec.describe Transaction::Operations::Import::Work do
           expect(result.success).to eq(change_set)
           expect(result.success.member_ids.count).to eq(1)
         }.to change { ::Work::File.count }.by(5).and change { ::Work::FileSet.count }.by(1)
+      end
+
+      it 'persists the fits characterization to the preservation file' do
+        operation.call(change_set)
+
+        files = ::Work::File.all
+        expect(files.count).to eq(5) # Sanity
+        expect(files.select(&:preservation?).count).to eq(1) # Sanity
+
+        files.each do |file|
+          expect(file.fits_output.present?).to eq file.preservation?
+        end
       end
     end
   end

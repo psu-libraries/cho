@@ -5,6 +5,8 @@ require 'rails_helper'
 RSpec.describe Transaction::Operations::File::Save do
   let(:operation) { described_class.new }
 
+  before { mock_fits_for_travis }
+
   describe '#call' do
     context 'with a successful save' do
       let!(:collection) { create(:collection) }
@@ -22,6 +24,18 @@ RSpec.describe Transaction::Operations::File::Save do
           expect(result.success).to eq(change_set)
           expect(result.success.member_ids.count).to eq(1)
         }.to change { Work::File.count }.by(2).and change { Work::FileSet.count }.by(1)
+      end
+
+      it 'persists the fits characterization to the preservation file' do
+        operation.call(change_set)
+
+        files = Work::File.all
+        expect(files.count).to eq(2) # Sanity
+        expect(files.select(&:preservation?).count).to eq(1) # Sanity
+
+        files.each do |f|
+          expect(f.fits_output.present?).to eq f.preservation?
+        end
       end
     end
 
