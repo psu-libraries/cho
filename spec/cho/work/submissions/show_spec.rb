@@ -50,4 +50,10 @@ RSpec.describe Work::Submission, type: :feature do
       expect(page).not_to have_select('work_submission[work_type]', with_selected: 'Generic')
     end
   end
+
+  context 'with a Penn State work' do
+    let(:resource) { create(:work, :restricted_to_penn_state) }
+
+    it_behaves_like 'a resource restricted to Penn State users'
+  end
 end

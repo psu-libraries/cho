@@ -2,12 +2,22 @@
 
 class CatalogController < ApplicationController
   include Blacklight::Catalog
+  include Blacklight::AccessControls::Catalog
   include Blacklight::DefaultComponentConfiguration
   include CollectionMembers
+
+  # Applies access controls from the blacklight-access_controls gem
+  before_action :enforce_show_permissions, only: :show
+
+  # Devise does not control index (i.e. search) requests. Search results are limited to a user's access rights
+  # via Blacklight::AccessControls::SearchBuilder.
+  skip_authorize_resource only: :index
 
   helper LocalHelperBehavior, LayoutHelperBehavior
 
   Blacklight::IndexPresenter.thumbnail_presenter = ::ThumbnailPresenter
+
+  self.search_service_class = ::SearchService
 
   configure_blacklight do |config|
     ## Configure blacklight-gallery
@@ -223,4 +233,16 @@ class CatalogController < ApplicationController
     config.add_nav_action(:my_works, partial: 'blacklight/nav/my_works')
     config.add_nav_action(:my_collectionss, partial: 'blacklight/nav/my_collections')
   end
+
+  private
+
+    # @note Overrides search service initialization to pass in current_ability.
+    # We should be able to remove this once Blacklight access controls supports version 7.
+    def search_service
+      search_service_class.new(
+        config: blacklight_config,
+        user_params: search_state.to_h,
+        current_ability: current_ability
+      )
+    end
 end

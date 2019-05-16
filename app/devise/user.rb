@@ -2,13 +2,12 @@
 
 class User < ApplicationRecord
   include Blacklight::User
+  include Blacklight::AccessControls::User
   devise :http_header_authenticatable
 
+  # @return [Array<String>]
   def groups
-    return group_list.split(';?;') unless groups_last_update.blank? || ((Time.now - groups_last_update) > 24 * 60 * 60)
-
-    populate_attributes
-    group_list.split(';?;')
+    ldap_groups + default_groups
   end
 
   def admin?
@@ -22,4 +21,17 @@ class User < ApplicationRecord
     Rails.logger.debug "$#{login}$ groups = #{list}"
     update(group_list: list.join(';?;'), groups_last_update: Time.now)
   end
+
+  private
+
+    def ldap_groups
+      return group_list.split(';?;') unless groups_last_update.blank? || ((Time.now - groups_last_update) > 24 * 60 * 60)
+
+      populate_attributes
+      group_list.split(';?;')
+    end
+
+    def default_groups
+      [Repository::AccessLevel.public]
+    end
 end

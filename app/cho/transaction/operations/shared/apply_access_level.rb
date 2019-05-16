@@ -13,8 +13,7 @@ module Transaction
           change_set.resource.read_groups += [change_set.access_level]
           Success(change_set)
         rescue StandardError => e
-          change_set.errors.add(:apply_access_level, e.message)
-          Failure(change_set)
+          Failure(Transaction::Rejection.new('Error applying access level', e))
         end
       end
     end

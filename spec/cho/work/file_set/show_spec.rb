@@ -14,4 +14,10 @@ RSpec.describe Work::FileSet, type: :feature do
     end
     expect(page).to have_selector('h2', text: 'Files')
   end
+
+  context 'with a Penn State file set' do
+    let(:resource) { create(:preservation_file_set, :restricted_to_penn_state) }
+
+    it_behaves_like 'a resource restricted to Penn State users'
+  end
 end

@@ -11,7 +11,7 @@ RSpec.describe Transaction::Operations::Shared::ApplyAccessLevel do
 
   before(:all) do
     class AccessResource < Valkyrie::Resource
-      include Valkyrie::Resource::AccessControls
+      include Repository::Access::ResourceControls
       attribute :access_level
     end
 
@@ -50,7 +50,8 @@ RSpec.describe Transaction::Operations::Shared::ApplyAccessLevel do
 
       it 'returns a failure' do
         expect(result).to be_a(Dry::Monads::Result::Failure)
-        expect(result.failure.errors.full_messages).to contain_exactly('Apply access level I fell down')
+        expect(result.failure.errors.full_messages)
+          .to contain_exactly('Transaction Error applying access level: I fell down')
       end
     end
   end

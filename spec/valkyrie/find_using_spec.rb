@@ -8,7 +8,6 @@ RSpec.describe FindUsing do
 
   before(:all) do
     class SampleResource < Valkyrie::Resource
-      include Valkyrie::Resource::AccessControls
       include DataDictionary::FieldsForObject
 
       attribute :framjam, Valkyrie::Types::String
@@ -16,7 +15,6 @@ RSpec.describe FindUsing do
     end
 
     class SimilarResource < Valkyrie::Resource
-      include Valkyrie::Resource::AccessControls
       include DataDictionary::FieldsForObject
 
       attribute :framjam, Valkyrie::Types::String

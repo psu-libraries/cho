@@ -19,6 +19,12 @@ RSpec.describe Collection::Archival, type: :feature do
     end
   end
 
+  context 'with a Penn State collection' do
+    let(:resource) { create(:psu_collection) }
+
+    it_behaves_like 'a resource restricted to Penn State users'
+  end
+
   it_behaves_like 'a collection with works'
 
   it_behaves_like 'a collection editable only by admins'

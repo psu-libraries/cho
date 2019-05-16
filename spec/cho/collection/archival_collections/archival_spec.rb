@@ -12,5 +12,4 @@ RSpec.describe Collection::Archival, type: :model do
 
   it_behaves_like 'a collection'
   it_behaves_like 'a Valkyrie::Resource'
-  it_behaves_like 'a resource with Valkyrie::Resource::AccessControls'
 end

@@ -5,7 +5,7 @@
 require Rails.root.join('spec', 'support', 'seed_map')
 
 FactoryBot.define do
-  factory :work_submission, aliases: [:work], class: Work::Submission do
+  factory :work_submission, aliases: [:work, :public_work], class: Work::Submission do
     title { 'Sample Generic Work' }
     work_type_id { Work::Type.find_using(label: 'Generic').first.id }
 

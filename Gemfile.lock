@@ -1,4 +1,14 @@
 GIT
+  remote: https://github.com/projectblacklight/blacklight-access_controls.git
+  revision: 21e04f53217b7d6a0c90faf6393286635cf525f0
+  ref: 21e04f5
+  specs:
+    blacklight-access_controls (6.0.0)
+      blacklight (> 6.0, < 8)
+      cancancan (>= 1.8)
+      deprecation (~> 1.0)
+
+GIT
   remote: https://github.com/projectblacklight/blacklight-gallery
   revision: f885a5a57db751b4cdf57ebdff47d86a2fcad426
   specs:
@@ -691,6 +701,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   blacklight (~> 7.0)
+  blacklight-access_controls!
   blacklight-gallery!
   bootsnap
   bootstrap (~> 4.3)

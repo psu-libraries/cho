@@ -11,7 +11,6 @@ class ApplicationController < ActionController::Base
   layout 'blacklight'
 
   protect_from_forgery with: :exception
-  authorize_resource class: false
 
   rescue_from CanCan::AccessDenied do |_exception|
     render file: Rails.root.join('public', '403.html'),
