@@ -10,7 +10,9 @@ RSpec.describe CatalogController, type: :feature do
       create(:work_submission, :with_file, :with_creator,
              collection_title: 'Searching Collection',
              generic_field: 'Faceted Value',
-             alternate_ids: ['abc_123_999'])
+             alternate_ids: ['abc_123_999'],
+             description: 'Barahir son of bregor bree-hobbits chieftain of the north harlindon northern mirkwood orleg
+                           orocarni pass of imladris sun white mountains.')
     end
 
     it 'returns the work and excludes file sets and files' do
@@ -81,6 +83,30 @@ RSpec.describe CatalogController, type: :feature do
       fill_in('q', with: 'abc')
       within('#search_field') do
         select('All Fields')
+      end
+      click_button('Search')
+      within('#documents') do
+        expect(page).to have_link('Sample Generic Work')
+      end
+    end
+
+    it 'returns the work when searching for the description bree-hobbits' do
+      visit(root_path)
+      fill_in('q', with: 'bree-hobbits')
+      within('#search_field') do
+        select('Description')
+      end
+      click_button('Search')
+      within('#documents') do
+        expect(page).to have_link('Sample Generic Work')
+      end
+    end
+
+    it 'returns the work when searching for the creator' do
+      visit(root_path)
+      fill_in('q', with: 'Doe, John')
+      within('#search_field') do
+        select('Creator')
       end
       click_button('Search')
       within('#documents') do
