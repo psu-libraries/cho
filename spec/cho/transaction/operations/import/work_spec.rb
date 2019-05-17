@@ -18,8 +18,6 @@ RSpec.describe Transaction::Operations::Import::Work do
     )
   end
 
-  before { mock_fits_for_travis }
-
   describe '#call' do
     context 'when there is no import work' do
       subject { operation.call(change_set) }

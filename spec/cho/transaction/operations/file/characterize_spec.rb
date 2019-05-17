@@ -16,12 +16,11 @@ RSpec.describe Transaction::Operations::File::Characterize do
       let(:resource_params) { { label: 'abc123', file: temp_file } }
 
       before do
-        mock_fits_for_travis
         work_change_set.validate(resource_params)
         Transaction::Operations::File::Save.new.call(work_change_set)
       end
 
-      it 'returns Success' do
+      it 'returns Success', :with_fits do
         result = operation.call(change_set)
         expect(result).to be_success
         expect(result.success).to eq(change_set)
