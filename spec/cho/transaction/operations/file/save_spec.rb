@@ -5,8 +5,6 @@ require 'rails_helper'
 RSpec.describe Transaction::Operations::File::Save do
   let(:operation) { described_class.new }
 
-  before { mock_fits_for_travis }
-
   describe '#call' do
     context 'with a successful save' do
       let!(:collection) { create(:collection) }
