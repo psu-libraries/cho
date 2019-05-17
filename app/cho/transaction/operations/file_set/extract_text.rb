@@ -19,7 +19,7 @@ module Transaction
           end
           Success(file_set)
         rescue StandardError => e
-          Failure(Transaction::Rejection.new("Error extracting text: #{e.message}"))
+          Failure(Transaction::Rejection.new('Error extracting text', e))
         end
 
         private

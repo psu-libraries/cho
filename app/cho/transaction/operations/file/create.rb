@@ -12,7 +12,7 @@ module Transaction
           saved_work_file = metadata_adapter.persister.save(resource: work_file(file_change_set, temp_file: temp_file))
           Success(file_change_set.class.new(saved_work_file))
         rescue StandardError => e
-          Failure(Transaction::Rejection.new("Error persisting file: #{e.message}"))
+          Failure(Transaction::Rejection.new('Error persisting file', e))
         end
 
         private

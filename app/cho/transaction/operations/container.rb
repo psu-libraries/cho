@@ -13,6 +13,9 @@ module Transaction
         register 'characterize' do
           Operations::File::Characterize.new
         end
+        register 'process' do
+          Operations::File::Process.new
+        end
         register 'save' do
           Operations::File::Save.new
         end

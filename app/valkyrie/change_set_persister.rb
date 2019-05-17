@@ -44,9 +44,6 @@ class ChangeSetPersister
     else
       result.failure
     end
-  rescue StandardError => e
-    change_set.errors.add(:save, e.message)
-    change_set
   end
 
   def delete(change_set:)

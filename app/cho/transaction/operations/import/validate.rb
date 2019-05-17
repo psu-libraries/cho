@@ -15,7 +15,7 @@ module Transaction
 
           Failure(bag)
         rescue StandardError => e
-          Failure(Transaction::Rejection.new("Error validating the bag: #{e.message}"))
+          Failure(Transaction::Rejection.new('Error validating the bag', e))
         end
       end
     end
