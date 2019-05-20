@@ -66,7 +66,10 @@ class CatalogController < ApplicationController
       narrative
     ]
 
-    DataDictionary::Field.all.sort_by(&:created_at).each do |map_field|
+    # Store search field config, to allow for later sorting and aggregation
+    search_field_options = []
+
+    DataDictionary::Field.all.sort_by(&:created_at).each do |map_field| # where core fields true
       catalog_field = map_field.solr_search_field
       catalog_label = map_field.display_name || map_field.label.titleize
       catalog_helper = map_field.display_transformation == 'no_transformation' ? nil : map_field.display_transformation.to_sym
@@ -76,14 +79,38 @@ class CatalogController < ApplicationController
         config.add_show_field catalog_field, label: catalog_label, helper_method: catalog_helper
       end
 
-      config.add_search_field(map_field.label) do |field|
-        # solr_parameters hash are sent to Solr as ordinary url query params.
-        field.solr_parameters = { 'spellcheck.dictionary': field.label,
-                                  qf: catalog_field,
-                                  pf: catalog_field }
+      # Store search param configuration for core fields
+      if map_field.core_field
+        field_name = map_field.label
+        field_solr_params = { qf: catalog_field,
+                              pf: catalog_field }
+        search_field_options << [field_name, field_solr_params]
       end
+
       if map_field.facet?
         config.add_facet_field map_field.facet_field, label: catalog_label, helper_method: catalog_helper
+      end
+    end
+
+    # Add "All Fields" as first search option, which is an aggregate of all others
+    config.add_search_field('all_fields', label: 'All Fields') do |field|
+      all_names = search_field_options
+        .map { |_label, solr_params| solr_params[:qf] }
+        .join(' ')
+
+      field.solr_parameters = {
+        qf: "#{all_names} id",
+        pf: 'title_tesim'
+      }
+    end
+
+    # Add the rest of the search dimensions
+    search_field_options.each do |field_name, field_solr_params|
+      config.add_search_field(field_name) do |field| # append 92-94 to array
+        # solr_parameters hash are sent to Solr as ordinary url query params.
+        field.solr_parameters = field_solr_params.merge(
+          'spellcheck.dictionary': field.label
+        )
       end
     end
 
@@ -171,16 +198,6 @@ class CatalogController < ApplicationController
     # This one uses all the defaults set by the solr request handler. Which
     # solr request handler? The one set in config[:default_solr_parameters][:qt],
     # since we aren't specifying it otherwise.
-
-    config.add_search_field('all_fields', label: 'All Fields') do |field|
-      all_names = config.search_fields.each.map do |_key, value|
-        value[:solr_parameters][:qf]
-      end.join(' ')
-      field.solr_parameters = {
-        qf: "#{all_names} id",
-        pf: 'title_tesim'
-      }
-    end
 
     # Now we see how to over-ride Solr request handler defaults, in this
     # case for a BL "search field", which is really a dismax aggregate
