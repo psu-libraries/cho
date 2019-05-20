@@ -13,7 +13,7 @@ module Transaction
           updated_temp_file = write_file(temp_file: temp_file, io: io)
           Success(updated_temp_file)
         rescue StandardError => e
-          Failure(Transaction::Rejection.new("Error persisting file: #{e.message}"))
+          Failure(Transaction::Rejection.new('Error persisting file', e))
         end
 
         private

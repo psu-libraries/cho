@@ -37,8 +37,15 @@ RSpec.describe Csv::Importer do
   end
 
   context 'error during save' do
-    let(:bad_persister) { ChangeSetPersister.new(metadata_adapter: nil, storage_adapter: nil) }
+    let(:bad_persister) { ChangeSetPersister.new(metadata_adapter: bad_meta_adapter, storage_adapter: nil) }
+    let(:bad_meta_adapter) { instance_double('Valkyrie::Persistence::Postgres::MetadataAdapter') }
     let(:importer) { described_class.new(change_set_list, bad_persister) }
+
+    before do
+      allow(bad_meta_adapter)
+        .to receive_message_chain(:persister, :save)
+        .and_raise("You know I'm bad, I'm bad (really really bad)")
+    end
 
     it 'does not create the works' do
       status = false
@@ -48,10 +55,8 @@ RSpec.describe Csv::Importer do
       expect(importer.errors.map(&:class)).to eq([Work::SubmissionChangeSet, Work::SubmissionChangeSet])
       expect(importer.errors.map(&:errors).map(&:full_messages)).to eq(
         [
-          ['Save ChangeSetPersister#persister delegated to metadata_adapter.persister, '\
-           "but metadata_adapter is nil: #{bad_persister.inspect}"],
-          ['Save ChangeSetPersister#persister delegated to metadata_adapter.persister, '\
-           "but metadata_adapter is nil: #{bad_persister.inspect}"]
+          ["Save You know I'm bad, I'm bad (really really bad)"],
+          ["Save You know I'm bad, I'm bad (really really bad)"]
         ]
       )
     end

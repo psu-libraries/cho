@@ -16,7 +16,7 @@ module Transaction
 
           Success(change_set)
         rescue StandardError => e
-          Failure(Transaction::Rejection.new("Error characterizing file: #{e.message}"))
+          Failure(Transaction::Rejection.new('Error characterizing file', e))
         end
 
         private

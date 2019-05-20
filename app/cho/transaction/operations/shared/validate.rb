@@ -13,6 +13,8 @@ module Transaction
           else
             Failure(change_set)
           end
+        rescue StandardError => e
+          Failure(Transaction::Rejection.new('Error validating changeset', e))
         end
       end
     end

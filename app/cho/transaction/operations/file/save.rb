@@ -15,7 +15,7 @@ module Transaction
           change_set.model.member_ids << saved_work_file_set.id
           Success(change_set)
         rescue StandardError => e
-          Failure(Transaction::Rejection.new("Error persisting file: #{e.message}"))
+          Failure(Transaction::Rejection.new('Error persisting file', e))
         end
 
         private
