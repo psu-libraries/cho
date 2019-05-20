@@ -13,7 +13,7 @@ RSpec.describe Collection::Library, type: :feature do
       expect(page).to have_content('Sample library collection')
       expect(page).to have_content('default')
       expect(page).to have_content('public')
-      click_link('Edit')
+      click_button('Edit')
       expect(page).to have_field('library_collection[title]', with: 'Library Collection')
       expect(page).not_to have_link('Back')
     end

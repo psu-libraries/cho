@@ -77,9 +77,9 @@ end
 
 RSpec.shared_examples 'a collection editable only by admins' do
   context 'when the current user is an admin' do
-    it 'shows the edit link' do
+    it 'shows the edit button' do
       visit(polymorphic_path([:solr_document], id: collection.id))
-      expect(page).to have_link('Edit')
+      expect(page).to have_selector('input[type=submit][value=Edit]')
     end
   end
 
@@ -87,7 +87,7 @@ RSpec.shared_examples 'a collection editable only by admins' do
     it 'disables the edit link' do
       visit(polymorphic_path([:solr_document], id: collection.id))
 
-      expect(page).not_to have_link I18n.t('cho.catalog.edit')
+      expect(page).not_to have_selector('input[type=submit][value=Edit]')
     end
   end
 
@@ -95,7 +95,7 @@ RSpec.shared_examples 'a collection editable only by admins' do
     it 'disables the edit link' do
       visit(polymorphic_path([:solr_document], id: collection.id))
 
-      expect(page).not_to have_link I18n.t('cho.catalog.edit')
+      expect(page).not_to have_selector('input[type=submit][value=Edit]')
     end
   end
 end

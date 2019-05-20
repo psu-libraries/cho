@@ -2,4 +2,4 @@
 
 <%= render 'collection/base/form', collection: @collection %>
 <%= render 'shared/form_delete', resource: @collection %>
-<%= link_to t('cho.library_collection.edit.show'), polymorphic_path([:solr_document], id: @collection.id) %>
+<%= link_to t('cho.library_collection.edit.show'), polymorphic_path([:solr_document], id: @collection.id), method: 'get', class: 'btn btn-outline-secondary' %>

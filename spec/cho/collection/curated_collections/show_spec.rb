@@ -13,7 +13,7 @@ RSpec.describe Collection::Curated, type: :feature do
       expect(page).to have_content('Sample curated collection')
       expect(page).to have_content('default')
       expect(page).to have_content('public')
-      click_link('Edit')
+      click_button('Edit')
       expect(page).to have_field('curated_collection[title]', with: 'Curated Collection')
       expect(page).not_to have_link('Back')
     end

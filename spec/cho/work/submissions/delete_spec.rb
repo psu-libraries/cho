@@ -9,7 +9,7 @@ RSpec.describe 'Deleting works', type: :feature do
   it 'removes the work and file from the system but retains its parent collection' do
     visit(polymorphic_path([:solr_document], id: resource.id))
     expect(page).to have_selector('li', text: 'hello_world.txt')
-    click_link('Edit')
+    click_button('Edit')
     click_button('Delete Resource')
     expect(page).to have_content('The following resources will be deleted')
     expect(page).to have_content(resource.title.first)
