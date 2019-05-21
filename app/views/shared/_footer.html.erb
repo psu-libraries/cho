@@ -2,6 +2,8 @@
   <a href="/" class="footer-logo"><%= t('cho.footer.logo') %></a>
   <p class="footer-service"><%= t('cho.footer.service') %></p>
   <% if Git.revision %>
-    <p><%= t('cho.footer.revision') %> <%= link_to Git.revision, "https://github.com/psu-libraries/cho/commit/#{Git.revision}" %></p>
+    <%= link_to("https://github.com/psu-libraries/cho/commit/#{Git.revision}") do %>
+      <%= t('cho.footer.revision') %> <%= Git.revision %>
+    <% end %>
   <% end %>
 </footer>
