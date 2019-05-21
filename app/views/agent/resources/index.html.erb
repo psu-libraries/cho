@@ -17,6 +17,7 @@
         <td><%= link_to t('cho.agent.index.show'), agent %></td>
         <td><%= link_to(t('cho.agent.index.edit'), edit_agent_resource_path(agent)) if can? :edit, agent %></td>
         <td>
+          <%# @todo this contains an N+1 query bug, may need to be optimized %>
           <%= if can? :delete, agent
                 link_to(t('cho.agent.index.destroy'), agent,
                         method: :delete, data: { confirm: t('cho.agent.index.confirm') })

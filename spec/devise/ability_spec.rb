@@ -16,6 +16,25 @@ RSpec.describe Ability do
     let(:user) { build_stubbed :admin }
 
     it { is_expected.to be_able_to(:manage, :all) }
+
+    describe 'special rules for Agents' do
+      context 'given an agent with no members' do
+        let(:agent) { create :agent }
+
+        before { raise 'sanity' if agent.member_ids.any? }
+
+        it { is_expected.to be_able_to(:delete, agent) }
+      end
+
+      context 'given an agent with members' do
+        let(:work) { create :work, :with_creator }
+        let(:agent) { Agent::Resource.find(work.creator.first.fetch(:agent)) }
+
+        before { raise 'sanity' if agent.member_ids.empty? }
+
+        it { is_expected.not_to be_able_to(:delete, agent) }
+      end
+    end
   end
 
   describe '#authenticated_permissions' do
