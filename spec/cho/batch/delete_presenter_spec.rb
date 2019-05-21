@@ -33,7 +33,7 @@ RSpec.describe Batch::DeletePresenter, type: :model do
         expect(presenter.children).to contain_exactly(
           'Work: Sample Generic Work',
           'File set: hello_world.txt',
-          'File: hello_world.txt'
+          "File: hello_world_#{Repository::FileUse.suffix_from_uri(Vocab::FileUse.PreservationMasterFile)}.txt"
         )
       end
     end
@@ -49,7 +49,7 @@ RSpec.describe Batch::DeletePresenter, type: :model do
         presenter = Batch::DeletePresenter.new(work)
         expect(presenter.children).to contain_exactly(
           'File set: hello_world.txt',
-          'File: hello_world.txt'
+          "File: hello_world_#{Repository::FileUse.suffix_from_uri(Vocab::FileUse.PreservationMasterFile)}.txt"
         )
       end
     end
@@ -58,7 +58,7 @@ RSpec.describe Batch::DeletePresenter, type: :model do
       it 'lists the files' do
         presenter = Batch::DeletePresenter.new(work.file_sets.first)
         expect(presenter.children).to contain_exactly(
-          'File: hello_world.txt'
+          "File: hello_world_#{Repository::FileUse.suffix_from_uri(Vocab::FileUse.PreservationMasterFile)}.txt"
         )
       end
     end

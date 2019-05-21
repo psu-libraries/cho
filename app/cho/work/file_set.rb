@@ -29,7 +29,9 @@ class Work::FileSet < Valkyrie::Resource
   end
 
   # @return [Work::File] the preservation file
-  # @note Overrides meta-defined method above
+  # @note Overrides meta-defined method above. This is to intentionally make it difficult to get to the
+  # preservation file if a redacted one exists. In order to get preservation file over its redacted counterpart,
+  # you'll need to call files and select the preservation one.
   def preservation
     preservation_redacted || files.select(&:preservation?).first
   end

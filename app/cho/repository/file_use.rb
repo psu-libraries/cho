@@ -23,6 +23,10 @@ module Repository
       NAME.key(suffix.gsub(/-/, '_'))
     end
 
+    def self.suffix_from_uri(uri)
+      NAME[uri].gsub(/_/, '-')
+    end
+
     def initialize(fragment)
       fragment ||= 'NoUse'
       @uri = build_uri(fragment)
