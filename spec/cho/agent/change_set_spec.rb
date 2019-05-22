@@ -5,6 +5,8 @@ require 'rails_helper'
 RSpec.describe Agent::ChangeSet, type: :model do
   subject(:change_set) { described_class.new(Agent::Resource.new) }
 
+  it { is_expected.to delegate_method(:member_ids).to(:resource) }
+
   describe '#validate' do
     context 'when given name is missing' do
       subject { change_set.errors }

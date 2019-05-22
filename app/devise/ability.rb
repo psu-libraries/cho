@@ -10,6 +10,7 @@ class Ability
     base_permissions
     authenticated_permissions
     admin_permissions
+    cannot_delete_agent_with_members
   ]
 
   def base_permissions
@@ -27,5 +28,11 @@ class Ability
 
   def admin_permissions
     can :manage, :all if current_user&.admin?
+  end
+
+  def cannot_delete_agent_with_members
+    cannot :delete, Agent::Resource do |agent|
+      agent.member_ids.any?
+    end
   end
 end

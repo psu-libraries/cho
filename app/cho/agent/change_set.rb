@@ -10,6 +10,8 @@ module Agent
 
     validates :given_name, :surname, with: :unique_name
 
+    delegate :member_ids, to: :resource
+
     def to_s
       "#{given_name} #{surname}"
     end
