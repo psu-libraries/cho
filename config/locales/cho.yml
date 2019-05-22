@@ -22,6 +22,7 @@ en:
       metadata: "Basic Metadata"
       workflow: "Workflow"
       access_level: "Access Level"
+      legend: "Upload Files"
       file_selection: "File Selection"
       required: "required"
     field_label:

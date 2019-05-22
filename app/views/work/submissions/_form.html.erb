@@ -7,8 +7,10 @@
 
   <% if form.object.new_record %>
     <%= form.hidden_field :file, value: work_form.model.cached_file_data %>
-    <%= form.label :file, t('cho.form.file_selection') %>
-    <%= form.file_field :file %>
+    <%= field_set_tag t('cho.form.legend') do %>
+      <%= form.label :file, t('cho.form.file_selection') %>
+      <%= form.file_field :file %>
+    <% end %>
   <% end %>
 
   <%= render 'errors', work: work_form if work_form.errors.any? %>
