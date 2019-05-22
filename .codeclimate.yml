@@ -10,3 +10,4 @@ exclude_patterns:
   - "app/cho/transaction/operations/file/process.rb"
   - "app/cho/transaction/shared/save_with_change_set.rb"
   - "app/cho/transaction/shared/save_with_resource.rb"
+  - "app/blacklight/access_controls/edit_ability.rb"

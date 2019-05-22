@@ -31,8 +31,17 @@ module Transaction
         register 'save' do
           Operations::Shared::Save.new
         end
-        register 'apply_access_level' do
-          Operations::Shared::ApplyAccessLevel.new
+      end
+
+      namespace 'access_controls' do
+        register 'access_level' do
+          Operations::AccessControls::AccessLevel.new
+        end
+        register 'system_creator' do
+          Operations::AccessControls::SystemCreator.new
+        end
+        register 'permissions' do
+          Operations::AccessControls::Permissions.new
         end
       end
 

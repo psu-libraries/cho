@@ -55,3 +55,27 @@ RSpec.shared_examples 'a resource restricted to Penn State users' do
     expect(page).to have_content(resource.title.first)
   end
 end
+
+RSpec.shared_examples 'a restricted resource' do |options|
+  context 'when accessed by the public', :with_public_user do
+    specify do
+      visit(polymorphic_path([:solr_document], id: resource.id))
+      expect(page).to have_content('You are not allowed to access this page')
+    end
+  end
+
+  context 'when accessed by a Penn State user', :with_psu_user do
+    specify do
+      visit(polymorphic_path([:solr_document], id: resource.id))
+      expect(page).to have_content('You are not allowed to access this page')
+    end
+  end
+
+  context 'when accessed by the user who created the resource', with_user: options.fetch(:with_user) do
+    specify do
+      visit(polymorphic_path([:solr_document], id: resource.id))
+      expect(page).not_to have_content('You are not allowed to access this page')
+      expect(page).to have_content(resource.title.first)
+    end
+  end
+end

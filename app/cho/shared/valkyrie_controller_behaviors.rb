@@ -10,6 +10,7 @@ module ValkyrieControllerBehaviors
   end
 
   def validate_save_and_respond(change_set, error_view)
+    change_set.current_user = current_user if change_set.try(:current_user)
     updated_change_set = change_set_persister.validate_and_save(
       change_set: change_set,
       resource_params: resource_params

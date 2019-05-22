@@ -3,12 +3,20 @@
 require 'rails_helper'
 
 RSpec.describe Transaction::Shared::SaveWithChangeSet do
-  let(:transaction) { described_class.new }
-
   describe '::steps' do
-    subject { described_class.steps.map(&:name) }
+    let(:steps) { described_class.steps.map(&:name) }
 
-    it { is_expected.to contain_exactly(:validate, :process_file, :import_work, :save, :apply_access_level) }
+    specify do
+      expect(steps).to eq([
+                            :validate,
+                            :process_file,
+                            :import_work,
+                            :access_level,
+                            :system_creator,
+                            :permissions,
+                            :save
+                          ])
+    end
   end
 
   it { is_expected.to respond_to(:call) }

@@ -4,4 +4,8 @@ FactoryBot.define do
   trait :restricted_to_penn_state do
     read_groups { [Repository::AccessLevel.psu] }
   end
+
+  trait :restricted do
+    read_groups { [] }
+  end
 end

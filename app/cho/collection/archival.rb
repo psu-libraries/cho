@@ -4,7 +4,6 @@
 # Collections are indexed both in Solr and and Postgres using the {IndexingAdapter}.
 module Collection
   class Archival < Valkyrie::Resource
-    include Repository::Access::ResourceControls
     include CommonFields
     include CommonQueries
     include WithMembers

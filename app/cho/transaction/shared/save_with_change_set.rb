@@ -9,7 +9,9 @@ module Transaction
       step :validate, with: 'shared.validate'
       step :process_file, with: 'file.process'
       step :import_work, with: 'import.work'
-      step :apply_access_level, with: 'shared.apply_access_level'
+      step :access_level, with: 'access_controls.access_level'
+      step :system_creator, with: 'access_controls.system_creator'
+      step :permissions, with: 'access_controls.permissions'
       step :save, with: 'shared.save'
     end
   end

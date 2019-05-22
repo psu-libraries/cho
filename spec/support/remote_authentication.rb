@@ -2,6 +2,41 @@
 
 require 'webdrivers'
 
+# Controls the authentication of users during tests. This applies only to instances of controler and feature
+# tests. By default, if no options are specified, an admin user is logged in.
+#
+# @example To login with administrative-level privileges:
+#
+#     context 'as an admin user' do
+#       specify { ... }
+#     end
+#
+# @example To login with authenticated privileges:
+#
+#     context 'as a Penn State user', :with_psu_user do
+#       specify { ... }
+#     end
+#
+# @example To be a member of the public, with no login:
+#
+#     context 'as a public user', :with_public_user do
+#       specify { ... }
+#     end
+#
+# @example To login with a specific user, usually to match the user who created a resource:
+#   Note that the key for :with_user must match the same key that is used in the let() statement.
+#
+#     context 'as a created', with_user: :creator do
+#       let(:creator) { create(:user) }
+#       specify { ... }
+#     end
+#
+# @example Combining logins with named JS drivers
+#
+#     context 'as a public user', :with_public_user, with_named_js: :public_features do
+#       specify { ... }
+#     end
+#
 module RemoteAuthentication
   def sign_in(user: nil, js_driver: nil)
     if js_driver
@@ -62,6 +97,8 @@ RSpec.configure do |config|
 
     request.headers['REMOTE_USER'] = if example.metadata.key?(:with_psu_user)
                                        create(:psu_user).login
+                                     elsif example.metadata.key?(:with_user)
+                                       send(example.metadata.fetch(:with_user)).login
                                      else
                                        create(:admin).login
                                      end
@@ -74,6 +111,8 @@ RSpec.configure do |config|
 
     if example.metadata.key?(:with_psu_user)
       sign_in(user: create(:psu_user), js_driver: js_driver)
+    elsif example.metadata.key?(:with_user)
+      sign_in(user: send(example.metadata.fetch(:with_user)), js_driver: js_driver)
     else
       sign_in(user: create(:admin), js_driver: js_driver)
     end
