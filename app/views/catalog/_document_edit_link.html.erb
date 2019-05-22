@@ -1,1 +1,1 @@
-<%= link_to(t('cho.catalog.edit'), edit_cho_resource_path) if can? :edit, @document %>
+<%= button_to(t('cho.catalog.edit'), edit_cho_resource_path, method: 'get', class: 'btn btn-outline-secondary') if can? :edit, @document %>

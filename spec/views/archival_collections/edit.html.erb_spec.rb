@@ -24,6 +24,6 @@ RSpec.describe 'collection/archival_collections/edit', type: :view do
       assert_select 'legend', 'Workflow'
       assert_select 'legend', 'Access Level'
     end
-    assert_select 'a[href=?]', "/catalog/#{collection.id}"
+    assert_select 'form[action=?]', "/catalog/#{collection.id}"
   end
 end

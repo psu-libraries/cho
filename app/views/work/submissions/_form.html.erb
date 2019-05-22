@@ -14,6 +14,6 @@
   <%= render 'errors', work: work_form if work_form.errors.any? %>
 
   <div class="actions pt-4">
-    <%= form.submit work_form.submit_text %>
+    <%= form.submit work_form.submit_text, class: 'btn btn-outline-secondary' %>
   </div>
 <% end %>

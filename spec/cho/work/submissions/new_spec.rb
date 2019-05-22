@@ -52,7 +52,7 @@ RSpec.describe Work::Submission, type: :feature do
         expect(page).to have_blacklight_label(:creator_tesim)
         expect(page).to have_blacklight_field(:creator_tesim, 'Christopher Kringle (climbing)')
       end
-      expect(page).to have_link('Edit')
+      expect(page).to have_selector('input[type=submit][value=Edit]')
     end
   end
 
@@ -74,7 +74,7 @@ RSpec.describe Work::Submission, type: :feature do
       click_button('Create Resource')
       expect(page).to have_content('Required Title')
       expect(page).to have_content('Document')
-      expect(page).to have_link('Edit')
+      expect(page).to have_selector('input[type=submit][value=Edit]')
     end
   end
 
@@ -99,7 +99,7 @@ RSpec.describe Work::Submission, type: :feature do
       click_button('Create Resource')
       expect(page).to have_content('New Title')
       expect(page).to have_content('Generic')
-      expect(page).to have_link('Edit')
+      expect(page).to have_selector('input[type=submit][value=Edit]')
       expect(page).to have_selector('h2', text: 'Parts')
       expect(page).to have_content('hello_world.txt')
     end
@@ -130,7 +130,7 @@ RSpec.describe Work::Submission, type: :feature do
       click_button('Create Resource')
       expect(page).to have_content('Work with attached zip')
       expect(page).to have_content('Generic')
-      expect(page).to have_link('Edit')
+      expect(page).to have_selector('input[type=submit][value=Edit]')
       expect(page).to have_selector('h2', text: 'Parts')
       expect(page).to have_content('work1_preservation.tif')
     end
@@ -176,7 +176,7 @@ RSpec.describe Work::Submission, type: :feature do
       expect(page).to have_content('Generic')
       expect(page).to have_xpath("//img[@src='/files/work1_thumb.jpg']")
       expect(page).to have_xpath("//img[@alt='Work1 thumb']")
-      expect(page).to have_link('Edit')
+      expect(page).to have_selector('input[type=submit][value=Edit]')
       expect(page).to have_selector('h2', text: 'Parts')
       expect(page).to have_content('work1_00001_01_preservation.tif')
       expect(page).to have_content('work1_00001_02_preservation.tif')
@@ -218,7 +218,7 @@ RSpec.describe Work::Submission, type: :feature do
       expect(page).to have_content('Generic')
       expect(page).to have_xpath("//img[@src='/files/work1_00001_thumb.png']")
       expect(page).to have_xpath("//img[@alt='Work1 00001 thumb']")
-      expect(page).to have_link('Edit')
+      expect(page).to have_selector('input[type=submit][value=Edit]')
       expect(page).to have_selector('h2', text: 'Parts')
       expect(page).to have_link('work1_00001_preservation.tif')
 

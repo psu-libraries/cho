@@ -13,7 +13,7 @@ RSpec.describe Collection::Archival, type: :feature do
       expect(page).to have_content('Sample archival collection')
       expect(page).to have_content('default')
       expect(page).to have_content('public')
-      click_link('Edit')
+      click_button('Edit')
       expect(page).to have_field('archival_collection[title]', with: 'Archival Collection')
       expect(page).not_to have_link('Back')
     end
