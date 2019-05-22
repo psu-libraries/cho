@@ -33,12 +33,12 @@ FactoryBot.define do
   end
 
   trait :with_preservation_file do
-    to_create do |resource, attributes|
+    after(:create) do |resource|
       file_factory = FileFactory.new(
         use: Vocab::FileUse.PreservationMasterFile,
         text: 'Hello World! (preservation)'
       )
-      file_factory.build_file_set(resource: resource, attributes: attributes)
+      file_factory.add_file(resource: resource)
     end
   end
 
@@ -52,52 +52,52 @@ FactoryBot.define do
   end
 
   trait :with_redacted_preservation_file do
-    to_create do |resource, attributes|
+    after(:create) do |resource|
       file_factory = FileFactory.new(
         use: Vocab::FileUse.RedactedPreservationMasterFile,
         text: 'Hello World! (redacted preservation)'
       )
-      file_factory.build_file_set(resource: resource, attributes: attributes)
+      file_factory.add_file(resource: resource)
     end
   end
 
   trait :with_service_file do
-    to_create do |resource, attributes|
+    after(:create) do |resource|
       file_factory = FileFactory.new(
         use: Vocab::FileUse.ServiceFile,
         text: 'Hello World! (service)'
       )
-      file_factory.build_file_set(resource: resource, attributes: attributes)
+      file_factory.add_file(resource: resource)
     end
   end
 
   trait :with_access_file do
-    to_create do |resource, attributes|
+    after(:create) do |resource|
       file_factory = FileFactory.new(
         use: Vocab::FileUse.AccessFile,
         text: 'Hello World! (access)'
       )
-      file_factory.build_file_set(resource: resource, attributes: attributes)
+      file_factory.add_file(resource: resource)
     end
   end
 
   trait :with_extracted_text_file do
-    to_create do |resource, attributes|
+    after(:create) do |resource|
       file_factory = FileFactory.new(
         use: Vocab::FileUse.ExtractedText,
         text: 'Hello World! (extracted text)'
       )
-      file_factory.build_file_set(resource: resource, attributes: attributes)
+      file_factory.add_file(resource: resource)
     end
   end
 
   trait :with_thumbnail_file do
-    to_create do |resource, attributes|
+    after(:create) do |resource|
       file_factory = FileFactory.new(
         use: Vocab::FileUse.ThumbnailImage,
         text: 'Hello World! (thumbnail)'
       )
-      file_factory.build_file_set(resource: resource, attributes: attributes)
+      file_factory.add_file(resource: resource)
     end
   end
 end

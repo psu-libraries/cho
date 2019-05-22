@@ -6,6 +6,12 @@ require 'cancan/matchers'
 RSpec.describe Ability do
   subject(:ability) { described_class.new(user) }
 
+  describe '#admin?' do
+    let(:user) { build_stubbed :user }
+
+    it { is_expected.to delegate_method(:admin?).to(:current_user) }
+  end
+
   describe '#admin_permissions' do
     let(:user) { build_stubbed :admin }
 

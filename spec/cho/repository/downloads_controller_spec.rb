@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Repository::DownloadsController, type: :controller do
-  describe 'GET #download', :with_public_user do
+  describe 'GET #download as a public user', :with_public_user do
     context 'when not requesting a specific use type with a preservation file present' do
       let(:file_set) { create(:file_set, :with_preservation_file) }
 
@@ -45,7 +45,7 @@ RSpec.describe Repository::DownloadsController, type: :controller do
     end
 
     context 'when requesting the preservation file when a redacted one is present' do
-      let(:file_set) { create(:file_set, :with_redacted_preservation_file) }
+      let(:file_set) { create(:file_set, :with_redacted_preservation_file, :with_preservation_file) }
 
       specify do
         get :download, params: { id: file_set.id, use_type: 'PreservationMasterFile' }
@@ -136,6 +136,59 @@ RSpec.describe Repository::DownloadsController, type: :controller do
       specify do
         get :download, params: { id: file_set.id }
         expect(response).to be_not_found
+      end
+    end
+
+    context 'when the file set is restricted to Penn State' do
+      let(:file_set) { create(:file_set, :with_preservation_file, :restricted_to_penn_state) }
+
+      specify do
+        get :download, params: { id: file_set.id }
+        expect(response).to be_forbidden
+      end
+    end
+  end
+
+  describe 'GET #download as a Penn State user', :with_psu_user do
+    context 'when the file set is restricted to Penn State' do
+      let(:file_set) { create(:file_set, :with_preservation_file, :restricted_to_penn_state) }
+
+      specify do
+        get :download, params: { id: file_set.id }
+        expect(response).to be_success
+        expect(response.body).to eq('Hello World! (preservation)')
+      end
+    end
+  end
+
+  describe 'GET #download as an admin user' do
+    context 'when the file set is restricted to Penn State' do
+      let(:file_set) { create(:file_set, :with_preservation_file, :restricted_to_penn_state) }
+
+      specify do
+        get :download, params: { id: file_set.id }
+        expect(response).to be_success
+        expect(response.body).to eq('Hello World! (preservation)')
+      end
+    end
+
+    context 'when not requesting a specific use type with a redacted preservation file present' do
+      let(:file_set) { create(:file_set, :with_redacted_preservation_file) }
+
+      specify do
+        get :download, params: { id: file_set.id }
+        expect(response).to be_success
+        expect(response.body).to eq('Hello World! (redacted preservation)')
+      end
+    end
+
+    context 'when requesting the preservation file when a redacted one is present' do
+      let(:file_set) { create(:file_set, :with_redacted_preservation_file, :with_preservation_file) }
+
+      specify do
+        get :download, params: { id: file_set.id, use_type: 'PreservationMasterFile' }
+        expect(response).to be_success
+        expect(response.body).to eq('Hello World! (preservation)')
       end
     end
   end

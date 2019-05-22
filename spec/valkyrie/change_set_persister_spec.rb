@@ -75,13 +75,13 @@ RSpec.describe ChangeSetPersister do
         expect(Work::FileSet.all.count).to eq(1)
         expect(Work::File.all.count).to eq(1)
         expect(metadata_adapter.index_adapter.query_service.find_all.count).to eq(4)
-        expect(Cho::Application.config.storage_directory.join('hello_world.txt')).to be_exist
+        expect(Cho::Application.config.storage_directory.join('hello_world_preservation.txt')).to be_exist
         change_set_persister.delete(change_set: change_set)
         expect(Work::Submission.all.count).to eq(0)
         expect(Work::FileSet.all.count).to eq(0)
         expect(Work::File.all.count).to eq(0)
         expect(metadata_adapter.index_adapter.query_service.find_all.count).to eq(1)
-        expect(Cho::Application.config.storage_directory.join('hello_world.txt')).not_to be_exist
+        expect(Cho::Application.config.storage_directory.join('hello_world_preservation.txt')).not_to be_exist
       end
     end
 

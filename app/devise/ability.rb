@@ -4,6 +4,8 @@ class Ability
   include CanCan::Ability
   include Blacklight::AccessControls::Ability
 
+  delegate :admin?, to: :current_user
+
   self.ability_logic += %i[
     base_permissions
     authenticated_permissions

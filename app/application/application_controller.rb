@@ -17,4 +17,10 @@ class ApplicationController < ActionController::Base
            status: 403,
            layout: false
   end
+
+  rescue_from Blacklight::Exceptions::RecordNotFound do |_exception|
+    render file: Rails.root.join('public', '404.html'),
+           status: 404,
+           layout: false
+  end
 end

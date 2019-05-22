@@ -2,11 +2,12 @@
 
 module Repository
   class Download
-    attr_reader :id, :use
+    attr_reader :id, :use, :current_ability
 
-    def initialize(id:, use: nil)
+    def initialize(id:, use: nil, current_ability: Ability.new(nil))
       @id = id
-      @use = use
+      @use = FileUse.new(use)
+      @current_ability = current_ability
     end
 
     def available?
@@ -22,14 +23,18 @@ module Repository
     end
 
     delegate :path, to: :file
+    delegate :get_method, to: :use
 
     private
 
       def select_file
-        get_method = FileUse.new(use).get_method
         return default_file unless get_method
 
-        file_set.send(get_method)
+        if use.uri == Vocab::FileUse.PreservationMasterFile && current_ability.admin?
+          file_set.files.select(&:preservation?).first
+        else
+          file_set.send(get_method)
+        end
       end
 
       def default_file
