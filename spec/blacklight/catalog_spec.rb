@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe CatalogController, type: :feature do
   it_behaves_like 'a search form', '/catalog'
 
-  context 'when searching for works' do
+  describe 'searching for works' do
     before do
       create(:work_submission, :with_file, :with_creator,
              collection_title: 'Searching Collection',
@@ -115,7 +115,7 @@ RSpec.describe CatalogController, type: :feature do
     end
   end
 
-  context 'when searching extracted text' do
+  describe 'searching extracted text' do
     before do
       create(:work_submission, :with_file_and_extracted_text,
              filename: 'example_extracted_text.txt',
@@ -132,23 +132,46 @@ RSpec.describe CatalogController, type: :feature do
     end
   end
 
-  context 'when searching for collections' do
+  describe 'searching collections' do
     before do
       create(:archival_collection)
       create(:curated_collection)
       create(:library_collection)
+      create(:psu_collection, title: 'PSU-only Collection')
       create(:work_submission, :with_file)
     end
 
-    it 'returns the collection and excludes file sets and files' do
-      visit(root_path)
-      click_button('Search')
-      within('#documents') do
-        expect(page).to have_link('Archival Collection')
-        expect(page).to have_link('Curated Collection')
-        expect(page).to have_link('Library Collection')
-        expect(page).not_to have_content('hello_world.txt')
-        expect(page).not_to have_content(Work::File.all.first.id)
+    context 'with a public user', :with_public_user do
+      it 'returns only the public collections and excludes file sets and files' do
+        visit(root_path)
+        click_button('Search')
+        within('#documents') do
+          expect(page).to have_link('Archival Collection')
+          expect(page).to have_link('Library Collection')
+          expect(page).not_to have_link('PSU-only Collection')
+          expect(page).not_to have_content('hello_world.txt')
+          expect(page).not_to have_content(Work::File.all.first.id)
+          click_link('Curated Collection')
+        end
+        expect(page).not_to have_content('You are not allowed to access this page')
+        expect(page).to have_content('Curated Collection')
+      end
+    end
+
+    context 'with a PSU user', :with_psu_user do
+      it 'returns both the public and restricted collections, excluding file sets and files' do
+        visit(root_path)
+        click_button('Search')
+        within('#documents') do
+          expect(page).to have_link('Archival Collection')
+          expect(page).to have_link('Library Collection')
+          expect(page).to have_link('PSU-only Collection')
+          expect(page).not_to have_content('hello_world.txt')
+          expect(page).not_to have_content(Work::File.all.first.id)
+          click_link('Curated Collection')
+        end
+        expect(page).not_to have_content('You are not allowed to access this page')
+        expect(page).to have_content('Curated Collection')
       end
     end
   end

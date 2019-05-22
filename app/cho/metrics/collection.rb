@@ -58,7 +58,7 @@ module Metrics
           title: [I18n.t("#{i18n_key}.title")],
           description: [I18n.t("#{i18n_key}.description")],
           workflow: 'default',
-          access_level: 'public'
+          access_level: ::Repository::AccessLevel.public
         }
       end
 

@@ -16,7 +16,7 @@ RSpec.describe Collection::Library, type: :feature do
       expect(page).to have_content('new subtitle')
       expect(page).to have_content('Description of new collection')
       expect(page).to have_content('mediated')
-      expect(page).to have_content('authenticated')
+      expect(page).to have_content(Repository::AccessLevel.psu)
     end
   end
 

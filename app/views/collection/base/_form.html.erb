@@ -18,16 +18,19 @@
 
   <fieldset>
     <legend><%= t('cho.form.access_level') %></legend>
-    <%= form.label :access_level_public do %>
-      <%= form.radio_button :access_level, 'public' %> <%= t('cho.field_label.public') %>
+    <%= form.label "access_level_#{Repository::AccessLevel.public}".to_sym do %>
+      <%= form.radio_button :access_level, Repository::AccessLevel.public %>
+      <%= Vocab::AccessLevel.Public.label %>
     <% end %>
 
-    <%= form.label :access_level_authenticated do %>
-      <%= form.radio_button :access_level, 'authenticated' %> <%= t('cho.field_label.authenticated') %>
+    <%= form.label "access_level_#{Repository::AccessLevel.psu}".to_sym do %>
+      <%= form.radio_button :access_level, Repository::AccessLevel.psu %>
+      <%= Vocab::AccessLevel.PennState.label %>
     <% end %>
 
-    <%= form.label :access_level_private do %>
-      <%= form.radio_button :access_level, 'private' %> <%= t('cho.field_label.private') %>
+    <%= form.label "access_level_#{Repository::AccessLevel.restricted}".to_sym do %>
+      <%= form.radio_button :access_level, Repository::AccessLevel.restricted %>
+      <%= Vocab::AccessLevel.Restricted.label %>
     <% end %>
   </fieldset>
 

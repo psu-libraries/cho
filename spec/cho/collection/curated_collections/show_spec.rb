@@ -12,11 +12,17 @@ RSpec.describe Collection::Curated, type: :feature do
       expect(page).to have_content('subtitle for a curated collection')
       expect(page).to have_content('Sample curated collection')
       expect(page).to have_content('default')
-      expect(page).to have_content('public')
+      expect(page).to have_content(Repository::AccessLevel.public)
       click_button('Edit')
       expect(page).to have_field('curated_collection[title]', with: 'Curated Collection')
       expect(page).not_to have_link('Back')
     end
+  end
+
+  context 'with a Penn State collection' do
+    let(:resource) { create(:psu_curated_collection) }
+
+    it_behaves_like 'a resource restricted to Penn State users'
   end
 
   it_behaves_like 'a collection with works'

@@ -5,7 +5,6 @@
 # Work types are not indexed in Solr and are only persisted in Postgres via the {Postgres::SingularMetadataAdapter}.
 module Work
   class Type < Valkyrie::Resource
-    include Valkyrie::Resource::AccessControls
     include CommonQueries
 
     attribute :label, Valkyrie::Types::String

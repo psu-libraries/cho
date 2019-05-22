@@ -72,7 +72,14 @@ RSpec.describe Collection::ChangeSetBehaviors do
     end
 
     context 'with all required fields' do
-      let(:params) { { title: 'Title', description: 'My collection', workflow: 'default', access_level: 'public' } }
+      let(:params) do
+        {
+          title: 'Title',
+          description: 'My collection',
+          workflow: 'default',
+          access_level: Repository::AccessLevel.public
+        }
+      end
 
       its(:full_messages) { is_expected.to be_empty }
     end

@@ -2,18 +2,28 @@
 
 class Ability
   include CanCan::Ability
+  include Blacklight::AccessControls::Ability
 
-  def initialize(user)
-    can :read, :all
+  self.ability_logic += %i[
+    base_permissions
+    authenticated_permissions
+    admin_permissions
+  ]
+
+  def base_permissions
     can :manage, %i[
       bookmark
-      catalog
-      download
       search_history
       devise_remote
       session
     ]
+  end
 
-    can :manage, :all if user&.admin?
+  def authenticated_permissions
+    can :read, :all if current_user.login?
+  end
+
+  def admin_permissions
+    can :manage, :all if current_user&.admin?
   end
 end

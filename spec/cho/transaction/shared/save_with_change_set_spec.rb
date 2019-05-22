@@ -8,7 +8,7 @@ RSpec.describe Transaction::Shared::SaveWithChangeSet do
   describe '::steps' do
     subject { described_class.steps.map(&:name) }
 
-    it { is_expected.to contain_exactly(:validate, :process_file, :import_work, :save) }
+    it { is_expected.to contain_exactly(:validate, :process_file, :import_work, :save, :apply_access_level) }
   end
 
   it { is_expected.to respond_to(:call) }

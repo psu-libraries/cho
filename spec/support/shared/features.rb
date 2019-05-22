@@ -42,3 +42,16 @@ RSpec.shared_examples 'a search form' do |path|
     end
   end
 end
+
+RSpec.shared_examples 'a resource restricted to Penn State users' do
+  it 'renders an error page', :with_public_user do
+    visit(polymorphic_path([:solr_document], id: resource.id))
+    expect(page).to have_content('You are not allowed to access this page')
+  end
+
+  it 'displays the resource', :with_psu_user do
+    visit(polymorphic_path([:solr_document], id: resource.id))
+    expect(page).not_to have_content('You are not allowed to access this page')
+    expect(page).to have_content(resource.title.first)
+  end
+end
