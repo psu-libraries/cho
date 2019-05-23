@@ -13,6 +13,6 @@
   </ul>
   <% else %>
     <%= link_to t('blacklight.header_links.login'), devise_remote.new_user_session_path,
-                class: 'nav-link' %>
+                class: 'btn btn-secondary', role: 'button' %>
   <% end %>
 </div>
