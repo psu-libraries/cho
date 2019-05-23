@@ -32,6 +32,8 @@ class User < ApplicationRecord
     end
 
     def default_groups
-      [Repository::AccessLevel.public]
+      return [] if login.blank?
+
+      [Repository::AccessLevel.psu]
     end
 end

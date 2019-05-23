@@ -8,7 +8,6 @@ class Ability
 
   self.ability_logic += %i[
     base_permissions
-    authenticated_permissions
     admin_permissions
     cannot_delete_agent_with_members
   ]
@@ -20,10 +19,6 @@ class Ability
       devise_remote
       session
     ]
-  end
-
-  def authenticated_permissions
-    can :read, :all if current_user.login?
   end
 
   def admin_permissions
