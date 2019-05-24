@@ -1,0 +1,12 @@
+version: 2
+exclude_patterns:
+  - "config/"
+  - "db/"
+  - "**/node_modules/"
+  - "script/"
+  - "**/spec/"
+  - "**/vendor/"
+  - "babel.config.js"
+  - "app/cho/transaction/operations/file/process.rb"
+  - "app/cho/transaction/shared/save_with_change_set.rb"
+  - "app/cho/transaction/shared/save_with_resource.rb"
