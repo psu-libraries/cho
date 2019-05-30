@@ -3,4 +3,4 @@
 
 <%= render partial: 'form', locals: { file_set_form: @file_set } %>
 <%= render 'shared/form_delete', resource: @file_set %>
-<%= link_to t('cho.work.edit.show_link'), polymorphic_path([:solr_document], id: @file_set.id) %>
+<%= link_to t('cho.work.edit.show_link'), polymorphic_path([:solr_document], id: @file_set.id), class: 'btn btn-outline-secondary' %>
