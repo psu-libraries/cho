@@ -3,7 +3,7 @@
   <p class="footer-service"><%= t('cho.footer.service') %></p>
   <% if Git.revision %>
     <%= link_to("https://github.com/psu-libraries/cho/commit/#{Git.revision}") do %>
-      <%= t('cho.footer.revision') %> <%= Git.revision %>
+      <%= t('cho.footer.revision') %> <%= Git.revision.truncate(7, omission: '') %>
     <% end %>
   <% end %>
 </footer>
