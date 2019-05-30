@@ -77,7 +77,7 @@ class CatalogController < ApplicationController
     ]
 
     # Store search field config, to allow for later sorting and aggregation
-    search_field_options = []
+    searchable_fields = []
 
     DataDictionary::Field.all.sort_by(&:created_at).each do |map_field| # where core fields true
       catalog_field = map_field.solr_search_field
@@ -91,10 +91,7 @@ class CatalogController < ApplicationController
 
       # Store search param configuration for core fields
       if map_field.core_field
-        field_name = map_field.label
-        field_solr_params = { qf: catalog_field,
-                              pf: catalog_field }
-        search_field_options << [field_name, field_solr_params]
+        searchable_fields << ::Indexing::SolrSearchableField.new(map_field)
       end
 
       if map_field.facet?
@@ -104,21 +101,21 @@ class CatalogController < ApplicationController
 
     # Add "All Fields" as first search option, which is an aggregate of all others
     config.add_search_field('all_fields', label: 'All Fields') do |field|
-      all_names = search_field_options
-        .map { |_label, solr_params| solr_params[:qf] }
+      all_fields = searchable_fields
+        .map(&:qf)
         .join(' ')
 
       field.solr_parameters = {
-        qf: "#{all_names} id",
+        qf: "#{all_fields} id",
         pf: 'title_tesim'
       }
     end
 
     # Add the rest of the search dimensions
-    search_field_options.each do |field_name, field_solr_params|
-      config.add_search_field(field_name) do |field| # append 92-94 to array
+    searchable_fields.each do |searchable_field|
+      config.add_search_field(searchable_field.label) do |field| # append 92-94 to array
         # solr_parameters hash are sent to Solr as ordinary url query params.
-        field.solr_parameters = field_solr_params.merge(
+        field.solr_parameters = searchable_field.solr_search_params.merge(
           'spellcheck.dictionary': field.label
         )
       end

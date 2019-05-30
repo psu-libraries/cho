@@ -23,6 +23,7 @@ Rails.application.config.to_prepare do
         Work::FileSetIndexer,
         Collection::TypeIndexer,
         Indexing::Dates,
+        Indexing::DateRanges,
         Indexing::LinkedFields
       )
     ),
