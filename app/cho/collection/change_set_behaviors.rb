@@ -10,10 +10,6 @@ module Collection::ChangeSetBehaviors
     property :workflow, multiple: false, required: true
     validates :workflow, inclusion: { in: ::Collection::CommonFields::WORKFLOW }
     validates :workflow, presence: true
-
-    property :access_level, multiple: false, required: true
-    validates :access_level, inclusion: { in: Repository::AccessLevel.names }
-    validates :access_level, presence: true
   end
 
   # @return [Array<Schema::MetadataField>]

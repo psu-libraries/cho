@@ -6,7 +6,7 @@ module Schema
 
     attr_reader :form, :metadata_field
 
-    delegate :text?, :required?, :valkyrie_id?, :linked_field?, :creator?, :label, to: :metadata_field
+    delegate :text?, :required?, :valkyrie_id?, :linked_field?, :creator?, :radio_button?, :label, to: :metadata_field
 
     # @param [ActionView::Helpers::FormBuilder] form
     # @param [Schema::MetadataField] metadata_field
@@ -20,7 +20,7 @@ module Schema
     end
 
     def partial
-      if text? || valkyrie_id? || creator?
+      if text? || valkyrie_id? || creator? || radio_button?
         metadata_field.field_type
       else
         'string'

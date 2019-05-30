@@ -18,7 +18,8 @@ module ControlledVocabulary
             default_key => ControlledVocabulary::None,
             cho_collections: ControlledVocabulary::Collections,
             cho_agents: ControlledVocabulary::Agents,
-            creator_vocabulary: ControlledVocabulary::Creators
+            creator_vocabulary: ControlledVocabulary::Creators,
+            access_rights: ControlledVocabulary::AccessRights
           }
         end
 

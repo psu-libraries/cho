@@ -9,13 +9,13 @@ RSpec.describe Transaction::Operations::AccessControls::AccessLevel do
   before(:all) do
     class AccessResource < Valkyrie::Resource
       include Repository::Access::ResourceControls
-      attribute :access_level
+      attribute :access_rights
     end
 
     class AccessChangeSet < Valkyrie::ChangeSet
       include Repository::Access::ChangeSetBehaviors
-      property :access_level
-      validates :access_level, inclusion: { in: Repository::AccessLevel.names }
+      property :access_rights
+      validates :access_rights, inclusion: { in: Repository::AccessLevel.names }
     end
   end
 
@@ -28,7 +28,7 @@ RSpec.describe Transaction::Operations::AccessControls::AccessLevel do
     context 'when changing from public default to Penn State' do
       specify do
         expect(change_set.read_groups).to contain_exactly(Repository::AccessLevel.public)
-        change_set.access_level = Repository::AccessLevel.psu
+        change_set.access_rights = Repository::AccessLevel.psu
         result = described_class.new.call(change_set)
         expect(result.success.read_groups).to contain_exactly(Repository::AccessLevel.psu)
       end
@@ -37,7 +37,7 @@ RSpec.describe Transaction::Operations::AccessControls::AccessLevel do
     context 'when changing from public default to private' do
       specify do
         expect(change_set.read_groups).to contain_exactly(Repository::AccessLevel.public)
-        change_set.access_level = Repository::AccessLevel.restricted
+        change_set.access_rights = Repository::AccessLevel.restricted
         result = described_class.new.call(change_set)
         expect(result.success.read_groups).to contain_exactly(Repository::AccessLevel.restricted)
       end
@@ -47,7 +47,7 @@ RSpec.describe Transaction::Operations::AccessControls::AccessLevel do
       before { change_set.read_groups = [Repository::AccessLevel.psu] }
 
       specify do
-        change_set.access_level = Repository::AccessLevel.restricted
+        change_set.access_rights = Repository::AccessLevel.restricted
         result = described_class.new.call(change_set)
         expect(result.success.read_groups).to contain_exactly(Repository::AccessLevel.restricted)
       end
@@ -57,7 +57,7 @@ RSpec.describe Transaction::Operations::AccessControls::AccessLevel do
       before { change_set.read_groups = [Repository::AccessLevel.psu] }
 
       specify do
-        change_set.access_level = Repository::AccessLevel.public
+        change_set.access_rights = Repository::AccessLevel.public
         result = described_class.new.call(change_set)
         expect(result.success.read_groups).to contain_exactly(Repository::AccessLevel.public)
       end
@@ -67,7 +67,7 @@ RSpec.describe Transaction::Operations::AccessControls::AccessLevel do
       before { change_set.read_groups = [Repository::AccessLevel.restricted] }
 
       specify do
-        change_set.access_level = Repository::AccessLevel.psu
+        change_set.access_rights = Repository::AccessLevel.psu
         result = described_class.new.call(change_set)
         expect(result.success.read_groups).to contain_exactly(Repository::AccessLevel.psu)
       end
@@ -77,7 +77,7 @@ RSpec.describe Transaction::Operations::AccessControls::AccessLevel do
       before { change_set.read_groups = [Repository::AccessLevel.restricted] }
 
       specify do
-        change_set.access_level = Repository::AccessLevel.public
+        change_set.access_rights = Repository::AccessLevel.public
         result = described_class.new.call(change_set)
         expect(result.success.read_groups).to contain_exactly(Repository::AccessLevel.public)
       end
@@ -87,7 +87,7 @@ RSpec.describe Transaction::Operations::AccessControls::AccessLevel do
       before { change_set.read_groups = [Repository::AccessLevel.restricted, 'group1', 'group2'] }
 
       specify do
-        change_set.access_level = Repository::AccessLevel.psu
+        change_set.access_rights = Repository::AccessLevel.psu
         result = described_class.new.call(change_set)
         expect(result.success.read_groups).to contain_exactly(Repository::AccessLevel.psu, 'group1', 'group2')
       end
@@ -95,19 +95,19 @@ RSpec.describe Transaction::Operations::AccessControls::AccessLevel do
 
     context 'when no changes are made' do
       before do
-        change_set.access_level = Repository::AccessLevel.restricted
+        change_set.access_rights = Repository::AccessLevel.restricted
         change_set.read_groups = [Repository::AccessLevel.restricted]
       end
 
       specify do
         result = described_class.new.call(change_set)
         expect(result.success.read_groups).to contain_exactly(Repository::AccessLevel.restricted)
-        expect(result.success.access_level).to eq(Repository::AccessLevel.restricted)
+        expect(result.success.access_rights).to eq(Repository::AccessLevel.restricted)
       end
     end
 
     context 'when something unexpected happens' do
-      before { allow(change_set).to receive(:access_level).and_raise(StandardError, 'I fell down') }
+      before { allow(change_set).to receive(:access_rights).and_raise(StandardError, 'I fell down') }
 
       it 'returns a failure' do
         result = described_class.new.call(change_set)

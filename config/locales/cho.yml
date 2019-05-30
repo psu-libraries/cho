@@ -21,7 +21,7 @@ en:
     form:
       metadata: "Basic Metadata"
       workflow: "Workflow"
-      access_level: "Access Level"
+      access_rights: "Access Level"
       legend: "Upload Files"
       file_selection: "File Selection"
       required: "required"
@@ -32,7 +32,7 @@ en:
       workflow: "Workflow"
       default: "Publish Immediately"
       mediated: "Mediated"
-      access_level: "Access Level"
+      access_rights: "Access Level"
       title: "Title"
       required: "required"
       member_of_collections: "Collections"

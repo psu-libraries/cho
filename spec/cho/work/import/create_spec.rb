@@ -32,7 +32,8 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
           "#{agent1.display_name}#{CsvParsing::SUBVALUE_SEPARATOR}bsl",
           "#{agent2.display_name}#{CsvParsing::SUBVALUE_SEPARATOR}cli",
           agent3.display_name.to_s
-        ]
+        ],
+        access_rights: ['public', 'public', 'public']
       )
     end
 
@@ -78,18 +79,21 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
       end
       expect(page).to have_content('My Work 1')
       expect(page).to have_content("#{agent1.display_name}, blasting")
+      expect(page).to have_content('public')
       click_link('my collection')
       within('div#members') do
         click_link('My Work 2')
       end
       expect(page).to have_content('My Work 2')
       expect(page).to have_content("#{agent2.display_name}, climbing")
+      expect(page).to have_content('public')
       click_link('my collection')
       within('div#members') do
         click_link('My Work 3')
       end
       expect(page).to have_content('My Work 3')
       expect(page).to have_content(agent3.display_name.to_s)
+      expect(page).to have_content('public')
 
       # Verify each work has a file set and a file
       Work::Submission.all.each do |work|

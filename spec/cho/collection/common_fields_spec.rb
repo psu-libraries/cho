@@ -17,16 +17,6 @@ RSpec.describe Collection::CommonFields, type: :model do
 
   it { is_expected.to respond_to(:id) }
   it { is_expected.to respond_to(:workflow) }
-  it { is_expected.to respond_to(:access_level) }
-
-  describe '#access_level=' do
-    it 'can be set' do
-      expect { collection.access_level = Repository::AccessLevel.public }.not_to raise_error
-      expect { collection.access_level = Repository::AccessLevel.psu }.not_to raise_error
-      expect { collection.access_level = Repository::AccessLevel.restricted }.not_to raise_error
-      expect { collection.access_level = 'bogus' }.to raise_error(Dry::Types::ConstraintError)
-    end
-  end
 
   describe '#workflow' do
     it 'can be set' do

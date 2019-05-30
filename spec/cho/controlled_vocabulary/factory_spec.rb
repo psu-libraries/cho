@@ -46,12 +46,22 @@ RSpec.describe ControlledVocabulary::Factory, type: :model do
       described_class.vocabularies = vocabularies
     end
 
-    it { is_expected.to eq([:no_vocabulary, :cho_collections, :cho_agents, :creator_vocabulary]) }
+    it { is_expected.to eq([:no_vocabulary, :cho_collections, :cho_agents, :creator_vocabulary, :access_rights]) }
 
     context 'valid vocabularies set' do
       let(:vocabularies) { { abc: MyVocab.new, other: OtherVocab.new } }
 
-      it { is_expected.to eq([:abc, :other, :no_vocabulary, :cho_collections, :cho_agents, :creator_vocabulary]) }
+      specify do
+        expect(described_class.vocabularies.keys).to contain_exactly(
+          :abc,
+          :other,
+          :no_vocabulary,
+          :cho_collections,
+          :cho_agents,
+          :creator_vocabulary,
+          :access_rights
+        )
+      end
     end
   end
 

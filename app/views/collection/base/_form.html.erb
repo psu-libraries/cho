@@ -16,24 +16,6 @@
     <% end %>
   </fieldset>
 
-  <fieldset>
-    <legend><%= t('cho.form.access_level') %></legend>
-    <%= form.label "access_level_#{Repository::AccessLevel.public}".to_sym do %>
-      <%= form.radio_button :access_level, Repository::AccessLevel.public %>
-      <%= Vocab::AccessLevel.Public.label %>
-    <% end %>
-
-    <%= form.label "access_level_#{Repository::AccessLevel.psu}".to_sym do %>
-      <%= form.radio_button :access_level, Repository::AccessLevel.psu %>
-      <%= Vocab::AccessLevel.PennState.label %>
-    <% end %>
-
-    <%= form.label "access_level_#{Repository::AccessLevel.restricted}".to_sym do %>
-      <%= form.radio_button :access_level, Repository::AccessLevel.restricted %>
-      <%= Vocab::AccessLevel.Restricted.label %>
-    <% end %>
-  </fieldset>
-
   <%= render '/work/submissions/errors', work: collection if collection.errors.any? %>
 
   <div class="actions">

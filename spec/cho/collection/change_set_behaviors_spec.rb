@@ -30,14 +30,12 @@ RSpec.describe Collection::ChangeSetBehaviors do
   describe '#multiple?' do
     it 'has one title and description' do
       expect(change_set).not_to be_multiple(:workflow)
-      expect(change_set).not_to be_multiple(:access_level)
     end
   end
 
   describe '#required?' do
     it 'has required fields' do
       expect(change_set).to be_required(:workflow)
-      expect(change_set).to be_required(:access_level)
     end
   end
 
@@ -45,7 +43,6 @@ RSpec.describe Collection::ChangeSetBehaviors do
     before { change_set.prepopulate! }
 
     its(:workflow) { is_expected.to be_nil }
-    its(:access_level) { is_expected.to be_nil }
   end
 
   describe '#validate' do
@@ -65,19 +62,12 @@ RSpec.describe Collection::ChangeSetBehaviors do
       its(:full_messages) { is_expected.to include('Workflow is not included in the list') }
     end
 
-    context 'with an unsupported access_level' do
-      let(:params) { { title: 'title', access_level: 'foo' } }
-
-      its(:full_messages) { is_expected.to include('Access level is not included in the list') }
-    end
-
     context 'with all required fields' do
       let(:params) do
         {
           title: 'Title',
           description: 'My collection',
-          workflow: 'default',
-          access_level: Repository::AccessLevel.public
+          workflow: 'default'
         }
       end
 
@@ -95,6 +85,7 @@ RSpec.describe Collection::ChangeSetBehaviors do
         'creator',
         'date_cataloged',
         'acknowledgments',
+        'access_rights',
         'narrative'
       )
     end
@@ -112,6 +103,7 @@ RSpec.describe Collection::ChangeSetBehaviors do
         'creator',
         'date_cataloged',
         'acknowledgments',
+        'access_rights',
         'narrative'
       )
     end
