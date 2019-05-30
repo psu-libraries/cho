@@ -222,6 +222,6 @@ en:
     footer:
       logo: "Cultural Heritage Objects"
       service: "A service of the University Libraries"
-      revision: "Current Revision:"
+      revision: "Current CHO Revision:"
     layout:
       skip: "Skip to main content"
