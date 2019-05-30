@@ -7,6 +7,6 @@
   <%= render 'errors', file_set: file_set_form if file_set_form.errors.any? %>
 
   <div class="actions pt-4">
-    <%= form.submit t('cho.file_set.edit.submit') %>
+    <%= form.submit t('cho.file_set.edit.submit'), class: 'btn btn-outline-secondary' %>
   </div>
 <% end %>
