@@ -63,6 +63,12 @@
 		<dynamicField name="*_dttsm" type="tdate" stored="true" indexed="false" multiValued="true"/>
 		<dynamicField name="*_dttsi" type="tdate" stored="true" indexed="true" multiValued="false"/>
 		<dynamicField name="*_dttsim" type="tdate" stored="true" indexed="true" multiValued="true"/>
+		<dynamicField name="*_dtri" type="rdate" stored="false" indexed="true" multiValued="false"/>
+		<dynamicField name="*_dtrim" type="rdate" stored="false" indexed="true" multiValued="true"/>
+		<dynamicField name="*_dtrs" type="rdate" stored="true" indexed="false" multiValued="false"/>
+		<dynamicField name="*_dtrsm" type="rdate" stored="true" indexed="false" multiValued="true"/>
+		<dynamicField name="*_dtrsi" type="rdate" stored="true" indexed="true" multiValued="false"/>
+		<dynamicField name="*_dtrsim" type="rdate" stored="true" indexed="true" multiValued="true"/>
 		<dynamicField name="*_li" type="long" stored="false" indexed="true" multiValued="false"/>
 		<dynamicField name="*_lim" type="long" stored="false" indexed="true" multiValued="true"/>
 		<dynamicField name="*_ls" type="long" stored="true" indexed="false" multiValued="false"/>
@@ -126,6 +132,7 @@
 		<fieldType name="tdouble" class="solr.TrieDoubleField" precisionStep="8" positionIncrementGap="0"/>
 		<fieldType name="date" class="solr.TrieDateField" precisionStep="0" positionIncrementGap="0"/>
 		<fieldType name="tdate" class="solr.TrieDateField" precisionStep="6" positionIncrementGap="0"/>
+		<fieldType name="rdate" class="solr.DateRangeField" />
 		<fieldType name="point" class="solr.PointType" dimension="2" subFieldSuffix="_d"/>
 		<fieldType name="location" class="solr.LatLonType" subFieldSuffix="_coordinate"/>
 		<fieldType name="location_rpt" class="solr.SpatialRecursivePrefixTreeFieldType" geo="true" distErrPct="0.025" maxDistErr="0.000009" distanceUnits="degrees"/>
