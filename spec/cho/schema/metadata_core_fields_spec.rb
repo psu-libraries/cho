@@ -11,13 +11,14 @@ RSpec.describe Schema::MetadataCoreFields, type: :model do
                                             'subtitle',
                                             'description',
                                             'alternate_ids',
-                                            'creator'])
-    expect(core_fields.map(&:order_index)).to eq([0, 1, 2, 3, 4])
+                                            'creator',
+                                            'date_cataloged'])
+    expect(core_fields.map(&:order_index)).to eq([0, 1, 2, 3, 4, 5])
   end
 
   it 'saves the core fields' do
     saved_core_fields = core_fields.map { |field| Schema::MetadataField.find(field.id) }
-    expect(saved_core_fields.map(&:order_index)).to eq([0, 1, 2, 3, 4])
+    expect(saved_core_fields.map(&:order_index)).to eq([0, 1, 2, 3, 4, 5])
   end
 
   context 'multiple work types' do
@@ -26,7 +27,7 @@ RSpec.describe Schema::MetadataCoreFields, type: :model do
 
     it 'saves different core fields based on type' do
       core_field_ids = generic_core_fields.map(&:id) + document_core_fields.map(&:id)
-      expect(core_field_ids.uniq.count).to eq(10)
+      expect(core_field_ids.uniq.count).to eq(12)
     end
   end
 end

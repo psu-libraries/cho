@@ -102,21 +102,22 @@ RSpec.describe 'Preview of CSV Update', type: :feature do
     # Create a new csv with updated values for testing
     let(:csv_update_file) do
       matrix = CSV.parse(SolrDocument.find('work1').export_as_csv)
+      col_idx = matrix.first.each_with_index.to_h # Look up column indexes by header
 
       matrix.each_with_index do |row, i|
         next if i == 0
 
-        row[2] = titles[i - 1]
-        row[3] = MetadataFactory.fancy_title
-        row[4] = Faker::Lorem.paragraph
+        row[col_idx['title']] = titles[i - 1]
+        row[col_idx['subtitle']] = MetadataFactory.fancy_title
+        row[col_idx['description']] = Faker::Lorem.paragraph
 
-        row[6] = if i == 1
-                   agent.display_name.to_s
-                 else
-                   "#{agent.display_name}#{CsvParsing::SUBVALUE_SEPARATOR}cli"
-                 end
+        row[col_idx['creator']] = if i == 1
+                                    agent.display_name.to_s
+                                  else
+                                    "#{agent.display_name}#{CsvParsing::SUBVALUE_SEPARATOR}cli"
+                                  end
 
-        row[9] = dates[i - 1]
+        row[col_idx['created']] = dates[i - 1]
       end
 
       Tempfile.open do |csv_file|
@@ -128,13 +129,14 @@ RSpec.describe 'Preview of CSV Update', type: :feature do
     # Create a new csv with incorrect updated values
     let(:csv_update_file_with_errors) do
       matrix = CSV.parse(SolrDocument.find('work1').export_as_csv)
+      col_idx = matrix.first.each_with_index.to_h # Look up column indexes by header
 
       matrix.each_with_index do |row, i|
         next if i == 0
 
-        row[2] = missing_titles[i - 1]
-        row[6] = [nil, nil, nil, nil, 'Dude, Bad Agent', nil][i - 1]
-        row[9] = bad_dates[i - 1]
+        row[col_idx['title']] = missing_titles[i - 1]
+        row[col_idx['creator']] = [nil, nil, nil, nil, 'Dude, Bad Agent', nil][i - 1]
+        row[col_idx['created']] = bad_dates[i - 1]
       end
 
       Tempfile.open do |csv_file|

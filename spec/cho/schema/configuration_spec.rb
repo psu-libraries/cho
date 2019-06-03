@@ -90,8 +90,8 @@ RSpec.describe Schema::Configuration, type: :model do
   describe '#core_field_ids' do
     it 'does not create more fields since the defaults were loaded' do
       expect {
-        expect(schema_configuration.core_field_ids('Generic').count).to eq(5)
-        expect(schema_configuration.core_field_count('Generic')).to eq(5)
+        expect(schema_configuration.core_field_ids('Generic').count).to eq(6)
+        expect(schema_configuration.core_field_count('Generic')).to eq(6)
       }.to change { Valkyrie.config.metadata_adapter.query_service.find_all.count }.by(0)
     end
   end
@@ -129,10 +129,10 @@ RSpec.describe Schema::Configuration, type: :model do
       it 'adds a Schema::MetadataField, a Work::Type, and a Schema::Metadata' do
         expect {
           schema_configuration.load_work_types
-        }.to change { Schema::MetadataField.all.count }.by(6) # 5 core fields + 1 other field
+        }.to change { Schema::MetadataField.all.count }.by(7) # 6 core fields + 1 other field
           .and change { Work::Type.all.count }.by(1)
           .and change { Schema::Metadata.all.count }.by(1)
-          .and change { Valkyrie.config.metadata_adapter.query_service.find_all.count }.by(8)
+          .and change { Valkyrie.config.metadata_adapter.query_service.find_all.count }.by(9)
         expect(title_field.display_name).to eq('my title')
       end
     end

@@ -14,3 +14,4 @@ map_field,string,optional,no_validation,true,no_vocabulary,,,no_transformation,n
 audio_field,string,optional,no_validation,true,no_vocabulary,,,no_transformation,no_facet,help me,false
 alternate_ids,alternate_id,required_to_publish,unique,true,no_vocabulary,,Identifier,no_transformation,no_facet,help me,true
 creator,creator,optional,creator,true,creator_vocabulary,,Creator,no_transformation,linked_field,help me,true
+date_cataloged,date,optional,edtf_date,true,no_vocabulary,,Date Cataloged,no_transformation,date,help me,true

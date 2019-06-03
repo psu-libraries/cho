@@ -71,7 +71,8 @@ RSpec.describe Work::FileSetChangeSet do
         'description',
         'title',
         'alternate_ids',
-        'creator'
+        'creator',
+        'date_cataloged'
       )
     end
   end

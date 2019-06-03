@@ -178,6 +178,7 @@ RSpec.describe Work::SubmissionChangeSet do
             'description',
             'alternate_ids',
             'creator',
+            'date_cataloged',
             'generic_field',
             'home_collection_id',
             'created'
@@ -200,6 +201,7 @@ RSpec.describe Work::SubmissionChangeSet do
               'description',
               'alternate_ids',
               'creator',
+              'date_cataloged',
               'home_collection_id',
               'created'
             ]
@@ -216,6 +218,7 @@ RSpec.describe Work::SubmissionChangeSet do
                                                                               'description',
                                                                               'generic_field',
                                                                               'alternate_ids',
+                                                                              'date_cataloged',
                                                                               'home_collection_id',
                                                                               'created',
                                                                               'title',

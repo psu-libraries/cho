@@ -23,6 +23,7 @@ RSpec.describe Work::Submission, type: :feature do
       fill_in('work_submission[subtitle][]', with: 'New subtitle')
       fill_in('work_submission[description][]', with: 'Description of new generic work.')
       fill_in('work_submission[alternate_ids][]', with: 'asdf_1234')
+      fill_in('work_submission[date_cataloged][]', with: '2019-06-03')
       fill_in('work_submission[generic_field][]', with: 'Sample generic field value')
       fill_in('work_submission[created][]', with: '2018-10-22')
       fill_in('work_submission[home_collection_id]', with: archival_collection.id)
