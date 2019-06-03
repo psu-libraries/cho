@@ -3,6 +3,8 @@
 module Repository::Access::ResourceControls
   extend ActiveSupport::Concern
 
+  DEFAULT_SYSTEM_USER = 'system'
+
   included do
     # These are attributes defined in Blacklight's access controls, which are based off of Hydra's
     attribute :discover_groups, Valkyrie::Types::Set
@@ -15,5 +17,7 @@ module Repository::Access::ResourceControls
     # Edit attributes found in Hydra, but not in Blacklight
     attribute :edit_users, Valkyrie::Types::Set
     attribute :edit_groups, Valkyrie::Types::Set
+
+    attribute :system_creator, Valkyrie::Types::String.default(DEFAULT_SYSTEM_USER)
   end
 end

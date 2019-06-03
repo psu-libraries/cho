@@ -27,6 +27,7 @@ RSpec.describe Repository::Access::ResourceControls do
       expect(resource.has_attribute?(:download_users)).to eq true
       expect(resource.has_attribute?(:edit_groups)).to eq true
       expect(resource.has_attribute?(:edit_users)).to eq true
+      expect(resource.has_attribute?(:system_creator)).to eq true
     end
   end
 
@@ -41,7 +42,8 @@ RSpec.describe Repository::Access::ResourceControls do
         :download_users,
         :download_groups,
         :edit_users,
-        :edit_groups
+        :edit_groups,
+        :system_creator
       )
     end
   end
@@ -147,6 +149,13 @@ RSpec.describe Repository::Access::ResourceControls do
     it 'is empty when not set' do
       resource = resource_klass.new
       expect(resource.edit_groups).to be_empty
+    end
+  end
+
+  describe '#system_creator' do
+    it 'defaults to the default system user' do
+      resource = resource_klass.new
+      expect(resource.system_creator).to eq(Repository::Access::ResourceControls::DEFAULT_SYSTEM_USER)
     end
   end
 end

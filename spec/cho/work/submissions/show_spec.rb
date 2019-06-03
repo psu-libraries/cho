@@ -56,4 +56,13 @@ RSpec.describe Work::Submission, type: :feature do
 
     it_behaves_like 'a resource restricted to Penn State users'
   end
+
+  context 'with a restricted work' do
+    let(:restricted_user) { create(:user) }
+    let(:resource) do
+      create(:work, :restricted, system_creator: restricted_user.login, read_users: [restricted_user.login])
+    end
+
+    it_behaves_like 'a restricted resource', with_user: :restricted_user
+  end
 end

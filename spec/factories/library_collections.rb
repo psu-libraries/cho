@@ -12,5 +12,10 @@ FactoryBot.define do
       access_level { Repository::AccessLevel.psu }
       read_groups { [Repository::AccessLevel.psu] }
     end
+
+    factory :private_library_collection, aliases: [:restricted_library_collection] do
+      access_level { Repository::AccessLevel.restricted }
+      read_groups { [] }
+    end
   end
 end

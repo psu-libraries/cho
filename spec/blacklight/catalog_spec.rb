@@ -133,45 +133,82 @@ RSpec.describe CatalogController, type: :feature do
   end
 
   describe 'searching collections' do
+    let(:private_user) { create(:user) }
+
     before do
       create(:archival_collection)
       create(:curated_collection)
       create(:library_collection)
       create(:psu_collection, title: 'PSU-only Collection')
-      create(:work_submission, :with_file)
+      create(:work_submission, :with_file, title: 'Public Work')
+
+      create(:restricted_collection,
+             title: 'Restricted Readable Collection',
+             system_creator: private_user.login,
+             read_users: [private_user.login])
     end
 
     context 'with a public user', :with_public_user do
-      it 'returns only the public collections and excludes file sets and files' do
+      it 'returns only public collections and works, excluding file sets and files' do
         visit(root_path)
         click_button('Search')
         within('#documents') do
           expect(page).to have_link('Archival Collection')
           expect(page).to have_link('Library Collection')
+          expect(page).to have_link('Public Work')
           expect(page).not_to have_link('PSU-only Collection')
+          expect(page).not_to have_link('Restricted Collection')
           expect(page).not_to have_content('hello_world.txt')
           expect(page).not_to have_content(Work::File.all.first.id)
-          click_link('Curated Collection')
         end
-        expect(page).not_to have_content('You are not allowed to access this page')
-        expect(page).to have_content('Curated Collection')
       end
     end
 
     context 'with a PSU user', :with_psu_user do
-      it 'returns both the public and restricted collections, excluding file sets and files' do
+      it 'returns all public and Penn State collections and works, excluding file sets and files' do
         visit(root_path)
         click_button('Search')
         within('#documents') do
           expect(page).to have_link('Archival Collection')
           expect(page).to have_link('Library Collection')
+          expect(page).to have_link('Public Work')
           expect(page).to have_link('PSU-only Collection')
+          expect(page).not_to have_link('Restricted Collection')
           expect(page).not_to have_content('hello_world.txt')
           expect(page).not_to have_content(Work::File.all.first.id)
-          click_link('Curated Collection')
         end
-        expect(page).not_to have_content('You are not allowed to access this page')
-        expect(page).to have_content('Curated Collection')
+      end
+    end
+
+    context 'with a private user', with_user: :private_user do
+      it 'returns all public, Penn State, and restricted collections and works, excluding file sets and files' do
+        visit(root_path)
+        click_button('Search')
+        within('#documents') do
+          expect(page).to have_link('Archival Collection')
+          expect(page).to have_link('Library Collection')
+          expect(page).to have_link('Public Work')
+          expect(page).to have_link('PSU-only Collection')
+          expect(page).to have_link('Restricted Readable Collection')
+          expect(page).not_to have_content('hello_world.txt')
+          expect(page).not_to have_content(Work::File.all.first.id)
+        end
+      end
+    end
+
+    context 'with an admin' do
+      it 'returns all collections and works, excluding file sets and files' do
+        visit(root_path)
+        click_button('Search')
+        within('#documents') do
+          expect(page).to have_link('Archival Collection')
+          expect(page).to have_link('Library Collection')
+          expect(page).to have_link('Public Work')
+          expect(page).to have_link('PSU-only Collection')
+          expect(page).to have_link('Restricted Readable Collection')
+          expect(page).not_to have_content('hello_world.txt')
+          expect(page).not_to have_content(Work::File.all.first.id)
+        end
       end
     end
   end

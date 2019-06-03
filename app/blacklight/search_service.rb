@@ -12,7 +12,14 @@ class SearchService < Blacklight::SearchService
     @current_ability = current_ability
   end
 
+  # @return [SearchBuilder]
+  # @note if the user is an administrator, the base SearchBuilder is returned which does not enforce
+  # any access controls.
   def search_builder
-    Blacklight::AccessControls::SearchBuilder.new(self, ability: current_ability)
+    if current_ability.admin?
+      ::SearchBuilder.new(self)
+    else
+      Blacklight::AccessControls::SearchBuilder.new(self, ability: current_ability)
+    end
   end
 end

@@ -4,6 +4,7 @@ module Collection::ChangeSetBehaviors
   extend ActiveSupport::Concern
   include DataDictionary::FieldsForChangeSet
   include Work::WithErrorMessages
+  include Repository::Access::ChangeSetBehaviors
 
   included do
     property :workflow, multiple: false, required: true
