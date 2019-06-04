@@ -11,6 +11,7 @@ RSpec.describe CatalogController, type: :feature do
              collection_title: 'Searching Collection',
              generic_field: 'Faceted Value',
              alternate_ids: ['abc_123_999'],
+             date_cataloged: ['1965/1975'],
              description: 'Barahir son of bregor bree-hobbits chieftain of the north harlindon northern mirkwood orleg
                            orocarni pass of imladris sun white mountains.')
     end
@@ -50,8 +51,7 @@ RSpec.describe CatalogController, type: :feature do
 
     it 'returns the work when searching for the title of the file' do
       visit(root_path)
-      fill_in('q', with: 'hello_world.txt')
-      click_button('Search')
+      search_for 'hello_world.txt'
       within('#documents') do
         expect(page).to have_link('Sample Generic Work')
       end
@@ -59,8 +59,7 @@ RSpec.describe CatalogController, type: :feature do
 
     it 'returns the work when searching for the part of the title of the file' do
       visit(root_path)
-      fill_in('q', with: 'hello')
-      click_button('Search')
+      search_for 'hello'
       within('#documents') do
         expect(page).to have_link('Sample Generic Work')
       end
@@ -68,11 +67,7 @@ RSpec.describe CatalogController, type: :feature do
 
     it 'returns the work when searching for the alternate id' do
       visit(root_path)
-      fill_in('q', with: 'abc')
-      within('#search_field') do
-        select('Alternate Id')
-      end
-      click_button('Search')
+      search_for 'abc', in: 'Alternate Id'
       within('#documents') do
         expect(page).to have_link('Sample Generic Work')
       end
@@ -80,11 +75,7 @@ RSpec.describe CatalogController, type: :feature do
 
     it 'returns the work when searching for the alternate id in all fields' do
       visit(root_path)
-      fill_in('q', with: 'abc')
-      within('#search_field') do
-        select('All Fields')
-      end
-      click_button('Search')
+      search_for 'abc', in: 'All Fields'
       within('#documents') do
         expect(page).to have_link('Sample Generic Work')
       end
@@ -92,11 +83,7 @@ RSpec.describe CatalogController, type: :feature do
 
     it 'returns the work when searching for the description bree-hobbits' do
       visit(root_path)
-      fill_in('q', with: 'bree-hobbits')
-      within('#search_field') do
-        select('Description')
-      end
-      click_button('Search')
+      search_for 'bree-hobbits', in: 'Description'
       within('#documents') do
         expect(page).to have_link('Sample Generic Work')
       end
@@ -104,11 +91,15 @@ RSpec.describe CatalogController, type: :feature do
 
     it 'returns the work when searching for the creator' do
       visit(root_path)
-      fill_in('q', with: 'Doe, John')
-      within('#search_field') do
-        select('Creator')
+      search_for 'Doe, John', in: 'Creator'
+      within('#documents') do
+        expect(page).to have_link('Sample Generic Work')
       end
-      click_button('Search')
+    end
+
+    it 'returns the work when searching within the edtf range' do
+      visit(root_path)
+      search_for '1970', in: 'Date Cataloged'
       within('#documents') do
         expect(page).to have_link('Sample Generic Work')
       end
@@ -124,8 +115,7 @@ RSpec.describe CatalogController, type: :feature do
 
     it 'returns the work containing the extracted text' do
       visit(root_path)
-      fill_in('q', with: 'words')
-      click_button('Search')
+      search_for 'words'
       within('#documents') do
         expect(page).to have_link('Sample Extracted Text Work')
       end
@@ -211,5 +201,13 @@ RSpec.describe CatalogController, type: :feature do
         end
       end
     end
+  end
+
+  def search_for(query, options = {})
+    fill_in('q', with: query)
+    within('#search_field') do
+      select(options.fetch(:in, 'All Fields'))
+    end
+    click_button('Search')
   end
 end
