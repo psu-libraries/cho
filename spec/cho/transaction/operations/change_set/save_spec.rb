@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Transaction::Operations::Shared::Save do
+RSpec.describe Transaction::Operations::ChangeSet::Save do
   let(:collection) { create :collection }
   let(:change_set) { Work::SubmissionChangeSet.new(resource) }
   let(:operation) { described_class.new }

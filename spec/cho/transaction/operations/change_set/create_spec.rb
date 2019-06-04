@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Transaction::Operations::Shared::CreateChangeSet do
+RSpec.describe Transaction::Operations::ChangeSet::Create do
   let(:operation) { described_class.new }
 
   describe '#call' do
