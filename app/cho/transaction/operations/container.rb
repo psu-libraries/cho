@@ -21,15 +21,15 @@ module Transaction
         end
       end
 
-      namespace 'shared' do
+      namespace 'change_set' do
         register 'validate' do
-          Operations::Shared::Validate.new
+          Operations::ChangeSet::Validate.new
         end
-        register 'create_change_set' do
-          Operations::Shared::CreateChangeSet.new
+        register 'create' do
+          Operations::ChangeSet::Create.new
         end
         register 'save' do
-          Operations::Shared::Save.new
+          Operations::ChangeSet::Save.new
         end
       end
 

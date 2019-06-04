@@ -6,10 +6,10 @@ module Transaction
       include Dry::Transaction(container: Operations::Container)
 
       # Operations will be resolved from the `Container` specified above
-      step :create_change_set, with: 'shared.create_change_set'
-      step :validate, with: 'shared.validate'
+      step :create, with: 'change_set.create'
+      step :validate, with: 'change_set.validate'
       step :save_file, with: 'file.save'
-      step :save, with: 'shared.save'
+      step :save, with: 'change_set.save'
     end
   end
 end
