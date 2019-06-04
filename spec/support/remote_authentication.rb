@@ -86,6 +86,7 @@ module RemoteAuthentication
       { 'REMOTE_USER' => user.login }
     end
 
+    # @note 'headless' doesn't seem to have any effect, as the default behavior is to open a Chrome window
     def chrome_options
       { args: ['no-sandbox', 'headless', 'disable-gpu', 'window-size=1024,768', 'single-process'] }
     end
