@@ -111,13 +111,30 @@ RSpec.describe CatalogController, type: :feature do
       create(:work_submission, :with_file_and_extracted_text,
              filename: 'example_extracted_text.txt',
              title: 'Sample Extracted Text Work')
+
+      create(:work_submission, :with_file,
+             title: 'Words in the title')
     end
 
-    it 'returns the work containing the extracted text' do
-      visit(root_path)
-      search_for 'words'
-      within('#documents') do
-        expect(page).to have_link('Sample Extracted Text Work')
+    context 'when searching on "All Fields"' do
+      it 'returns the work containing the extracted text' do
+        visit(root_path)
+        search_for 'words', in: 'All Fields'
+        within('#documents') do
+          expect(page).to have_link('Sample Extracted Text Work')
+          expect(page).to have_link('Words in the title')
+        end
+      end
+    end
+
+    context 'when searching a more specific field' do
+      it 'does not include the extracted text in the search' do
+        visit(root_path)
+        search_for 'words', in: 'Title'
+        within('#documents') do
+          expect(page).not_to have_link('Sample Extracted Text Work')
+          expect(page).to have_link('Words in the title')
+        end
       end
     end
   end

@@ -22,9 +22,16 @@ module CatalogSearchBehavior
 
     # the {!lucene} gives us the OR syntax
     def new_query
-      "{!lucene}#{internal_query(query_all_query_fields)} "\
-      "#{internal_query(search_metadata_from_file_sets)} "\
-      "#{internal_query(search_extracted_text_from_files)}"
+      query_parts = [
+        "{!lucene}#{internal_query(query_all_query_fields)}",
+        internal_query(search_metadata_from_file_sets)
+      ]
+
+      if blacklight_params[:search_field] == 'all_fields'
+        query_parts << internal_query(search_extracted_text_from_files)
+      end
+
+      query_parts.join(' ')
     end
 
     # @note The _query_ allows for another parser, i.e. dismax.
