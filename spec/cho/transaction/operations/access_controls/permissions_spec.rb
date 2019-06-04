@@ -5,11 +5,11 @@ require 'rails_helper'
 RSpec.describe Transaction::Operations::AccessControls::Permissions do
   before(:all) do
     class PermissionsResource < Valkyrie::Resource
-      include Repository::Access::ResourceControls
+      include Repository::AccessControls::Fields
     end
 
     class PermissionsChangeSet < Valkyrie::ChangeSet
-      include Repository::Access::ChangeSetBehaviors
+      include Repository::AccessControls::ChangeSetBehaviors
     end
   end
 

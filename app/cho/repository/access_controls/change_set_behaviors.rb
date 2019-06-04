@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Repository::Access::ChangeSetBehaviors
+module Repository::AccessControls::ChangeSetBehaviors
   extend ActiveSupport::Concern
 
   included do

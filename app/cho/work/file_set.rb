@@ -5,7 +5,7 @@
 # File sets are indexed both in Solr and and Postgres using the {IndexingAdapter}.
 class Work::FileSet < Valkyrie::Resource
   enable_optimistic_locking
-  include Repository::Access::ResourceControls
+  include Repository::AccessControls::Fields
   include CommonQueries
   include DataDictionary::FieldsForObject
 

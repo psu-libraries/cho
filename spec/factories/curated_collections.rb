@@ -6,15 +6,15 @@ FactoryBot.define do
     description { 'Sample curated collection' }
     subtitle { 'subtitle for a curated collection' }
     workflow { 'default' }
-    access_rights { Repository::AccessLevel.public }
+    access_rights { Repository::AccessControls::AccessLevel.public }
 
     factory :psu_curated_collection do
-      access_rights { Repository::AccessLevel.psu }
-      read_groups { [Repository::AccessLevel.psu] }
+      access_rights { Repository::AccessControls::AccessLevel.psu }
+      read_groups { [Repository::AccessControls::AccessLevel.psu] }
     end
 
     factory :private_curated_collection, aliases: [:restricted_curated_collection] do
-      access_rights { Repository::AccessLevel.restricted }
+      access_rights { Repository::AccessControls::AccessLevel.restricted }
       read_groups { [] }
     end
   end

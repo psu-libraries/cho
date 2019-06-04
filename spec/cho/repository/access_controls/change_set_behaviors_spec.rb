@@ -2,16 +2,16 @@
 
 require 'rails_helper'
 
-RSpec.describe Repository::Access::ChangeSetBehaviors do
+RSpec.describe Repository::AccessControls::ChangeSetBehaviors do
   subject(:change_set) { ControlledChangeSet.new(ControlledResource.new) }
 
   before(:all) do
     class ControlledResource < Valkyrie::Resource
-      include Repository::Access::ResourceControls
+      include Repository::AccessControls::Fields
     end
 
     class ControlledChangeSet < Valkyrie::ChangeSet
-      include Repository::Access::ChangeSetBehaviors
+      include Repository::AccessControls::ChangeSetBehaviors
     end
   end
 
@@ -21,7 +21,7 @@ RSpec.describe Repository::Access::ChangeSetBehaviors do
   end
 
   describe '#system_creator' do
-    its(:system_creator) { is_expected.to be(Repository::Access::ResourceControls::DEFAULT_SYSTEM_USER) }
+    its(:system_creator) { is_expected.to be(Repository::AccessControls::Fields::DEFAULT_SYSTEM_USER) }
 
     it { is_expected.to be_required(:system_creator) }
     it { is_expected.not_to be_multiple(:system_creator) }
@@ -56,7 +56,7 @@ RSpec.describe Repository::Access::ChangeSetBehaviors do
   end
 
   describe '#read_groups' do
-    its(:read_groups) { is_expected.to contain_exactly(Repository::AccessLevel.public) }
+    its(:read_groups) { is_expected.to contain_exactly(Repository::AccessControls::AccessLevel.public) }
 
     it { is_expected.not_to be_required(:read_groups) }
     it { is_expected.to be_multiple(:read_groups) }

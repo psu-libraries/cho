@@ -9,7 +9,7 @@ RSpec.describe Validation::AccessRights do
     let(:validation_instance) { described_class.new }
 
     context 'with a valid access level' do
-      let(:access_level) { Repository::AccessLevel.public }
+      let(:access_level) { Repository::AccessControls::AccessLevel.public }
 
       it 'is valid' do
         expect(validation_instance.validate(access_level)).to be_truthy

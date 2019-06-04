@@ -3,7 +3,7 @@
 module ControlledVocabulary
   class AccessRights < Base
     def self.list(*)
-      Repository::AccessLevel.names
+      Repository::AccessControls::AccessLevel.names
     end
   end
 end

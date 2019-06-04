@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Repository::AccessLevel do
+RSpec.describe Repository::AccessControls::AccessLevel do
   describe '::uris' do
     specify do
       expect(described_class.uris).to contain_exactly(

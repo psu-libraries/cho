@@ -34,6 +34,6 @@ class User < ApplicationRecord
     def default_groups
       return [] if login.blank?
 
-      [Repository::AccessLevel.psu]
+      [Repository::AccessControls::AccessLevel.psu]
     end
 end

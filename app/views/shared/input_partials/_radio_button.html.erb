@@ -1,16 +1,16 @@
 <%# This is tied directly to access rights. We can refactor later if we need different kinds of buttons %>
 
-<%= form.label "access_rights_#{Repository::AccessLevel.public}".to_sym do %>
-  <%= form.radio_button :access_rights, Repository::AccessLevel.public %>
+<%= form.label "access_rights_#{Repository::AccessControls::AccessLevel.public}".to_sym do %>
+  <%= form.radio_button :access_rights, Repository::AccessControls::AccessLevel.public %>
   <%= Vocab::AccessLevel.Public.label %>
 <% end %>
 
-<%= form.label "access_rights_#{Repository::AccessLevel.psu}".to_sym do %>
-  <%= form.radio_button :access_rights, Repository::AccessLevel.psu %>
+<%= form.label "access_rights_#{Repository::AccessControls::AccessLevel.psu}".to_sym do %>
+  <%= form.radio_button :access_rights, Repository::AccessControls::AccessLevel.psu %>
   <%= Vocab::AccessLevel.PennState.label %>
 <% end %>
 
-<%= form.label "access_rights_#{Repository::AccessLevel.restricted}".to_sym do %>
-  <%= form.radio_button :access_rights, Repository::AccessLevel.restricted %>
+<%= form.label "access_rights_#{Repository::AccessControls::AccessLevel.restricted}".to_sym do %>
+  <%= form.radio_button :access_rights, Repository::AccessControls::AccessLevel.restricted %>
   <%= Vocab::AccessLevel.Restricted.label %>
 <% end %>

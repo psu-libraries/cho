@@ -7,7 +7,8 @@ module Transaction::Operations::AccessControls
     # @return [Valkyrie::ChangeSet]
     # @note duplicate members can be removed by the underlying resource model
     def call(change_set)
-      return Success(change_set) unless change_set.class.ancestors.include?(Repository::Access::ChangeSetBehaviors)
+      return Success(change_set) unless
+        change_set.class.ancestors.include?(Repository::AccessControls::ChangeSetBehaviors)
 
       change_set.read_users |= [change_set.system_creator]
       Success(change_set)
