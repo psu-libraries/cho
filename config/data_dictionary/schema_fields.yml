@@ -5,6 +5,8 @@ development: &development
         order_index: 2
       narrative:
         order_index: 1
+      access_rights:
+        order_index: 3
     work_type: 'false'
   - schema: 'FileSet'
     fields: []
@@ -18,6 +20,8 @@ development: &development
       home_collection_id:
         requirement_designation: 'required'
         order_index: 1
+      access_rights:
+        order_index: 2
   - schema: 'Document'
     file:
       create: Transaction::File::Create
@@ -234,6 +238,8 @@ test:
         order_index: 2
       narrative:
         order_index: 1
+      access_rights:
+        order_index: 3
     work_type: 'false'
   - schema: 'FileSet'
     fields: []

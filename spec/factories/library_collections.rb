@@ -6,15 +6,15 @@ FactoryBot.define do
     description { 'Sample library collection' }
     subtitle { 'subtitle for a library collection' }
     workflow { 'default' }
-    access_level { Repository::AccessLevel.public }
+    access_rights { Repository::AccessLevel.public }
 
     factory :psu_library_collection do
-      access_level { Repository::AccessLevel.psu }
+      access_rights { Repository::AccessLevel.psu }
       read_groups { [Repository::AccessLevel.psu] }
     end
 
     factory :private_library_collection, aliases: [:restricted_library_collection] do
-      access_level { Repository::AccessLevel.restricted }
+      access_rights { Repository::AccessLevel.restricted }
       read_groups { [] }
     end
   end

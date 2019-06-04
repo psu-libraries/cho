@@ -3,66 +3,30 @@
 module DataDictionary::WithFieldType
   extend ActiveSupport::Concern
 
-  FieldTypes = Valkyrie::Types::String.enum('string', 'text', 'numeric', 'date',
-                                            'valkyrie_id', 'alternate_id', 'creator')
+  TYPES = %w(
+    string
+    text
+    numeric
+    date
+    valkyrie_id
+    alternate_id
+    creator
+    radio_button
+  ).freeze
+
+  FieldTypes = Valkyrie::Types::String.enum(*TYPES)
 
   included do
     attribute :field_type, FieldTypes
   end
 
-  def string!
-    self.field_type = 'string'
-  end
+  TYPES.each do |type|
+    define_method "#{type}!" do
+      self.field_type = type
+    end
 
-  def string?
-    field_type == 'string'
-  end
-
-  def text!
-    self.field_type = 'text'
-  end
-
-  def text?
-    field_type == 'text'
-  end
-
-  def numeric!
-    self.field_type = 'numeric'
-  end
-
-  def numeric?
-    field_type == 'numeric'
-  end
-
-  def date!
-    self.field_type = 'date'
-  end
-
-  def date?
-    field_type == 'date'
-  end
-
-  def valkyrie_id!
-    self.field_type = 'valkyrie_id'
-  end
-
-  def valkyrie_id?
-    field_type == 'valkyrie_id'
-  end
-
-  def alternate_id!
-    self.field_type = 'alternate_id'
-  end
-
-  def alternate_id?
-    field_type == 'alternate_id'
-  end
-
-  def creator!
-    self.field_type = 'creator'
-  end
-
-  def creator?
-    field_type == 'creator'
+    define_method "#{type}?" do
+      field_type == type
+    end
   end
 end

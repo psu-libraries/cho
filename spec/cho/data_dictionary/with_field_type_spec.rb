@@ -15,73 +15,30 @@ RSpec.describe DataDictionary::WithFieldType, type: :model do
     ActiveSupport::Dependencies.remove_constant('MyFieldModel')
   end
 
-  context 'field_type is set to text' do
-    before { model.text! }
-
-    it { is_expected.to be_text }
-    it { is_expected.not_to be_string }
-    it { is_expected.not_to be_date }
-    it { is_expected.not_to be_numeric }
-    it { is_expected.not_to be_valkyrie_id }
-    it { is_expected.not_to be_creator }
+  describe '::TYPES' do
+    specify do
+      expect(DataDictionary::WithFieldType::TYPES).to contain_exactly(
+        'string',
+        'text',
+        'numeric',
+        'date',
+        'valkyrie_id',
+        'alternate_id',
+        'creator',
+        'radio_button'
+      )
+    end
   end
 
-  context 'field_type is set to date' do
-    before { model.date! }
-
-    it { is_expected.not_to be_text }
-    it { is_expected.not_to be_string }
-    it { is_expected.to be_date }
-    it { is_expected.not_to be_numeric }
-    it { is_expected.not_to be_valkyrie_id }
-    it { is_expected.not_to be_creator }
+  describe 'setting a field type' do
+    specify do
+      expect(model.text?).to be(false)
+      model.text!
+      expect(model.text?).to be(true)
+    end
   end
 
-  context 'field_type is set to numeric' do
-    before { model.numeric! }
-
-    it { is_expected.not_to be_text }
-    it { is_expected.not_to be_string }
-    it { is_expected.not_to be_date }
-    it { is_expected.to be_numeric }
-    it { is_expected.not_to be_valkyrie_id }
-    it { is_expected.not_to be_creator }
-  end
-
-  context 'field_type is set to string' do
-    before { model.string! }
-
-    it { is_expected.not_to be_text }
-    it { is_expected.to be_string }
-    it { is_expected.not_to be_date }
-    it { is_expected.not_to be_numeric }
-    it { is_expected.not_to be_valkyrie_id }
-    it { is_expected.not_to be_creator }
-  end
-
-  context 'field_type is set to a Valkyrie ID' do
-    before { model.valkyrie_id! }
-
-    it { is_expected.not_to be_text }
-    it { is_expected.not_to be_string }
-    it { is_expected.not_to be_date }
-    it { is_expected.not_to be_numeric }
-    it { is_expected.to be_valkyrie_id }
-    it { is_expected.not_to be_creator }
-  end
-
-  context 'field_type is set to a Valkyrie ID' do
-    before { model.creator! }
-
-    it { is_expected.not_to be_text }
-    it { is_expected.not_to be_string }
-    it { is_expected.not_to be_date }
-    it { is_expected.not_to be_numeric }
-    it { is_expected.not_to be_valkyrie_id }
-    it { is_expected.to be_creator }
-  end
-
-  context 'field_type is bogus' do
+  describe 'setting a field to a bogus type' do
     it 'raises an error' do
       expect { MyFieldModel.new(field_type: 'bogus') }.to raise_error(Dry::Struct::Error)
     end

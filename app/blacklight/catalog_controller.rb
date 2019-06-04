@@ -177,14 +177,12 @@ class CatalogController < ApplicationController
     # solr fields to be displayed in the index (search results) view
     #   The ordering of the field names is the order of the display
     config.add_index_field 'work_type_ssim', label: I18n.t('cho.field_label.work_type')
-    config.add_index_field 'access_level_ssim', label: I18n.t('cho.field_label.access_level')
     config.add_index_field 'workflow_ssim', label: I18n.t('cho.field_label.workflow')
     config.add_index_field 'collection_type_ssim', label: I18n.t('cho.field_label.collection_type')
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
     config.add_show_field 'work_type_ssim', label: I18n.t('cho.field_label.work_type')
-    config.add_show_field 'access_level_ssim', label: I18n.t('cho.field_label.access_level')
     config.add_show_field 'workflow_ssim', label: I18n.t('cho.field_label.workflow')
     config.add_show_field 'collection_type_ssim', label: I18n.t('cho.field_label.collection_type')
 

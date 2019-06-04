@@ -53,7 +53,8 @@ RSpec.describe Schema::Configuration, type: :model do
           'schema' => 'Collection',
           'fields' => {
             'acknowledgments' => { 'order_index' => 2 },
-            'narrative' => { 'order_index' => 1 }
+            'narrative' => { 'order_index' => 1 },
+            'access_rights' => { 'order_index' => 3 }
           },
           'work_type' => 'false'
         },

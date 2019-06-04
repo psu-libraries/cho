@@ -20,7 +20,8 @@ module Validation
             edtf_date: Validation::EDTFDate,
             creator: Validation::Creator,
             unique: Validation::Unique,
-            character_encoding: Validation::CharacterEncoding
+            character_encoding: Validation::CharacterEncoding,
+            access_rights: Validation::AccessRights
           }
         end
 

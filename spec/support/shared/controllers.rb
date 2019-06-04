@@ -7,7 +7,7 @@ RSpec.shared_examples 'a collection controller' do
       subtitle: 'use only for testing',
       description: 'A sample collection',
       workflow: 'default',
-      access_level: Repository::AccessLevel.public
+      access_rights: Repository::AccessLevel.public
     }
   end
 
@@ -68,7 +68,7 @@ RSpec.shared_examples 'a collection controller' do
           subtitle: 'use only for testing',
           description: 'An updated sample collection',
           workflow: 'default',
-          access_level: Repository::AccessLevel.public
+          access_rights: Repository::AccessLevel.public
         }
       end
 
