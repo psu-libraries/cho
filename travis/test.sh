@@ -22,8 +22,12 @@ psql -c 'create database travis_ci_test;' -U postgres
 echo -e "\n\n\033[1;33mCompiling webpacks\033[0m"
 bundle exec rails webpacker:compile
 
+echo -e "\n\n\033[1;33mStarting xvfb\033[0m"
+export DISPLAY=:99.0
+sh -e /etc/init.d/xvfb start
+sleep 5
+
 echo -e "\n\n\033[1;33mPreparing...\033[0m"
-google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
 bundle exec solr_wrapper --config config/travis/solr_wrapper_test.yml &
 bin/jetty_wait
 

@@ -15,6 +15,7 @@ before_install:
   - yarn
 bundler_args: --without development debug
 sudo: false
+dist: trusty
 addons:
   postgresql: "9.6"
   chrome: stable
