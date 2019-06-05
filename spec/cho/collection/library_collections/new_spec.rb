@@ -9,6 +9,7 @@ RSpec.describe Collection::Library, type: :feature do
       fill_in('library_collection[title]', with: 'New Title')
       fill_in('library_collection[subtitle][]', with: 'new subtitle')
       fill_in('library_collection[description][]', with: 'Description of new collection')
+      expect(find("#library_collection_access_rights_#{Repository::AccessControls::AccessLevel.public}")).to be_checked
       choose('Mediated')
       choose('PSU Access')
       click_button('Create Library collection')
