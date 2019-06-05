@@ -15,7 +15,7 @@ module Work
     include WithValidMembers
     include WithFormFields
     include Work::WithErrorMessages
-    include Repository::Access::ChangeSetBehaviors
+    include Repository::AccessControls::ChangeSetBehaviors
 
     delegate :url_helpers, to: 'Rails.application.routes'
 

@@ -16,7 +16,7 @@ RSpec.describe Collection::Curated, type: :feature do
       expect(page).to have_content('new subtitle')
       expect(page).to have_content('Description of new collection')
       expect(page).to have_content('mediated')
-      expect(page).to have_content(Repository::AccessLevel.psu)
+      expect(page).to have_content(Repository::AccessControls::AccessLevel.psu)
     end
   end
 

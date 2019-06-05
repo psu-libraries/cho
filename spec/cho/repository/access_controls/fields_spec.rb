@@ -2,10 +2,10 @@
 
 require 'rails_helper'
 
-RSpec.describe Repository::Access::ResourceControls do
+RSpec.describe Repository::AccessControls::Fields do
   before(:all) do
     class ControlledResource < Valkyrie::Resource
-      include Repository::Access::ResourceControls
+      include Repository::AccessControls::Fields
     end
   end
 
@@ -96,7 +96,7 @@ RSpec.describe Repository::Access::ResourceControls do
 
     it 'is public when not set' do
       resource = resource_klass.new
-      expect(resource.read_groups).to contain_exactly(Repository::AccessLevel.public)
+      expect(resource.read_groups).to contain_exactly(Repository::AccessControls::AccessLevel.public)
     end
   end
 
@@ -155,7 +155,7 @@ RSpec.describe Repository::Access::ResourceControls do
   describe '#system_creator' do
     it 'defaults to the default system user' do
       resource = resource_klass.new
-      expect(resource.system_creator).to eq(Repository::Access::ResourceControls::DEFAULT_SYSTEM_USER)
+      expect(resource.system_creator).to eq(Repository::AccessControls::Fields::DEFAULT_SYSTEM_USER)
     end
   end
 end

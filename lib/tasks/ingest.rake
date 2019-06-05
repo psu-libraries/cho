@@ -31,7 +31,7 @@ namespace :cho do
       collection = Collection::Archival.new(
         title: "Collection for #{id}",
         alternate_ids: [id],
-        access_rights: Repository::AccessLevel.public,
+        access_rights: Repository::AccessControls::AccessLevel.public,
         workflow: 'default'
       )
       change_set_persister.persister.save(resource: collection)

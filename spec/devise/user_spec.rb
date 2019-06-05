@@ -37,7 +37,7 @@ RSpec.describe User, type: :model do
 
       it 'returns a list of groups from the database' do
         expect(user).not_to receive(:populate_attributes)
-        expect(user.groups).to contain_exactly('group1', 'group2', Repository::AccessLevel.psu)
+        expect(user.groups).to contain_exactly('group1', 'group2', Repository::AccessControls::AccessLevel.psu)
       end
     end
 
@@ -47,7 +47,7 @@ RSpec.describe User, type: :model do
 
       it 'returns a list of groups from the database' do
         expect(PsuDir::LdapUser).to receive(:get_groups).with(user.login).and_return(groups)
-        expect(user.groups).to contain_exactly('group1', 'group2', Repository::AccessLevel.psu)
+        expect(user.groups).to contain_exactly('group1', 'group2', Repository::AccessControls::AccessLevel.psu)
       end
     end
 
@@ -57,7 +57,7 @@ RSpec.describe User, type: :model do
 
       it 'returns a list of groups from the database' do
         expect(PsuDir::LdapUser).to receive(:get_groups).with(user.login).and_return(groups)
-        expect(user.groups).to contain_exactly('group1', 'group2', Repository::AccessLevel.psu)
+        expect(user.groups).to contain_exactly('group1', 'group2', Repository::AccessControls::AccessLevel.psu)
       end
     end
 
@@ -66,7 +66,7 @@ RSpec.describe User, type: :model do
 
       it 'returns a the default list of groups' do
         expect(PsuDir::LdapUser).to receive(:get_groups).with(user.login).and_return([])
-        expect(user.groups).to contain_exactly(Repository::AccessLevel.psu)
+        expect(user.groups).to contain_exactly(Repository::AccessControls::AccessLevel.psu)
       end
     end
   end

@@ -5,11 +5,11 @@ require 'rails_helper'
 RSpec.describe Transaction::Operations::AccessControls::SystemCreator do
   before(:all) do
     class SystemCreatorResource < Valkyrie::Resource
-      include Repository::Access::ResourceControls
+      include Repository::AccessControls::Fields
     end
 
     class SystemCreatorChangeSet < Valkyrie::ChangeSet
-      include Repository::Access::ChangeSetBehaviors
+      include Repository::AccessControls::ChangeSetBehaviors
     end
   end
 
@@ -50,7 +50,7 @@ RSpec.describe Transaction::Operations::AccessControls::SystemCreator do
         before { change_set.current_user = user }
 
         it 'updates the system creator' do
-          expect(change_set.system_creator).to eq(Repository::Access::ResourceControls::DEFAULT_SYSTEM_USER)
+          expect(change_set.system_creator).to eq(Repository::AccessControls::Fields::DEFAULT_SYSTEM_USER)
           result = described_class.new.call(change_set)
           expect(result).to be_success
           expect(result.success.system_creator).to eq(user.login)

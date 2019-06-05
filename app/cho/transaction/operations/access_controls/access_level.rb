@@ -10,7 +10,7 @@ module Transaction::Operations::AccessControls
     def call(change_set)
       return Success(change_set) if change_set.try(:access_rights).blank?
 
-      remaining_groups = change_set.read_groups - Repository::AccessLevel.names
+      remaining_groups = change_set.read_groups - Repository::AccessControls::AccessLevel.names
       change_set.read_groups = (remaining_groups | Array.wrap(change_set.access_rights))
       Success(change_set)
     rescue StandardError => e

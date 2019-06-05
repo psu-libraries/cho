@@ -3,7 +3,7 @@
 module Collection::CommonFields
   extend ActiveSupport::Concern
   include DataDictionary::FieldsForObject
-  include Repository::Access::ResourceControls
+  include Repository::AccessControls::Fields
 
   WORKFLOW = ['default', 'mediated'].freeze
 

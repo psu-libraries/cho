@@ -6,7 +6,7 @@ module Validation
       self.errors = []
       return true if field_value.blank?
 
-      (Array.wrap(field_value) - Repository::AccessLevel.names).each do |invalid_level|
+      (Array.wrap(field_value) - Repository::AccessControls::AccessLevel.names).each do |invalid_level|
         errors << "#{invalid_level} is not a valid access right"
       end
       errors.empty?

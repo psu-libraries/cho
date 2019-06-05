@@ -6,7 +6,7 @@
 module Work
   class Submission < Valkyrie::Resource
     enable_optimistic_locking
-    include Repository::Access::ResourceControls
+    include Repository::AccessControls::Fields
     include DataDictionary::FieldsForObject
     include CommonQueries
 
