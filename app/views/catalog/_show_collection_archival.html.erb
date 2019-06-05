@@ -1,3 +1,5 @@
+<%= document.description_data_dictionary_field.first %>
+
 <% @document.transformed_fields.each do |field| %>
   <% if field.present? %>
     <%= render partial: "shared/transformation_partials/#{field.display_transformation}",
@@ -5,7 +7,7 @@
   <% end %>
 <% end %>
 
-<%= render partial: 'show', locals: { document: @document } %>
+<%#= render partial: 'show', locals: { document: @document } %>
 
 <% unless @document_facade.members.empty? %>
   <%= render partial: 'members', locals: { facade: @document_facade } %>
