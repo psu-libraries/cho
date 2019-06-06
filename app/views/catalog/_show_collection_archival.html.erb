@@ -1,13 +1,24 @@
-<%= document.description_data_dictionary_field.first %>
+<%# Create a method similar to fields_to_render for core fields
+# https://github.com/projectblacklight/blacklight/blob/8de6ad03af4180c116ed1b559750f538deafa6dd/app/presenters/blacklight/document_presenter.rb#L9
+# https://github.com/projectblacklight/blacklight/blob/8f1b3f2a4c7cbd69a5f6a4a74c8c34bf7d209042/app/views/catalog/_show.html.erb
+%>
 
-<% @document.transformed_fields.each do |field| %>
-  <% if field.present? %>
-    <%= render partial: "shared/transformation_partials/#{field.display_transformation}",
-               locals: { presenter: field } %>
-  <% end %>
-<% end %>
-
-<%#= render partial: 'show', locals: { document: @document } %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12 col-md-7">
+      <p><%= document.description_data_dictionary_field.first %></p>
+    </div>
+    <div class="col-sm-12 col-md-5">
+      <%= render partial: 'show', locals: { document: @document } %>
+      <% @document.transformed_fields.each do |field| %>
+        <% if field.present? %>
+          <%= render partial: "shared/transformation_partials/#{field.display_transformation}",
+                     locals: { presenter: field } %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
 
 <% unless @document_facade.members.empty? %>
   <%= render partial: 'members', locals: { facade: @document_facade } %>
