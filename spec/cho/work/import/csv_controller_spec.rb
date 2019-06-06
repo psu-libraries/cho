@@ -63,11 +63,13 @@ RSpec.describe Work::Import::CsvController, type: :controller do
         expect(call).to render_template('dry_run_results')
         expect(response).to be_success
         expect(assigns(:presenter)).to be_a(Work::Import::CsvDryRunResultsPresenter)
-        expect(assigns(:presenter).change_set_list.map(&:valid?)).to eq([false, false])
+        expect(assigns(:presenter).change_set_list.map(&:valid?)).to eq([false, false, true, true])
         expect(assigns(:presenter).change_set_list.map(&:errors).map(&:messages)).to eq(
           [
             { work_type_id: ["can't be blank"] },
-            { home_collection_id: ['bad does not exist'], title: ["can't be blank"] }
+            { home_collection_id: ['bad does not exist'], title: ["can't be blank"] },
+            {},
+            {}
           ]
         )
         expect(File).to be_exist(assigns(:file_name))

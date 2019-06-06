@@ -25,7 +25,11 @@ module Work
       end
 
       def bag
-        @bag ||= Transaction::Import::ImportFromZip.new.call(zip_name: batch_id)
+        @bag ||= if update?
+                   Dry::Monads::Result::Failure.new('Bags are not supported with CSVDryRun updates')
+                 else
+                   Transaction::Import::ImportFromZip.new.call(zip_name: batch_id)
+                 end
       end
 
       def results
@@ -62,28 +66,50 @@ module Work
           0
         end
 
-        # @todo see https://github.com/psu-libraries/cho/issues/605
-        # @note if there's more than one work in the bag with the same identifier, the duplicates will be ignored.
+        # @note Attaches the import work and associated file set hashes to each change set. These will
+        # be used later in the transaction when the file sets and files are created or updated.
         def add_import_works
-          return if bag.failure?
-
           results.each do |change_set|
-            import_work = retrieve_import_work(change_set: change_set)
-            change_set.import_work = import_work
-            change_set.file_set_hashes = build_import_file_sets(import_work).compact if import_work.present?
+            change_set.import_work = retrieve_import_work(change_set: change_set)
+            change_set.file_set_hashes = build_file_sets(change_set: change_set).compact
           end
         end
 
+        # @return [Import::Work] retrieved from the bag based on the alternate id provided in the CSV.
+        # @note If the bag is a failure, it could indicate a bad bag, or just an update.
         def retrieve_import_work(change_set:)
+          return if bag.failure?
+
           bag.success.works.select { |work| work.identifier == change_set.alternate_ids.first.to_s }.first
         end
 
+        # @return [Array<Work::FileSetChangeSet>]
+        def build_file_sets(change_set:)
+          if change_set.import_work.present?
+            build_import_file_sets(change_set.import_work)
+          else
+            build_update_file_sets
+          end
+        end
+
+        # @note This applies to a create scenario, where we select file set metadata from the CSV that matches
+        # the id of the file sets in the import work.
         def build_import_file_sets(import_work)
           import_work.file_sets.map do |file_set|
             file_set_hash = file_set_metadata(file_set.id).first
             next if file_set_hash.nil?
 
             FileSetHashValidator.new(file_set_hash,
+                                     resource_class: Work::FileSet,
+                                     change_set_class: Work::FileSetChangeSet).change_set
+          end
+        end
+
+        # @note This applies to an update scenario, where we read each file set from the csv. Since this is
+        # assumed to be from a previously exported step, we assume the metadata is valid.
+        def build_update_file_sets
+          reader.file_set_hashes.map do |file_set|
+            FileSetHashValidator.new(file_set,
                                      resource_class: Work::FileSet,
                                      change_set_class: Work::FileSetChangeSet).change_set
           end
