@@ -5,7 +5,7 @@ subtitle,string,optional,character_encoding,true,no_vocabulary,,,no_transformati
 description,text,optional,character_encoding,true,no_vocabulary,,,no_transformation,no_facet,help me,true
 acknowledgments,text,optional,character_encoding,true,no_vocabulary,,,paragraph_heading,no_facet,help me,false
 narrative,text,optional,character_encoding,true,no_vocabulary,,Narrative,paragraph,no_facet,help me,false
-created,date,optional,edtf_date,true,no_vocabulary,,,no_transformation,date,help me,false
+created,string,optional,edtf_date,true,no_vocabulary,,,humanize_edtf,no_facet,help me,false
 generic_field,string,optional,no_validation,true,no_vocabulary,,,no_transformation,facet,help me,false
 document_field,string,optional,no_validation,true,no_vocabulary,,,no_transformation,no_facet,help me,false
 still_image_field,string,optional,no_validation,true,no_vocabulary,,,no_transformation,no_facet,help me,false
@@ -15,4 +15,4 @@ audio_field,string,optional,no_validation,true,no_vocabulary,,,no_transformation
 access_rights,radio_button,optional,access_rights,false,access_rights,public,Access Rights,no_transformation,no_facet,help me,false
 alternate_ids,alternate_id,required_to_publish,unique,true,no_vocabulary,,Identifier,no_transformation,no_facet,help me,true
 creator,creator,optional,creator,true,creator_vocabulary,,Creator,no_transformation,linked_field,help me,true
-date_cataloged,date,optional,edtf_date,true,no_vocabulary,,Date Cataloged,no_transformation,date,help me,true
+date_cataloged,string,optional,edtf_date,true,no_vocabulary,,Date Cataloged,humanize_edtf,no_facet,help me,true

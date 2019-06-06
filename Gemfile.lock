@@ -253,6 +253,9 @@ GEM
       sxp (~> 1.0)
     edtf (3.0.4)
       activesupport (>= 3.0, < 6.0)
+    edtf-humanize (0.0.7)
+      activesupport (>= 4, < 6)
+      edtf (>= 2.3, < 4)
     erb_lint (0.0.28)
       activesupport
       better_html (~> 1.0.7)
@@ -717,6 +720,7 @@ DEPENDENCIES
   devise_remote
   dry-transaction
   edtf
+  edtf-humanize
   execjs
   factory_bot_rails
   faker

@@ -25,4 +25,13 @@ module LocalHelperBehavior
   def paragraph(*args)
     # noop
   end
+
+  # @param Hash passed in by blacklight representing the page
+  def humanize_edtf(page)
+    value = page[:value]
+    Array.wrap(value).map do |date_str|
+      d = Date.edtf(date_str)
+      d&.humanize&.titleize || date_str
+    end.join(', ')
+  end
 end

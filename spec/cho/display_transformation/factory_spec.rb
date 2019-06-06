@@ -38,7 +38,7 @@ RSpec.describe DisplayTransformation::Factory, type: :model do
   end
 
   describe '#tranformations' do
-    subject { described_class.transformations.keys }
+    subject(:keys) { described_class.transformations.keys }
 
     let(:transformations) { {} }
 
@@ -46,12 +46,18 @@ RSpec.describe DisplayTransformation::Factory, type: :model do
       described_class.transformations = transformations
     end
 
-    it { is_expected.to eq([:no_transformation, :render_link_to_collection, :paragraph_heading, :paragraph]) }
+    it { is_expected.to eq([:no_transformation, :render_link_to_collection, :paragraph_heading, :paragraph, :humanize_edtf]) }
 
     context 'valid transformations set' do
       let(:transformations) { { abc: MyTransformation.new, other: OtherTransformation.new } }
 
-      it { is_expected.to eq([:abc, :other, :no_transformation, :render_link_to_collection, :paragraph_heading, :paragraph]) }
+      it { expect(keys).to eq([:abc,
+                               :other,
+                               :no_transformation,
+                               :render_link_to_collection,
+                               :paragraph_heading,
+                               :paragraph,
+                               :humanize_edtf]) }
     end
   end
 
