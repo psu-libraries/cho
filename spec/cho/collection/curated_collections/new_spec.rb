@@ -9,6 +9,7 @@ RSpec.describe Collection::Curated, type: :feature do
       fill_in('curated_collection[title]', with: 'New Title')
       fill_in('curated_collection[subtitle][]', with: 'new subtitle')
       fill_in('curated_collection[description][]', with: 'Description of new collection')
+      expect(find("#curated_collection_access_rights_#{Repository::AccessControls::AccessLevel.public}")).to be_checked
       choose('Mediated')
       choose('PSU Access')
       click_button('Create Curated collection')

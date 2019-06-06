@@ -9,6 +9,7 @@ RSpec.describe Collection::Archival, type: :feature do
       fill_in('archival_collection[title]', with: 'New Title')
       fill_in('archival_collection[subtitle][]', with: 'new subtitle')
       fill_in('archival_collection[description][]', with: 'Description of new collection')
+      expect(find("#archival_collection_access_rights_#{Repository::AccessControls::AccessLevel.public}")).to be_checked
       choose('Mediated')
       choose('PSU Access')
       click_button('Create Archival collection')

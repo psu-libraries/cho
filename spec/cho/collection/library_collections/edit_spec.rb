@@ -13,6 +13,7 @@ RSpec.describe Collection::Library, type: :feature do
       expect(page).to have_field('Description', type: 'textarea', with: 'Sample library collection')
       fill_in('library_collection[title]', with: 'Updated Library Collection Title')
       fill_in('library_collection[description][]', with: 'Updated library collection description')
+      expect(find("#library_collection_access_rights_#{Repository::AccessControls::AccessLevel.public}")).to be_checked
       click_button('Update Library collection')
       expect(page).to have_content('Updated Library Collection Title')
       expect(page).to have_content('Updated library collection description')

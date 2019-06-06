@@ -26,7 +26,7 @@ place,string,optional,no_validation,true,no_vocabulary,,Place of Publication,no_
 series,string,optional,no_validation,true,no_vocabulary,,Series,no_transformation,no_facet,help me,false
 box,string,optional,no_validation,true,no_vocabulary,,Box and Folder,no_transformation,no_facet,help me,false
 finding_aid,string,optional,no_validation,true,no_vocabulary,,Finding Aid,no_transformation,no_facet,help me,false
-access_rights,radio_button,optional,access_rights,false,access_rights,,Access Rights,no_transformation,no_facet,help me,false
+access_rights,radio_button,optional,access_rights,false,access_rights,public,Access Rights,no_transformation,no_facet,help me,false
 alternate_title,string,optional,no_validation,true,no_vocabulary,,Alternate Title,no_transformation,no_facet,help me,false
 scale,string,optional,no_validation,true,no_vocabulary,,Scale,no_transformation,no_facet,help me,false
 projection,string,optional,no_validation,true,no_vocabulary,,Projection,no_transformation,no_facet,help me,false

@@ -54,6 +54,8 @@ module DataDictionary
         Valkyrie::Types::Set.of(Valkyrie::Types::ID)
       elsif date?
         Valkyrie::Types::Set.of(Valkyrie::Types::Date)
+      elsif default_value.present?
+        Valkyrie::Types::Set.default([default_value])
       else
         Valkyrie::Types::Set.optional
       end
@@ -69,6 +71,8 @@ module DataDictionary
         Valkyrie::Types::Set.of(Valkyrie::Types::ID)
       elsif date?
         Valkyrie::Types::Set.of(Valkyrie::Types::Date)
+      elsif default_value.present?
+        Valkyrie::Types::Set.default([default_value]).meta(ordered: true)
       else
         Valkyrie::Types::Set.meta(ordered: true)
       end
