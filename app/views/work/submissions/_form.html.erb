@@ -1,4 +1,4 @@
-<%= javascript_include_tag '/parsley.min.js' %>
+<%= javascript_include_tag '/parsley.js' %>
 
 <%= form_for(work_form.model, url: work_form.form_path, id: 'form') do |form| %>
 
@@ -22,15 +22,15 @@
   </div>
 <% end %>
 
-
-<script href="parsley.remote.js"></script>
 <script>
-  $('#form').parsley();
-  $('#work_submission_title').parsley();
-  //debugger
-  window.Parsley.addAsyncValidator('mycustom', function (xhr) {
-    console.log(this.$element); // jQuery Object[ input[name="q"] ]
+    $( document ).ready(function() {
+        $('#work_submission_title').parsley();
+        $('#form').parsley();
 
-    return 404 === xhr.status;
-  }, '/validator');
+        window.Parsley.addAsyncValidator('mycustom', function (xhr) {
+            console.log(this.$element);
+
+            return 404 === xhr.status;
+        }, 'http://localhost:3000/validator');
+    });
 </script>

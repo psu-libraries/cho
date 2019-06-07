@@ -3,8 +3,8 @@
     <%= form.text_field field.label,
         field.options.merge(
           multiple: field.multiple?,
-          value: value,
-          data: { parsley_remote: nil, parsley_remote_validator: 'mycustom', parsley_trigger: 'change' }
+          value: 'foobar',
+          data: { parsley_remote: true, parsley_remote_validator: 'mycustom', parsley_trigger: 'change' }
         )
     %>
   <% end %>
