@@ -1,5 +1,11 @@
 <% field.values.each do |value| %>
   <%= content_tag :div, class: 'input-group ff-group' do %>
-    <%= form.text_field field.label, field.options.merge(multiple: field.multiple?, value: value) %>
+    <%= form.text_field field.label,
+        field.options.merge(
+          multiple: field.multiple?,
+          value: value,
+          data: { parsley_remote: nil, parsley_remote_validator: 'mycustom', parsley_trigger: 'change' }
+        )
+    %>
   <% end %>
 <% end %>

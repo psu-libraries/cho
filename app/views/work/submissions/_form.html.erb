@@ -1,4 +1,6 @@
-<%= form_for(work_form.model, url: work_form.form_path) do |form| %>
+<%= javascript_include_tag '/parsley.min.js' %>
+
+<%= form_for(work_form.model, url: work_form.form_path, id: 'form') do |form| %>
 
   <%= render 'shared/form_fields', resource: work_form, form: form %>
 
@@ -19,3 +21,16 @@
     <%= form.submit work_form.submit_text, class: 'btn btn-outline-secondary' %>
   </div>
 <% end %>
+
+
+<script href="parsley.remote.js"></script>
+<script>
+  $('#form').parsley();
+  $('#work_submission_title').parsley();
+  //debugger
+  window.Parsley.addAsyncValidator('mycustom', function (xhr) {
+    console.log(this.$element); // jQuery Object[ input[name="q"] ]
+
+    return 404 === xhr.status;
+  }, '/validator');
+</script>

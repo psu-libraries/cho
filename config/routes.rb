@@ -54,4 +54,6 @@ Rails.application.routes.draw do
   get '/batch/delete', to: 'batch/delete#index'
   post '/batch/delete', to: 'batch/delete#confirm'
   delete '/batch/delete', to: 'batch/delete#destroy'
+
+  get '/validator', to: 'validation/validator#index'
 end

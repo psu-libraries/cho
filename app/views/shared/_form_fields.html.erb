@@ -1,5 +1,5 @@
 <% content_for(:head) do %>
-  <%= stylesheet_pack_tag 'form_fields' %>
+  <%# stylesheet_pack_tag 'form_fields' %>
 <% end %>
 
 <%- resource.input_fields(form).each do |input_field| %>
@@ -15,4 +15,6 @@
   <%- end %>
 <%- end %>
 
-<%= javascript_pack_tag 'form_fields' %>
+
+<%# javascript_pack_tag 'form_fields' %>
+

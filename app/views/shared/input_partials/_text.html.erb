@@ -1,5 +1,9 @@
+
 <% field.values.each do |value| %>
+  <%= "hi mom!" %>
   <%= content_tag :div, class: 'input-group ff-group' do %>
-    <%= form.text_area field.label, field.options.merge(multiple: field.multiple?, value: value) %>
+    <%= form.text_area field.label,
+          field.options
+            .merge(multiple: field.multiple?, value: value, data: { parsley_trigger: "change" }) %>
   <% end %>
 <% end %>
