@@ -39,6 +39,6 @@
 <%= form_tag({ controller: 'csv', action: 'import' }, class: 'form-inline') do %>
   <%= hidden_field_tag(:file_name, @file_name) %>
   <%= hidden_field_tag(:update, @presenter.update?) %>
-  <%= submit_tag(t('cho.csv.work.dry_run.submit'), disabled: @presenter.invalid?) %>
+  <%= submit_tag(t('cho.csv.work.dry_run.submit'), class: 'btn btn-primary', disabled: @presenter.invalid?) %>
   <%= link_to t('cho.csv.work.dry_run.cancel'), :back, class: 'btn btn-link' %>
 <% end %>

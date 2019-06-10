@@ -1,8 +1,8 @@
 <%# Overriding Blacklight to render edit link %>
 
 <% if current_search_session %>
-  <div id="appliedParams" class="clearfix constraints-container ml-3">
-    <%= link_back_to_catalog(label: 'Back to Search Results', class: 'btn btn-outline-secondary') %>
+  <div id="appliedParams">
+    <%= link_back_to_catalog(label: 'Back to Search Results', class: 'btn btn-link') %>
     <%= render 'previous_next_doc' if @search_context %>
   </div>
 <% end %>
