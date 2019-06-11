@@ -26,6 +26,7 @@ module Csv
       return false unless valid_list?
 
       change_set_list.each do |change_set|
+        update_member_hashes(change_set)
         result = change_set_persister.validate_and_save(change_set: change_set, resource_params: {})
         if result.errors.blank?
           created << result
@@ -42,6 +43,17 @@ module Csv
         state = change_set_list.map(&:valid?).reduce(:'&')
         errors << 'Invalid items in list' unless state
         state
+      end
+
+      def update_member_hashes(change_set)
+        (change_set.try(:file_set_hashes) || []).map do |file_set_change_set|
+          result = change_set_persister.validate_and_save(change_set: file_set_change_set, resource_params: {})
+          if result.errors.blank?
+            created << result
+          else
+            errors << result
+          end
+        end
       end
 
       def change_set_persister
