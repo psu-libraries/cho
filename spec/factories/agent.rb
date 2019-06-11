@@ -2,7 +2,6 @@
 
 FactoryBot.define do
   factory :agent, aliases: [:secret_agent], class: Agent::Resource do
-    sequence(:id)
     given_name { 'John' }
     surname { 'Doe' }
 

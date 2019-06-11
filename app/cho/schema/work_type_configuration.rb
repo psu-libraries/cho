@@ -15,8 +15,8 @@ module Schema
 
       metadata_schema = Schema::Metadata.new(
         label: work_type,
-        core_fields: core_fields,
-        fields: schema_fields.map(&:id)
+        core_field_ids: core_fields,
+        field_ids: schema_fields.map(&:id)
       )
       find_or_save(metadata_schema)
     end

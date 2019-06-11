@@ -3,20 +3,8 @@
 module Work::WithUseType
   extend ActiveSupport::Concern
 
-  class UseTypes
-    def self.call(value)
-      raise Dry::Struct::Error, "#{value} is not a valid use type" unless valid?(value)
-
-      value
-    end
-
-    def self.valid?(value)
-      Repository::FileUse.uris.include?(value)
-    end
-  end
-
   included do
-    attribute :use, Valkyrie::Types::Set.of(UseTypes).default([Vocab::FileUse.PreservationMasterFile])
+    attribute :use, Valkyrie::Types::Set.of(Repository::Types::UseType).default([Vocab::FileUse.PreservationMasterFile])
   end
 
   Repository::FileUse.uris.each do |uri|

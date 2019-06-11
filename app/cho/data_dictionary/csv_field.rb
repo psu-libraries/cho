@@ -17,7 +17,7 @@ module DataDictionary
 
     # @return [String]
     def to_csv
-      values = model.attributes.slice(*attributes).values
+      values = attributes.map { |term| model.send(term) }
       ::CSV.generate_line(values)
     end
 

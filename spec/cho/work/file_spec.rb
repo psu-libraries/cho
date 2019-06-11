@@ -23,7 +23,7 @@ RSpec.describe Work::File do
   describe '#use' do
     context 'with an invalid use type' do
       it 'raises an error' do
-        expect { file.use = 'asdf' }.to raise_error(Dry::Struct::Error, 'asdf is not a valid use type')
+        expect { file.use = 'asdf' }.to raise_error(Dry::Types::CoercionError, 'asdf is not a valid use type')
       end
     end
   end
