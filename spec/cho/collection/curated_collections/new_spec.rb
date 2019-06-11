@@ -18,6 +18,7 @@ RSpec.describe Collection::Curated, type: :feature do
       expect(page).to have_content('Description of new collection')
       expect(page).to have_content('mediated')
       expect(page).to have_content(Repository::AccessControls::AccessLevel.psu)
+      expect(Collection::Curated.all.first.system_creator).to eq(current_user)
     end
   end
 
