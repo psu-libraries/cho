@@ -6,13 +6,14 @@ module Transaction
       class Work
         include Dry::Transaction::Operation
 
-        attr_reader :model
+        attr_reader :model, :current_user
 
         # @param [Work::SubmissionChangeSet] change_set
         def call(change_set)
           return Success(change_set) if change_set.try(:import_work).nil?
 
           @model = change_set.model
+          @current_user = change_set.current_user
           file_sets = saved_file_sets(change_set.import_work, file_set_hashes: change_set.file_set_hashes)
           change_set.member_ids = file_sets.map(&:id)
           Success(change_set)
@@ -48,10 +49,12 @@ module Transaction
                          ::Work::FileSet.new(
                            member_ids: files.map(&:id),
                            title: file_set.title,
-                           alternate_ids: file_set.id
+                           alternate_ids: file_set.id,
+                           system_creator: current_user&.login
                          )
                        else
                          file_set_change_set.member_ids = files.map(&:id)
+                         file_set_change_set.system_creator = current_user&.login
                          file_set_change_set.sync
                          file_set_change_set.resource
                        end

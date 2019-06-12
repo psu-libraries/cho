@@ -8,9 +8,9 @@ module Transaction
       class Csv
         include Dry::Transaction::Operation
 
-        def call(csv_dry_run:, file:, update:)
+        def call(csv_dry_run:, file:, update:, current_user: nil)
           dry_run = csv_dry_run.new(file, update: update)
-          importer = ::Csv::Importer.new(dry_run.results)
+          importer = ::Csv::Importer.new(change_set_list: dry_run.results, current_user: current_user)
           importer.run
           delete_bag(dry_run)
 

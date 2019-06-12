@@ -53,6 +53,7 @@ RSpec.describe Work::Submission, type: :feature do
         expect(page).to have_blacklight_field(:creator_tesim).with("Kringle, Christopher, #{role.label}")
       end
       expect(page).to have_selector('input[type=submit][value=Edit]')
+      expect(Work::Submission.all.first.system_creator).to eq(current_user)
     end
   end
 

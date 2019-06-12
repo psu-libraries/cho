@@ -17,7 +17,7 @@ RSpec.describe Csv::Importer do
   let(:change_set_list) { [Work::SubmissionChangeSet.new(Work::Submission.new(work_hash_1)),
                            Work::SubmissionChangeSet.new(Work::Submission.new(work_hash_2))] }
 
-  let(:importer) { described_class.new(change_set_list) }
+  let(:importer) { described_class.new(change_set_list: change_set_list) }
 
   it 'creates the works' do
     status = false
@@ -39,7 +39,7 @@ RSpec.describe Csv::Importer do
   context 'error during save' do
     let(:bad_persister) { ChangeSetPersister.new(metadata_adapter: bad_meta_adapter, storage_adapter: nil) }
     let(:bad_meta_adapter) { instance_double('Valkyrie::Persistence::Postgres::MetadataAdapter') }
-    let(:importer) { described_class.new(change_set_list, bad_persister) }
+    let(:importer) { described_class.new(change_set_list: change_set_list, change_set_persister: bad_persister) }
 
     before do
       allow(bad_meta_adapter)

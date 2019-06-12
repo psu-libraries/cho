@@ -99,8 +99,10 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
       Work::Submission.all.each do |work|
         expect(work.batch_id).to eq('batch1_2018-07-12')
         expect(work.member_ids.count).to eq(1)
+        expect(work.system_creator).to eq(current_user)
         file_set = Work::FileSet.find(Valkyrie::ID.new(work.member_ids.first))
         expect(file_set.member_ids.count).to eq(1)
+        expect(file_set.system_creator).to eq(current_user)
         file = Work::File.find(Valkyrie::ID.new(file_set.member_ids.first))
         expect(file_set.title).to contain_exactly(file.original_filename)
         expect(file.original_filename).to eq("#{work.alternate_ids.first}_preservation.tif")
@@ -182,6 +184,7 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
       # Verify each work has a file set and a file
       imported_work = Work::Submission.all.first
       expect(imported_work.title).to eq(['My Work1'])
+      expect(imported_work.system_creator).to eq(current_user)
       file_sets = imported_work.member_ids.map do |id|
         Work::FileSet.find(Valkyrie::ID.new(id))
       end
@@ -196,6 +199,7 @@ RSpec.describe 'Preview of CSV Import', type: :feature do
         ['My Work1_00002_01'],
         ['My Work1_00002_02']
       )
+      expect(file_sets.map(&:system_creator).uniq).to contain_exactly(current_user)
       filenames = file_sets.map do |file_set|
         file_set.member_ids.map { |id| Work::File.find(Valkyrie::ID.new(id)).original_filename }
       end

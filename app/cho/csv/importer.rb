@@ -4,7 +4,7 @@ module Csv
   # Runs the import process assuming each item in the list is valid
   #  Each item in the list is a change set that can be persisted
   #
-  # importer = Csv::Importer.new(change_set_list)
+  # importer = Csv::Importer.new(change_set_list: change_set_list)
   # if importer.run
   #   puts "The import was successful"
   # else
@@ -13,11 +13,12 @@ module Csv
   # end
   #
   class Importer
-    attr_reader :change_set_list, :errors, :created
+    attr_reader :change_set_list, :errors, :created, :current_user
 
-    def initialize(change_set_list, change_set_persister = nil)
+    def initialize(change_set_list: change_set_list, change_set_persister: nil, current_user: nil)
       @change_set_list = change_set_list
       @change_set_persister = change_set_persister
+      @current_user = current_user
       @errors = []
       @created = []
     end
@@ -27,7 +28,7 @@ module Csv
 
       change_set_list.each do |change_set|
         update_member_hashes(change_set)
-        result = change_set_persister.validate_and_save(change_set: change_set, resource_params: {})
+        result = change_set_persister.validate_and_save(change_set: change_set, resource_params: resource_params)
         if result.errors.blank?
           created << result
         else
@@ -54,6 +55,10 @@ module Csv
             errors << result
           end
         end
+      end
+
+      def resource_params
+        { current_user: current_user }
       end
 
       def change_set_persister

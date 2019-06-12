@@ -51,7 +51,8 @@ module Csv::ControllerBehavior
       @import_csv ||= Transaction::Operations::Import::Csv.new.call(
         csv_dry_run: csv_dry_run,
         file: params[:file_name],
-        update: update?
+        update: update?,
+        current_user: current_user
       )
     end
 
