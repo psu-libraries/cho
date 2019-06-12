@@ -11,7 +11,8 @@ module Repository
         { 'virtual_host' => { required: true } },
         { 'network_ingest_directory' => { required: true, directory: { writable: false } } },
         { 'extraction_directory' => { required: true, directory: { writable: true } } },
-        { 'storage_directory' => { required: true, directory: { writable: true } } }
+        { 'storage_directory' => { required: true, directory: { writable: true } } },
+        { 'piwik_id' => { required: true } }
       ]
     }.freeze
 

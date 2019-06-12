@@ -8,6 +8,7 @@ development:
   network_ingest_directory: 'tmp/ingest-development'
   extraction_directory: 'tmp/extract-development'
   storage_directory: 'public/files'
+  piwik_id: '2'
 test:
   service_name: "example-test"
   service_instance: "example-test"
@@ -15,6 +16,7 @@ test:
   network_ingest_directory: 'tmp/ingest-test'
   extraction_directory: 'tmp/extract-test'
   storage_directory: 'public/files'
+  piwik_id: '2'
 production:
   service_name: "example-test"
   service_instance: "example-test"
@@ -22,3 +24,4 @@ production:
   network_ingest_directory: 'tmp/ingest-test'
   extraction_directory: 'tmp/extract-test'
   storage_directory: 'public/files'
+  piwik_id: '2'
