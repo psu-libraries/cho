@@ -37,7 +37,7 @@ module Indexing
       end
 
       def edtf_date?
-        field.date? && field.validation == 'edtf_date'
+        field.validation == 'edtf_date'
       end
   end
 end

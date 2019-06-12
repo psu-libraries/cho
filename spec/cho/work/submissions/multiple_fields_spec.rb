@@ -87,7 +87,10 @@ RSpec.describe 'Works with multiple fields', with_named_js: :multiple_fields, ty
         content: "id-#{attributes1[:alternate_ids]} and id-#{attributes2[:alternate_ids]}"
       )
       verify_multiple(:generic_field)
-      verify_multiple(:created)
+      verify_multiple(
+        :created,
+        content: [attributes1, attributes2].map { |a| a[:created].humanize }.join(', ')
+      )
       verify_multiple(
         :creator,
         content:

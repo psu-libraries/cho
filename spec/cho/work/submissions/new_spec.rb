@@ -13,6 +13,7 @@ RSpec.describe Work::Submission, type: :feature do
   context 'when filling in all the fields' do
     let!(:archival_collection) { create(:archival_collection, title: 'Sample Collection') }
     let!(:agent) { create(:agent, given_name: 'Christopher', surname: 'Kringle') }
+    let(:role) { MockRDF.relators.first }
 
     it 'creates a new work object without a file' do
       visit(root_path)
@@ -27,31 +28,29 @@ RSpec.describe Work::Submission, type: :feature do
       fill_in('work_submission[generic_field][]', with: 'Sample generic field value')
       fill_in('work_submission[created][]', with: '2018-10-22')
       fill_in('work_submission[home_collection_id]', with: archival_collection.id)
-      fill_in('work_submission[creator][][role]', with: MockRDF.relators.first)
+      fill_in('work_submission[creator][][role]', with: role)
       fill_in('work_submission[creator][][agent]', with: agent.id)
       click_button('Create Resource')
       expect(page).to have_selector('h1', text: 'New Title')
       within('#document') do
         expect(page).to have_blacklight_label(:title_tesim)
-        expect(page).to have_blacklight_field(:title_tesim, 'New Title')
+        expect(page).to have_blacklight_field(:title_tesim).with('New Title')
         expect(page).to have_blacklight_label(:subtitle_tesim)
-        expect(page).to have_blacklight_field(:subtitle_tesim, 'New subtitle')
+        expect(page).to have_blacklight_field(:subtitle_tesim).with('New subtitle')
         expect(page).to have_blacklight_label(:description_tesim)
-        expect(page).to have_blacklight_field(:description_tesim, 'Description of new generic work')
+        expect(page).to have_blacklight_field(:description_tesim).with('Description of new generic work')
         expect(page).to have_blacklight_label(:created_tesim)
-        expect(page).to have_blacklight_field(:created_tesim, 'datetime-2018-10-22T00:00:00.000Z')
+        expect(page).to have_blacklight_field(:created_tesim).with('October 22, 2018')
         expect(page).to have_blacklight_label(:generic_field_tesim)
-        expect(page).to have_blacklight_field(:generic_field_tesim, 'Sample generic field value')
+        expect(page).to have_blacklight_field(:generic_field_tesim).with('Sample generic field value')
         expect(page).to have_blacklight_label(:alternate_ids_tesim)
-        expect(page).to have_blacklight_field(:alternate_ids_tesim, 'id-asdf_1234')
+        expect(page).to have_blacklight_field(:alternate_ids_tesim).with('id-asdf_1234')
         expect(page).to have_blacklight_label(:work_type_ssim)
-        expect(page).to have_blacklight_field(:work_type_ssim, 'Generic')
+        expect(page).to have_blacklight_field(:work_type_ssim).with('Generic')
         expect(page).to have_blacklight_label(:home_collection_id_tesim)
-        expect(page).to have_blacklight_field(:home_collection_id_tesim, 'Sample Collection')
-        expect(page).to have_blacklight_field(:home_collection_id_tesim, archival_collection.id)
         expect(page).to have_link('Sample Collection')
         expect(page).to have_blacklight_label(:creator_tesim)
-        expect(page).to have_blacklight_field(:creator_tesim, 'Christopher Kringle (climbing)')
+        expect(page).to have_blacklight_field(:creator_tesim).with("Kringle, Christopher, #{role.label}")
       end
       expect(page).to have_selector('input[type=submit][value=Edit]')
     end
