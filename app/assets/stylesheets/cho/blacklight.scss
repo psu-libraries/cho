@@ -20,12 +20,16 @@
 // addresses insufficient color contrast
 .dl-invert dt { color: $gray-middle; }
 
-// Button visited link color
-.btn-danger:visited,
-.btn-primary:visited { color: $primary-white; }
 
 // Button background color
 .btn-primary { background-color: $btn-primary-color; }
+
+// Button hover color
+.btn-primary:hover { background-color: $psul-dark-blue; }
+
+// Button visited link color
+.btn-danger:visited,
+.btn-primary:visited { color: $primary-white; }
 
 // Adds the colored focus around the Bootstrap dropdown
 .dropdown-toggle:focus {
