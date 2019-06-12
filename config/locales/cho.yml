@@ -73,6 +73,8 @@ en:
         download_representative_link: 'Download Work'
         download_text_link: 'Download Plain Text'
     collection:
+      metadata:
+        title: "Collection Information"
       members:
         title: "Title"
         date_created: "Date Created"
