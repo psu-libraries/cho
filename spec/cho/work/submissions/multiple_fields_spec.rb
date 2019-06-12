@@ -54,13 +54,6 @@ RSpec.describe 'Works with multiple fields', with_named_js: :multiple_fields, ty
       expect(page).to have_selector("dd.blacklight-#{field}_tesim", text: content)
     end
 
-    # @note guards against scenarios in which the dates in each attribute are the same.
-    def date_display
-      [attributes1[:created], attributes2[:created]].uniq.map do |date|
-        "datetime-#{date.strftime('%Y-%m-%d')}T00:00:00.000Z"
-      end.join(' and ')
-    end
-
     it 'updates each field with the new information' do
       visit(root_path)
       click_link('Create Resource')
@@ -94,7 +87,7 @@ RSpec.describe 'Works with multiple fields', with_named_js: :multiple_fields, ty
         content: "id-#{attributes1[:alternate_ids]} and id-#{attributes2[:alternate_ids]}"
       )
       verify_multiple(:generic_field)
-      verify_multiple(:created, content: date_display)
+      verify_multiple(:created)
       verify_multiple(
         :creator,
         content:
