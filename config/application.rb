@@ -27,5 +27,10 @@ module Cho
     config.storage_directory = Pathname.new(ENV['storage_directory']).expand_path
     config.network_ingest_directory = Pathname.new(ENV['network_ingest_directory']).expand_path
     config.extraction_directory = Pathname.new(ENV['extraction_directory']).expand_path
+
+    # Inject new behaviors into existing classes without having to override the entire class itself.
+    config.to_prepare do
+      Valkyrie::Persistence::Shared::JSONValueMapper::DateValue.singleton_class.send(:prepend, DateTimeJSONValue)
+    end
   end
 end
