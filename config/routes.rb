@@ -30,7 +30,12 @@ Rails.application.routes.draw do
                                controller: 'work/submissions'
   resources :work_file_sets, as: 'file_sets', path: '/file_sets', only: [:edit, :update],
                              controller: 'work/file_sets'
-  resources :archival_collections, except: [:show, :index, :destroy], controller: 'collection/archival_collections'
+  resources :archival_collections, except: [:show, :index, :destroy], controller: 'collection/archival_collections' do
+    resource :resources, only: [:index], as: 'resources', path: 'resources', controller: 'collection/resources' do
+      concerns :searchable
+    end
+  end
+
   resources :library_collections, except: [:show, :index, :destroy], controller: 'collection/library_collections'
   resources :curated_collections, except: [:show, :index, :destroy], controller: 'collection/curated_collections'
   resources :data_dictionary_fields, controller: 'data_dictionary/fields'

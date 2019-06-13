@@ -79,6 +79,15 @@ en:
         title: "Title"
         date_created: "Date Created"
         heading: "Resources in this Collection"
+      search:
+        form:
+          search_field: "Collection search options"
+          search: "Search within collection"
+          submit: "Search Collection"
+      heading:
+        finding_aid: "Finding Aid"
+        collection_home: "Collection Home"
+        browse:  "Browse"
     archival_collection:
       edit:
         delete_link: "Delete Archival Collection"
