@@ -36,7 +36,9 @@ RSpec.describe Collection::Archival, type: :feature do
     it_behaves_like 'a restricted resource', with_user: :restricted_user
   end
 
-  it_behaves_like 'a collection with works'
+  # it_behaves_like 'a collection with works'
+
+  it_behaves_like 'a collection with a landing page'
 
   it_behaves_like 'a collection editable only by admins'
 end
