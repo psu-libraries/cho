@@ -1,0 +1,22 @@
+development:
+  host: <% ENV['REDIS_HOST'] || "localhost" %>
+  port: <%= ENV['REDIS_PORT' || "6379" %>
+  password: <%= ENV['REDIS_PASSWORD'] %>
+test:
+  host: <% ENV['REDIS_HOST'] || "localhost" %>
+  port: <%= ENV['REDIS_PORT' || "6379" %>
+  password: <%= ENV['REDIS_PASSWORD'] %>
+integration:
+  host: <% ENV['REDIS_HOST'] || "localhost" %>
+  port: <%= ENV['REDIS_PORT' || "6379" %>
+  password: <%= ENV['REDIS_PASSWORD'] %>
+production:
+  host: <% ENV['REDIS_HOST'] || "localhost" %>
+  port: <%= ENV['REDIS_PORT' || "6379" %>
+  timeout: <%= ENV['REDIS_TIMEOUT'] || "1000" %>
+  password: <%= ENV['REDIS_PASSWORD'] %>
+resque:
+  host: <% ENV['REDIS_HOST'] || "localhost" %>
+  port: <%= ENV['REDIS_PORT' || "6379" %>
+  timeout: <%= ENV['REDIS_TIMEOUT'] || "1000" %>
+  password: <%= ENV['REDIS_PASSWORD'] %>
