@@ -20,8 +20,8 @@
 # Ignore Byebug command history file.
 .byebug_history
 .rubocop-http*
-config/database.yml
-config/hydra-ldap.yml
+#config/database.yml
+#config/hydra-ldap.yml
 public/files
 public/assets
 
