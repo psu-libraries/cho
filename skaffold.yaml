@@ -1,0 +1,28 @@
+
+apiVersion: skaffold/v1beta11
+kind: Config
+build:
+  artifacts:
+  - image: harbor.dsrd.libraries.psu.edu/library/cho
+    sync:
+      manual:
+      - src: '**'
+        dest: /cho/
+    docker:
+      buildArgs:
+        RAILS_ENV: development
+  local:
+    push: false
+deploy:
+  helm:
+    releases:
+    - name: cho-local
+      chartPath: k8s/chart
+      setValues:
+        redis.password: cho
+        postgresql.db.username: cho
+        postgresql.db.name: cho
+        postgresql.db.password: cho
+        rails.environment: development
+      values:
+        imageName: harbor.dsrd.libraries.psu.edu/library/cho
