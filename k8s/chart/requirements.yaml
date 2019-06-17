@@ -1,0 +1,13 @@
+dependencies:
+- name: solr
+  version: 0.1.1 
+  repository: file://helm-charts/solr
+  condition: solr.enabled
+- name: postgresql
+  version: 0.1.1
+  repository: file://helm-charts/postgresql
+  condition: postgresql.enabled
+- name: redis
+  version: 0.1.2
+  repository: file://helm-charts/redis
+  condition: redis.enabled

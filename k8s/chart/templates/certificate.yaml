@@ -1,0 +1,29 @@
+{{- if .Values.certmanager.enabled }}
+---
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: {{ .Values.certmanager.commonName | default (index .Values.ingress.hosts 0).host }}
+spec:
+  secretName: {{ .Values.certmanager.secretName | default (index .Values.ingress.tls 0).secretName }}
+  issuerRef:
+    {{- if eq .Values.certmanager.issuer.kind "ClusterIssuer" }}
+    kind: ClusterIssuer
+    {{- end }}
+    name: {{ .Values.certmanager.issuer.name }}
+  commonName: {{ .Values.certmanager.commonName | default (index .Values.ingress.hosts 0).host }}
+  acme:
+    config:
+    {{- if eq .Values.certmanager.challenge.type "http01" }}
+    - http01:
+    {{- else if eq .Values.certmanager.challenge.type "dns01" }}
+    - dns01:
+        provider: {{ .Values.certmanager.challenge.provider }}
+    {{- end }}
+      domains:
+      {{- range .Values.certmanager.dnsNames }}
+      - {{ .}}
+      {{- end }}
+      - {{ .Values.certmanager.commonName | default (index .Values.ingress.hosts 0).host }}
+
+{{- end}}

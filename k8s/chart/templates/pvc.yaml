@@ -1,0 +1,18 @@
+{{- if .Values.persistence.enabled -}}
+{{- $fullName := include "chart.fullname" . -}}
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ $fullName }}-data
+spec:
+  accessModes:
+  {{- range .Values.persistence.accessModes }}
+  - {{ . }}
+  {{- end }}
+  resources:
+    {{- .Values.persistence.resources | toYaml | nindent 4 -}}
+  {{- if .Values.persistence.storageClassName }}
+  storageClassName: {{ .Values.persistence.storageClassName }}
+  {{- end }}
+{{- end }}

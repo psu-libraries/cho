@@ -1,0 +1,190 @@
+{{- $fullName := include "chart.fullname" . -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "chart.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "chart.name" . }}
+    helm.sh/chart: {{ include "chart.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "chart.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "chart.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      volumes:
+      - name: shared-data
+        emptyDir: {}
+      - name: vault-token
+        emptyDir:
+          medium: Memory
+      - name: vault-config
+        configMap:
+          name: {{ $fullName }}-vault
+          items:
+          - key: vault-agent-config.hcl
+            path: vault-agent-config.hcl
+      {{- if .Values.webaccess.enabled }}
+      - name: webaccess-config
+        configMap:
+          name: {{ $fullName }}-webaccess
+      - name: tls
+        secret:
+          {{- range .Values.ingress.tls }}
+          secretName: {{ .secretName }}
+          {{- end }}
+      {{- end }}
+      - name: cho-data
+      {{- if .Values.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ $fullName }}-data
+      {{- else }}
+        emptyDir: {}
+      {{- end }}
+      {{- if .Values.image.imagePullSecrets}}
+      imagePullSecrets:
+      - name: {{ .Values.image.imagePullSecrets }}
+      {{- end }}
+      serviceAccountName: {{ .Release.Name }}
+      {{- if .Values.global.vault.enabled }}
+      initContainers:
+      - name: vault-agent-auth
+        image: vault
+        volumeMounts:
+        - name: vault-config
+          mountPath: /etc/vault
+        - name: vault-token
+          mountPath: /home/vault
+        env:
+        - name: VAULT_ADDR
+          value: {{ .Values.global.vault.address }}
+        args: [
+          "agent",
+          "-config=/etc/vault/vault-agent-config.hcl",
+        ]
+      {{- end }}
+      containers:
+      {{- if .Values.webaccess.enabled }}
+        - name: {{ .Chart.Name }}-webaccess
+          image: {{ .Values.webaccess.image }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          volumeMounts:
+            - name: webaccess-config
+              mountPath: /etc/apache2/sites-enabled/vhost.conf
+              subPath: vhost.conf
+            - name: tls
+              mountPath: /etc/ssl/certs/cert.crt
+              subPath: tls.crt
+            - name: tls
+              mountPath: /etc/ssl/private/key.key
+              subPath: tls.key
+          ports:
+            - name: http-wa
+              containerPort: 80
+              protocol: TCP
+            - name: https-wa
+              containerPort: 443
+              protocol: TCP
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          resources:
+            limits:
+              cpu: 100m
+              memory: 2048Mi
+            requests:
+              cpu: 100m
+              memory: 1024Mi
+      {{- end }}
+        - name: {{ .Chart.Name }}
+          image: "{{- if .Values.imageName }}{{ .Values.imageName }}{{- else}}{{ .Values.image.repository }}:{{ .Values.image.tag }}{{- end}}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+          {{- if .Values.solr.enabled }}
+          - name: SOLR_CORE
+            value: {{ .Values.solr.core }}
+          - name: SOLR_HOST
+            value: {{ $fullName }}-solr
+          {{- end }}
+          {{- if .Values.global.vault.enabled }}
+          - name: VAULT_KEY_PATH
+            value: " {{ .Values.global.vault.path }}"
+          - name: VAULT_ADDR
+            value: "{{ .Values.global.vault.address }}"
+          - name: VAULT_TOKEN
+            value: /etc/token/.vault-token
+          {{- end }}
+          - name: RAILS_ENV
+            value: {{ .Values.rails.environment }}
+          - name: RAILS_LOG_TO_STDOUT
+            value: "true"
+          {{- if .Values.postgresql.enabled }}
+          - name: POSTGRES_HOST
+            value: {{ $fullName }}-postgresql
+          {{- if .Values.postgresql.postgresqlUsername }}
+          - name: POSTGRES_USER
+            value: {{ .Values.postgresql.postgresqlUsername }}
+          {{- end}}
+          {{- if .Values.postgresql.postgresqlDatabase }}
+          - name: POSTGRES_DATABASE
+            value: {{ .Values.postgresql.postgresqlDatabase }}
+          {{- end}}
+          {{- if .Values.postgresql.postgresqlPassword }}
+          - name: POSTGRES_PASSWORD
+            value: {{ .Values.postgresql.postgresqlPassword }}
+          {{- end }}
+          {{- end }}
+          {{- if .Values.redis.enabled }}
+          {{- if .Values.redis.password }}
+          - name: REDIS_PASSWORD
+            value: {{ .Values.redis.password }}
+          {{- end }}
+          - name: REDIS_HOST
+            value: {{ $fullName }}-redis-master
+          {{- end }}
+          volumeMounts:
+            - name: shared-data
+              mountPath: /secrets
+            - name: vault-token
+              mountPath: /etc/token
+            - name: cho-data
+              mountPath: /cho/data
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          # livenessProbe:
+          #   httpGet:
+          #     path: /healthcheck/all.json
+          #     port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /healthcheck
+          #     port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

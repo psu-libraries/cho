@@ -1,0 +1,96 @@
+apiVersion: apps/v1beta2
+kind: StatefulSet
+metadata:
+  name: {{ include "postgresql.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "postgresql.name" . }}
+    helm.sh/chart: {{ include "postgresql.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  {{- if .Values.persistence.enabled }}
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+      labels:
+        app.kubernetes.io/name: {{ include "postgresql.name" . }}
+        app.kubernetes.io/managed-by: {{ .Release.Service }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      accessModes:
+      {{- range .Values.persistence.accessModes }}
+      - {{ . | quote }}
+      {{- end }}
+      resources:
+        requests:
+          storage: {{ .Values.persistence.size | quote }}
+    {{- if .Values.persistence.storageClass }}
+    {{- if (eq "-" .Values.persistence.storageClass) }}
+      # storageClassName: ""
+    {{- else }}
+      storageClassName: {{ .Values.persistence.storageClass | quote }}
+    {{- end }}
+    {{- end }}
+  {{- end }}
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "postgresql.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "postgresql.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.persistence.enabled }}
+          volumeMounts:
+          - name: data
+            mountPath: /var/lib/postgresql/data
+          {{- end }}
+          env:
+          {{- if .Values.db.password }}
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: postgres-password
+                name: {{ include "postgresql.fullname" . }}
+          {{- end }}
+          {{- if .Values.db.username }}
+          - name: POSTGRES_USER
+            value: {{ .Values.db.username }}
+          {{- end }}
+          {{- if .Values.db.name }}
+          - name: POSTGRES_DB
+            value: {{ .Values.db.name }}
+          {{- end }}
+          ports:
+            - name: postgres
+              containerPort: 5432
+              protocol: TCP
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

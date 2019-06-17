@@ -1,0 +1,25 @@
+{{- $fullName := include "chart.fullname" . -}}
+---
+apiVersion: v1
+data:
+  vault-agent-config.hcl: |-
+    exit_after_auth = true
+    pid_file = "/home/vault/pidfile"
+
+    auto_auth {
+        method "kubernetes" {
+            mount_path = "{{ .Values.global.vault.mountPath }}"
+            config = {
+                role = "{{ .Values.global.vault.role }}"
+            }
+        }
+
+        sink "file" {
+            config = {
+                path = "/home/vault/.vault-token"
+            }
+        }
+    }
+kind: ConfigMap
+metadata:
+  name: {{ $fullName }}-vault

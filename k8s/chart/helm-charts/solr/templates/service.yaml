@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "solr.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "solr.name" . }}
+    helm.sh/chart: {{ include "solr.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: solr
+      protocol: TCP
+      name: solr
+  selector:
+    app.kubernetes.io/name: {{ include "solr.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}

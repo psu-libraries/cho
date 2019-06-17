@@ -1,0 +1,12 @@
+dependencies:
+- name: solr
+  repository: file://helm-charts/solr
+  version: 0.1.1
+- name: postgresql
+  repository: file://helm-charts/postgresql
+  version: 0.1.1
+- name: redis
+  repository: file://helm-charts/redis
+  version: 0.1.1
+digest: sha256:1f7bbb8eb8f9139ae37a8d1e33de656a20b5ccaf2639af3594864a4149f80f45
+generated: 2019-06-17T15:57:34.139932-04:00

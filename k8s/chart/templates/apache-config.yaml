@@ -1,0 +1,118 @@
+{{- $fullName := include "chart.fullname" . -}}
+{{- if .Values.webaccess.enabled }}
+---
+apiVersion: v1
+data:
+ vhost.conf: |-
+    <VirtualHost _default_:443>
+
+    ServerAdmin webmaster@localhost
+    CosignProtected Off
+    CosignHostname connect.webaccess.psu.edu
+    CosignPort	6664
+    CosignRedirect https://webaccess.psu.edu/
+    CosignPostErrorRedirect https://webaccess.psu.edu/post_error.html
+    CosignValidReference              ^https?:\/\/.*\.psu\.edu(\/.*)?
+    CosignValidationErrorRedirect      https://webaccess.psu.edu/validation_error.html
+    CosignFilterHashLength 2
+    CosignService {{ .Values.webaccess.cosignService | default (index .Values.ingress.hosts 0).host }}
+    CosignCrypto /etc/ssl/private/key.key /etc/ssl/certs/cert.crt /etc/apache2/cosign-ca/InCommonSHA2Chain.pem
+
+    LogFormat "{ \
+    \"@timestamp\":\"%{%FT%T%z}t\", \
+    \"client_ip\":\"%a\", \
+    \"client_port\":\"%{remote}p\", \
+    \"server_ip\":\"%A\", \
+    \"X-Forwarded-For\":\"%{X-Forwarded-For}i\", \
+    \"user\":\"%u\", \
+    \"REMOTE_USER\":\"%{REMOTE_USER}i\", \
+    \"JSESSIONID\":\"%{JSESSIONID}C\", \
+    \"pid\":\"%p\", \
+    \"protocol\":\"%H\", \
+    \"http_method\":\"%m\", \
+    \"vhost\":\"%{Host}i\", \
+    \"service_port\":\"%p\", \
+    \"path\":\"%U\", \
+    \"query_string\":\"%q\", \
+    \"referer\":\"%{Referer}i\", \
+    \"user_agent\":\"%{User-agent}i\", \
+    \"response_code\":\"%>s\", \
+    \"response_location\":\"%{Location}o\", \
+    \"Content-Type\":\"%{Content-Type}o\", \
+    \"bytes_in\":\"%I\", \
+    \"bytes_out\":\"%O\", \
+    \"keepalive\":\"%X\", \
+    \"duration_micros\":\"%D\" \
+    }" json
+
+    RequestHeader set X-Forwarded-Proto "https"
+
+    <LocationMatch / >
+        CosignProtected On
+        CosignAllowPublicAccess Off
+        AuthType Cosign
+
+        RequestHeader set REMOTE_REALM "%{REMOTE_REALM}e"
+        Header add REMOTE_USER "%{REMOTE_USER}s"
+        RequestHeader set REMOTE_USER "%{REMOTE_USER}s"
+        RequestHeader set HTTP_REMOTE_USER "%{REMOTE_USER}s"
+
+        RequestHeader unset X-Forwarded-User
+        RequestHeader unset X-Forwarded-Realm
+
+        RequestHeader set X-Forwarded-User "%{REMOTE_USER}s"
+        RequestHeader set X-Forwarded-Realm "%{REMOTE_REALM}e"
+    </LocationMatch>
+
+    ProxyPass       /cosign/valid !
+
+    ProxyPreserveHost On
+
+    ProxyPass / http://localhost:3000/
+    ProxyPassReverse / http://localhost:3000/
+
+    <LocationMatch "/cosign">
+        CosignProtected On
+        CosignAllowPublicAccess Off
+        AuthType Cosign
+    </LocationMatch>
+
+    <Location /cosign/valid>
+        SetHandler	cosign
+        CosignProtected     Off
+        Allow from all
+        Satisfy any
+    </Location>
+
+    <LocationMatch / >
+        CosignProtected On
+        CosignAllowPublicAccess Off
+        AuthType Cosign
+        Require valid-user
+    </LocationMatch>
+
+    DocumentRoot /var/www/html
+
+    ErrorLog /proc/self/fd/1
+    CustomLog /proc/self/fd/1 json
+
+    SSLEngine on
+
+    SSLCertificateFile	/etc/ssl/certs/cert.crt
+    SSLCertificateKeyFile /etc/ssl/private/key.key
+
+    SSLCertificateChainFile /etc/apache2/cosign-ca/InCommonSHA2Chain.pem
+
+    #   CertificatertData +StrictRequire
+    <FilesMatch "\.(cgi|shtml|phtml|php)$">
+        SSLOptions +StdEnvVars
+    </FilesMatch>
+    <Directory /usr/lib/cgi-bin>
+        SSLOptions +StdEnvVars
+    </Directory>
+
+    </VirtualHost>
+kind: ConfigMap
+metadata:
+  name: {{ $fullName }}-webaccess
+{{- end }}
