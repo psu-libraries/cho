@@ -13,7 +13,7 @@ RSpec.describe Collection::Library, type: :feature do
       expect(page).to have_content('Sample library collection')
       expect(page).to have_content('default')
       expect(page).to have_content(Repository::AccessControls::AccessLevel.public)
-      click_button('Edit')
+      click_link('Edit')
       expect(page).to have_field('library_collection[title]', with: 'Library Collection')
       expect(page).not_to have_link('Back')
     end
@@ -35,8 +35,6 @@ RSpec.describe Collection::Library, type: :feature do
 
     it_behaves_like 'a restricted resource', with_user: :restricted_user
   end
-
-  # it_behaves_like 'a collection with works'
 
   it_behaves_like 'a collection editable only by admins'
 end

@@ -30,6 +30,12 @@ RSpec/ContextWording:
   Exclude:
     - 'spec/**/*'
 
+# This might get fixed in https://github.com/rubocop-hq/rubocop-rspec/issues/759
+RSpec/ExpectActual:
+  Exclude:
+    - 'spec/routing/**/*'
+    - 'spec/**/*/*routing_spec.rb'
+
 Metrics/LineLength:
   Exclude:
     - 'config/initializers/devise.rb'

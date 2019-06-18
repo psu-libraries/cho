@@ -48,7 +48,7 @@ RSpec.describe Work::Submission, type: :feature do
       )
       expect(page).to have_selector('h2', text: 'Parts')
       expect(page).to have_content('hello_world.txt')
-      click_button('Edit')
+      click_link('Edit')
       expect(page).to have_field('work_submission[title]', with: 'An editable file')
       expect(page).not_to have_select('work_submission[work_type]', with_selected: 'Generic')
     end

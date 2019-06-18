@@ -5,5 +5,10 @@
       <%= render '/collection/nav' %>
       <%= render '/work/submissions/nav' %>
     <% end %>
+    <% if @document.present? && can?(:edit, @document) && params[:action] == 'show' %>
+      <li>
+        <%= link_to(t('cho.catalog.edit'), edit_cho_resource_path, method: 'get', class: 'nav-link text-white') %>
+      </li>
+    <% end %>
   </ul>
 </div>

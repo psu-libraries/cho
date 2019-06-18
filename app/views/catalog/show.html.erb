@@ -8,22 +8,18 @@
 <% end %>
 
 <%# Use Bootstrap columns to position the thumbnail on the left and the content partials on the right %>
-<div class="container mt-4">
+<div class="container-fluid mt-4">
   <div class="row">
     <% if presenter(@document).thumbnail.exists? %>
       <div class="col-xs-12 col-sm-12 col-md-4">
         <%= render 'thumbnail', document: @document, document_counter: 0 %>
-        <%= render 'document_edit_link' %>
       </div>
       <div class="col-xs-12 col-sm-12 col-md-7">
         <%= render_document_main_content_partial %>
       </div>
     <% else %>
-      <div class="col-xs-12 col-sm-11">
+      <div class="col-xs-12">
         <%= render_document_main_content_partial %>
-      </div>
-      <div class="col-xs-12 col-sm-1">
-        <%= render 'document_edit_link' %>
       </div>
     <% end %>
   </div>

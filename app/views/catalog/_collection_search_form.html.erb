@@ -1,0 +1,23 @@
+<% form_id = params.fetch(:archival_collection_id, nil) || params[:id] %>
+<%= form_tag search_archival_collection_resources_url(form_id), method: :get, class: 'search-query-form', role: 'search' do %>
+  <%= render_hash_as_hidden_fields(search_state.params_for_search.except(:q, :search_field, :qt, :page, :utf8)) %>
+
+  <label for="collection_q"><%= t('cho.collection.search.form.search') %></label>
+
+  <div class="input-group">
+    <label for="collection_search_field" class="sr-only"><%= t('cho.collection.search.form.search_field') %></label>
+    <%= select_tag(:search_field,
+                   options_for_select(search_fields, h(params[:search_field])),
+                   id: 'collection_search_field',
+                   class: 'custom-select search-field') %>
+
+    <%= text_field_tag :q, params[:q], class: 'search-q q form-control', id: 'collection_q' %>
+
+    <span class="input-group-append">
+      <button type="submit" class="btn btn-primary search-btn" id="search">
+        <span class="submit-search-text"><%= t('cho.collection.search.form.submit') %></span>
+        <%= blacklight_icon :search %>
+      </button>
+    </span>
+  </div>
+<% end %>
