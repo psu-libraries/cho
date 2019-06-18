@@ -48,6 +48,7 @@ Metrics/BlockLength:
     - 'lib/tasks/**/*'
     - 'config/initializers/valkyrie.rb'
     - 'app/blacklight/catalog_controller.rb'
+    - 'config/routes.rb'
 
 # This is due to a bug in Rubocop. A future version of Niftany, which will include an updated
 # version of Rubocop, should fix this.

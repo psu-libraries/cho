@@ -11,5 +11,14 @@ RSpec.describe Collection::ResourcesController, type: :routing do
         archival_collection_id: '1'
       )
     end
+
+    it 'routes to #show' do
+      expect(get: '/archival_collections/1/resources/2').to route_to(
+        controller: 'collection/resources',
+        action: 'show',
+        archival_collection_id: '1',
+        id: '2'
+      )
+    end
   end
 end
