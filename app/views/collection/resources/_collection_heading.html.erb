@@ -1,7 +1,17 @@
-<h2><%= presenter.title_data_dictionary_field.first %></h2>
-
-<%= image_tag collection_representative_image_path(presenter) %>
-
-<%= link_to t('cho.collection.heading.collection_home'), polymorphic_path([:solr_document], id: params[:archival_collection_id]) %>
-<%= link_to t('cho.collection.heading.finding_aid'), root_path %>
-<%= render partial: 'collection_search_form' %>
+<div class="collection-heading">
+  <div class="rep-image">
+    <%= image_tag collection_representative_image_path(presenter), class: 'img-fluid' %>
+  </div>
+  <div class="header-buttons">
+    <h1><%= presenter.title_data_dictionary_field.first %></h1>
+    <div class="just-buttons">
+      <%= link_to t('cho.collection.heading.collection_home'), polymorphic_path([:solr_document], id: params[:archival_collection_id]), class: 'btn search-btn' %>
+      <%= link_to t('cho.collection.heading.finding_aid'), root_path, class: 'text-white' %>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="offset-lg-3 col-lg-9">
+    <%= render partial: 'collection_search_form' %>
+  </div>
+</div>

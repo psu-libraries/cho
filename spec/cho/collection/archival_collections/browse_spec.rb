@@ -16,10 +16,10 @@ RSpec.describe Collection::Archival, type: :feature do
 
     it 'displays a paginated list of all the works in the collection' do
       visit(search_archival_collection_resources_path(collection.id))
-      expect(page).to have_selector('h2', text: collection.title.first)
+      expect(page).to have_selector('h1', text: collection.title.first)
       expect(page).to have_link('Collection Home')
       expect(page).to have_link('Finding Aid')
-      expect(page).to have_content('Search within collection')
+      expect(page).to have_selector('legend', text: I18n.t('cho.collection.search.fieldset.legend'))
       expect(page).to have_content('1 - 10 of 15')
     end
 
@@ -37,7 +37,7 @@ RSpec.describe Collection::Archival, type: :feature do
   context 'when the collection has no works' do
     it 'shows the user that there are no works to browse' do
       visit(search_archival_collection_resources_path(collection.id))
-      expect(page).to have_selector('h2', text: collection.title.first)
+      expect(page).to have_selector('h1', text: collection.title.first)
     end
   end
 end

@@ -1,0 +1,14 @@
+.search-btn {
+  background-color: $psul-yellow;
+  border-color: $psul-yellow;
+  color: $primary-black;
+  svg { fill: $primary-black; }
+  svg:hover { fill: $primary-white; }
+}
+
+.search-btn:hover {
+  background-color: $psu-yellow-dark;
+  border-color: $psu-yellow-dark;
+}
+
+.search-legend { font-size: 1rem; }

@@ -1,0 +1,53 @@
+.collection-heading {
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.rep-image img {
+  flex-shrink: 0;
+  min-height: 100%;
+  min-width: 100%;
+}
+
+.header-buttons {
+  background-color: rgba($primary-black, .6);
+  color: $primary-white;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  left: 0;
+  padding: 1rem;
+  position: absolute;
+  top: 0;
+  width: 100%;
+
+
+  h1 {
+    flex: 1;
+    font-family: "serifa", serif;
+    font-size: 1.25rem;
+    font-weight: 400;
+    margin-bottom: 0;
+  }
+
+  .just-buttons {
+    border-top: 2px solid $primary-white;
+    flex: 0;
+    padding-top: 1rem;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .header-buttons {
+    h1 {
+      font-size: 2rem;
+    }
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .header-buttons {
+    width: 45%;
+  }
+}
+

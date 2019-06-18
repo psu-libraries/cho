@@ -13,7 +13,7 @@ RSpec.describe Collection::Archival, type: :feature do
     expect(page).to have_link('Browse')
     expect(page).to have_link('Finding Aid')
     expect(page).to have_selector('h2', text: 'Collection Information')
-    expect(page).to have_content('Search within collection')
+    expect(page).to have_selector('legend', text: I18n.t('cho.collection.search.fieldset.legend'))
     expect(page).to have_blacklight_label(:subtitle_tesim)
     expect(page).to have_blacklight_field(:subtitle_tesim).with(collection.subtitle.first)
     expect(page).to have_blacklight_label(:access_rights_tesim)
