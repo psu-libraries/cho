@@ -1,12 +1,12 @@
 dependencies:
 - name: solr
-  repository: file://helm-charts/solr
+  repository: https://harbor.dsrd.libraries.psu.edu/chartrepo/public
   version: 0.1.1
 - name: postgresql
-  repository: file://helm-charts/postgresql
+  repository: https://harbor.dsrd.libraries.psu.edu/chartrepo/public
   version: 0.1.1
 - name: redis
-  repository: file://helm-charts/redis
-  version: 0.1.1
-digest: sha256:1f7bbb8eb8f9139ae37a8d1e33de656a20b5ccaf2639af3594864a4149f80f45
-generated: 2019-06-17T15:57:34.139932-04:00
+  repository: https://harbor.dsrd.libraries.psu.edu/chartrepo/public
+  version: 0.1.2
+digest: sha256:eba2a1abfdd3c74ae2378af2827e2c21acf479d172eb1c5ef8b7e3ab6c2bd107
+generated: 2019-06-18T09:49:43.723327-04:00
