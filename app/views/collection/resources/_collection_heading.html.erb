@@ -1,4 +1,7 @@
 <h2><%= presenter.title_data_dictionary_field.first %></h2>
+
+<%= image_tag collection_representative_image_path(presenter) %>
+
 <%= link_to t('cho.collection.heading.collection_home'), polymorphic_path([:solr_document], id: params[:archival_collection_id]) %>
 <%= link_to t('cho.collection.heading.finding_aid'), root_path %>
 <%= render partial: 'collection_search_form' %>

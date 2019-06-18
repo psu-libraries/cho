@@ -27,6 +27,7 @@ module Cho
     config.storage_directory = Pathname.new(ENV['storage_directory']).expand_path
     config.network_ingest_directory = Pathname.new(ENV['network_ingest_directory']).expand_path
     config.extraction_directory = Pathname.new(ENV['extraction_directory']).expand_path
+    config.collection_image_directory = Pathname.new(ENV['collection_image_directory']).expand_path
 
     # Inject new behaviors into existing classes without having to override the entire class itself.
     config.to_prepare do

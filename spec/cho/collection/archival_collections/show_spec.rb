@@ -9,6 +9,7 @@ RSpec.describe Collection::Archival, type: :feature do
     visit(polymorphic_path([:solr_document], id: collection.id))
     expect(page).to have_selector('h1', text: collection.title.first)
     expect(page).to have_selector('p', text: collection.description.first)
+    expect(page).to have_selector('img[src$="default.png"]')
     expect(page).to have_link('Browse')
     expect(page).to have_link('Finding Aid')
     expect(page).to have_selector('h2', text: 'Collection Information')
