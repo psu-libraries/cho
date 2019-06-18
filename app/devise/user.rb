@@ -25,9 +25,8 @@ class User < ApplicationRecord
   private
 
     def ldap_groups
-      return group_list.split(';?;') unless groups_last_update.blank? || ((Time.now - groups_last_update) > 24 * 60 * 60)
+      populate_attributes if groups_last_update.blank? || ((Time.now - groups_last_update) > 1.day)
 
-      populate_attributes
       group_list.split(';?;')
     end
 
