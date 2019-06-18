@@ -89,7 +89,11 @@ RSpec.describe Transaction::Operations::AccessControls::AccessLevel do
       specify do
         change_set.access_rights = Repository::AccessControls::AccessLevel.psu
         result = described_class.new.call(change_set)
-        expect(result.success.read_groups).to contain_exactly(Repository::AccessControls::AccessLevel.psu, 'group1', 'group2')
+        expect(result.success.read_groups).to contain_exactly(
+          Repository::AccessControls::AccessLevel.psu,
+          'group1',
+          'group2'
+        )
       end
     end
 

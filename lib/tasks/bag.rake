@@ -2,7 +2,8 @@
 
 namespace :cho do
   namespace :bag do
-    desc 'create a bag from a directory of files.  The files are expected to be in a named directory that does not have any bag structure.'
+    desc 'Create a bag from a directory of files. ' \
+         'The files are expected to be in a named directory that does not have any bag structure.'
     task :create_from_path, [:path] => [:environment] do |_t, args|
       path = args.fetch(:path, nil)
       if path.nil?
