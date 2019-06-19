@@ -59,7 +59,7 @@ rails:
 # PVC for explore and workflow data
 persistence:
   enabled: true
-  storageClassName: nfs-client
+  storageClassName: hostpath
   accessModes:
   - ReadWriteOnce
   resources:
@@ -91,6 +91,8 @@ redis:
     enabled: false
 
 solr:
+  image:
+    # tag: 7.1.0
   persistence:
     enabled: true
     size: 8Gi
@@ -100,9 +102,10 @@ solr:
   core: cho
 
 postgresql:
-  postgresqlUsername: cho
-  postgresqlPassword: cho
-  postgresqlDatabase: cho
+  db:
+    username: cho
+    name: cho
+    # password:
   persistence:
     enabled: true
     storageClass: hostpath
