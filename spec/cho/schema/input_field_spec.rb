@@ -190,15 +190,15 @@ RSpec.describe Schema::InputField, type: :model do
     end
   end
 
-  describe 'multiple_class' do
+  describe '#data_attributes' do
     context 'when the field is not multiple' do
-      its(:multiple_class) { is_expected.to eq('ff-single') }
+      its(:data_attributes) { is_expected.to eq({}) }
     end
 
     context 'when the field is multiple' do
       let(:metadata_field) { build(:schema_metadata_field, multiple: true) }
 
-      its(:multiple_class) { is_expected.to eq('ff-multiple') }
+      its(:data_attributes) { is_expected.to eq(controller: 'fields') }
     end
   end
 end

@@ -27,12 +27,6 @@ module Schema
       end
     end
 
-    def multiple_class
-      return 'ff-multiple' if multiple?
-
-      'ff-single'
-    end
-
     def values
       return empty_values if value_set.empty?
 
@@ -44,7 +38,13 @@ module Schema
     end
 
     def options
-      { required: required?, 'aria-required': required?, class: 'form-control ff-control' }
+      { required: required?, 'aria-required': required?, class: 'form-control' }
+    end
+
+    def data_attributes
+      return {} unless multiple?
+
+      { controller: 'fields' }
     end
 
     def datalist(component: nil)

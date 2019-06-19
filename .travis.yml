@@ -28,9 +28,12 @@ env:
     - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
 stages:
   - niftany
+  - jest
   - test
 jobs:
   include:
     - script: ./travis/test.sh
     - stage: niftany
       script: bundle exec niftany
+    - stage: jest
+      script: yarn lint && yarn jest
