@@ -71,6 +71,18 @@ I've been running the following:
 ./k8s/rake_task.sh cho:benchmark:works
 ```
 
-cho:benchmark:works fails for me, i think becuase fits isn't installed. i'm going to be workign on that soon
+cho:benchmark:works fails for me, i think becuase fits isn't installed. i'm going to be working on that soon
+
+
+Various other tasks:
+You may want to access any of the services locally. You can easily do this by port-forwarding into the pod from localhost
+
+i.e 
+```
+kubectl port-forward cho-local-solr-0 8983:8983
+```
+will expose solr on localhost for further debugging
+
+
 
 
