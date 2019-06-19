@@ -2,6 +2,7 @@ en:
   cho:
     catalog:
       edit: "Edit"
+      link_back: "Back to Search Results"
     file_set:
       edit:
         delete_link: "Delete File Set"
@@ -88,6 +89,8 @@ en:
         finding_aid: "Finding Aid"
         collection_home: "Collection Home"
         browse:  "Browse"
+      resources:
+        link_back: "Back to Collection Search"
     archival_collection:
       edit:
         delete_link: "Delete Archival Collection"
