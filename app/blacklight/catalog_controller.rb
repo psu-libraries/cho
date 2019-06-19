@@ -13,7 +13,7 @@ class CatalogController < ApplicationController
   # via Blacklight::AccessControls::SearchBuilder.
   skip_authorize_resource only: :index
 
-  helper LocalHelperBehavior, LayoutHelperBehavior
+  helper LocalHelperBehavior, LayoutHelperBehavior, Collection::LocalHelper
 
   Blacklight::IndexPresenter.thumbnail_presenter = ::ThumbnailPresenter
 

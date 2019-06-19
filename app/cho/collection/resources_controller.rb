@@ -7,7 +7,7 @@ module Collection
 
     copy_blacklight_config_from(CatalogController)
 
-    helper UrlHelperBehavior
+    helper UrlHelperBehavior, LocalHelper
 
     # @note Use Blacklight's views and override them locally. We spell out the exact paths
     #       to use for views because of the module namespace.
