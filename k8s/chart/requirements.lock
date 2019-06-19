@@ -4,9 +4,9 @@ dependencies:
   version: 0.1.1
 - name: postgresql
   repository: https://harbor.dsrd.libraries.psu.edu/chartrepo/public
-  version: 0.1.1
+  version: 0.1.5
 - name: redis
   repository: https://harbor.dsrd.libraries.psu.edu/chartrepo/public
   version: 0.1.2
-digest: sha256:eba2a1abfdd3c74ae2378af2827e2c21acf479d172eb1c5ef8b7e3ab6c2bd107
-generated: 2019-06-18T09:49:43.723327-04:00
+digest: sha256:57a898b5691e2dbb225b0c1710c81c17b6bea97e6c6eda8aeb01a9d02c824b87
+generated: 2019-06-19T10:28:44.997288-04:00
