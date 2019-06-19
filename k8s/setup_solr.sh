@@ -1,5 +1,5 @@
 echo "creating cho core"
-# kubectl exec -it cho-local-solr-0 -- /opt/solr/bin/solr create_core -c cho
+kubectl exec -it cho-local-solr-0 -- /opt/solr/bin/solr create_core -c cho
 
 echo "finding local path for solr data"
 
