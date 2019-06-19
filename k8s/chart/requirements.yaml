@@ -4,7 +4,7 @@ dependencies:
   repository: https://harbor.dsrd.libraries.psu.edu/chartrepo/public
   condition: solr.enabled
 - name: postgresql
-  version: 0.1.1
+  version: 0.1.5
   repository: https://harbor.dsrd.libraries.psu.edu/chartrepo/public
   condition: postgresql.enabled
 - name: redis

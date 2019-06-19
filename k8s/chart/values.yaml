@@ -59,7 +59,7 @@ rails:
 # PVC for explore and workflow data
 persistence:
   enabled: true
-  storageClassName: hostpath
+  storageClassName: nfs-client
   accessModes:
   - ReadWriteOnce
   resources:
@@ -105,13 +105,13 @@ postgresql:
   postgresqlDatabase: cho
   persistence:
     enabled: true
+    storageClass: hostpath
   enabled: true
 
 global:
   vault:
     enabled: false
-    mountPath: auth/kubernetes
-    address: https://vault.dsrd.libraries.psu.edu
+    mountPath: auth/k8s-dsrd-dev
+    address: https://vault.dsrd.libraries.psu.edu:8200
     path: secret/data/app/cho/dev
     role: cho-dev
-    serviceAccountName: vault-auth
