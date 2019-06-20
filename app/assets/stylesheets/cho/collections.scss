@@ -23,16 +23,17 @@
 
 
   h1 {
-    flex: 1;
+    flex: 1 1;
     font-family: "serifa", serif;
     font-size: 1.25rem;
     font-weight: 400;
     margin-bottom: 0;
+    overflow: auto;
   }
 
   .just-buttons {
     border-top: 2px solid $primary-white;
-    flex: 0;
+    flex: 0 0;
     padding-top: 1rem;
   }
 }
