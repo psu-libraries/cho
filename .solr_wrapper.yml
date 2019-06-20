@@ -1,5 +1,5 @@
 # .solr_wrapper
-version: 7.4.0
+version: 8.1.1
 port: 8983
 instance_dir: tmp/solr-development
 download_dir: tmp
