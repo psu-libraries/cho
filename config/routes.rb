@@ -30,7 +30,22 @@ Rails.application.routes.draw do
                                controller: 'work/submissions'
   resources :work_file_sets, as: 'file_sets', path: '/file_sets', only: [:edit, :update],
                              controller: 'work/file_sets'
-  resources :archival_collections, except: [:show, :index, :destroy], controller: 'collection/archival_collections'
+  resources :archival_collections, except: [:show, :index, :destroy], controller: 'collection/archival_collections' do
+    # Duplicates the same routing syntax for the searching in CatalogController, but in a nested context such that
+    # `/archival_collections/:archival_collection_id/resources` serves as a search and browse endpoint for an
+    # individual collection.
+    resource :resources, only: [:index], as: 'resources', path: 'resources', controller: 'collection/resources' do
+      concerns :searchable
+    end
+
+    # Duplicates the same routing syntax for displaying solr documents in CatalogController, but in a nested
+    # context such that `/archival_collections/:archival_collection_id/resources/:id` displays an individual work
+    # within a collection.
+    resources :resources, only: [:show], path: 'resources', controller: 'collection/resources' do
+      concerns :exportable
+    end
+  end
+
   resources :library_collections, except: [:show, :index, :destroy], controller: 'collection/library_collections'
   resources :curated_collections, except: [:show, :index, :destroy], controller: 'collection/curated_collections'
   resources :data_dictionary_fields, controller: 'data_dictionary/fields'

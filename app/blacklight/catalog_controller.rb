@@ -13,7 +13,7 @@ class CatalogController < ApplicationController
   # via Blacklight::AccessControls::SearchBuilder.
   skip_authorize_resource only: :index
 
-  helper LocalHelperBehavior, LayoutHelperBehavior
+  helper LocalHelperBehavior, LayoutHelperBehavior, Collection::LocalHelper
 
   Blacklight::IndexPresenter.thumbnail_presenter = ::ThumbnailPresenter
 
@@ -82,7 +82,10 @@ class CatalogController < ApplicationController
     DataDictionary::Field.all.sort_by(&:created_at).each do |map_field| # where core fields true
       catalog_field = map_field.solr_search_field
       catalog_label = map_field.display_name || map_field.label.titleize
-      catalog_helper = map_field.display_transformation == 'no_transformation' ? nil : map_field.display_transformation.to_sym
+
+      unless map_field.display_transformation == 'no_transformation'
+        catalog_helper = map_field.display_transformation.to_sym
+      end
 
       unless fields_excluded_from_metadata_list.include?(map_field.label)
         config.add_index_field catalog_field, label: catalog_label, helper_method: catalog_helper

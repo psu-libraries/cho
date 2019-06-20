@@ -1,0 +1,9 @@
+<% content_for(:container_header) do %>
+  <%= render 'collection_heading', presenter: SolrDocument.find(params.fetch(:archival_collection_id)) %>
+<% end %>
+
+<% content_for(:sidebar) do %>
+  <%= render 'search_sidebar' %>
+<% end %>
+
+<%= render 'search_results' %>

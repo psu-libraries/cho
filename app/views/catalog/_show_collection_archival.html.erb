@@ -1,12 +1,20 @@
-<% @document.transformed_fields.each do |field| %>
-  <% if field.present? %>
-    <%= render partial: "shared/transformation_partials/#{field.display_transformation}",
-               locals: { presenter: field } %>
-  <% end %>
-<% end %>
-
-<%= render partial: 'show', locals: { document: @document } %>
-
-<% unless @document_facade.members.empty? %>
-  <%= render partial: 'members', locals: { facade: @document_facade } %>
-<% end %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12 col-md-6">
+      <% Array.wrap(document.description_data_dictionary_field).map do |field| %>
+        <p><%= field %></p>
+      <% end %>
+    </div>
+    <div class="col-sm-12 col-md-6">
+      <h2><%= t('cho.collection.metadata.title') %></h2>
+      <%= render partial: 'collection_search_form' %>
+      <%= render partial: 'show', locals: { document: @document } %>
+      <% @document.transformed_fields.each do |field| %>
+        <% if field.present? %>
+          <%= render partial: "shared/transformation_partials/#{field.display_transformation}",
+                     locals: { presenter: field } %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

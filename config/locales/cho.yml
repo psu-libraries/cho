@@ -2,6 +2,7 @@ en:
   cho:
     catalog:
       edit: "Edit"
+      link_back: "Back to Search Results"
     file_set:
       edit:
         delete_link: "Delete File Set"
@@ -73,10 +74,23 @@ en:
         download_representative_link: 'Download Work'
         download_text_link: 'Download Plain Text'
     collection:
+      metadata:
+        title: "Collection Information"
       members:
         title: "Title"
         date_created: "Date Created"
         heading: "Resources in this Collection"
+      search:
+        form:
+          search_field: "Collection search options"
+          search: "Search within collection"
+          submit: "Search Collection"
+      heading:
+        finding_aid: "Finding Aid"
+        collection_home: "Collection Home"
+        browse:  "Browse"
+      resources:
+        link_back: "Back to Collection Search"
     archival_collection:
       edit:
         delete_link: "Delete Archival Collection"

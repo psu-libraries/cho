@@ -1,3 +1,8 @@
 <%# bookmark/folder functions -%>
 <%= render_document_heading(document, tag: :h1) %>
-<%= render 'download_representatives', document: document %>
+
+<% if document.internal_resource == Collection::Archival %>
+  <%= render 'show_collection_archival_heading', document: document %>
+<% else %>
+  <%= render 'download_representatives', document: document %>
+<% end %>

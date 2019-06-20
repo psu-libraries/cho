@@ -10,7 +10,7 @@ RSpec.describe 'Deleting file sets', type: :feature do
     visit(polymorphic_path([:solr_document], id: Work::Submission.all.first.id))
     click_link('File Set to Delete')
     expect(page).to have_selector('td', text: 'hello_world_preservation.txt')
-    click_button('Edit')
+    click_link('Edit')
     click_button('Delete File Set')
     expect(page).to have_content('The following resources will be deleted')
     expect(page).to have_content(resource.title.first)

@@ -19,4 +19,12 @@ class MetadataFactory
       created: Faker::Date.between(2.years.ago, Date.today)
     }
   end
+
+  def self.work_attributes
+    {
+      title: fancy_title,
+      description: Faker::Lorem.paragraph,
+      created: Faker::Date.between(2.years.ago, Date.today)
+    }
+  end
 end

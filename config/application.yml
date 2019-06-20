@@ -8,6 +8,7 @@ development:
   network_ingest_directory: 'tmp/ingest-development'
   extraction_directory: 'tmp/extract-development'
   storage_directory: 'public/files'
+  collection_image_directory: 'public/collection-images'
   piwik_id: '2'
 test:
   service_name: "example-test"
@@ -15,7 +16,8 @@ test:
   virtual_host: "http://test.com/"
   network_ingest_directory: 'tmp/ingest-test'
   extraction_directory: 'tmp/extract-test'
-  storage_directory: 'public/files'
+  storage_directory: 'public/files-test'
+  collection_image_directory: 'public/collection-images'
   piwik_id: '2'
 production:
   service_name: "example-test"
@@ -23,5 +25,6 @@ production:
   virtual_host: "http://test.com/"
   network_ingest_directory: 'tmp/ingest-test'
   extraction_directory: 'tmp/extract-test'
-  storage_directory: 'public/files'
+  storage_directory: 'public/files-test'
+  collection_image_directory: 'public/collection-images'
   piwik_id: '2'
