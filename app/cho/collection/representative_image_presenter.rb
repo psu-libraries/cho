@@ -32,7 +32,7 @@ module Collection
     end
 
     def path
-      exists? ? url_path_for(identifier) : url_path_for('default.png')
+      exists? ? url_path_for(identifier) : '/default-collection-image.png'
     end
 
     private

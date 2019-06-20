@@ -58,6 +58,6 @@ RSpec.describe Collection::RepresentativeImagePresenter do
 
     its(:exists?) { is_expected.to be false }
     its(:identifier) { is_expected.to be_nil }
-    its(:path) { is_expected.to eq "/#{base_url}/default.png" }
+    its(:path) { is_expected.to eq '/default-collection-image.png' }
   end
 end
