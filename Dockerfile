@@ -1,11 +1,11 @@
 FROM node:10 as nodejs
 
-FROM ruby:2.4.6
+FROM ruby:2.6.3
 
 WORKDIR /cho
 
-ENV BUNDLE_PATH='/cho/.vendor/bundle'
-ENV GEM_HOME='/cho/.vendor/gems'
+# ENV BUNDLE_PATH='/cho/.vendor/bundle'
+# ENV GEM_HOME='/cho/.vendor/gems'
 ARG RAILS_ENV
 ENV RAILS_ENV=$RAILS_ENV
 
@@ -15,9 +15,10 @@ RUN gem install bundler
 
 COPY Gemfile Gemfile.lock /cho/
 
-RUN bundle package --all
+# RUN bundle package --all
 
-RUN if [ "$RAILS_ENV" = "development" ]; then bundle install --deployment; else bundle install --without development test --deployment; fi 
+# RUN if [ "$RAILS_ENV" = "development" ]; then bundle install --deployment; else bundle install --without development test --deployment; fi 
+RUN bundle install 
 
 COPY --from=nodejs /usr/local/bin/node /usr/local/bin/
 COPY --from=nodejs /usr/local/lib/node_modules /usr/local/lib/node_modules
