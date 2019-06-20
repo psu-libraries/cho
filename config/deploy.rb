@@ -65,6 +65,7 @@ set :linked_dirs, fetch(:linked_dirs, []).push(
   'tmp/sockets',
   'tmp/uploads',
   'public/files',
+  'public/collection-images',
   'vendor/bundle'
 )
 
@@ -112,6 +113,8 @@ namespace :deploy do
       execute "ln -sf /#{fetch(:application)}/config_#{fetch(:stage)} /home/deploy/cho/shared/config"
       execute 'rm -f /home/deploy/cho/shared/public/files'
       execute "ln -sf /#{fetch(:application)}/shared_#{fetch(:stage)}/public/files /home/deploy/cho/shared/public/files"
+      execute 'rm -f /home/deploy/cho/shared/public/collection-images'
+      execute "ln -sf /#{fetch(:application)}/shared_#{fetch(:stage)}/public/collection-images /home/deploy/cho/shared/public/collection-images"
       execute 'rm -f /home/deploy/cho/shared/public/robots.txt'
       execute "ln -sf /#{fetch(:application)}/shared_#{fetch(:stage)}/public/robots.txt /home/deploy/cho/shared/public/robots.txt"
     end
