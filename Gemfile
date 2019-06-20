@@ -10,7 +10,7 @@ end
 # Main gems
 gem 'blacklight', '~> 7.0'
 gem 'rails', '~> 5.1.6'
-gem 'valkyrie', '=2.0.0.RC10'
+gem 'valkyrie', '~> 2.0'
 
 # For Blacklight with Sprockets
 gem 'bootstrap', '~> 4.3'
