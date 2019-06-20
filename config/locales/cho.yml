@@ -81,9 +81,11 @@ en:
         date_created: "Date Created"
         heading: "Resources in this Collection"
       search:
+        fieldset:
+          legend: "Search within Collection"
         form:
           search_field: "Collection search options"
-          search: "Search within collection"
+          search: "Search Terms"
           submit: "Search Collection"
       heading:
         finding_aid: "Finding Aid"

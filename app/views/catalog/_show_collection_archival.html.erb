@@ -6,8 +6,8 @@
       <% end %>
     </div>
     <div class="col-sm-12 col-md-6">
-      <h2><%= t('cho.collection.metadata.title') %></h2>
       <%= render partial: 'collection_search_form' %>
+      <h2><%= t('cho.collection.metadata.title') %></h2>
       <%= render partial: 'show', locals: { document: @document } %>
       <% @document.transformed_fields.each do |field| %>
         <% if field.present? %>
