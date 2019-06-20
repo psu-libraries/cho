@@ -3,10 +3,15 @@
   position: relative;
 }
 
-.rep-image img {
-  flex-shrink: 0;
-  min-height: 100%;
-  min-width: 100%;
+.rep-image {
+  overflow: hidden;
+
+  img {
+    flex-shrink: 0;
+    max-width: 100%;
+    min-height: 250px;
+    object-fit: cover;
+  }
 }
 
 .header-buttons {
@@ -23,7 +28,7 @@
 
 
   h1 {
-    flex: 1;
+    flex: 1 1;
     font-family: "serifa", serif;
     font-size: 1.25rem;
     font-weight: 400;
@@ -32,7 +37,7 @@
 
   .just-buttons {
     border-top: 2px solid $primary-white;
-    flex: 0;
+    flex: 0 0;
     padding-top: 1rem;
   }
 }
