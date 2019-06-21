@@ -45,7 +45,10 @@ module Collection
       def base_url_path
         @base_url_path = begin
                            filesystem_path
-                             .relative_path_from(Rails.root.join('public'))
+                             .to_s
+                             .split('public/')
+                             .last
+                             .gsub(/^\/|\/$/, '') # strip any leading/trailing slashes
                          end
       end
 
