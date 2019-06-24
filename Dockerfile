@@ -4,8 +4,14 @@ FROM ruby:2.6.3
 
 WORKDIR /cho
 
-# ENV BUNDLE_PATH='/cho/.vendor/bundle'
-# ENV GEM_HOME='/cho/.vendor/gems'
+RUN apt-get update && \
+    apt-get install default-jdk curl unzip -y
+
+RUN mkdir /opt/fits &&  \
+    curl -Lo /tmp/fits.zip https://github.com/harvard-lts/fits/releases/download/1.4.1/fits-1.4.1.zip &&  \
+    unzip /tmp/fits.zip -d /opt/fits &&  \
+    ln -s /opt/fits/fits.sh /usr/local/bin/fits
+
 ARG RAILS_ENV
 ENV RAILS_ENV=$RAILS_ENV
 
@@ -15,10 +21,7 @@ RUN gem install bundler
 
 COPY Gemfile Gemfile.lock /cho/
 
-# RUN bundle package --all
-
-# RUN if [ "$RAILS_ENV" = "development" ]; then bundle install --deployment; else bundle install --without development test --deployment; fi 
-RUN bundle install 
+RUN bundle install
 
 COPY --from=nodejs /usr/local/bin/node /usr/local/bin/
 COPY --from=nodejs /usr/local/lib/node_modules /usr/local/lib/node_modules
@@ -35,8 +38,5 @@ COPY yarn.lock /cho
 RUN yarn install
 
 COPY . /cho
-
-# RUN curl -Lo fits.zip https://github.com/harvard-lts/fits/releases/download/1.4.1/fits-1.4.1.zip
-# RUN unzip 
 
 CMD ["./entrypoint.sh"]
