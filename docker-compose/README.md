@@ -1,3 +1,9 @@
+# Install Docker
+https://download.docker.com/mac/stable/Docker.dmg
+
+- Drag to Applications
+- Open
+
 
 # Build 
 Builds the docker image from your Dockerfile. You'll need to build anytime anything *outside* of `./app` changes. changes from within `./app` are automaticaly persisted to the docker container via volume bind mount
@@ -8,7 +14,11 @@ Builds the docker image from your Dockerfile. You'll need to build anytime anyth
 # Run CHO
 All the defaults for CHO should be sane enough to "just work" Running
 
-`docker-compose up` will startup solr, redis, postgres, and the rails app.
+`docker-compose up -d` will startup solr, redis, postgres, and the rails app.
+
+If you want to build, and run the app in the same command you can run 
+
+`docker-compose up --build`
 
 the following will be available to localhost for your convenience 
 
@@ -20,6 +30,7 @@ localhost:8983 - solr
 
 #DANGER ZONE
 There be dragons in solr land. The first time solr boots up, you will need to create the 'cho' core, and send it it's configuration
+
 ```
 # create the core
 docker-compose exec solr solr create_core -c cho
