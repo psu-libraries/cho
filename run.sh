@@ -1,8 +1,8 @@
 #!/bin/bash
 
-./bin/rails db:create
-./bin/rails db:migrate
-./bin/rails db:seed
+rails db:create
+rails db:migrate
+rails db:seed
 
-./bin/rails s
+rails s
 
