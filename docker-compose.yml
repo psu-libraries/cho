@@ -1,0 +1,59 @@
+version: '3.2'
+services:
+  solr:
+    image: solr:8.1.1
+    volumes:
+    - cho-solr-data:/var/solr/data
+    ports:
+      - "8983:8983"
+  redis:
+    image: redis:5.0.5
+    volumes:
+    - cho-redis-data:/data
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+    - "8080:8080"
+  db:
+    environment:
+      POSTGRES_PASSWORD: cho
+      POSTGRES_USER: cho
+      POSTGRES_DB: cho
+    image: postgres:10
+    ports:
+    - "5432:5432"
+    volumes:
+    - cho-db-data:/var/lib/postgresql/data
+  web:
+    environment:
+      REDIS_HOST: redis
+      SOLR_HOST: solr
+      SOLR_CORE: cho
+      POSTGRES_USER: cho
+      POSTGRES_HOST: db
+      POSTGRES_DATABASE: cho
+      POSTGRES_PASSWORD: cho
+    build: .
+    command: >
+      sh -c "yarn install && 
+            echo starting database migrations &&
+            rails db:migrate &&
+            echo starting rails &&
+            rails s"
+    volumes:
+      - type: bind
+        source: ./app/
+        target: /cho/app
+        consistency: cached
+    ports:
+    - "3000:3000"
+    depends_on:
+    - solr
+    - redis
+    - db
+
+volumes:
+  cho-db-data:
+  cho-solr-data:
+  cho-redis-data:
