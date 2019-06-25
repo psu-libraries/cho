@@ -14,6 +14,7 @@
 //   </div>
 
 import { Controller } from 'stimulus'
+import Validator from './validator'
 
 export default class extends Controller {
   connect () {
@@ -36,12 +37,20 @@ export default class extends Controller {
     event.target.parentElement.remove()
   }
 
+  // By default, Stimulus listens to change events on inputs and will execute this method
+  validate (event) {
+    let validator = new Validator(event.target)
+    validator.call()
+  }
+
   // @return [HTMLElement] cloned field taken from the first input group.
   get newField () {
     let clone = this.inputGroups.item(0).cloneNode(true)
     Array.from(clone.getElementsByClassName('form-control')).forEach((input) => {
       input.value = ''
     })
+    let validatorMessage = clone.querySelector('.' + Validator.messageSelectorClass)
+    if (validatorMessage) { validatorMessage.remove() }
     clone.appendChild(this.removeButton)
     return clone
   }
