@@ -68,7 +68,7 @@ persistence:
 
 webaccess:
   enabled: false
-  image: harbor.dsrd.libraries.psu.edu/public/apache-docker-webaccess:v0.0.2
+  image: harbor.dsrd.libraries.psu.edu/public/apache-docker-webaccess:v3.0.2
 
 certmanager:
   enabled: false
