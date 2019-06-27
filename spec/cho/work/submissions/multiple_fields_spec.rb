@@ -3,15 +3,21 @@
 require 'rails_helper'
 
 RSpec.describe 'Works with multiple fields', with_named_js: :multiple_fields, type: :feature do
+  def parent_div(field)
+    find("label[for='work_submission_#{field}']").first(:xpath, './/..')
+  end
+
   context 'when adding new fields for entry' do
-    def check_field(label:)
-      within(".ff-multiple.#{label}") do
-        expect(page).to have_css('.ff-add', text: /\(\+\) Add another/)
-        expect(page).to have_selector('span.ff-remove', text: '(-) Remove', count: 1, visible: false)
-        retry_click { find('.ff-add').click }
-        expect(page).to have_selector('span.ff-remove', text: '(-) Remove', count: 2, visible: true)
-        page.all('.ff-remove').last.click
-        expect(page).to have_selector('span.ff-remove', text: '(-) Remove', count: 1, visible: false)
+    def check_field(field, label: nil)
+      label ||= field.to_s.titleize
+      within(parent_div(field)) do
+        expect(page).to have_selector('button', text: /Add another/)
+        expect(page).not_to have_selector('button', text: 'Remove')
+        expect(page).to have_selector('div', class: 'input-group', count: 1)
+        retry_click { click_button(label) }
+        expect(page).to have_selector('div', class: 'input-group', count: 2)
+        retry_click { click_button('Remove') }
+        expect(page).to have_selector('div', class: 'input-group', count: 1)
       end
     end
 
@@ -20,15 +26,15 @@ RSpec.describe 'Works with multiple fields', with_named_js: :multiple_fields, ty
       click_link('Create Resource')
       click_link('Generic')
       expect(page).to have_content('New Generic Resource', wait: Capybara.default_max_wait_time * 5)
-      check_field(label: 'subtitle')
-      check_field(label: 'description')
-      check_field(label: 'alternate_ids')
-      check_field(label: 'creator')
-      check_field(label: 'generic_field')
-      check_field(label: 'created')
-      within('.ff-single.home_collection_id') do
-        expect(page).not_to have_selector('span.ff-remove')
-        expect(page).not_to have_selector('span.ff-add')
+      check_field(:subtitle)
+      check_field(:description)
+      check_field(:alternate_ids, label: 'Identifier')
+      check_field(:creator)
+      check_field(:generic_field)
+      check_field(:created)
+      within(parent_div(:home_collection_id)) do
+        expect(page).not_to have_selector('button', text: /Add another/)
+        expect(page).not_to have_selector('button', text: 'Remove')
       end
     end
   end
@@ -41,11 +47,11 @@ RSpec.describe 'Works with multiple fields', with_named_js: :multiple_fields, ty
     let!(:agent2) { create(:agent, :generate_name) }
 
     def fill_in_multiple(field)
-      within(".ff-multiple.#{field}") do
+      within(parent_div(field)) do
         fill_in("work_submission[#{field}][]", with: attributes1[field])
-        retry_click { find('.ff-add').click }
-        expect(page.all('.ff-control').last.value).to be_empty
-        page.all('.ff-control').last.set(attributes2[field])
+        retry_click { find('button').click }
+        expect(page.all('.form-control').last.value).to be_empty
+        page.all('.form-control').last.set(attributes2[field])
       end
     end
 
@@ -67,15 +73,15 @@ RSpec.describe 'Works with multiple fields', with_named_js: :multiple_fields, ty
       fill_in_multiple(:created)
 
       # Add multiple creators
-      within('.ff-multiple.creator') do
+      within(parent_div(:creator)) do
         fill_in('work_submission[creator][][role]', with: MockRDF.relators.first)
         fill_in('work_submission[creator][][agent]', with: agent1.id)
-        retry_click { find('.ff-add').click }
-        inputs = page.all('.ff-control')
+        retry_click { click_button('Add another Creator') }
+        inputs = page.all('.form-control')
         expect(inputs[2].value).to be_empty
         expect(inputs[3].value).to be_empty
-        inputs[2].set(MockRDF.relators.last)
-        inputs[3].set(agent2.id)
+        inputs[2].set(agent2.id)
+        inputs[3].set(MockRDF.relators.last)
       end
 
       fill_in('work_submission[home_collection_id]', with: archival_collection.id)

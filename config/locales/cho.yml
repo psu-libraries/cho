@@ -38,6 +38,7 @@ en:
       required: "required"
       member_of_collections: "Collections"
       role: "Role"
+      name_and_role: "Name and Role"
     header_links:
       alt_banner_image: "Penn State University Libraries"
       collection:

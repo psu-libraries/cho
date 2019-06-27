@@ -3,7 +3,7 @@
 <% end %>
 
 <%- resource.input_fields(form).each do |input_field| %>
-  <%= content_tag :div, class: "form-group #{input_field.multiple_class} #{input_field.label}" do -%>
+  <%= content_tag :div, class: 'form-group', data: input_field.data_attributes do -%>
     <%= form.label input_field.label do %>
       <%= input_field.display_label %>
       <% if input_field.required? %>
@@ -14,5 +14,3 @@
     <%= render "/shared/input_partials/#{input_field.partial}", field: input_field, form: form %>
   <%- end %>
 <%- end %>
-
-<%= javascript_pack_tag 'form_fields' %>
