@@ -18,7 +18,7 @@ module Validation
     private
 
       def unchanged_edit?
-        return false unless change_set.resource.persisted?
+        return false unless change_set.present? && change_set.resource.persisted?
 
         change_set.send(field) == change_set.resource.send(field)
       end

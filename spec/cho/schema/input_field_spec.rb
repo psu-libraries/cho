@@ -16,8 +16,10 @@ RSpec.describe Schema::InputField, type: :model do
           default_value: 'abc123',
           display_name: 'My Abc123',
           display_transformation: 'no_transformation',
-          multiple: false, validation: 'no_validation',
-          core_field: false, order_index: 0,
+          multiple: false,
+          validation: 'no_validation',
+          core_field: false,
+          order_index: 0,
           work_type: 'something'
   end
 
@@ -103,6 +105,25 @@ RSpec.describe Schema::InputField, type: :model do
       before { metadata_field.requirement_designation = 'required' }
 
       it { is_expected.to include("aria-required": true, required: true) }
+    end
+
+    context 'with validation' do
+      before { metadata_field.validation = 'unique' }
+
+      it { is_expected.to include(data: { action: 'fields#validate', url: '/validations/unique' }) }
+    end
+
+    context 'with validation and a controlled vocabulary' do
+      before do
+        metadata_field.validation = 'creator'
+        metadata_field.controlled_vocabulary = 'creator_vocabulary'
+      end
+
+      it { is_expected.not_to have_key(:data) }
+    end
+
+    context 'without validation' do
+      it { is_expected.not_to have_key(:data) }
     end
   end
 

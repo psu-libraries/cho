@@ -69,4 +69,6 @@ Rails.application.routes.draw do
   get '/batch/delete', to: 'batch/delete#index'
   post '/batch/delete', to: 'batch/delete#confirm'
   delete '/batch/delete', to: 'batch/delete#destroy'
+
+  post '/validations/:validation', to: 'validation/validations#validate', as: 'validations'
 end
