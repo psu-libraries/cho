@@ -1,7 +1,9 @@
-<%= form.text_field field.label, field.options.merge!(list: field.label) %>
+<%= content_tag :div, class: 'input-group' do %>
+  <%= form.text_field field.label, field.options.merge!(list: field.label) %>
 
-<datalist id="<%= field.label %>">
-  <% field.datalist.each do |item| %>
-    <option value="<%= item.id %>"><%= item.title %></option>
-  <% end %>
-</datalist>
+  <datalist id="<%= field.label %>">
+    <% field.datalist.each do |item| %>
+      <option value="<%= item.id %>"><%= item.title %></option>
+    <% end %>
+  </datalist>
+<% end %>

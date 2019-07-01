@@ -1,4 +1,4 @@
-<%= form_for(work_form.model, url: work_form.form_path) do |form| %>
+<%= form_for(work_form.model, url: work_form.form_path, data: { controller: 'form' }) do |form| %>
 
   <%= render 'shared/form_fields', resource: work_form, form: form %>
 
