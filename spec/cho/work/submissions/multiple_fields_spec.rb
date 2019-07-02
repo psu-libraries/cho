@@ -74,18 +74,29 @@ RSpec.describe 'Works with multiple fields', with_named_js: :multiple_fields, ty
 
       # Add multiple creators
       within(parent_div(:creator)) do
+        expect(page).to have_selector('.input-group-text', text: 'Select')
         fill_in('work_submission[creator][][role]', with: MockRDF.relators.first)
         fill_in('work_submission[creator][][agent]', with: agent1.id)
+        expect(page).to have_selector('.input-group-text', text: agent1)
         retry_click { click_button('Add another Creator') }
         inputs = page.all('.form-control')
+        spans = page.all('.input-group-text')
         expect(inputs[2].value).to be_empty
         expect(inputs[3].value).to be_empty
+        expect(spans[1]).to have_text('Select')
         inputs[2].set(agent2.id)
         inputs[3].set(MockRDF.relators.last)
+        expect(spans[1]).to have_text(agent2.to_s)
       end
 
-      fill_in('work_submission[home_collection_id]', with: archival_collection.id)
+      within(parent_div(:home_collection_id)) do
+        expect(page).to have_selector('.input-group-text', text: 'Select')
+        fill_in('work_submission[home_collection_id]', with: archival_collection.id)
+        expect(page).to have_selector('.input-group-text', text: archival_collection.title.first)
+      end
+
       retry_click { click_button('Create Resource') }
+
       verify_multiple(:subtitle)
       verify_multiple(:description)
       verify_multiple(

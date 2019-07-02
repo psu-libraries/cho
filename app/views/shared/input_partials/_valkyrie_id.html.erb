@@ -1,9 +1,11 @@
 <%= content_tag :div, class: 'input-group' do %>
-  <%= form.text_field field.label, field.options.merge!(list: field.label) %>
-
+  <div class="input-group-prepend">
+    <span class="input-group-text"></span>
+  </div>
+  <%= form.text_field field.label, field.options.merge!(list: field.label, data: { controller: 'datalist' }) %>
   <datalist id="<%= field.label %>">
     <% field.datalist.each do |item| %>
-      <option value="<%= item.id %>"><%= item.title %></option>
+      <option value="<%= item.id %>"><%= item.title.first %></option>
     <% end %>
   </datalist>
 <% end %>
