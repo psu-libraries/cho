@@ -1,0 +1,123 @@
+---
+kind: pipeline
+name: default
+
+steps:
+- name: build
+  image: docker
+  environment:
+    SSH_PRIVATE_KEY:
+      from_secret: SSH_PRIVATE_KEY
+    DOCKER_PASSWORD:
+      from_secret: DOCKER_PASSWORD
+  commands:
+    - export DOCKER_HOST=unix:///var/run/host.sock
+    - docker login -u 'robot$drone' -p $DOCKER_PASSWORD harbor.dsrd.libraries.psu.edu
+    - docker build --build-arg SSH_PRIVATE_KEY=$SSH_PRIVATE_KEY -t harbor.dsrd.libraries.psu.edu/library/cho:$DRONE_BUILD_NUMBER . 
+    - docker tag harbor.dsrd.libraries.psu.edu/library/cho:$DRONE_BUILD_NUMBER harbor.dsrd.libraries.psu.edu/library/cho:ci
+    - docker push harbor.dsrd.libraries.psu.edu/library/cho:$DRONE_BUILD_NUMBER 
+  volumes:
+  - name: docker-sock
+    path: /var/run/host.sock
+
+# - name: prepare
+#   image: harbor.dsrd.libraries.psu.edu/library/cho:ci
+#   environment:
+#     MYSQL_USER: root
+#     MYSQL_PASSWORD: root
+#     MYSQL_DATABASE_TEST: etda_workflow_test
+#     MYSQL_HOST: mariadb
+#     REDIS_HOST: redis
+#   depends_on:
+#   - build
+#   commands:
+#     - cd /etda_workflow
+#     - apt-get update 
+#     - apt-get install mysql-client -y
+#     - export RAILS_ENV=test
+#     - unset CI
+#     # - bundle install --with development test
+#     - bundle exec rake drone_prepare
+
+# - name: integration-tests
+#   image: harbor.dsrd.libraries.psu.edu/library/cho:ci
+#   environment:
+#     MYSQL_USER: root
+#     MYSQL_PASSWORD: root
+#     MYSQL_DATABASE_TEST: integration_test
+#     MYSQL_DATABASE: integration
+#     MYSQL_HOST: mariadb
+#     REDIS_HOST: redis
+#   depends_on:
+#     - prepare
+#   commands:
+#     - cd /etda_workflow
+#     - apt-get install mysql-client -y
+#     - yarn global add phantomjs-prebuilt
+#     - export PARTNER=graduate
+#     - unset CI
+#     - bundle exec rake drone_prepare
+#     - bundle exec rake spec:integration
+
+# - name: test-grad-0
+#   image: harbor.dsrd.libraries.psu.edu/library/cho:ci
+#   environment:
+#     MYSQL_USER: root
+#     MYSQL_PASSWORD: root
+#     MYSQL_DATABASE_TEST: etda_workflow_test
+#     MYSQL_HOST: mariadb
+#     REDIS_HOST: redis
+#   depends_on:
+#   - prepare
+#   commands:
+#     - cd /etda_workflow
+#     - yarn global add phantomjs-prebuilt
+#     - export RAILS_ENV=test
+#     - export PARTNER=graduate
+#     - unset CI
+#     - bundle exec rake spec:controllers
+#     - bundle exec rake spec:helpers
+#     - bundle exec rake spec:lib
+#     - bundle exec rake spec:mailers
+#     - bundle exec rake spec:models
+#     - bundle exec rake spec:presenters
+#     - bundle exec rake spec:requests
+#     - bundle exec rake spec:routing
+#     - bundle exec rake spec:services
+#     - bundle exec rake spec:workers
+
+
+- name: tag
+  image: alpine/git
+  # depends_on:
+  #   - prepare
+  #   - test-grad-0
+  trigger:
+    event:
+      exclude:
+      - pull_request
+  commands:
+    - cd k8s/chart
+    - if [ ! -f values-$DRONE_BRANCH.yaml ]; then echo "no environment to deploy, exiting && exit 0"; fi
+    - 'sed -i "/^image:/,/*[^:]*:/s/tag:.*/tag: $DRONE_BUILD_NUMBER/g" values-$DRONE_BRANCH.yaml'
+    - git config user.email "drone@drone2test.vmhost.psu.edu"
+    - git config user.name "DroneCI"
+    - git add values-$DRONE_BRANCH.yaml
+    - git commit -m "[skip ci] adds $DRONE_BUILD_NUMBER"
+    - git push -u origin $DRONE_BRANCH
+
+
+# services:
+# - name: postgres
+#   image: postgres:11.3
+#   environment:
+#     POSTGRES_USER: cho
+#     POSTGRES_PASSWORD: cho
+  
+# - name: solr
+#   image: solr:8.1.1
+
+volumes:
+- name: docker-sock
+  host:
+    path: /var/run/docker.sock
