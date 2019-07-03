@@ -6,7 +6,7 @@
     </div>
 
     <%= text_field_tag "#{form.object_name}[creator][][agent]", value.fetch(:agent, nil),
-                       field.options.merge!(list: "#{field.label}_agent") %>
+                       field.options.merge!(list: "#{field.label}_agent", data: { controller: 'datalist' }) %>
     <datalist id="<%= "#{field.label}_agent" %>">
       <% field.datalist(component: :agents).each do |item| %>
         <option value="<%= item.id %>"><%= item %></option>
@@ -14,10 +14,12 @@
     </datalist>
 
     <%= text_field_tag "#{form.object_name}[creator][][role]", value.fetch(:role, nil),
-                       field.options.merge!(list: "#{field.label}_role") %>
+                       field.options.merge!(
+                         list: "#{field.label}_role", data: { controller: 'datalist', display: false }
+                       ) %>
     <datalist id="<%= "#{field.label}_role" %>">
       <% field.datalist(component: :roles).each do |item| %>
-        <option value="<%= item %>"><%= item.label %></option>
+        <option value="<%= item %>"><%= item.attributes.fetch('mads:authoritativeLabel'.to_sym, item.label) %></option>
       <% end %>
     </datalist>
 
