@@ -3,10 +3,27 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] - 2019-06-21
+## [Unreleased] - 2019-09-13
 ### Added
 ### Changed
 ### Fixed
+
+## [v0.7.0](https://github.com/psu-libraries/cho/releases/tag/v0.7.0) - 2019-07-21
+### Added
+- Access rights (public, PSU, restricted to submitter) can be applied to resources and collections.
+- Collection landing pages with a representative image, browse, and search.
+### Changed
+- Made button styles more consistent and action-based.
+- FITS file characterization service is now a dry-transaction.
+- Change-set values can be pre-defined (hardcoded).
+- Correct Matomo id for each local server environment is now includes as part of the deploy.
+- Basic search has been configured. All Fields searching includes full-text, if available, all other searching is field percise.
+- Users must confirm before deleting agents.
+- EDTF dates are now fully indexed (excluding date sets) and display in human-friendly.
+### Fixed
+- File upload labeling has been improved for screen readers.
+- Text for the link to currently deployed release in the footer has been improved for screen readers. 
+- Agents with punctuation in their names can now be used.
 
 ## [v0.6.0](https://github.com/psu-libraries/cho/releases/tag/v0.6.0) - 2019-04-12
 ### Added
@@ -107,7 +124,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Authentication using Penn States's Shibboleth
 
 ## Code Diffs
-- Unreleased: https://github.com/psu-libraries/cho/compare/v0.6.0...HEAD
+- Unreleased: https://github.com/psu-libraries/cho/compare/v0.7.0...HEAD
+- v0.7.0: https://github.com/psu-libraries/cho/compare/v0.6.0...v0.7.0
 - v0.6.0: https://github.com/psu-libraries/cho/compare/v0.5.0...v0.6.0
 - v0.5.0: https://github.com/psu-libraries/cho/compare/v0.4.0...v0.5.0
 - v0.4.0: https://github.com/psu-libraries/cho/compare/v0.3.0...v0.4.0
