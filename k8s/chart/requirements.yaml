@@ -8,6 +8,6 @@ dependencies:
   repository: https://harbor.dsrd.libraries.psu.edu/chartrepo/public
   condition: postgresql.enabled
 - name: redis
-  version: 0.1.5
+  version: 0.2.0
   repository: https://harbor.dsrd.libraries.psu.edu/chartrepo/public
   condition: redis.enabled
